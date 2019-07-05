@@ -2,16 +2,38 @@ from django.db import models
 
 from wagtail.core.models import Page
 
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, FieldRowPanel, InlinePanel
+from wagtail.images.edit_handlers import  ImageChooserPanel
+from modelcluster.models import ClusterableModel, ParentalKey
+
 
 class HomePage(Page):
-    pass
+    def get_context(self, request):
+        context = super().get_context(request)
+
+        # Add extra variables and return the updated context
+        context['organization'] = Organization.objects.all()
+        return context
 
 
-class Organization(models.Model):
+class Organization(ClusterableModel):
     name = models.CharField(max_length=512, default='')
     description = models.TextField()
     published = models.BooleanField(default=False)
-    criterions = models.OneToOneField('Criterion', on_delete=models.CASCADE)
+    cover_photo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+            FieldPanel('name'),
+            FieldPanel('description'),
+            FieldPanel('published'),
+            ImageChooserPanel('cover_photo'),
+            InlinePanel('criterions'),
+    ]
 
 
 class Link(models.Model):
@@ -20,7 +42,14 @@ class Link(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE)
 
 
-class Criterion(models.Model):
+class Criterion(ClusterableModel):
+    organization = ParentalKey(
+        'Organization',
+        on_delete=models.CASCADE,
+        related_name='criterions',
+        null=True
+    )
+
     control_of_business_1 = models.IntegerField(
         default=0,
         verbose_name='število sestankov nadzornega/upravnega odbora v zadnjem letu'
@@ -124,6 +153,14 @@ class Criterion(models.Model):
         default=0,
         verbose_name='objavljen je finančni načrt za tekoče leto'
     )
+
+    custom_panels = [
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('control_of_business_1', classname='fn'),
+                FieldPanel('control_of_business_2', classname='ln'),
+        ])])
+    ]
 
 
 class Attachment(models.Model):
