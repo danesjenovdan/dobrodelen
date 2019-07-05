@@ -1,3 +1,6 @@
+from django.utils.html import format_html
+from django.templatetags.static import static
+from wagtail.core import hooks
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
     ModelAdminGroup,
@@ -21,6 +24,13 @@ class OrganizationAdminGroup(ModelAdminGroup):
     menu_icon = "folder-open-inverse"
     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
     items = (OrganizationModelAdmin,)
+
+
+@hooks.register("insert_global_admin_css")
+def global_admin_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">', static("wagtailadmin/css/home.css")
+    )
 
 
 modeladmin_register(OrganizationAdminGroup)
