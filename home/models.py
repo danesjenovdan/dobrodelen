@@ -29,6 +29,12 @@ class Organization(ClusterableModel):
         related_name="+",
     )
 
+    @property
+    def stars(self):
+        if self.criteria and self.criteria.count() > 0:
+            return self.criteria.first().stars
+        return -1
+
     panels = [
         FieldPanel("name"),
         FieldPanel("description"),
@@ -152,6 +158,27 @@ class Criteria(models.Model):
     transparency_of_organizations_4_7 = models.IntegerField(
         default=0, verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto"
     )
+
+    @property
+    def stars(self):
+        fields = [
+            f.name
+            for f in self.__class__._meta.fields
+            if f.name not in ["id", "organization"]
+        ]
+        values = list(map(lambda f: getattr(self, f, 0), fields))
+        points = sum(values)
+        if points < 30:
+            return 0
+        if points < 35:
+            return 1
+        if points < 41:
+            return 2
+        if points < 51:
+            return 3
+        if points < 61:
+            return 4
+        return 5
 
     panels = [
         MultiFieldPanel(

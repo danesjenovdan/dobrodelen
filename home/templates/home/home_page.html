@@ -5,7 +5,7 @@
 dobrodelen.si home page
 
 {% for organization in organizations %}
-    <li>{{ organization.name }}</li>
+    <li>{{ organization.name }} ({{ organization.stars }} stars)</li>
 {% endfor %}
 
 {% endblock content %}
