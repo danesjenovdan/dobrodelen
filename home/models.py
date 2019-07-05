@@ -13,7 +13,7 @@ from modelcluster.models import ClusterableModel, ParentalKey
 class HomePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
-        context["organizations"] = Organization.objects.all()
+        context["organizations"] = Organization.objects.filter(published=True)
         return context
 
 
@@ -38,6 +38,9 @@ class Organization(ClusterableModel):
         InlinePanel("documents", label="Documents"),
         InlinePanel("criteria", label="Criteria", max_num=1),
     ]
+
+    def __str__(self):
+        return str(self.name)
 
     class Meta:
         verbose_name = "Organizacija"
