@@ -21,5 +21,6 @@ module.exports = {
     semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     'vue/singleline-html-element-content-newline': 'off',
+    // 'vue/multiline-html-element-content-newline': 'off',
   },
 };
