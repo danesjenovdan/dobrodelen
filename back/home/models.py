@@ -159,15 +159,15 @@ class Criteria(models.Model):
         default=0, verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto"
     )
 
-    @property
-    def stars(self):
+    stars = models.IntegerField(default=-1, editable=False)
+
+    def compute_stars(self):
         fields = [
             f.name
             for f in self.__class__._meta.fields
             if f.name not in ["id", "organization"]
         ]
-        values = list(map(lambda f: getattr(self, f, 0), fields))
-        points = sum(values)
+        points = sum(list(map(lambda f: getattr(self, f, 0), fields)))
         if points < 30:
             return 0
         if points < 35:
@@ -179,6 +179,10 @@ class Criteria(models.Model):
         if points < 61:
             return 4
         return 5
+
+    def save(self, *args, **kwargs):
+        self.stars = self.compute_stars()
+        super().save(*args, **kwargs)
 
     panels = [
         MultiFieldPanel(
