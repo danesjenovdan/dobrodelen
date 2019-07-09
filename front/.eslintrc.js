@@ -22,5 +22,16 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'vue/singleline-html-element-content-newline': 'off',
     // 'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-self-closing': [
+      'warn',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always',
+        },
+        svg: 'any',
+      },
+    ],
   },
 };
