@@ -1,4 +1,5 @@
 from django.db import models
+from django.core import signing
 from modelcluster.models import ClusterableModel, ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -29,11 +30,17 @@ class Organization(ClusterableModel):
         related_name="+",
     )
 
+    signup_time = models.DateTimeField(auto_now_add=True)
+
     @property
     def stars(self):
         if self.criteria and self.criteria.count() > 0:
             return self.criteria.first().stars
         return -1
+
+    @property
+    def edit_key(self):
+        return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
 
     panels = [
         FieldPanel("name"),
@@ -231,6 +238,11 @@ class Criteria(models.Model):
             heading="Kriterij 4: Transparentnost organizacij",
         ),
     ]
+
+    def __str__(self):
+        if self.organization:
+            return str("Criteria for {}".format(self.organization.name))
+        return str("Unknown Criteria")
 
 
 class DocumentAttachment(models.Model):

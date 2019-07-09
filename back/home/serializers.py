@@ -21,3 +21,19 @@ class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         fields = ("id", "name", "description", "cover_photo", "stars")
+
+
+class OrganizationDetailSerializer(serializers.ModelSerializer):
+    cover_photo = ImageRenditionAndUploadField("original")
+
+    class Meta:
+        model = Organization
+        fields = (
+            "id",
+            "name",
+            "description",
+            "cover_photo",
+            "stars",
+            "signup_time",
+            "edit_key",
+        )
