@@ -6,6 +6,12 @@
       <span v-if="organization.stars >= i">⭐</span>
       <span v-else>⚪</span>
     </span>
+    <br />
+    <img
+      v-if="organization.cover_photo"
+      :src="`http://127.0.0.1:8000${organization.cover_photo.url}`"
+      :alt="`image ${organization.cover_photo.width}x${organization.cover_photo.height}`"
+    />
   </div>
 </template>
 
@@ -14,8 +20,11 @@ export default {
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
-  async asyncData({ $axios, params }) {
-    const orgResp = await $axios.$get(`http://127.0.0.1:8000/api/organizations/${params.id}`);
+  async asyncData({ $axios, params, query }) {
+    const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
+    const orgResp = await $axios.$get(
+      `http://127.0.0.1:8000/api/organizations/${params.id}/${editKey}`,
+    );
     return {
       organization: orgResp,
     };
