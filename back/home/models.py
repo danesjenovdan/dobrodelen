@@ -10,6 +10,10 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+def get_intance_path(instance, file_name):
+        return 'documents/{}/{}'.format(
+            instance.pk,
+            file_name)
 
 class HomePage(Page):
     def get_context(self, request):
@@ -17,11 +21,57 @@ class HomePage(Page):
         context["organizations"] = Organization.objects.filter(published=True)
         return context
 
+class Member(models.Model):
+    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    role = models.CharField(max_length=512, default="", verbose_name="povezava z organizacijo")
+    is_paid = models.BooleanField(default=False, verbose_name='Orgali za svoje delo v odboru prejema nadomestilo')
+
 
 class Organization(ClusterableModel):
-    name = models.CharField(max_length=512, default="")
-    description = models.TextField()
-    published = models.BooleanField(default=False)
+    name = models.CharField(max_length=512, default="", verbose_name="Uradno ime organizacije (iz AJPES)", blank=True)
+    additional_names = models.TextField(verbose_name="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)", default='', blank=True)
+    contact_info = models.TextField(verbose_name="Kontakt: (ime in priimek, e-pošta, telefon)", default='', blank=True)
+    web_page = models.URLField(max_length=512, verbose_name='spletna stran', default='', blank=True)
+    description = models.TextField(verbose_name='kratek opis organizacije (do 1500 znakov)', default='', blank=True)
+    tax_number = models.CharField(max_length=32, verbose_name='davčna številka', default='', blank=True)
+    mission = models.TextField(verbose_name='Poslanstvo organizacije (do 500 znakov)', default='', blank=True)
+    area = models.ManyToManyField('Area', blank=True, related_name='organization', verbose_name='Področje delovanja (lahko izberete več možnosti)', default='')
+    avg_revenue = models.CharField(max_length=16, verbose_name='povprečni letni proračun v zadnjih treh letih', default='', blank=True)
+    employed = models.IntegerField(verbose_name='število zaposlenih v zadnjem zaključenem letu', default=0, blank=True)
+    is_charity = models.BooleanField(default=False, verbose_name='Organizacija ima status humanitarne organizacije', blank=True)
+    has_public_interest = models.BooleanField(default=False, verbose_name='Organizacija ima status delovanja v javnem interesu', blank=True)
+    is_voluntary = models.BooleanField(default=False, verbose_name='Organizacija je vpisana v evidenco prostotovoljskih organizacij', blank=True)
+    zero5 = models.BooleanField(default=False, verbose_name='Organizacija je na seznamu upravičencev do 0,5 % dohodnine', blank=True)
+
+
+    # TODO supervisory meeting dates
+    supervisory_board = models.ManyToManyField('Member', related_name='organization_supervisor', blank=True)
+    # TODO management meeting dates
+    management_board = models.ManyToManyField('Member', related_name='organization_manegement', blank=True)
+    # TODO council meeting dates
+    council_board = models.ManyToManyField('Member', related_name='organization_council', blank=True)
+
+    # OTHER WHAT???
+    # TODO OTHER meeting dates
+    OTHER_board = models.ManyToManyField('Member', related_name='organization_other', blank=True)
+
+    strategic_planning = models.BooleanField(default=False, verbose_name='Ali organizacija strateško načrtuje?')
+    milestiones_description = models.TextField(verbose_name='ali organizacija spremlja doseganje strateških ciljev? -> kratek opis kako, max 500 znakov', default='', blank=True)
+    wages_ratio = models.TextField(verbose_name="razmerje med najvišjo in povprečno plačo v organizaciji", default='', blank=True)
+
+    # documents
+    minutes_meeteng = models.FileField(upload_to=get_intance_path, verbose_name='priloga zapisnik zadnje seje', blank=True, null=True)
+    strategic_goals = models.FileField(upload_to=get_intance_path, verbose_name='pisna poročila o spremljanju stateških ciljev', blank=True, null=True)
+    finance_report = models.FileField(upload_to=get_intance_path, verbose_name='Finančno poročilo', blank=True, null=True)
+    finance_report_ajpes = models.FileField(upload_to=get_intance_path, verbose_name='finančno poročilo, ki je bilo oddano na AJPES', blank=True, null=True)
+    audited_report = models.FileField(upload_to=get_intance_path, verbose_name='revidirano poročilo', blank=True, null=True)
+    finance_plan = models.FileField(upload_to=get_intance_path, verbose_name='finančni načrt za tekoče leto', blank=True, null=True)
+    given_loan = models.FileField(upload_to=get_intance_path, verbose_name='seznam danih posojil', blank=True, null=True)
+    received_loans = models.FileField(upload_to=get_intance_path, verbose_name='seznam prejetih posojil', blank=True, null=True)
+    payment_classes = models.FileField(upload_to=get_intance_path, verbose_name='akt o sistematizaciji delovnih mest in plačnih razredov', blank=True, null=True)
+
+
+
     cover_photo = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -30,7 +80,8 @@ class Organization(ClusterableModel):
         related_name="+",
     )
 
-    signup_time = models.DateTimeField(auto_now_add=True)
+    published = models.BooleanField(default=False, verbose_name='')
+    signup_time = models.DateTimeField(auto_now_add=True, verbose_name='')
 
     @property
     def stars(self):
@@ -44,7 +95,35 @@ class Organization(ClusterableModel):
 
     panels = [
         FieldPanel("name"),
+        FieldPanel("additional_names"),
+        FieldPanel("contact_info"),
+        FieldPanel("web_page"),
         FieldPanel("description"),
+        FieldPanel("tax_number"),
+        FieldPanel("mission"),
+        FieldPanel("area"),
+        FieldPanel("avg_revenue"),
+        FieldPanel("employed"),
+        FieldPanel("is_charity"),
+        FieldPanel("has_public_interest"),
+        FieldPanel("is_voluntary"),
+        FieldPanel("zero5"),
+        FieldPanel("supervisory_board"),
+        FieldPanel("management_board"),
+        FieldPanel("council_board"),
+        FieldPanel("OTHER_board"),
+        FieldPanel("strategic_planning"),
+        FieldPanel("milestiones_description"),
+        FieldPanel("wages_ratio"),
+        FieldPanel("minutes_meeteng"),
+        FieldPanel("strategic_goals"),
+        FieldPanel("finance_report"),
+        FieldPanel("finance_report_ajpes"),
+        FieldPanel("audited_report"),
+        FieldPanel("finance_plan"),
+        FieldPanel("given_loan"),
+        FieldPanel("received_loans"),
+        FieldPanel("payment_classes"),
         FieldPanel("published"),
         ImageChooserPanel("cover_photo"),
         InlinePanel("links", label="Links"),
@@ -137,14 +216,16 @@ class Criteria(models.Model):
         verbose_name="4.1 - Organizacija ima objavljena letna poročila o delu",
     )
     transparency_of_organizations_4_2 = models.IntegerField(
-        default=0, verbose_name="4.2 - Letna poročila o delu so razumljiva"
+        default=0,
+        verbose_name="4.2 - Letna poročila o delu so razumljiva"
     )
     transparency_of_organizations_4_2_1 = models.IntegerField(
         default=0,
         verbose_name="4.2.1 - Organizacija ima objavljena letna finančna poročila",
     )
     transparency_of_organizations_4_2_2 = models.IntegerField(
-        default=0, verbose_name="4.2.2 - Finančna poročila so razumljiva"
+        default=0,
+        verbose_name="4.2.2 - Finančna poročila so razumljiva"
     )
     transparency_of_organizations_4_2_3 = models.IntegerField(
         default=0,
@@ -251,3 +332,7 @@ class DocumentAttachment(models.Model):
     organization = ParentalKey(
         "Organization", on_delete=models.CASCADE, related_name="documents"
     )
+
+
+class Area(models.Model):
+    name = models.CharField(max_length=128)
