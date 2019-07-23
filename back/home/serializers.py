@@ -2,7 +2,9 @@ from rest_framework import serializers, fields
 from wagtail.images.api.fields import ImageRenditionField
 from wagtail.images import get_image_model
 
-from .models import Organization
+from drf_writable_nested import WritableNestedModelSerializer
+
+from home import models
 
 
 class ImageRenditionAndUploadField(ImageRenditionField):
@@ -15,25 +17,95 @@ class ImageRenditionAndUploadField(ImageRenditionField):
             return Image.objects.create(title=clean_data._name, file=clean_data)
 
 
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Member
+        fields = (
+            'id',
+            'name',
+            'role'
+        )
+
+
+class BoardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Board
+        fields = (
+            'id',
+            'name',
+            'meeting_dates',
+            'organization'
+        )
+
+
+class BoardMemberSerializer(WritableNestedModelSerializer):
+    member = MemberSerializer()
+    class Meta:
+        model = models.BoardMember
+        fields = (
+            'id',
+            'member',
+            'board',
+            'organization',
+            'is_paid'
+        )
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
-    cover_photo = ImageRenditionAndUploadField("original")
+    cover_photo = ImageRenditionAndUploadField('original')
 
     class Meta:
-        model = Organization
-        fields = ("id", "name", "description", "cover_photo", "stars")
+        model = models.Organization
+        fields = ('id', 'name', 'description', 'cover_photo', 'stars')
 
 
 class OrganizationDetailSerializer(serializers.ModelSerializer):
-    cover_photo = ImageRenditionAndUploadField("original")
+    cover_photo = ImageRenditionAndUploadField('original', required=False)
+    boards = BoardSerializer(many=True, required=False, read_only=True)
+    board_members = serializers.SerializerMethodField(required=False)
 
     class Meta:
-        model = Organization
+        model = models.Organization
         fields = (
-            "id",
-            "name",
-            "description",
-            "cover_photo",
-            "stars",
-            "signup_time",
-            "edit_key",
+            'id',
+            'name',
+            'additional_names',
+            'contact_info',
+            'web_page',
+            'description',
+            'tax_number',
+            'mission',
+            'area',
+            'avg_revenue',
+            'employed',
+            'is_charity',
+            'has_public_interest',
+            'is_voluntary',
+            'zero5',
+            'strategic_planning',
+            'milestiones_description',
+            'wages_ratio',
+            'boards',
+            'board_members',
+
+            'minutes_meeteng',
+            'strategic_goals',
+            'finance_report',
+            'finance_report_ajpes',
+            'audited_report',
+            'finance_plan',
+            'given_loan',
+            'received_loans',
+            'payment_classes',
+
+            'cover_photo',
+
+            'stars',
+            'signup_time',
+            'edit_key',
         )
+    def get_board_members(self, obj):
+        members = obj.board_members.all()
+        board_members = BoardMember.objects.filter(member__in=members, organization=obj)
+        ll = BoardMemberSerializer(board_members, many=True)
+        return ll.data

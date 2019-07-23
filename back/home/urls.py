@@ -1,10 +1,13 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import OrganizationViewSet
+from home import views
 
 
 router = routers.DefaultRouter()
-router.register(r"organizations", OrganizationViewSet, basename="organization")
+router.register(r'organizations', views.OrganizationViewSet, basename='organization')
+router.register(r'boards', views.BoardViewSet, basename='boards')
+router.register(r'boardmembers', views.BoardMemberViewSet, basename='boardmembers')
 
-urlpatterns = [path("", include(router.urls))]
+
+urlpatterns = [path('', include(router.urls))]
