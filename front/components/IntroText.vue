@@ -3,8 +3,8 @@
     <div class="row justify-content-center">
       <div class="col-10">
         <p class="lead text-center">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati consequuntur ullam
-          eius magni consectetur quaerat eum amet!
+          Lorem, ipsum dolor sit amet,
+          <br />consectetur adipisicing elit.
         </p>
       </div>
     </div>
@@ -14,11 +14,11 @@
 <style lang="scss" scoped>
 .jumbotron {
   background: transparent;
-  padding: 6rem 2rem;
+  padding: 11rem 2rem 13rem;
 
   p.lead {
-    font-size: 1.8rem;
-    line-height: 1.4;
+    font-size: 3.1rem;
+    line-height: 1.25;
     letter-spacing: 0.2em;
     margin: 0;
   }

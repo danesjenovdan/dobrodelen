@@ -1,20 +1,20 @@
 <template>
   <header>
     <nav>
-      <nuxt-link :to="{ name: 'index' }" class="nav-link">organizacije</nuxt-link>
+      <nuxt-link :to="{ name: 'index' }" class="nav-link text-secondary">organizacije</nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'index' }" class="title-link">dobrodelen.si</nuxt-link>
+        <nuxt-link :to="{ name: 'index' }" class="title-link text-primary">dobrodelen.si</nuxt-link>
         <hr />
       </h1>
-      <nuxt-link :to="{ name: 'org-add' }" class="nav-link">prijava</nuxt-link>
+      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-secondary">prijava</nuxt-link>
     </nav>
   </header>
 </template>
 
 <style lang="scss" scoped>
 header {
-  margin: 2em 0;
+  margin: 3.5em 0;
 
   nav {
     display: flex;
@@ -26,7 +26,7 @@ header {
     .nav-link {
       flex: 1;
       text-transform: uppercase;
-      font-size: 1em;
+      font-size: 1.5rem;
       line-height: 1;
       letter-spacing: 0.2em;
       text-align: center;
@@ -34,24 +34,22 @@ header {
     }
 
     h1 {
-      flex: 2;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
       text-transform: uppercase;
-      font-size: 1.5em;
+      font-size: 2.5rem;
       font-weight: 700;
       line-height: 1;
-      letter-spacing: 0.25em;
-      color: orange;
+      letter-spacing: 0.2em;
 
       hr {
-        margin: 0 0.75em;
+        margin: 0;
         border: none;
-        width: 4em;
-        height: 0.25em;
-        background: linear-gradient(to right, lightblue 25%, orange);
+        width: 3.4em;
+        height: 0.2em;
+        background: linear-gradient(to right, $secondary 20%, $primary);
 
         &:last-of-type {
           transform: rotate(180deg);
@@ -60,9 +58,9 @@ header {
 
       .title-link {
         text-align: center;
-        transform: translateY(-10%);
         color: inherit;
         text-decoration: none;
+        margin: 0 0.65em 0 0.85em;
       }
     }
   }

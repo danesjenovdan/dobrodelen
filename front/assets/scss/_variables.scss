@@ -1,0 +1,40 @@
+// ---
+// Change boostrap defaults here
+// ---
+
+$primary: #efc45b;
+$secondary: #99b5f0;
+
+$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+$lead-font-size: 1.5rem;
+
+$enable-rounded: false;
+
+$grid-breakpoints: (
+  // bootstrap defaults:
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  // non-defaults:
+  xxl: 1500px
+);
+
+$container-max-widths: (
+  // bootstrap defaults:
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  // non-defaults:
+  xxl: 1440px
+);
+
+// ---
+// Import bootstrap functions and variables so that you can @import this file
+// and use bootstrap breakpoint mixins
+// ---
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/mixins/_breakpoints.scss';

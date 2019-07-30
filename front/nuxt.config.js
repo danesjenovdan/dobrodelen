@@ -14,7 +14,14 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900&display=swap&subset=latin-ext',
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -45,9 +52,24 @@ export default {
    ** Build configuration
    */
   build: {
+    // extractCSS: true,
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) {
+      // inject variables import to all scss modules
+      const scssRule = config.module.rules.find((e) => e.test.toString() === '/\\.scss$/i');
+      const scssUses = scssRule.oneOf ? scssRule.oneOf.map((r) => r.use) : [scssRule.use];
+      scssUses.forEach((use) => {
+        const sassLoader = use.find((e) => e.loader === 'sass-loader');
+        if (sassLoader) {
+          sassLoader.options = sassLoader.options || {};
+          sassLoader.options.data = `
+            @import '~/assets/scss/_variables.scss';
+          `;
+          // sassLoader.options.functions = scssCustomFunctions;
+        }
+      });
+    },
   },
 };
