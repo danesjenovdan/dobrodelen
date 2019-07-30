@@ -1,16 +1,17 @@
 <template>
-  <div class="container">
-    <h1>Organizations:</h1>
+  <div class="content">
+    <intro-text />
     <organization-list :organizations="organizations" />
-    <nuxt-link :to="{ name: 'org-add' }" class="btn">add new org</nuxt-link>
   </div>
 </template>
 
 <script>
-import OrganizationList from '~/components/OrganizationList';
+import OrganizationList from '~/components/OrganizationList.vue';
+import IntroText from '~/components/IntroText.vue';
 
 export default {
   components: {
+    IntroText,
     OrganizationList,
   },
   async asyncData({ $axios }) {
@@ -21,24 +22,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  margin: 20px auto 0;
-  max-width: 900px;
-}
-
-.btn {
-  display: inline-block;
-  background: green;
-  padding: 0.4rem 0.7rem;
-  margin: 2rem 0;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-
-  &:hover {
-    background: lighten(green, 5%);
-  }
-}
-</style>
