@@ -39,11 +39,7 @@
             </nuxt-link>
           </td>
           <td>
-            <p class="lead">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt nisi mollitia
-              dolorum cupiditate debitis aliquid dolore deserunt ad minus reprehenderit voluptatibus
-              nostrum est tenetur fuga officia, magni, pariatur veritatis nam.
-            </p>
+            <p class="lead">{{ org.description }}</p>
           </td>
           <td>
             <i
@@ -114,14 +110,13 @@ export default {
     }
 
     th {
-      color: #383838;
       font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: 0.2em;
       position: relative;
       cursor: default;
       border-top: 0;
-      border-bottom: 1px solid $red;
+      border-bottom: 1px solid $blue;
 
       &:first-child {
         width: 31rem;
@@ -152,7 +147,7 @@ export default {
           border: $sort-arrow-size/2 solid transparent;
           border-top-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
           border-bottom-width: ($sort-arrow-diff - 1) * ($sort-arrow-size/$sort-arrow-diff);
-          border-bottom-color: #383838;
+          border-bottom-color: $body-color;
         }
 
         &::after {
@@ -162,25 +157,26 @@ export default {
           border: $sort-arrow-size/2 solid transparent;
           border-bottom-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
           border-top-width: ($sort-arrow-diff - 1) * ($sort-arrow-size/$sort-arrow-diff);
-          border-top-color: #383838;
+          border-top-color: $body-color;
         }
 
         &.asc::before {
-          border-bottom-color: $red;
+          border-bottom-color: $blue;
         }
 
         &.desc::after {
-          border-top-color: $red;
+          border-top-color: $blue;
         }
       }
     }
 
     td {
       padding-top: 1.25rem;
-      border-bottom: 1px solid $red;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid $blue;
 
       a {
-        color: #383838;
+        color: inherit;
       }
 
       img {

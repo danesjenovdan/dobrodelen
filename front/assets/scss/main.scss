@@ -2,7 +2,7 @@
 @import 'bootstrap/scss/bootstrap.scss';
 
 .form-control::placeholder {
-  color: #383838;
+  color: $body-color;
   font-weight: 300;
 }
 

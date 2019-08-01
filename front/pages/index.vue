@@ -56,7 +56,7 @@ export default {
       font-size: 2.5rem;
       letter-spacing: 0.2em;
       line-height: 1.4;
-      color: #383838;
+      color: inherit;
       margin-right: 0;
     }
 
