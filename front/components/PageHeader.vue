@@ -1,13 +1,17 @@
 <template>
   <header>
     <nav>
-      <nuxt-link :to="{ name: 'index' }" class="nav-link text-secondary">organizacije</nuxt-link>
+      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-secondary">
+        <span>prijava organizacije</span>
+      </nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'index' }" class="title-link text-primary">dobrodelen.si</nuxt-link>
+        <nuxt-link :to="{ name: 'index' }" class="title-link text-primary">DOBRODELEN.SI</nuxt-link>
         <hr />
       </h1>
-      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-secondary">prijava</nuxt-link>
+      <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-secondary">
+        <span>metodologija</span>
+      </nuxt-link>
     </nav>
   </header>
 </template>

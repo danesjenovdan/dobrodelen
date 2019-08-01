@@ -1,11 +1,9 @@
 <template>
   <div class="jumbotron">
     <div class="row justify-content-center">
-      <div class="col-10">
-        <p class="lead text-center">
-          Lorem, ipsum dolor sit amet,
-          <br />consectetur adipisicing elit.
-        </p>
+      <div class="col-10 text-center">
+        <p class="lead">Doniraj pametno.</p>
+        <div class="icon icon-heart mt-4" />
       </div>
     </div>
   </div>
@@ -14,13 +12,18 @@
 <style lang="scss" scoped>
 .jumbotron {
   background: transparent;
-  padding: 11rem 2rem 13rem;
+  padding: 5rem 2rem 5rem;
 
   p.lead {
     font-size: 3.1rem;
     line-height: 1.25;
     letter-spacing: 0.2em;
     margin: 0;
+  }
+
+  .icon {
+    width: 13rem;
+    height: 13rem;
   }
 }
 </style>
