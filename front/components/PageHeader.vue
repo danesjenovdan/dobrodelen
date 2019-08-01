@@ -35,6 +35,25 @@ header {
       letter-spacing: 0.2em;
       text-align: center;
       text-decoration: none;
+
+      span {
+        display: inline-block;
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: -0.07em;
+          left: 0.07em;
+          right: 0.17em;
+          height: 0.35em;
+        }
+      }
+
+      &.nuxt-link-exact-active span::after {
+        background: rgba($blue, 0.3);
+      }
     }
 
     h1 {
