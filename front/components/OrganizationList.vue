@@ -28,7 +28,11 @@
         <tr v-for="org in organizations" :key="org.id" @click="onOrgClick(org)">
           <td>
             <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
-              <img src="~/assets/placeholder.png" alt="organization placeholder image" />
+              <img
+                src="~/assets/placeholder.png"
+                alt="organization placeholder image"
+                class="rounded-circle bg-dark"
+              />
             </nuxt-link>
             <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
               <strong class="lead">{{ org.name }}</strong>

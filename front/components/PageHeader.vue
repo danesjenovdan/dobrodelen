@@ -30,7 +30,7 @@ header {
     .nav-link {
       flex: 1;
       text-transform: uppercase;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       line-height: 1;
       letter-spacing: 0.2em;
       text-align: center;
