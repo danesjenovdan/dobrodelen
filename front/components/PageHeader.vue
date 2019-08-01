@@ -1,15 +1,15 @@
 <template>
   <header>
     <nav>
-      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-secondary">
+      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-primary">
         <span>prijava organizacije</span>
       </nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'index' }" class="title-link text-primary">DOBRODELEN.SI</nuxt-link>
+        <nuxt-link :to="{ name: 'index' }" class="title-link text-warning">DOBRODELEN.SI</nuxt-link>
         <hr />
       </h1>
-      <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-secondary">
+      <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
         <span>metodologija</span>
       </nuxt-link>
     </nav>
@@ -53,7 +53,7 @@ header {
         border: none;
         width: 3.4em;
         height: 0.2em;
-        background: linear-gradient(to right, $secondary 20%, $primary);
+        background: linear-gradient(to right, $blue 20%, $yellow);
 
         &:last-of-type {
           transform: rotate(180deg);

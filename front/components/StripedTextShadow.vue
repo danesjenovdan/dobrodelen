@@ -26,12 +26,12 @@ export default {
     background-image: linear-gradient(
       0deg,
       transparent 40%,
-      $primary 40%,
-      $primary 50%,
+      $yellow 40%,
+      $yellow 50%,
       transparent 50%,
       transparent 90%,
-      $primary 90%,
-      $primary 100%
+      $yellow 90%,
+      $yellow 100%
     );
     background-size: 10px 10px;
     background-clip: text;

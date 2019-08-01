@@ -6,7 +6,7 @@
           <input class="form-control" type="text" placeholder="Poišči organizacijo" />
         </div>
         <div class="col-auto">
-          <input class="form-control btn btn-primary" type="submit" value="Išči" />
+          <input class="form-control btn btn-warning" type="submit" value="Išči" />
         </div>
       </div>
     </form>
@@ -116,13 +116,15 @@ export default {
       letter-spacing: 0.2em;
       position: relative;
       cursor: default;
+      border-top: 0;
+      border-bottom: 1px solid $red;
 
       &:first-child {
-        width: 30rem;
+        width: 31rem;
       }
 
       &:last-child {
-        width: 15rem;
+        width: 17rem;
       }
 
       &.can-sort {
@@ -160,16 +162,19 @@ export default {
         }
 
         &.asc::before {
-          border-bottom-color: #ea6678;
+          border-bottom-color: $red;
         }
 
         &.desc::after {
-          border-top-color: #ea6678;
+          border-top-color: $red;
         }
       }
     }
 
     td {
+      padding-top: 1.25rem;
+      border-bottom: 1px solid $red;
+
       a {
         color: #383838;
       }
@@ -189,6 +194,10 @@ export default {
 
       strong.lead {
         font-weight: 600;
+      }
+
+      .icon {
+        margin: 0 0.2rem;
       }
     }
 

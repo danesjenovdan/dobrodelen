@@ -2,7 +2,7 @@
   <div class="content">
     <div class="row">
       <div class="col-8">
-        <h1 class="text-primary">
+        <h1 class="text-warning">
           <striped-text-shadow text="DOBRODELEN.SI" />
         </h1>
         <p class="lead mt-3">
@@ -15,7 +15,7 @@
           kriterijih, ki se nanašajo na 4 področja – nadzor nad poslovanjem; strateško načrtovanje;
           finančno upravljanje in transparentnost.
         </p>
-        <nuxt-link :to="{ name: 'organizations' }" class="btn btn-primary mt-5">VSTOPI</nuxt-link>
+        <nuxt-link :to="{ name: 'organizations' }" class="btn btn-warning mt-5">VSTOPI</nuxt-link>
       </div>
       <div class="col-4">
         <div class="icon icon-heart" />
