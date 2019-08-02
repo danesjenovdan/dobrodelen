@@ -9,7 +9,7 @@
             class="rounded-circle bg-dark mb-4"
           />
           <h2>{{ organization.name }}</h2>
-          <div class="stars">
+          <div class="stars" @click="toggleModal(true)">
             <i
               v-for="i in 5"
               :key="i"
@@ -105,49 +105,65 @@
       </div>
     </div>
 
-    <div class="modal fade show" tabindex="-1" role="dialog" style="display:block">
+    <transition name="fade-modal">
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-        role="document"
+        v-if="showStarsModal"
+        class="modal show"
+        tabindex="-1"
+        role="dialog"
+        style="display:block"
       >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Skupna ocena</h5>
-            <div class="stars">
-              <i
-                v-for="i in 5"
-                :key="i"
-                :class="['icon', 'icon-star', { 'icon-star--full': organization.stars >= i }]"
-              />
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Skupna ocena</h5>
+              <div class="stars">
+                <i
+                  v-for="i in 5"
+                  :key="i"
+                  :class="['icon', 'icon-star', { 'icon-star--full': organization.stars >= i }]"
+                />
+              </div>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                @click="toggleModal(false)"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-              dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-              nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-              quis, sem. Nulla consequat massa quis enim.
-            </p>
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>Število zaposlenih v zadnjem zaključenem letu</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>Število zaposlenih v zadnjem zaključenem letu</td>
-                  <td>1</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="modal-body">
+              <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                quis, sem. Nulla consequat massa quis enim.
+              </p>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Število zaposlenih v zadnjem zaključenem letu</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Število zaposlenih v zadnjem zaključenem letu</td>
+                    <td>1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal-backdrop fade show" />
+    </transition>
+    <transition name="fade-backdrop">
+      <div v-if="showStarsModal" class="modal-backdrop show" />
+    </transition>
   </div>
 </template>
 
@@ -155,6 +171,11 @@
 export default {
   validate({ params }) {
     return /^\d+$/.test(params.id);
+  },
+  data() {
+    return {
+      showStarsModal: false,
+    };
   },
   async asyncData({ $axios, params, query }) {
     const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
@@ -164,6 +185,21 @@ export default {
     return {
       organization: orgResp,
     };
+  },
+  beforeDestroy() {
+    this.toggleModal(false);
+  },
+  methods: {
+    toggleModal(show = !this.showStarsModal) {
+      if (typeof window !== 'undefined' && document.body.classList) {
+        if (show) {
+          document.body.classList.add('modal-open');
+        } else {
+          document.body.classList.remove('modal-open');
+        }
+      }
+      this.showStarsModal = show;
+    },
   },
 };
 </script>
@@ -276,5 +312,33 @@ export default {
       }
     }
   }
+}
+
+.fade-backdrop-enter-active,
+.fade-backdrop-leave-active {
+  transition: opacity 0.15s linear;
+}
+
+.fade-backdrop-leave-active {
+  transition-delay: 0.15s;
+}
+
+.fade-backdrop-enter,
+.fade-backdrop-leave-to {
+  opacity: 0;
+}
+
+.fade-modal-enter-active,
+.fade-modal-leave-active {
+  transition: opacity 0.15s linear;
+}
+
+.fade-modal-enter-active {
+  transition-delay: 0.15s;
+}
+
+.fade-modal-enter,
+.fade-modal-leave-to {
+  opacity: 0;
 }
 </style>
