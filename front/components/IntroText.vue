@@ -4,11 +4,11 @@
       <div class="col-10 text-center">
         <p v-if="lead" class="lead" v-text="lead" />
       </div>
-      <div class="row justify-content-center">
-        <div class="col-7 text-center">
-          <p v-if="text" class="text" v-text="text" />
-          <div v-if="icon" :class="`icon icon-${icon} mt-4`" />
-        </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-7 text-center">
+        <p v-if="text" class="text" v-text="text" />
+        <div v-if="icon" :class="`icon icon-${icon} mt-4`" />
       </div>
     </div>
   </div>
