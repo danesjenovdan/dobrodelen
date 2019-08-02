@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <intro-text />
+    <intro-text lead="Doniraj pametno." icon="heart" />
     <organization-list :organizations="organizations" />
   </div>
 </template>
 
 <script>
-import OrganizationList from '~/components/OrganizationList.vue';
 import IntroText from '~/components/IntroText.vue';
+import OrganizationList from '~/components/OrganizationList.vue';
 
 export default {
   components: {

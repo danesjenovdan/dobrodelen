@@ -6,7 +6,9 @@
       </nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'index' }" class="title-link text-warning">DOBRODELEN.SI</nuxt-link>
+        <nuxt-link :to="{ name: 'organizations' }" class="title-link text-warning">
+          <span>DOBRODELEN.SI</span>
+        </nuxt-link>
         <hr />
       </h1>
       <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
