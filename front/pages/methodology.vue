@@ -6,10 +6,21 @@
     />
     <div class="faq">
       <div class="accordion">
-        <div class="card">
-          <div class="card-header">
+        <div
+          v-for="(item, i) in items"
+          :id="`accordion-item-${i}`"
+          :key="`accordion-item-${i}`"
+          class="card"
+        >
+          <div :id="`accordion-item-heading-${i}`" class="card-header">
             <h2 class="mb-0">
-              <button class="btn" type="button" aria-expanded="false" aria-controls="collapseOne">
+              <button
+                :class="['btn', { collapsed: item.collapsed }]"
+                type="button"
+                :aria-expanded="`${!item.collapsed}`"
+                :aria-controls="`accordion-item-content-${i}`"
+                @click="toggleItem(i)"
+              >
                 <span>
                   Kriterij 1:
                   <strong>Nadzor nad poslovanjem</strong>
@@ -18,36 +29,12 @@
               <i class="icon icon-arrow icon-arrow--right" />
             </h2>
           </div>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-            <div class="card-body">
-              <p>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                brunch. Food truck quinoa nesciunt laborum eiusmod.
-              </p>
-              <p>
-                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
-                anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-                probably haven't heard of them accusamus labore sustainable VHS.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h2 class="mb-0">
-              <button class="btn" type="button" aria-expanded="true" aria-controls="collapseOne">
-                <span>
-                  Kriterij 1:
-                  <strong>Nadzor nad poslovanjem</strong>
-                </span>
-              </button>
-              <i class="icon icon-arrow icon-arrow--right" />
-            </h2>
-          </div>
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+          <div
+            :id="`accordion-item-content-${i}`"
+            ref="accordion-item-content"
+            :class="['accordion-item-content', 'collapse', { show: !item.collapsed }]"
+            :aria-labelledby="`accordion-item-heading-${i}`"
+          >
             <div class="card-body">
               <p>
                 <strong>
@@ -143,35 +130,6 @@
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header">
-            <h2 class="mb-0">
-              <button class="btn" type="button" aria-expanded="false" aria-controls="collapseOne">
-                <span>
-                  Kriterij 1:
-                  <strong>Nadzor nad poslovanjem</strong>
-                </span>
-              </button>
-              <i class="icon icon-arrow icon-arrow--right" />
-            </h2>
-          </div>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-            <div class="card-body">
-              <p>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                brunch. Food truck quinoa nesciunt laborum eiusmod.
-              </p>
-              <p>
-                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
-                anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-                probably haven't heard of them accusamus labore sustainable VHS.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -184,100 +142,163 @@ export default {
   components: {
     IntroText,
   },
+  data() {
+    return {
+      items: [
+        {
+          collapsed: true,
+        },
+        {
+          collapsed: true,
+        },
+        {
+          collapsed: true,
+        },
+        {
+          collapsed: true,
+        },
+        {
+          collapsed: true,
+        },
+      ],
+    };
+  },
+  methods: {
+    toggleItem(i) {
+      const itemContentElement = this.$refs['accordion-item-content'][i];
+
+      let from = `${itemContentElement.firstElementChild.clientHeight}px`;
+      let to = '0px';
+      if (!itemContentElement.classList.contains('show')) {
+        [from, to] = [to, from];
+      }
+
+      itemContentElement.style.height = from;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          itemContentElement.style.height = to;
+        });
+      });
+
+      const onTransitionEnd = () => {
+        itemContentElement.style.height = '';
+        itemContentElement.removeEventListener('transitionend', onTransitionEnd);
+
+        this.items = this.items.map((item, index) => ({
+          ...item,
+          collapsed: i === index ? !item.collapsed : item.collapsed,
+        }));
+      };
+      itemContentElement.addEventListener('transitionend', onTransitionEnd);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.faq {
-  .card {
-    border: 0;
+.content {
+  margin-bottom: 5rem;
 
-    & + .card {
-      margin-top: 1.5rem;
-    }
-
-    .card-header {
-      padding: 3rem 3.5rem;
-      background: #f6f2f0;
+  .faq {
+    .card {
       border: 0;
 
-      h2 {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      & + .card {
+        margin-top: 1.5rem;
+      }
 
-        button {
-          font-size: 1.85rem;
-          color: inherit;
+      .card-header {
+        padding: 3rem 3.5rem;
+        background: #f6f2f0;
+        border: 0;
 
-          span {
-            font-weight: 300;
-            letter-spacing: 0.2em;
+        h2 {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
 
-            strong {
-              font-weight: 600;
-              text-transform: uppercase;
+          button {
+            font-size: 1.85rem;
+            color: inherit;
+
+            span {
+              font-weight: 300;
+              letter-spacing: 0.2em;
+
+              strong {
+                font-weight: 600;
+                text-transform: uppercase;
+              }
             }
           }
-        }
 
-        .icon {
-          margin: 0.375rem 0.75rem;
-        }
+          .icon {
+            margin: 0.375rem 0.75rem;
+          }
 
-        button[aria-expanded='true'] + .icon {
-          transform: rotate(90deg);
-        }
-      }
-    }
-
-    .card-body {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-      font-size: 1.5rem;
-      margin: 0 14rem;
-      font-weight: 300;
-      line-height: 1.4;
-
-      strong {
-        font-weight: 600;
-      }
-
-      p {
-        margin-bottom: 0;
-
-        & + p {
-          margin-top: 2rem;
-        }
-
-        & + ul {
-          margin-top: 0.5rem;
-        }
-
-        & + table {
-          margin-top: 0.75rem;
+          button[aria-expanded='true'] + .icon {
+            transform: rotate(90deg);
+          }
         }
       }
 
-      ul {
-        margin-bottom: 2rem;
-        list-style: none;
+      .accordion-item-content {
+        transition: height 1s ease;
 
-        li {
-          padding-left: 1.4em;
-          background-image: url('~assets/svg/arrow-list.svg');
-          background-repeat: no-repeat;
-          background-position: top 0.38em left;
-          background-size: 1em;
+        &.collapse:not(.show) {
+          display: block;
+          height: 0;
         }
-      }
 
-      table {
-        margin-bottom: 2rem;
+        .card-body {
+          padding-top: 4rem;
+          padding-bottom: 4rem;
+          font-size: 1.5rem;
+          margin: 0 14rem;
+          font-weight: 300;
+          line-height: 1.4;
 
-        td {
-          border: 1px solid $blue;
-          padding: 0.5rem 3rem;
+          strong {
+            font-weight: 600;
+          }
+
+          p {
+            margin-bottom: 0;
+
+            & + p {
+              margin-top: 2rem;
+            }
+
+            & + ul {
+              margin-top: 0.5rem;
+            }
+
+            & + table {
+              margin-top: 0.75rem;
+            }
+          }
+
+          ul {
+            margin-bottom: 2rem;
+            list-style: none;
+
+            li {
+              padding-left: 1.4em;
+              background-image: url('~assets/svg/arrow-list.svg');
+              background-repeat: no-repeat;
+              background-position: top 0.38em left;
+              background-size: 1em;
+            }
+          }
+
+          table {
+            margin-bottom: 2rem;
+
+            td {
+              border: 1px solid $blue;
+              padding: 0.5rem 3rem;
+            }
+          }
         }
       }
     }
