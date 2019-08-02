@@ -104,6 +104,50 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade show" tabindex="-1" role="dialog" style="display:block">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+        role="document"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Skupna ocena</h5>
+            <div class="stars">
+              <i
+                v-for="i in 5"
+                :key="i"
+                :class="['icon', 'icon-star', { 'icon-star--full': organization.stars >= i }]"
+              />
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+              dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+              nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+              quis, sem. Nulla consequat massa quis enim.
+            </p>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Število zaposlenih v zadnjem zaključenem letu</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>Število zaposlenih v zadnjem zaključenem letu</td>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show" />
   </div>
 </template>
 
@@ -128,6 +172,15 @@ export default {
 .content {
   margin-bottom: 5rem;
 
+  .stars {
+    display: inline-block;
+    margin-top: 0.75rem;
+
+    .icon {
+      margin: 0 0.3rem;
+    }
+  }
+
   .org-title-container {
     background: #f6f2f0;
     padding: 2.5rem 4.2rem;
@@ -146,13 +199,8 @@ export default {
     }
 
     .stars {
-      display: inline-block;
       margin-top: 1.5rem;
       cursor: pointer;
-
-      .icon {
-        margin: 0 0.3rem;
-      }
     }
   }
 
@@ -202,6 +250,30 @@ export default {
 
     p + h4 {
       margin-top: 5rem;
+    }
+  }
+
+  .modal {
+    .table {
+      margin-top: 4rem;
+
+      tr {
+        border-top: 1px solid $blue;
+
+        &:last-of-type {
+          border-bottom: 1px solid $blue;
+        }
+
+        td {
+          border: 0;
+          padding-top: 1.25rem;
+          padding-bottom: 1.25rem;
+
+          &:first-of-type {
+            padding-left: 0;
+          }
+        }
+      }
     }
   }
 }
