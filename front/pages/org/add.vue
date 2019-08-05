@@ -14,17 +14,43 @@
 
             <div class="form-group">
               <input
-                id="exampleInputEmail1"
-                type="email"
+                id="orgName"
+                type="text"
                 class="form-control"
-                aria-describedby="emailHelp"
-                placeholder="Email address"
+                placeholder="Uradno ime organizacije"
               />
-              <label for="exampleInputEmail1">Email address</label>
-              <!-- <small
-                id="emailHelp"
-                class="form-text text-muted"
-              >We'll never share your email with anyone else.</small>-->
+              <label for="orgName">Uradno ime organizacije</label>
+            </div>
+            <div class="form-group">
+              <input id="orgNameOther" type="text" class="form-control" placeholder="Druga imena" />
+              <label for="orgNameOther">Druga imena</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Kontakt</legend>
+
+            <div class="form-group">
+              <div class="invalid-feedback">* nepravilna telefonska številka</div>
+              <input
+                id="orgPhone"
+                type="text"
+                class="form-control is-invalid"
+                placeholder="Telefon"
+                value="+00 00 000 00 00"
+              />
+              <label for="orgPhone">Telefon</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Poslanstvo</legend>
+            <small class="form-text">
+              <span>* največ 500 znakov</span>
+            </small>
+
+            <div class="form-group">
+              <textarea class="form-control" rows="8">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta et sed voluptate voluptatum nihil, corrupti iusto tenetur quaerat doloremque eos ipsum facere dolore. Repellendus sed, hic impedit est libero veritatis.
+              </textarea>
             </div>
           </fieldset>
         </form>
@@ -94,16 +120,19 @@ export default {
       font-weight: 300;
       letter-spacing: 0.2em;
       margin-bottom: 1.5rem;
+
+      + small {
+        margin-top: -1.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9375rem;
+      }
     }
 
     .form-group {
       display: flex;
       flex-direction: column-reverse;
-
-      .form-control,
-      label {
-        transition: all 0.2s;
-      }
+      overflow: hidden;
+      margin-bottom: 3rem;
 
       .form-control {
         border: 0;
@@ -129,16 +158,31 @@ export default {
         &:focus {
           border-bottom-color: $blue;
         }
+
+        &.is-invalid {
+          color: $red;
+          border-bottom-color: rgba($red, 0.3);
+
+          &:focus {
+            border-bottom-color: $red;
+          }
+        }
+      }
+
+      textarea.form-control {
+        height: auto;
+        font-size: 1.5rem;
       }
 
       label {
         font-weight: 400;
         font-size: 0.9375rem;
-        line-height: 1;
-        margin-bottom: -1em;
+        line-height: 1.1;
+        margin-bottom: -1.1em;
         margin-left: 2rem;
-        transform: translate(0, 0.75rem) scale(1);
+        transform: translate(0.1rem, 0.75rem) scale(1);
         cursor: text;
+        transition: all 0.2s;
       }
 
       .form-control::placeholder {
@@ -159,7 +203,13 @@ export default {
       .form-control:not(:placeholder-shown) + label,
       .form-control:focus + label {
         font-weight: 400;
-        transform: translate(0, 0.75rem) scale(1);
+        transform: translate(0.1rem, 0.75rem) scale(1);
+      }
+
+      .invalid-feedback {
+        display: block;
+        font-size: 0.9375rem;
+        padding: 0 2rem;
       }
     }
   }
