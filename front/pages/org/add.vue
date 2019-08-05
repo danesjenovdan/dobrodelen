@@ -38,6 +38,11 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: 'Prijava organizacije',
+    };
+  },
 };
 </script>
 

@@ -192,6 +192,11 @@ export default {
       itemContentElement.addEventListener('transitionend', onTransitionEnd);
     },
   },
+  head() {
+    return {
+      title: 'Metodologija',
+    };
+  },
 };
 </script>
 

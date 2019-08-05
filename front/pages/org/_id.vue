@@ -201,6 +201,11 @@ export default {
       this.showStarsModal = show;
     },
   },
+  head() {
+    return {
+      title: this.organization.name,
+    };
+  },
 };
 </script>
 

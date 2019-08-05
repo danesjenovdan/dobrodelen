@@ -20,5 +20,10 @@ export default {
       organizations: orgsResp.results,
     };
   },
+  head() {
+    return {
+      title: 'Organizacije',
+    };
+  },
 };
 </script>
