@@ -1,24 +1,15 @@
 <template>
   <div class="content">
-    <div class="row">
-      <div class="col-12">
-        <div class="org-title-container text-center">
-          <img
-            src="~/assets/placeholder.png"
-            alt="organization placeholder image"
-            class="rounded-circle bg-dark mb-4"
-          />
-          <h2>{{ organization.name }}</h2>
-          <div class="stars" @click="toggleModal(true)">
-            <i
-              v-for="i in 5"
-              :key="i"
-              :class="['icon', 'icon-star', { 'icon-star--full': organization.stars >= i }]"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <content-title
+      :image="
+        organization.cover_photo
+          ? `http://127.0.0.1:8000${organization.cover_photo.url}`
+          : '/img/placeholder.png'
+      "
+      :title="organization.name"
+      :stars="organization.stars"
+      @stars-click="toggleModal(true)"
+    />
     <div class="row">
       <div class="col-6">
         <div class="org-info">
@@ -168,7 +159,12 @@
 </template>
 
 <script>
+import ContentTitle from '~/components/ContentTitle.vue';
+
 export default {
+  components: {
+    ContentTitle,
+  },
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
@@ -212,38 +208,6 @@ export default {
 <style lang="scss" scoped>
 .content {
   margin-bottom: 5rem;
-
-  .stars {
-    display: inline-block;
-    margin-top: 0.75rem;
-
-    .icon {
-      margin: 0 0.3rem;
-    }
-  }
-
-  .org-title-container {
-    background: #f6f2f0;
-    padding: 2.5rem 4.2rem;
-    margin-bottom: 5rem;
-
-    img {
-      width: 100%;
-      max-width: 10rem;
-    }
-
-    h2 {
-      font-size: 3rem;
-      font-weight: 300;
-      line-height: 1.4;
-      letter-spacing: 0.2em;
-    }
-
-    .stars {
-      margin-top: 1.5rem;
-      cursor: pointer;
-    }
-  }
 
   .org-info {
     padding: 4.2rem;
@@ -295,6 +259,15 @@ export default {
   }
 
   .modal {
+    .stars {
+      display: inline-block;
+      margin-top: 0.75rem;
+
+      .icon {
+        margin: 0 0.3rem;
+      }
+    }
+
     .table {
       margin-top: 4rem;
 

@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="content">
+    <content-title icon="signup-form" title="Prijava organizacije" />
+
     <h1>Add organization</h1>
 
     <form action method="POST" @submit.prevent="onSubmit">
@@ -19,7 +21,12 @@
 </template>
 
 <script>
+import ContentTitle from '~/components/ContentTitle.vue';
+
 export default {
+  components: {
+    ContentTitle,
+  },
   methods: {
     async onSubmit(event) {
       try {
