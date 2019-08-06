@@ -20,6 +20,7 @@ module.exports = {
     'no-console': 'warn',
     semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
+    'arrow-parens': ['error', 'always'],
     'vue/singleline-html-element-content-newline': 'off',
     // 'vue/multiline-html-element-content-newline': 'off',
     'vue/html-self-closing': [
