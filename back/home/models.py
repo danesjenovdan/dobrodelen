@@ -42,6 +42,7 @@ class Organization(ClusterableModel):
         verbose_name='Poslanstvo organizacije (do 500 znakov)', default='', blank=True)
     area = models.ManyToManyField('Area', blank=True, related_name='organization',
                                   verbose_name='Področje delovanja (lahko izberete več možnosti)', default='')
+    custom_area = models.TextField(verbose_name='Področje delovanja Other', default='')
     avg_revenue = models.CharField(
         max_length=16, verbose_name='povprečni letni proračun v zadnjih treh letih', default='', blank=True)
     employed = models.IntegerField(
@@ -381,3 +382,6 @@ class DocumentAttachment(models.Model):
 
 class Area(models.Model):
     name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name

@@ -26,11 +26,14 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         return models.Organization.objects.filter(published=True)
 
     def get_serializer_class(self):
-        if self.action == "create":
+        print(self.action)
+        if self.action in ["create", "update"] and self.is_valid_edit_key():
             return serializers.OrganizationDetailSerializer
-        if self.action != "list" and self.is_valid_edit_key():
-            return serializers.OrganizationDetailSerializer
-        return serializers.OrganizationSerializer
+        if self.action == "list":
+            return serializers.OrganizationListSerializer
+        if self.action == "retrieve":
+            return serializers.OrganizationPublicSerializer
+        return serializers.OrganizationListSerializer
 
     def is_valid_edit_key(self):
         edit_key = self.request.query_params.get("edit_key")

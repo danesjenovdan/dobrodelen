@@ -38,6 +38,16 @@ class BoardSerializer(serializers.ModelSerializer):
         )
 
 
+class LinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Link
+        fields = (
+            'id',
+            'name',
+            'url',
+            'organization'
+        )
+
 class BoardMemberSerializer(WritableNestedModelSerializer):
     member = MemberSerializer()
     class Meta:
@@ -51,13 +61,45 @@ class BoardMemberSerializer(WritableNestedModelSerializer):
         )
 
 
-class OrganizationSerializer(serializers.ModelSerializer):
+class OrganizationListSerializer(serializers.ModelSerializer):
     cover_photo = ImageRenditionAndUploadField('original')
 
     class Meta:
         model = models.Organization
         fields = ('id', 'name', 'description', 'cover_photo', 'stars')
 
+
+class OrganizationPublicSerializer(serializers.ModelSerializer):
+    cover_photo = ImageRenditionAndUploadField('original')
+    links = LinkSerializer(many=True)
+    area = serializers.SerializerMethodField(required=False)
+    class Meta:
+        model = models.Organization
+        fields = (
+            'id',
+            'name',
+            'additional_names',
+            'contact_info',
+            'web_page',
+            'description',
+            'cover_photo',
+            'stars',
+            'links',
+            'area',
+            'mission',
+            'avg_revenue',
+            'employed',
+            'is_charity',
+            'has_public_interest',
+            'is_voluntary',
+            'zero5'
+        )
+    def get_area(self, obj):
+        areas = obj.area.all()
+        if areas:
+            return ', '.join(list(areas.values_list('name', flat=True)))
+        else:
+            return obj.custom_area
 
 class OrganizationDetailSerializer(serializers.ModelSerializer):
     cover_photo = ImageRenditionAndUploadField('original', required=False)

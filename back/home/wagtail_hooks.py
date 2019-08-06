@@ -29,7 +29,7 @@ class OrganizationAdminGroup(ModelAdminGroup):
 class BoardModelAdmin(ModelAdmin):
     model = models.Board
     menu_icon = "form"
-    menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
+    menu_order = 250  # will put in 3rd place (000 being 1st, 100 2nd)
     add_to_settings_menu = False
     list_display = ("name",)
     search_fields = ("name",)
@@ -38,8 +38,24 @@ class BoardModelAdmin(ModelAdmin):
 class BoardAdminGroup(ModelAdminGroup):
     menu_label = "Odbori"
     menu_icon = "folder-open-inverse"
-    menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
+    menu_order = 250  # will put in 3rd place (000 being 1st, 100 2nd)
     items = (BoardModelAdmin,)
+
+
+class AreasModelAdmin(ModelAdmin):
+    model = models.Area
+    menu_icon = "form"
+    menu_order = 300  # will put in 3rd place (000 being 1st, 100 2nd)
+    add_to_settings_menu = False
+    list_display = ("name",)
+    search_fields = ("name",)
+
+
+class AreasAdminGroup(ModelAdminGroup):
+    menu_label = "Območja delovanja"
+    menu_icon = "folder-open-inverse"
+    menu_order = 300  # will put in 3rd place (000 being 1st, 100 2nd)
+    items = (AreasModelAdmin,)
 
 
 @hooks.register("insert_global_admin_css")
@@ -51,3 +67,4 @@ def global_admin_css():
 
 modeladmin_register(OrganizationAdminGroup)
 modeladmin_register(BoardAdminGroup)
+modeladmin_register(AreasAdminGroup)
