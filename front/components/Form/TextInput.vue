@@ -12,14 +12,14 @@
     />
     <textarea
       v-else
-      :id="`${name}_id`"
+      :id="`${name}__id`"
       :name="name"
       :class="['form-control', { 'is-invalid': hasError }]"
       :placeholder="label"
       :value="value"
       rows="8"
     />
-    <label v-if="label" :for="`${name}_id`">{{ label }}</label>
+    <label v-if="label" :for="`${name}__id`">{{ label }}</label>
   </div>
 </template>
 
