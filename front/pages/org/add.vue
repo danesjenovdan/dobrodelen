@@ -9,56 +9,26 @@
     <div class="row justify-content-center form-row">
       <div class="col-12 col-md-7 col-xxl-5">
         <form @submit.prevent>
-          <fieldset>
-            <legend>Ime</legend>
+          <form-category title="Ime">
+            <text-input name="orgName" label="Uradno ime organizacije" />
+            <text-input name="orgNameOther" label="Druga imena" />
+          </form-category>
+          <form-category title="Kontakt">
+            <text-input
+              name="orgPhone"
+              label="Telefon"
+              value="+00 00 000 00 00"
+              has-error="nepravilna telefonska številka"
+            />
+          </form-category>
+          <form-category title="Poslanstvo" note="največ 500 znakov">
+            <text-input name="orgDesc" multiline />
+          </form-category>
+          <form-category title="Področja delovanja" note="lahko izberete več možnosti">
+            <br />
+          </form-category>
 
-            <div class="form-group">
-              <input
-                id="orgName"
-                type="text"
-                class="form-control"
-                placeholder="Uradno ime organizacije"
-              />
-              <label for="orgName">Uradno ime organizacije</label>
-            </div>
-            <div class="form-group">
-              <input id="orgNameOther" type="text" class="form-control" placeholder="Druga imena" />
-              <label for="orgNameOther">Druga imena</label>
-            </div>
-          </fieldset>
           <fieldset>
-            <legend>Kontakt</legend>
-
-            <div class="form-group">
-              <div class="invalid-feedback">* nepravilna telefonska številka</div>
-              <input
-                id="orgPhone"
-                type="text"
-                class="form-control is-invalid"
-                placeholder="Telefon"
-                value="+00 00 000 00 00"
-              />
-              <label for="orgPhone">Telefon</label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Poslanstvo</legend>
-            <small class="form-text">
-              <span>* največ 500 znakov</span>
-            </small>
-
-            <div class="form-group">
-              <textarea class="form-control" rows="8">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta et sed voluptate voluptatum nihil, corrupti iusto tenetur quaerat doloremque eos ipsum facere dolore. Repellendus sed, hic impedit est libero veritatis.
-              </textarea>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Področja delovanja</legend>
-            <small class="form-text">
-              <span>* lahko izberete več možnosti</span>
-            </small>
-
             <div class="custom-control custom-radio">
               <input id="cr1" type="radio" name="cr" class="custom-control-input" />
               <label class="custom-control-label" for="cr1">this custom radio</label>
@@ -72,6 +42,21 @@
               <label class="custom-control-label d-flex align-items-center" for="cr3">
                 Drugo:
                 <input class="form-control" />
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Člani</legend>
+
+            <div>
+              <button class="btn btn-outline-primary btn-form icon icon-add">Dodaj člana</button>
+            </div>
+            <br />
+
+            <div class="custom-file">
+              <input id="customFile" type="file" class="custom-file-input" />
+              <label class="custom-file-label icon icon-upload" for="customFile">
+                <span>Naloži datoteko</span>
               </label>
             </div>
           </fieldset>
@@ -100,11 +85,15 @@
 <script>
 import ContentTitle from '~/components/ContentTitle.vue';
 import FormStages from '~/components/FormStages.vue';
+import TextInput from '~/components/Form/TextInput.vue';
+import FormCategory from '~/components/Form/FormCategory.vue';
 
 export default {
   components: {
     ContentTitle,
     FormStages,
+    TextInput,
+    FormCategory,
   },
   methods: {
     async onSubmit(event) {
@@ -137,102 +126,8 @@ export default {
   .form-row {
     margin-top: 6rem;
 
-    legend {
-      font-size: 1.85rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      margin-bottom: 1.5rem;
-
-      + small {
-        margin-top: -1.5rem;
-        margin-bottom: 1.5rem;
-        font-size: 0.9375rem;
-      }
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column-reverse;
-      overflow: hidden;
+    .custom-control:last-of-type {
       margin-bottom: 3rem;
-
-      .form-control {
-        border: 0;
-        background: rgba(#f6f2f0, 0.4);
-        font-size: 1.85rem;
-        font-weight: 300;
-        padding: 1rem 2rem;
-        padding: 1.5rem 2rem 0.25rem;
-        height: 5rem;
-        border-bottom: 2px solid rgba($blue, 0.3);
-
-        &::placeholder {
-          font-weight: 300;
-          color: $body-color;
-        }
-
-        &,
-        &:focus {
-          outline: 0;
-          box-shadow: none;
-        }
-
-        &:focus {
-          border-bottom-color: $blue;
-        }
-
-        &.is-invalid {
-          color: $red;
-          border-bottom-color: rgba($red, 0.3);
-
-          &:focus {
-            border-bottom-color: $red;
-          }
-        }
-      }
-
-      textarea.form-control {
-        height: auto;
-        font-size: 1.5rem;
-      }
-
-      label {
-        font-weight: 400;
-        font-size: 0.9375rem;
-        line-height: 1.1;
-        margin-bottom: -1.1em;
-        margin-left: 2rem;
-        transform: translate(0.1rem, 0.75rem) scale(1);
-        cursor: text;
-        transition: all 0.2s;
-      }
-
-      .form-control::placeholder {
-        opacity: 0;
-      }
-
-      .form-control:placeholder-shown + label {
-        max-width: 80%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: text;
-        font-weight: 300;
-        transform-origin: left bottom;
-        transform: translate(-0.075rem, 2.5rem) scale(1.97);
-      }
-
-      .form-control:not(:placeholder-shown) + label,
-      .form-control:focus + label {
-        font-weight: 400;
-        transform: translate(0.1rem, 0.75rem) scale(1);
-      }
-
-      .invalid-feedback {
-        display: block;
-        font-size: 0.9375rem;
-        padding: 0 2rem;
-      }
     }
 
     .custom-radio,
@@ -295,6 +190,65 @@ export default {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3e%3ccircle r='5.5' fill='%23#{str-slice(#{$blue}, 2)}'/%3e%3c/svg%3e");
         background-size: contain;
         background-position: center;
+      }
+    }
+
+    .btn-form {
+      border-width: 2px;
+      border-radius: 0.41em;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: $body-color;
+      letter-spacing: 0.2em;
+      width: auto;
+      height: 5rem;
+      padding: 1rem 1.5rem 1rem 5rem;
+      background-position: left center;
+      background-size: 5rem 45%;
+    }
+
+    .custom-file {
+      width: auto;
+
+      &,
+      .custom-file-input,
+      .custom-file-label {
+        height: 5rem;
+      }
+
+      .custom-file-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+      }
+
+      .custom-file-label {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        border-width: 2px;
+        border-radius: 0.41em;
+        border-color: $blue;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: $body-color;
+        letter-spacing: 0.2em;
+        padding: 1rem 1.5rem 1rem 5rem;
+        background-position: left center;
+        background-size: 5rem 45%;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      .custom-file-input:hover ~ .custom-file-label {
+        background-color: $blue;
       }
     }
   }
