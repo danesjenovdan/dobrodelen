@@ -49,7 +49,9 @@ export default {
   .custom-control-label {
     font-size: 1.85rem;
     font-weight: 300;
-    height: 4rem;
+    line-height: 1.2;
+    min-height: 2rem;
+    margin: 1.75rem 0;
     display: flex;
     align-items: center;
 
@@ -57,8 +59,9 @@ export default {
     &::after {
       width: 1.75rem;
       height: 1.75rem;
-      top: 1.125rem;
+      top: 50%;
       left: -2.5rem;
+      transform: translateY(-50%);
       cursor: pointer;
     }
 
