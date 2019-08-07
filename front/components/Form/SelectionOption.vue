@@ -1,8 +1,8 @@
 <template>
-  <div class="custom-control custom-radio">
+  <div :class="['custom-control', `custom-${type}`]">
     <input
       :id="`${name}__${value}__id`"
-      type="radio"
+      :type="type"
       :name="name"
       class="custom-control-input"
       :value="value"
@@ -38,12 +38,23 @@ export default {
       type: String,
       default: null,
     },
+    type: {
+      type: String,
+      default: 'radio',
+      validator(value) {
+        if (value === 'radio' || value === 'checkbox') {
+          return true;
+        }
+        return false;
+      },
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.custom-radio {
+.custom-radio,
+.custom-checkbox {
   padding-left: 2.5rem;
 
   .custom-control-label {
@@ -97,14 +108,14 @@ export default {
     border-color: $blue;
   }
 
-  .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #fff;
-  }
+  // .custom-control-input:checked ~ .custom-control-label::before {
+  //   background-color: #fff;
+  // }
 
-  .custom-control-input:checked ~ .custom-control-label::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3e%3ccircle r='5.5' fill='%23#{str-slice(#{$blue}, 2)}'/%3e%3c/svg%3e");
-    background-size: contain;
-    background-position: center;
-  }
+  // .custom-control-input:checked ~ .custom-control-label::after {
+  //   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3e%3ccircle r='5.5' fill='%23#{str-slice(#{$blue}, 2)}'/%3e%3c/svg%3e");
+  //   background-size: contain;
+  //   background-position: center;
+  // }
 }
 </style>
