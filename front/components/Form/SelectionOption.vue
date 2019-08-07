@@ -118,4 +118,8 @@ export default {
   //   background-position: center;
   // }
 }
+
+legend + .custom-control {
+  margin-top: -1.5rem;
+}
 </style>
