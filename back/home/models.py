@@ -30,8 +30,12 @@ class Organization(ClusterableModel):
                             verbose_name="Uradno ime organizacije (iz AJPES)", blank=True)
     additional_names = models.TextField(
         verbose_name="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)", default='', blank=True)
-    contact_info = models.TextField(
-        verbose_name="Kontakt: (ime in priimek, e-pošta, telefon)", default='', blank=True)
+    contact_name = models.CharField(
+        verbose_name="Kontakt: ime in priimek", default='', blank=True, max_length=128)
+    contact_email = models.CharField(
+        verbose_name="Kontakt: e-pošta", default='', blank=True, max_length=128)
+    contact_phone = models.CharField(
+        verbose_name="Kontakt: telefon", default='', blank=True, max_length=128)
     web_page = models.URLField(
         max_length=512, verbose_name='spletna stran', default='', blank=True)
     description = models.TextField(
@@ -110,7 +114,9 @@ class Organization(ClusterableModel):
     panels = [
         FieldPanel("name"),
         FieldPanel("additional_names"),
-        FieldPanel("contact_info"),
+        FieldPanel("contact_name"),
+        FieldPanel("contact_email"),
+        FieldPanel("contact_phone"),
         FieldPanel("web_page"),
         FieldPanel("description"),
         FieldPanel("tax_number"),

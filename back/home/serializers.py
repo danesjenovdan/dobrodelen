@@ -38,14 +38,11 @@ class BoardSerializer(serializers.ModelSerializer):
         )
 
 
-class LinkSerializer(serializers.ModelSerializer):
+class LinkSerializer(WritableNestedModelSerializer):
     class Meta:
         model = models.Link
         fields = (
-            'id',
-            'name',
             'url',
-            'organization'
         )
 
 class BoardMemberSerializer(WritableNestedModelSerializer):
@@ -79,7 +76,9 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'additional_names',
-            'contact_info',
+            'contact_name',
+            'contact_email',
+            'contact_phone',
             'web_page',
             'description',
             'cover_photo',
@@ -92,7 +91,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             'is_charity',
             'has_public_interest',
             'is_voluntary',
-            'zero5'
+            'zero5',
         )
     def get_area(self, obj):
         areas = obj.area.all()
@@ -101,10 +100,12 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
         else:
             return obj.custom_area
 
-class OrganizationDetailSerializer(serializers.ModelSerializer):
+
+class OrganizationDetailSerializer(WritableNestedModelSerializer):
     cover_photo = ImageRenditionAndUploadField('original', required=False)
     boards = BoardSerializer(many=True, required=False, read_only=True)
     board_members = serializers.SerializerMethodField(required=False)
+    links = LinkSerializer(many=True)
 
     class Meta:
         model = models.Organization
@@ -112,7 +113,9 @@ class OrganizationDetailSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'additional_names',
-            'contact_info',
+            'contact_name',
+            'contact_email',
+            'contact_phone',
             'web_page',
             'description',
             'tax_number',
@@ -129,6 +132,7 @@ class OrganizationDetailSerializer(serializers.ModelSerializer):
             'wages_ratio',
             'boards',
             'board_members',
+            'links',
 
             'minutes_meeteng',
             'strategic_goals',
@@ -148,6 +152,9 @@ class OrganizationDetailSerializer(serializers.ModelSerializer):
         )
     def get_board_members(self, obj):
         members = obj.board_members.all()
-        board_members = BoardMember.objects.filter(member__in=members, organization=obj)
+        board_members = models.BoardMember.objects.filter(member__in=members, organization=obj)
         ll = BoardMemberSerializer(board_members, many=True)
         return ll.data
+
+    def get_links(self, obj):
+        return self.links.values_list("name", flat=True)

@@ -27,7 +27,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         print(self.action)
-        if self.action in ["create", "update"] and self.is_valid_edit_key():
+        if self.action in ["create", "partial_update"] and self.is_valid_edit_key():
             return serializers.OrganizationDetailSerializer
         if self.action == "list":
             return serializers.OrganizationListSerializer
@@ -72,10 +72,17 @@ class OrganizationChildAuth(viewsets.ModelViewSet):
                 print(e)
         return False
 
+
 class BoardViewSet(OrganizationChildAuth):
     serializer_class = serializers.BoardSerializer
     queryset = models.Board.objects.all()
 
+
 class BoardMemberViewSet(OrganizationChildAuth):
     serializer_class = serializers.BoardMemberSerializer
     queryset = models.BoardMember.objects.all()
+
+
+class LinkViewSet(OrganizationChildAuth):
+    serializer_class = serializers.LinkSerializer
+    queryset = models.Link.objects.all()
