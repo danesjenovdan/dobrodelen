@@ -18,9 +18,9 @@
           </form-category>
 
           <form-category title="Kontakt">
-            <text-input name="contact__name" label="Ime in priimek" />
-            <text-input name="contact__email" label="E-naslov" />
-            <text-input name="contact__phone" label="Telefon" />
+            <text-input name="contact_name" label="Ime in priimek" />
+            <text-input name="contact_email" label="E-naslov" />
+            <text-input name="contact_phone" label="Telefon" />
           </form-category>
 
           <form-category title="Spletna prisotnost">
