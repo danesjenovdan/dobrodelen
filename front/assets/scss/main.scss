@@ -59,6 +59,9 @@
   }
 }
 
+
+// ICONS
+
 .icon {
   background-position: center;
   background-size: contain;
@@ -83,4 +86,16 @@
 .icon-arrow,
 .icon-arrow--right {
   background-image: url('~assets/svg/arrow-right.svg');
+}
+
+.icon-signup-form {
+  background-image: url('~assets/svg/signup-form.svg');
+}
+
+.icon-add {
+  background-image: url('~assets/svg/add.svg');
+}
+
+.icon-upload {
+  background-image: url('~assets/svg/upload.svg');
 }

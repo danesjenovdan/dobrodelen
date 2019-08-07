@@ -28,11 +28,21 @@
         <tr v-for="org in organizations" :key="org.id" @click="onOrgClick(org)">
           <td>
             <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
-              <img
-                src="~/assets/placeholder.png"
-                alt="organization placeholder image"
-                class="rounded-circle bg-dark"
-              />
+              <div class="embed-responsive embed-responsive-1by1">
+                <div class="embed-responsive-item">
+                  <div class="img-container">
+                    <img
+                      :src="
+                        org.cover_photo
+                          ? `http://127.0.0.1:8000${org.cover_photo.url}`
+                          : '/img/placeholder.png'
+                      "
+                      alt="organization image"
+                      class="rounded-circle bg-dark"
+                    />
+                  </div>
+                </div>
+              </div>
             </nuxt-link>
             <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
               <strong class="lead">{{ org.name }}</strong>
@@ -179,13 +189,25 @@ export default {
         color: inherit;
       }
 
-      img {
-        width: 100%;
+      .embed-responsive {
         max-width: 4rem;
-        display: block;
+        height: 4rem; // Chrome bug fix
         float: left;
         margin-top: 0.25rem;
         margin-right: 2rem;
+
+        .img-container {
+          width: 100%;
+          height: 100%;
+
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+          }
+        }
       }
 
       .lead {
