@@ -3,7 +3,7 @@
     <div v-if="hasError" class="invalid-feedback">* {{ errorMessage }}</div>
     <input
       v-if="!multiline"
-      :id="`${name}_id`"
+      :id="`${name}__id`"
       :name="name"
       type="text"
       :class="['form-control', { 'is-invalid': hasError }]"
@@ -17,7 +17,7 @@
       :class="['form-control', { 'is-invalid': hasError }]"
       :placeholder="label"
       :value="value"
-      rows="8"
+      :rows="rows"
     />
     <label v-if="label" :for="`${name}__id`">{{ label }}</label>
   </div>
@@ -39,8 +39,17 @@ export default {
       default: null,
     },
     multiline: {
-      type: Boolean,
+      type: [Boolean, Number],
       default: false,
+      validator(value) {
+        if (value === true || value === false) {
+          return true;
+        }
+        if (typeof value === 'number' && value > 1) {
+          return true;
+        }
+        return false;
+      },
     },
     hasError: {
       type: [Boolean, String],
@@ -50,6 +59,9 @@ export default {
   computed: {
     errorMessage() {
       return typeof this.hasError === 'string' ? this.hasError : 'napaka pri vnosu';
+    },
+    rows() {
+      return typeof this.multiline === 'number' ? this.multiline : 10;
     },
   },
 };
