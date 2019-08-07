@@ -30,11 +30,7 @@
           </form-category>
 
           <form-category title="Slika">
-            <strong>
-              TODO: upload button za sliko
-              <br />
-              <br />
-            </strong>
+            <file-input name="cover_photo" />
           </form-category>
 
           <form-category title="Poslanstvo" note="največ 500 znakov">
@@ -110,16 +106,6 @@
               label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
             />
           </form-category>
-
-          <fieldset>
-            <legend>Člani</legend>
-            <div class="custom-file">
-              <input id="customFile" type="file" class="custom-file-input" />
-              <label class="custom-file-label icon icon-upload" for="customFile">
-                <span>Naloži datoteko</span>
-              </label>
-            </div>
-          </fieldset>
         </form>
       </div>
     </div>
@@ -149,6 +135,7 @@ import FormCategory from '~/components/Form/FormCategory.vue';
 import TextInput from '~/components/Form/TextInput.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
 import AddButton from '~/components/Form/AddButton.vue';
+import FileInput from '~/components/Form/FileInput.vue';
 
 export default {
   components: {
@@ -158,6 +145,7 @@ export default {
     TextInput,
     SelectionOption,
     AddButton,
+    FileInput,
   },
   methods: {
     async onSubmit(event) {
@@ -192,51 +180,6 @@ export default {
 
     .custom-control:last-of-type {
       margin-bottom: 3rem;
-    }
-
-    .custom-file {
-      width: auto;
-
-      &,
-      .custom-file-input,
-      .custom-file-label {
-        height: 5rem;
-      }
-
-      .custom-file-input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        cursor: pointer;
-      }
-
-      .custom-file-label {
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin: 0;
-        border-width: 2px;
-        border-radius: 0.41em;
-        border-color: $blue;
-        font-weight: 700;
-        font-size: 1.5rem;
-        color: $body-color;
-        letter-spacing: 0.2em;
-        padding: 1rem 1.5rem 1rem 5rem;
-        background-position: left center;
-        background-size: 5rem 45%;
-
-        &::after {
-          display: none;
-        }
-      }
-
-      .custom-file-input:hover ~ .custom-file-label {
-        background-color: $blue;
-      }
     }
   }
 }
