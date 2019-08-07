@@ -10,25 +10,80 @@
       <div class="col-12 col-md-7 col-xxl-5">
         <form @submit.prevent>
           <form-category title="Ime">
-            <text-input name="orgName" label="Uradno ime organizacije" />
-            <text-input name="orgNameOther" label="Druga imena" />
-          </form-category>
-          <form-category title="Kontakt">
+            <text-input name="name" label="Uradno ime organizacije (iz AJPES)" />
             <text-input
-              name="orgPhone"
-              label="Telefon"
-              value="+00 00 000 00 00"
-              has-error="nepravilna telefonska številka"
+              name="additional_names"
+              label="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)"
             />
           </form-category>
+          <form-category title="Kontakt">
+            <text-input name="contact__name" label="Ime in priimek" />
+            <text-input name="contact__email" label="E-naslov" />
+            <text-input name="contact__phone" label="Telefon" />
+          </form-category>
+          <form-category title="Spletna prisotnost">
+            <text-input name="web_page" label="URL spletne strani" />
+            <text-input name="social_media" label="URL profila na družbenem mediju" />
+            <strong>
+              TODO: + button for more social links
+              <br />
+              <br />
+            </strong>
+          </form-category>
+          <form-category title="Slika">
+            <strong>
+              TODO: upload button za sliko
+              <br />
+              <br />
+            </strong>
+          </form-category>
           <form-category title="Poslanstvo" note="največ 500 znakov">
-            <text-input name="orgDesc" multiline />
+            <text-input name="mission" :multiline="9" />
+          </form-category>
+          <form-category title="Kratek opis" note="največ 1500 znakov">
+            <text-input name="description" :multiline="27" />
           </form-category>
           <form-category title="Področja delovanja" note="lahko izberete več možnosti">
-            <radio-option name="cr" value="this" label="this custom radio" />
-            <radio-option name="cr" value="that" label="that custom radio" />
-            <radio-option name="cr" value="other" label="other custom radio" />
-            <radio-option name="cr" value="custom" label="Drugo:" />
+            <radio-option
+              name="area"
+              value="equality"
+              label="Človekove pravice, demokracija in enakost"
+            />
+            <radio-option name="area" value="edu" label="Izobraževanje, raziskave in razvoj" />
+            <radio-option name="area" value="culture" label="Kultura" />
+            <radio-option name="area" value="youth" label="Mladina, otroci" />
+            <radio-option name="area" value="development" label="Razvojno sodelovanje" />
+            <radio-option name="area" value="social" label="Sociala" />
+            <radio-option name="area" value="sport" label="Šport" />
+            <radio-option name="area" value="environment" label="Okolje, narava in prostor" />
+            <radio-option name="area" value="health" label="Zdravje" />
+            <radio-option name="area" value="other" label="Drugo (navedite kaj):" />
+          </form-category>
+
+          <form-category>
+            <span>avg_revenue</span>
+            <div>povprečni letni proračun v zadnjih treh letih</div>
+            <span>employed</span>
+            <div>število zaposlenih v zadnjem zaključenem letu</div>
+          </form-category>
+
+          <form-category title="Statusi">
+            <radio-option
+              name="is_charity"
+              label="Organizacija ima status humanitarne organizacije"
+            />
+            <radio-option
+              name="has_public_interest"
+              label="Organizacija ima status delovanja v javnem interesu"
+            />
+            <radio-option
+              name="is_voluntary"
+              label="Organizacija je vpisana v evidenco prostotovoljskih organizacij"
+            />
+            <radio-option
+              name="zero5"
+              label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
+            />
           </form-category>
 
           <fieldset>
