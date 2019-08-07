@@ -3,7 +3,7 @@
     <content-title icon="signup-form" title="Prijava organizacije" />
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 col-xxl-5">
-        <form-stages />
+        <form-stages :stages="stages" :active="activeStage" @change="onChangeStage" />
       </div>
     </div>
     <div class="row justify-content-center form-row">
@@ -147,7 +147,29 @@ export default {
     AddButton,
     FileInput,
   },
+  data() {
+    return {
+      stages: [
+        {
+          label: 'Osnovni podatki',
+        },
+        {
+          label: 'Poslanstvo',
+        },
+        {
+          label: 'Odbori',
+        },
+        {
+          label: 'Finance',
+        },
+      ],
+      activeStage: 0,
+    };
+  },
   methods: {
+    onChangeStage(activeStage) {
+      this.activeStage = activeStage;
+    },
     async onSubmit(event) {
       try {
         const form = event.target;

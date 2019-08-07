@@ -1,14 +1,28 @@
 <template>
   <div class="form-stages">
-    <div class="stage active">Osnovni podatki</div>
-    <div class="stage">Poslanstvo</div>
-    <div class="stage">Lorem ipsum</div>
-    <div class="stage">dolor, sit amet</div>
+    <div
+      v-for="(stage, i) in stages"
+      :key="`stage-${i}`"
+      :class="['stage', { active: i === active }]"
+      @click="$emit('change', i)"
+      v-text="stage.label"
+    />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    stages: {
+      type: Array,
+      required: true,
+    },
+    active: {
+      type: Number,
+      default: 0,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -23,6 +37,7 @@ export default {};
     text-align: center;
     padding-bottom: 1.5rem;
     font-size: 0.9375rem;
+    cursor: pointer;
 
     &::after {
       content: '';
@@ -39,6 +54,7 @@ export default {};
 
     &.active {
       color: $blue;
+      cursor: default;
 
       &::after {
         opacity: 1;
