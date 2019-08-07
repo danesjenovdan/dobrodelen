@@ -177,10 +177,6 @@ export default {
 .content {
   .form-row {
     margin-top: 6rem;
-
-    .custom-control:last-of-type {
-      margin-bottom: 3rem;
-    }
   }
 }
 </style>

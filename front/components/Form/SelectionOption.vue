@@ -122,4 +122,8 @@ export default {
 legend + .custom-control {
   margin-top: -1.5rem;
 }
+
+.custom-control:last-of-type {
+  margin-bottom: 3rem;
+}
 </style>
