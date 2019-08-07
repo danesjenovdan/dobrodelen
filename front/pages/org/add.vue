@@ -26,11 +26,7 @@
           <form-category title="Spletna prisotnost">
             <text-input name="web_page" label="URL spletne strani" />
             <text-input name="social_media" label="URL profila na družbenem mediju" />
-            <strong>
-              TODO: + button for more social links
-              <br />
-              <br />
-            </strong>
+            <add-button text="Dodaj družbeni profil" />
           </form-category>
 
           <form-category title="Slika">
@@ -87,11 +83,9 @@
             />
           </form-category>
 
-          <form-category>
-            <span>avg_revenue</span>
-            <div>povprečni letni proračun v zadnjih treh letih</div>
-            <span>employed</span>
-            <div>število zaposlenih v zadnjem zaključenem letu</div>
+          <form-category title="Proračun">
+            <text-input name="avg_revenue" label="Povprečni letni proračun v zadnjih treh letih" />
+            <text-input name="employed" label="Število zaposlenih v zadnjem zaključenem letu" />
           </form-category>
 
           <form-category title="Statusi">
@@ -119,12 +113,6 @@
 
           <fieldset>
             <legend>Člani</legend>
-
-            <div>
-              <button class="btn btn-outline-primary btn-form icon icon-add">Dodaj člana</button>
-            </div>
-            <br />
-
             <div class="custom-file">
               <input id="customFile" type="file" class="custom-file-input" />
               <label class="custom-file-label icon icon-upload" for="customFile">
@@ -160,6 +148,7 @@ import FormStages from '~/components/FormStages.vue';
 import FormCategory from '~/components/Form/FormCategory.vue';
 import TextInput from '~/components/Form/TextInput.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
+import AddButton from '~/components/Form/AddButton.vue';
 
 export default {
   components: {
@@ -168,6 +157,7 @@ export default {
     FormCategory,
     TextInput,
     SelectionOption,
+    AddButton,
   },
   methods: {
     async onSubmit(event) {
@@ -202,20 +192,6 @@ export default {
 
     .custom-control:last-of-type {
       margin-bottom: 3rem;
-    }
-
-    .btn-form {
-      border-width: 2px;
-      border-radius: 0.41em;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: $body-color;
-      letter-spacing: 0.2em;
-      width: auto;
-      height: 5rem;
-      padding: 1rem 1.5rem 1rem 5rem;
-      background-position: left center;
-      background-size: 5rem 45%;
     }
 
     .custom-file {
