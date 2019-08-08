@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'dobrodelen-front',
-      cwd: '/home/cnvos/dobrodelen/front',
+      cwd: '/home/cnvos/dobrodelen/app/front',
       interpreter: 'node@10.16.2',
       script: 'npm',
       args: 'start',
