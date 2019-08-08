@@ -165,7 +165,7 @@ export default {
       try {
         const form = event.target;
         const formData = new FormData(form);
-        const org = await this.$axios.$post('http://127.0.0.1:8000/api/organizations/', formData);
+        const org = await this.$axios.$post('/api/organizations/', formData);
         this.$router.push({
           name: 'org-id',
           params: { id: org.id },

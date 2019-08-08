@@ -34,7 +34,7 @@
                     <img
                       :src="
                         org.cover_photo
-                          ? `http://127.0.0.1:8000${org.cover_photo.url}`
+                          ? `${process.env.API_BASE_URL}${org.cover_photo.url}`
                           : '/img/placeholder.png'
                       "
                       alt="organization image"

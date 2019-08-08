@@ -50,7 +50,15 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: process.env.API_BASE_URL || 'http://localhost:8000',
+  },
+  /*
+   ** Environment variables for webpack (via definePlugin)
+   */
+  env: {
+    API_BASE_URL: process.env.API_BASE_URL || 'http://localhost:8000',
+  },
   /*
    ** Build configuration
    */

@@ -15,7 +15,7 @@ export default {
     OrganizationList,
   },
   async asyncData({ $axios }) {
-    const orgsResp = await $axios.$get('http://127.0.0.1:8000/api/organizations/');
+    const orgsResp = await $axios.$get('/api/organizations/');
     return {
       organizations: orgsResp.results,
     };

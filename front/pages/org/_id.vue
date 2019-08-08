@@ -3,7 +3,7 @@
     <content-title
       :image="
         organization.cover_photo
-          ? `http://127.0.0.1:8000${organization.cover_photo.url}`
+          ? `${process.env.API_BASE_URL}${organization.cover_photo.url}`
           : '/img/placeholder.png'
       "
       :title="organization.name"
@@ -52,44 +52,45 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, numquam. Optio rem modi
             animi nisi exercitationem, pariatur quasi architecto harum? Voluptatem assumenda
             reiciendis itaque nihil, reprehenderit cum dignissimos sint nisi. Sapiente sunt
-            consequatur totam atque quas quos porro et, voluptate nam non tempore? Non, illo cum iste
-            fuga corrupti distinctio ex nesciunt at ipsum vitae sed quibusdam tenetur nihil suscipit.
-            Alias explicabo non optio exercitationem fuga doloremque? Accusamus cumque neque facilis
-            quasi aliquid velit ad repellendus veniam iusto, atque voluptates architecto dolorem
-            adipisci impedit dignissimos, corrupti perspiciatis. Libero, esse iste.
+            consequatur totam atque quas quos porro et, voluptate nam non tempore? Non, illo cum
+            iste fuga corrupti distinctio ex nesciunt at ipsum vitae sed quibusdam tenetur nihil
+            suscipit. Alias explicabo non optio exercitationem fuga doloremque? Accusamus cumque
+            neque facilis quasi aliquid velit ad repellendus veniam iusto, atque voluptates
+            architecto dolorem adipisci impedit dignissimos, corrupti perspiciatis. Libero, esse
+            iste.
           </p>
           <h4>Opis</h4>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto aliquam adipisci
             placeat enim illum sunt voluptas maiores. Qui, rerum nulla. Dolor odio aut vel similique
             eaque consequatur voluptates deserunt alias? Similique obcaecati ullam neque? Voluptatum
-            corporis similique nulla magni labore commodi nam quibusdam laborum consequatur. Omnis qui
-            unde iste? Quidem pariatur beatae vero ullam perspiciatis? Maiores, voluptates? Ipsam,
-            expedita odio. Consequuntur temporibus perferendis quia sit pariatur repellendus corrupti
-            illum enim? Eaque eveniet perspiciatis tempore ratione delectus. Temporibus, quibusdam, a
-            soluta eveniet doloribus asperiores cum, atque consequuntur iusto tempore voluptates modi.
-            Aut hic iusto ut explicabo exercitationem atque possimus ex, eveniet facere libero
-            consequatur at. Quisquam quasi similique temporibus adipisci? Officia ducimus eveniet
-            maiores reiciendis quasi alias veniam eius iusto possimus?
+            corporis similique nulla magni labore commodi nam quibusdam laborum consequatur. Omnis
+            qui unde iste? Quidem pariatur beatae vero ullam perspiciatis? Maiores, voluptates?
+            Ipsam, expedita odio. Consequuntur temporibus perferendis quia sit pariatur repellendus
+            corrupti illum enim? Eaque eveniet perspiciatis tempore ratione delectus. Temporibus,
+            quibusdam, a soluta eveniet doloribus asperiores cum, atque consequuntur iusto tempore
+            voluptates modi. Aut hic iusto ut explicabo exercitationem atque possimus ex, eveniet
+            facere libero consequatur at. Quisquam quasi similique temporibus adipisci? Officia
+            ducimus eveniet maiores reiciendis quasi alias veniam eius iusto possimus?
           </p>
           <p>
-            Voluptate ducimus tempore
-            laboriosam in nihil laudantium tempora eos sed voluptates impedit neque eligendi iure,
-            aliquid consequatur delectus asperiores ipsum ullam! Cupiditate placeat minima dolor atque
-            neque culpa iste explicabo! Pariatur sapiente voluptate voluptatum ut, possimus repellat
-            earum itaque autem laboriosam cupiditate omnis facere quod incidunt magni ex blanditiis
-            voluptates tenetur dolor rerum, beatae quam necessitatibus architecto. Laudantium, sequi
-            asperiores! Alias, aliquam laborum. Reprehenderit quasi optio architecto cumque eaque
-            itaque, animi, numquam quas impedit dolores atque accusamus odit. Dolorem quam labore nisi
-            et cumque deserunt veniam exercitationem quisquam eligendi animi? Voluptatem quae ullam
-            distinctio. Modi accusamus consectetur, perferendis facilis dicta aliquid itaque quis
-            repellat ad fugit aut obcaecati quas hic possimus voluptate dolorum, quos debitis libero
-            animi autem quibusdam nobis. Dolores corporis, numquam suscipit ut possimus itaque
-            expedita vel consectetur deleniti error illo modi dicta earum molestias aliquam quaerat
-            aperiam nulla, rem officiis ipsa nam natus et non? Harum, velit. Magnam sed laborum
-            recusandae ratione nisi adipisci temporibus quisquam architecto voluptatibus accusamus,
-            dolore doloremque quasi tenetur sint aut facilis ipsum obcaecati dolores hic quidem. Eius
-            odit amet omnis facilis odio!
+            Voluptate ducimus tempore laboriosam in nihil laudantium tempora eos sed voluptates
+            impedit neque eligendi iure, aliquid consequatur delectus asperiores ipsum ullam!
+            Cupiditate placeat minima dolor atque neque culpa iste explicabo! Pariatur sapiente
+            voluptate voluptatum ut, possimus repellat earum itaque autem laboriosam cupiditate
+            omnis facere quod incidunt magni ex blanditiis voluptates tenetur dolor rerum, beatae
+            quam necessitatibus architecto. Laudantium, sequi asperiores! Alias, aliquam laborum.
+            Reprehenderit quasi optio architecto cumque eaque itaque, animi, numquam quas impedit
+            dolores atque accusamus odit. Dolorem quam labore nisi et cumque deserunt veniam
+            exercitationem quisquam eligendi animi? Voluptatem quae ullam distinctio. Modi accusamus
+            consectetur, perferendis facilis dicta aliquid itaque quis repellat ad fugit aut
+            obcaecati quas hic possimus voluptate dolorum, quos debitis libero animi autem quibusdam
+            nobis. Dolores corporis, numquam suscipit ut possimus itaque expedita vel consectetur
+            deleniti error illo modi dicta earum molestias aliquam quaerat aperiam nulla, rem
+            officiis ipsa nam natus et non? Harum, velit. Magnam sed laborum recusandae ratione nisi
+            adipisci temporibus quisquam architecto voluptatibus accusamus, dolore doloremque quasi
+            tenetur sint aut facilis ipsum obcaecati dolores hic quidem. Eius odit amet omnis
+            facilis odio!
           </p>
           <!-- eslint-enable prettier/prettier -->
         </div>
@@ -175,9 +176,7 @@ export default {
   },
   async asyncData({ $axios, params, query }) {
     const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
-    const orgResp = await $axios.$get(
-      `http://127.0.0.1:8000/api/organizations/${params.id}/${editKey}`,
-    );
+    const orgResp = await $axios.$get(`/api/organizations/${params.id}/${editKey}`);
     return {
       organization: orgResp,
     };
