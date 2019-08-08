@@ -98,7 +98,8 @@ class Organization(ClusterableModel):
         related_name="+",
     )
 
-    published = models.BooleanField(default=False, verbose_name='')
+    published = models.BooleanField(default=False, verbose_name='Je objavlen')
+    is_complete = models.BooleanField(default=False, verbose_name='Je končan')
     signup_time = models.DateTimeField(auto_now_add=True, verbose_name='')
 
     @property
@@ -112,6 +113,8 @@ class Organization(ClusterableModel):
         return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
 
     panels = [
+        FieldPanel("published"),
+        FieldPanel("is_complete"),
         FieldPanel("name"),
         FieldPanel("additional_names"),
         FieldPanel("contact_name"),
@@ -140,7 +143,6 @@ class Organization(ClusterableModel):
         FieldPanel("given_loan"),
         FieldPanel("received_loans"),
         FieldPanel("payment_classes"),
-        FieldPanel("published"),
         ImageChooserPanel("cover_photo"),
         #InlinePanel("boards", label="Boards"),
         InlinePanel("memberships", label="Memberships"),

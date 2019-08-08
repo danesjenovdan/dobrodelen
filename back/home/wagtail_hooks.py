@@ -15,7 +15,8 @@ class OrganizationModelAdmin(ModelAdmin):
     menu_icon = "form"
     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
     add_to_settings_menu = False
-    list_display = ("name", "published")
+    list_display = ("name", "published", "is_complete")
+    list_filter = ("published", "is_complete")
     search_fields = ("name", "description")
 
 
