@@ -3,7 +3,7 @@
     <content-title
       :image="
         organization.cover_photo
-          ? `${process.env.API_BASE_URL}${organization.cover_photo.url}`
+          ? `${apiBaseUrl}${organization.cover_photo.url}`
           : '/img/placeholder.png'
       "
       :title="organization.name"
@@ -171,6 +171,7 @@ export default {
   },
   data() {
     return {
+      apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
     };
   },

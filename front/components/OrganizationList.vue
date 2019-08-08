@@ -34,7 +34,7 @@
                     <img
                       :src="
                         org.cover_photo
-                          ? `${process.env.API_BASE_URL}${org.cover_photo.url}`
+                          ? `${apiBaseUrl}${org.cover_photo.url}`
                           : '/img/placeholder.png'
                       "
                       alt="organization image"
@@ -71,6 +71,11 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  data() {
+    return {
+      apiBaseUrl: process.env.API_BASE_URL,
+    };
   },
   methods: {
     onOrgClick(org) {
