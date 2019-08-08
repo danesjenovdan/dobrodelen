@@ -9,7 +9,7 @@
     "precommit": "npm run lint",
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "nuxt start --port 3002",
     "generate": "nuxt generate"
   },
   "dependencies": {
