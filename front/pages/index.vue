@@ -1,10 +1,13 @@
 <template>
   <div class="content">
     <div class="row">
-      <div class="col-8">
+      <div class="col-12 col-md-8">
         <h1 class="text-warning">
           <striped-text-shadow text="DOBRODELEN.SI" />
         </h1>
+        <div class="icon-container-sm d-md-none">
+          <div class="icon icon-heart" />
+        </div>
         <p class="lead mt-3">
           <strong>Doniraj pametno.</strong>
           Pomagaj si z našim nepristranskim sistemom razvrščanja organizacij, poišči zaupanja vredne
@@ -15,9 +18,11 @@
           kriterijih, ki se nanašajo na 4 področja – nadzor nad poslovanjem; strateško načrtovanje;
           finančno upravljanje in transparentnost.
         </p>
-        <nuxt-link :to="{ name: 'organizations' }" class="btn btn-warning mt-5">VSTOPI</nuxt-link>
+        <nuxt-link :to="{ name: 'organizations' }" class="btn btn-warning mt-5">
+          <span>VSTOPI</span>
+        </nuxt-link>
       </div>
-      <div class="col-4">
+      <div class="col-12 col-md-4 d-none d-md-block">
         <div class="icon icon-heart" />
       </div>
     </div>
@@ -43,6 +48,13 @@ export default {
     font-size: 6rem;
     font-weight: 900;
     letter-spacing: 0.2em;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 2rem;
+      word-break: break-all;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
   }
 
   p {
@@ -52,12 +64,23 @@ export default {
     color: #696969;
     margin-right: 12rem;
 
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+      margin-right: 0;
+      text-align: center;
+    }
+
     &.lead {
       font-size: 2.5rem;
       letter-spacing: 0.2em;
       line-height: 1.4;
       color: inherit;
       margin-right: 0;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1.25rem;
+        text-align: center;
+      }
     }
 
     strong {
@@ -70,12 +93,30 @@ export default {
     font-weight: 700;
     padding: 0.75rem 4rem;
     letter-spacing: 0.2em;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1.25rem;
+      display: block;
+      margin: 0 auto;
+      width: min-content;
+    }
   }
 
   .icon {
     width: 100%;
     height: 100%;
     background-position: top 2rem center;
+  }
+
+  .icon-container-sm {
+    height: 8rem;
+    margin: 2rem 0;
+
+    .icon {
+      width: 100%;
+      height: 100%;
+      background-position: center;
+    }
   }
 }
 </style>
