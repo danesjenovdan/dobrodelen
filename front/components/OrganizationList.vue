@@ -2,10 +2,10 @@
   <div class="organization-list">
     <form action="#" method="get" @submit.prevent>
       <div class="form-row align-items-center justify-content-center">
-        <div class="col-auto">
+        <div class="col-9 col-md-auto">
           <input class="form-control" type="text" placeholder="Poišči organizacijo" />
         </div>
-        <div class="col-auto">
+        <div class="col-3 col-md-auto">
           <input class="form-control btn btn-warning" type="submit" value="Išči" />
         </div>
       </div>
@@ -90,19 +90,36 @@ export default {
   background: #f6f2f0;
   padding: 0 4em;
 
+  @include media-breakpoint-down(sm) {
+    padding: 0 1rem;
+  }
+
   form {
     padding: 7rem 0;
+
+    @include media-breakpoint-down(sm) {
+      padding: 3rem 0;
+    }
 
     .form-control {
       height: 61px;
       padding: 0 2rem;
       font-size: 1.5rem;
-
       border: 0;
+
+      @include media-breakpoint-down(sm) {
+        height: 3rem;
+        padding: 0 1.25rem;
+        font-size: 1rem;
+      }
 
       &[type='text'] {
         width: 42rem;
         margin-right: 0.6rem;
+
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+        }
 
         &::placeholder {
           letter-spacing: 0.2em;
@@ -113,15 +130,48 @@ export default {
         width: 12rem;
         font-weight: 600;
         letter-spacing: 0.2em;
+
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+        }
       }
     }
   }
 
   .table {
+    @include media-breakpoint-down(sm) {
+      &,
+      thead,
+      tbody {
+        display: block;
+      }
+
+      tr {
+        display: flex;
+        flex-direction: column;
+      }
+
+      thead tr {
+        flex-direction: row;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        display: none;
+      }
+
+      tbody {
+        td:nth-child(1) {
+          border-bottom: 0;
+        }
+      }
+    }
+
     th,
     td {
       padding-left: 1rem;
       padding-right: 1rem;
+      border-top: 0;
     }
 
     th {
@@ -132,6 +182,10 @@ export default {
       cursor: default;
       border-top: 0;
       border-bottom: 1px solid $blue;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem;
+      }
 
       &:first-child {
         width: 31rem;
