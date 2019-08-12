@@ -27,7 +27,7 @@
       <tbody>
         <tr v-for="org in organizations" :key="org.id" @click="onOrgClick(org)">
           <td>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
+            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-image-link">
               <div class="embed-responsive embed-responsive-1by1">
                 <div class="embed-responsive-item">
                   <div class="img-container">
@@ -44,7 +44,7 @@
                 </div>
               </div>
             </nuxt-link>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
+            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-title-link">
               <strong class="lead">{{ org.name }}</strong>
             </nuxt-link>
           </td>
@@ -52,11 +52,13 @@
             <p class="lead">{{ org.description }}</p>
           </td>
           <td>
-            <i
-              v-for="i in 5"
-              :key="i"
-              :class="['icon', 'icon-star', { 'icon-star--full': org.stars >= i }]"
-            />
+            <div class="stars">
+              <i
+                v-for="i in 5"
+                :key="i"
+                :class="['icon', 'icon-star', { 'icon-star--full': org.stars >= i }]"
+              />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -148,7 +150,7 @@ export default {
 
       tr {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
       }
 
       thead tr {
@@ -161,8 +163,56 @@ export default {
       }
 
       tbody {
-        td:nth-child(1) {
-          border-bottom: 0;
+        tr {
+          position: relative;
+
+          td:nth-child(1) {
+            padding: 0 1rem 1rem;
+          }
+
+          .org-image-link {
+            // display: none;
+            position: absolute;
+            top: 1rem;
+
+            .embed-responsive {
+              width: 3rem;
+              height: 3rem;
+              margin: 0;
+            }
+          }
+
+          .org-title-link {
+            // display: inline-block;
+            // margin-top: 2rem;
+          }
+
+          strong.lead {
+            display: block;
+            // text-align: center;
+            font-size: 1.15rem;
+          }
+
+          td:nth-child(3) {
+            padding: 1rem 1rem 0.5rem;
+            border-bottom: 0;
+
+            .stars {
+              text-align: right;
+              // position: absolute;
+              bottom: 0.5rem;
+              right: 0.5rem;
+              height: 3rem;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+
+              .icon {
+                width: 2rem;
+                height: 2rem;
+              }
+            }
+          }
         }
       }
     }
@@ -277,8 +327,10 @@ export default {
         font-weight: 600;
       }
 
-      .icon {
-        margin: 0 0.2rem;
+      .stars {
+        .icon {
+          margin: 0 0.2rem;
+        }
       }
     }
 
