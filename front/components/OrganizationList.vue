@@ -13,19 +13,33 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th class="can-sort desc">
+          <th
+            :class="[
+              'can-sort',
+              { desc: sortKey === 'name' && !sortAsc },
+              { asc: sortKey === 'name' && sortAsc },
+            ]"
+            @click="changeSort('name')"
+          >
             <span>Ime</span>
           </th>
           <th>
             <span>Opis</span>
           </th>
-          <th class="can-sort">
+          <th
+            :class="[
+              'can-sort',
+              { desc: sortKey === 'stars' && !sortAsc },
+              { asc: sortKey === 'stars' && sortAsc },
+            ]"
+            @click="changeSort('stars')"
+          >
             <span>Ocena</span>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="org in organizations" :key="org.id" @click="onOrgClick(org)">
+        <tr v-for="org in sortedOrgs" :key="org.id" @click="onOrgClick(org)">
           <td>
             <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-image-link">
               <div class="embed-responsive embed-responsive-1by1">
@@ -73,13 +87,53 @@ export default {
       type: Array,
       required: true,
     },
+    sortQuery: {
+      type: String,
+      default: '-stars',
+    },
   },
   data() {
+    const [sortKey, sortAsc] =
+      this.sortQuery[0] === '-' ? [this.sortQuery.slice(1), false] : [this.sortQuery, true];
     return {
       apiBaseUrl: process.env.API_BASE_URL,
+      sortKey,
+      sortAsc,
     };
   },
+  computed: {
+    sortedOrgs() {
+      const orgs = (this.organizations || []).slice();
+      orgs.sort((a, b) => {
+        if (!this.sortAsc) {
+          [a, b] = [b, a];
+        }
+        const aVal = a[this.sortKey];
+        const bVal = b[this.sortKey];
+        const aType = typeof aVal;
+        const bType = typeof bVal;
+        if (aType === bType) {
+          if (aType === 'number') {
+            return aVal - bVal;
+          }
+          if (aType === 'string') {
+            return aVal.localeCompare(bVal, 'sl');
+          }
+        }
+        return String(aVal).localeCompare(String(bVal), 'sl');
+      });
+      return orgs;
+    },
+  },
   methods: {
+    changeSort(key) {
+      if (key === this.sortKey) {
+        this.sortAsc = !this.sortAsc;
+      } else {
+        this.sortAsc = true;
+        this.sortKey = key;
+      }
+    },
     onOrgClick(org) {
       this.$router.push({ name: 'org-id', params: { id: org.id } });
     },
