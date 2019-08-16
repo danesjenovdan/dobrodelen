@@ -26,7 +26,7 @@
               </div>
               <div v-if="organization.contact_phone">
                 <a :href="`tel:${organization.contact_phone}`" target="_blank">{{
-                  organization.contact_phone
+                  formatPhoneNumber(organization.contact_phone)
                 }}</a>
               </div>
             </dd>
@@ -148,11 +148,13 @@
 <script>
 import { keys } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
+import formatPhoneNumberMixin from '~/mixins/formatPhoneNumber.js';
 
 export default {
   components: {
     ContentTitle,
   },
+  mixins: [formatPhoneNumberMixin],
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
@@ -192,10 +194,7 @@ export default {
         vimeo: ['vimeo.com'],
       };
 
-      return (
-        keys(domains).find((key) => domains[key].some((domain) => url.indexOf(domain) !== -1)) ||
-        'link'
-      );
+      return keys(domains).find((key) => domains[key].some((d) => url.indexOf(d) !== -1)) || 'link';
     },
   },
   head() {
@@ -249,6 +248,10 @@ export default {
 
       dd {
         font-weight: 600;
+
+        a {
+          color: inherit;
+        }
       }
     }
   }
