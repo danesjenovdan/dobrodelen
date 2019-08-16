@@ -68,7 +68,7 @@
             </nuxt-link>
           </td>
           <td>
-            <p class="lead">{{ org.description }}</p>
+            <p class="lead">{{ shorten(org.description) }}</p>
           </td>
           <td>
             <div class="stars">
@@ -174,6 +174,12 @@ export default {
     }, 250),
     onOrgClick(org) {
       this.$router.push({ name: 'org-id', params: { id: org.id } });
+    },
+    shorten(text, max = 320) {
+      if (text.length > max) {
+        return `${text.slice(0, text.lastIndexOf(' ', max))} ...`;
+      }
+      return text;
     },
   },
 };
