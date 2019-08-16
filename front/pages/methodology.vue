@@ -217,6 +217,10 @@ export default {
         background: #f6f2f0;
         border: 0;
 
+        @include media-breakpoint-down(sm) {
+          padding: 1rem;
+        }
+
         h2 {
           display: flex;
           align-items: center;
@@ -225,6 +229,10 @@ export default {
           button {
             font-size: 1.85rem;
             color: inherit;
+
+            @include media-breakpoint-down(sm) {
+              font-size: 1.25rem;
+            }
 
             span {
               font-weight: 300;
@@ -239,6 +247,7 @@ export default {
 
           .icon {
             margin: 0.375rem 0.75rem;
+            transition: transform 0.15s ease;
           }
 
           button[aria-expanded='true'] + .icon {
@@ -263,6 +272,12 @@ export default {
           font-weight: 300;
           line-height: 1.4;
 
+          @include media-breakpoint-down(sm) {
+            margin: 0;
+            padding: 1rem;
+            font-size: 1rem;
+          }
+
           strong {
             font-weight: 600;
           }
@@ -272,6 +287,10 @@ export default {
 
             & + p {
               margin-top: 2rem;
+
+              @include media-breakpoint-down(sm) {
+                margin-top: 1rem;
+              }
             }
 
             & + ul {
@@ -286,6 +305,11 @@ export default {
           ul {
             margin-bottom: 2rem;
             list-style: none;
+            padding-left: 2.5rem;
+
+            @include media-breakpoint-down(sm) {
+              padding-left: 1rem;
+            }
 
             li {
               padding-left: 1.4em;
@@ -298,6 +322,10 @@ export default {
 
           table {
             margin-bottom: 2rem;
+
+            @include media-breakpoint-down(sm) {
+              margin-bottom: 1rem;
+            }
 
             td {
               border: 1px solid $blue;
