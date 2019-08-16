@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="content-title-container text-center">
-        <div class="embed-responsive embed-responsive-1by1 mb-4">
+        <div class="embed-responsive embed-responsive-1by1">
           <div class="embed-responsive-item">
             <img v-if="image" :src="image" alt="title image" class="rounded-circle bg-dark" />
             <div v-else-if="icon" class="rounded-circle icon-container bg-warning">
@@ -53,9 +53,20 @@ export default {
   padding: 2.5rem 4.2rem;
   margin-bottom: 5rem;
 
+  @include media-breakpoint-down(sm) {
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
   .embed-responsive {
     max-width: 10rem;
     display: inline-block;
+    margin-bottom: 1.5rem;
+
+    @include media-breakpoint-down(sm) {
+      max-width: 6rem;
+      margin-bottom: 1rem;
+    }
 
     img {
       display: block;
@@ -84,6 +95,10 @@ export default {
     font-weight: 300;
     line-height: 1.4;
     letter-spacing: 0.2em;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1.5rem;
+    }
   }
 
   .stars {
@@ -91,8 +106,17 @@ export default {
     margin-top: 1.5rem;
     cursor: pointer;
 
+    @include media-breakpoint-down(sm) {
+      margin-top: 0.5rem;
+    }
+
     .icon {
       margin: 0 0.3rem;
+
+      @include media-breakpoint-down(sm) {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
     }
   }
 }

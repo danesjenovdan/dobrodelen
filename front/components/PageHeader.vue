@@ -62,7 +62,7 @@ header {
   margin: 3.5em 0;
 
   @include media-breakpoint-down(sm) {
-    margin: 1rem 0;
+    margin: 1rem 0 1.5rem;
   }
 
   nav {

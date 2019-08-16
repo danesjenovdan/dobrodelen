@@ -11,7 +11,7 @@
       @stars-click="toggleModal(true)"
     />
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         <div class="org-info">
           <dl class="row">
             <dt class="col-4">Druga imena</dt>
@@ -44,7 +44,7 @@
           </dl>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         <div class="org-description">
           <h4>Poslanstvo</h4>
           <!-- eslint-disable prettier/prettier -->
@@ -215,6 +215,12 @@ export default {
     border: 1px solid $blue;
     margin-right: 2rem;
 
+    @include media-breakpoint-down(sm) {
+      margin-right: 0;
+      padding: 1.5rem;
+      padding-bottom: 0;
+    }
+
     & + .org-info {
       margin-top: -1px;
     }
@@ -223,9 +229,17 @@ export default {
       font-size: 1.5rem;
       line-height: 1.4;
 
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem;
+      }
+
       dt,
       dd {
         margin-bottom: 2.5rem;
+
+        @include media-breakpoint-down(sm) {
+          margin-bottom: 1.25rem;
+        }
       }
 
       dt {
@@ -239,10 +253,18 @@ export default {
   }
 
   .org-description {
+    @include media-breakpoint-down(sm) {
+      margin-top: 2rem;
+    }
+
     h4 {
       font-weight: 400;
       margin-bottom: 1.5rem;
       letter-spacing: 0.2em;
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 0.5rem;
+      }
     }
 
     p {
@@ -251,10 +273,18 @@ export default {
       font-style: italic;
       line-height: 1.4;
       margin-bottom: 1.5rem;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1.25rem;
+      }
     }
 
     p + h4 {
       margin-top: 5rem;
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 2rem;
+      }
     }
   }
 
