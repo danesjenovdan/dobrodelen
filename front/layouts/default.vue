@@ -14,6 +14,11 @@ export default {
   components: {
     PageHeader,
   },
+  watch: {
+    $route() {
+      this.$nuxt.$emit('toggle-menu', false);
+    },
+  },
 };
 </script>
 

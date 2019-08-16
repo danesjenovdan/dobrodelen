@@ -10,9 +10,21 @@
           <span>DOBRODELEN.SI</span>
         </nuxt-link>
         <hr />
-        <button class="menu-button btn icon icon-menu d-md-none">
-          <span class="sr-only">menu</span>
-        </button>
+        <div v-click-outside="() => toggleMenu(null, false)">
+          <button class="menu-button btn icon icon-menu d-md-none" @click="toggleMenu">
+            <span class="sr-only">menu</span>
+          </button>
+          <transition name="fade-menu">
+            <div v-if="menuOpen" class="menu-content d-md-none">
+              <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-primary">
+                <span>prijava organizacije</span>
+              </nuxt-link>
+              <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
+                <span>metodologija</span>
+              </nuxt-link>
+            </div>
+          </transition>
+        </div>
       </h1>
       <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
         <span>metodologija</span>
@@ -20,6 +32,30 @@
     </nav>
   </header>
 </template>
+
+<script>
+import clickOutsideMixin from '~/mixins/clickOutside.js';
+
+export default {
+  mixins: [clickOutsideMixin],
+  data() {
+    return {
+      menuOpen: false,
+    };
+  },
+  mounted() {
+    this.$nuxt.$on('toggle-menu', (value) => this.toggleMenu(null, value));
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('toggle-menu', (value) => this.toggleMenu(null, value));
+  },
+  methods: {
+    toggleMenu(event, value = !this.menuOpen) {
+      this.menuOpen = value;
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 header {
@@ -135,7 +171,32 @@ header {
         margin-right: -0.5rem;
         // background-color: #f6f2f0;
       }
+
+      .menu-content {
+        position: absolute;
+        top: 3rem;
+        right: 0.5rem;
+        z-index: 1;
+        padding: 0.5rem;
+        background: $modal-content-bg;
+
+        .nav-link {
+          display: block;
+          text-align: right;
+          font-size: 1rem;
+        }
+      }
     }
   }
+}
+
+.fade-menu-enter-active,
+.fade-menu-leave-active {
+  transition: opacity 0.15s linear;
+}
+
+.fade-menu-enter,
+.fade-menu-leave-to {
+  opacity: 0;
 }
 </style>
