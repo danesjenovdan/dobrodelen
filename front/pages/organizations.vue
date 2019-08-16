@@ -1,7 +1,11 @@
 <template>
   <div class="content">
     <intro-text lead="Doniraj pametno." icon="heart" />
-    <organization-list :organizations="organizations" :sort-query="orgSortQuery" />
+    <organization-list
+      :organizations="organizations"
+      :sort-query="orgSortQuery"
+      @change="onOrgListChange"
+    />
   </div>
 </template>
 
@@ -21,6 +25,20 @@ export default {
       organizations: orgsResp.results,
       orgSortQuery,
     };
+  },
+  methods: {
+    onOrgListChange(changes) {
+      const query = {};
+      if (changes.sort) {
+        query.sort = changes.sort;
+      }
+      if (changes.search) {
+        query.q = changes.search;
+      }
+      this.$router.replace({
+        query,
+      });
+    },
   },
   head() {
     return {

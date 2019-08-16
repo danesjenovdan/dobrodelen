@@ -3,11 +3,16 @@
     <form action="#" method="get" @submit.prevent>
       <div class="form-row align-items-center justify-content-center">
         <div class="col-9 col-md-auto">
-          <input class="form-control" type="text" placeholder="Poišči organizacijo" />
+          <input
+            v-model="searchText"
+            class="form-control"
+            type="text"
+            placeholder="Poišči organizacijo"
+          />
         </div>
-        <div class="col-3 col-md-auto">
+        <!-- <div class="col-3 col-md-auto">
           <input class="form-control btn btn-warning" type="submit" value="Išči" />
-        </div>
+        </div> -->
       </div>
     </form>
     <table class="table table-hover">
@@ -81,6 +86,8 @@
 </template>
 
 <script>
+import { debounce } from 'lodash';
+
 export default {
   props: {
     organizations: {
@@ -99,11 +106,30 @@ export default {
       apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
+      searchText: '',
     };
   },
   computed: {
+    filteredOrgs() {
+      const orgs = this.organizations || [];
+      const filters = this.searchText
+        .toLowerCase()
+        .split(/\s+/g)
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      if (!filters || !filters.length) {
+        return orgs;
+      }
+
+      return orgs.filter((org) => {
+        return filters.every((filter) => {
+          return org.name.toLowerCase().indexOf(filter) !== -1;
+        });
+      });
+    },
     sortedOrgs() {
-      const orgs = (this.organizations || []).slice();
+      const orgs = this.filteredOrgs.slice();
       orgs.sort((a, b) => {
         if (!this.sortAsc) {
           [a, b] = [b, a];
@@ -125,6 +151,11 @@ export default {
       return orgs;
     },
   },
+  watch: {
+    searchText() {
+      this.emitChange();
+    },
+  },
   methods: {
     changeSort(key) {
       if (key === this.sortKey) {
@@ -133,7 +164,14 @@ export default {
         this.sortAsc = true;
         this.sortKey = key;
       }
+      this.emitChange();
     },
+    emitChange: debounce(function emitChange() {
+      this.$emit('change', {
+        sort: `${this.sortAsc ? '' : '-'}${this.sortKey}`,
+        search: this.searchText,
+      });
+    }, 250),
     onOrgClick(org) {
       this.$router.push({ name: 'org-id', params: { id: org.id } });
     },
@@ -236,10 +274,10 @@ export default {
             }
           }
 
-          .org-title-link {
-            // display: inline-block;
-            // margin-top: 2rem;
-          }
+          // .org-title-link {
+          //   // display: inline-block;
+          //   // margin-top: 2rem;
+          // }
 
           strong.lead {
             display: block;
