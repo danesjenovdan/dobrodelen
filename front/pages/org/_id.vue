@@ -40,12 +40,12 @@
             <dd class="col-8">
               <a
                 v-for="link in organization.links"
-                :key="link"
+                :key="link.url"
                 :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i class="icon icon-add" />
+                <i :class="['icon', `icon-${getIconForUrl(link.url)}`]" />
               </a>
             </dd>
             <dt class="col-4">Področja delovanja</dt>
@@ -146,6 +146,7 @@
 </template>
 
 <script>
+import { keys } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 
 export default {
@@ -181,6 +182,20 @@ export default {
         }
       }
       this.showStarsModal = show;
+    },
+    getIconForUrl(url) {
+      const domains = {
+        facebook: ['facebook.com', 'fb.com', 'fb.me'],
+        twitter: ['twitter.com'],
+        instagram: ['instagram.com'],
+        youtube: ['youtube.com', 'youtu.be'],
+        vimeo: ['vimeo.com'],
+      };
+
+      return (
+        keys(domains).find((key) => domains[key].some((domain) => url.indexOf(domain) !== -1)) ||
+        'link'
+      );
     },
   },
   head() {

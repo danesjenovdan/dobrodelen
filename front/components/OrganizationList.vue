@@ -2,7 +2,7 @@
   <div class="organization-list">
     <form action="#" method="get" @submit.prevent>
       <div class="form-row align-items-center justify-content-center">
-        <div class="col-9 col-md-auto">
+        <div class="col-12 col-md-6 col-md-auto">
           <input
             v-model="searchText"
             class="form-control"
@@ -208,7 +208,7 @@ export default {
       }
 
       &[type='text'] {
-        width: 42rem;
+        // width: 42rem;
         margin-right: 0.6rem;
 
         @include media-breakpoint-down(sm) {
