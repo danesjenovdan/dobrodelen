@@ -28,6 +28,10 @@ export default {
 .form-group {
   margin-bottom: 3rem;
 
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1.5rem;
+  }
+
   .custom-file {
     width: auto;
 
@@ -62,6 +66,13 @@ export default {
       padding: 1rem 1.5rem 1rem 5rem;
       background-position: left center;
       background-size: 5rem 45%;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem;
+        height: 3.5rem;
+        padding: 0 1.5rem 0 3.5rem;
+        background-size: 3.5rem 45%;
+      }
 
       &::after {
         display: none;

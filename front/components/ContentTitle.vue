@@ -86,6 +86,11 @@ export default {
       .icon {
         width: 4.5rem;
         height: 4.5rem;
+
+        @include media-breakpoint-down(sm) {
+          width: 2.7rem;
+          height: 2.7rem;
+        }
       }
     }
   }

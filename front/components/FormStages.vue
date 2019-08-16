@@ -31,6 +31,11 @@ export default {
   margin-left: -0.5rem;
   margin-right: -0.5rem;
 
+  @include media-breakpoint-down(sm) {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+  }
+
   .stage {
     flex: 1;
     position: relative;
@@ -38,6 +43,14 @@ export default {
     padding-bottom: 1.5rem;
     font-size: 0.9375rem;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 0.75rem;
+      padding-bottom: 1rem;
+    }
 
     &::after {
       content: '';
@@ -50,6 +63,10 @@ export default {
       background: $blue;
       margin: 0 0.5rem;
       opacity: 0.3;
+
+      @include media-breakpoint-down(sm) {
+        margin: 0 0.25rem;
+      }
     }
 
     &.active {

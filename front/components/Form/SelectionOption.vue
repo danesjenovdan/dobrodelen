@@ -66,6 +66,11 @@ export default {
     display: flex;
     align-items: center;
 
+    @include media-breakpoint-down(sm) {
+      font-size: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
     &::before,
     &::after {
       width: 1.75rem;
@@ -125,5 +130,9 @@ legend + .custom-control {
 
 .custom-control:last-of-type {
   margin-bottom: 3rem;
+
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1.5rem;
+  }
 }
 </style>

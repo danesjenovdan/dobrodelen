@@ -190,6 +190,10 @@ export default {
 .content {
   .form-row {
     margin-top: 6rem;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 2rem;
+    }
   }
 }
 </style>
