@@ -1,7 +1,7 @@
 <template>
   <div class="jumbotron">
     <div class="row justify-content-center">
-      <div class="col-10 text-center">
+      <div class="col-12 col-md-10 text-center">
         <p v-if="lead" class="lead" v-text="lead" />
       </div>
     </div>
@@ -60,6 +60,11 @@ export default {
     color: #696969;
     font-weight: 300;
     margin-top: 2rem;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
   }
 
   .icon {
