@@ -72,13 +72,11 @@
       <div class="col-12 col-md-6">
         <div class="org-description">
           <h4>Poslanstvo</h4>
-          <p>
-            {{ organization.mission }}
-          </p>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-html="paragraphise(organization.mission)" />
           <h4>Opis</h4>
-          <p>
-            {{ organization.description }}
-          </p>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-html="paragraphise(organization.description)" />
         </div>
       </div>
     </div>
@@ -196,6 +194,14 @@ export default {
 
       return keys(domains).find((key) => domains[key].some((d) => url.indexOf(d) !== -1)) || 'link';
     },
+    paragraphise(text) {
+      const paragraphs = text
+        .trim()
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .split(/\n\n+/g);
+      return paragraphs.map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+    },
   },
   head() {
     return {
@@ -271,19 +277,21 @@ export default {
       }
     }
 
-    p {
-      font-size: 1.5rem;
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.4;
-      margin-bottom: 1.5rem;
+    /deep/ div {
+      p {
+        font-size: 1.5rem;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.4;
+        margin-bottom: 1.5rem;
 
-      @include media-breakpoint-down(sm) {
-        font-size: 1.25rem;
+        @include media-breakpoint-down(sm) {
+          font-size: 1.25rem;
+        }
       }
     }
 
-    p + h4 {
+    div + h4 {
       margin-top: 5rem;
 
       @include media-breakpoint-down(sm) {
