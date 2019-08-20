@@ -10,6 +10,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
+from django.utils import timezone
 
 
 def get_intance_path(instance, file_name):
@@ -183,9 +184,9 @@ class Organization(ClusterableModel):
         related_name="+",
     )
 
-    published = models.BooleanField(default=False, verbose_name="Je objavlen")
-    is_complete = models.BooleanField(default=False, verbose_name="Je končan")
-    signup_time = models.DateTimeField(auto_now_add=True, verbose_name="")
+    published = models.BooleanField(default=False, verbose_name="Objavljena")
+    is_complete = models.BooleanField(default=False, verbose_name="Je prijava končana?")
+    signup_time = models.DateTimeField(blank=True, null=True, verbose_name="")
 
     @property
     def stars(self):
@@ -196,6 +197,11 @@ class Organization(ClusterableModel):
     @property
     def edit_key(self):
         return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
+
+    def save(self, *args, **kwargs):
+        if self.is_complete and not self.signup_time:
+            self.signup_time = timezone.now()
+        super().save(*args, **kwargs)
 
     panels = [
         FieldPanel("published"),
