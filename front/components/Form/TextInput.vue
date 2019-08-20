@@ -9,6 +9,7 @@
       :class="['form-control', { 'is-invalid': hasError }]"
       :placeholder="label"
       :value="value"
+      @input="$emit('input', $event.target.value)"
     />
     <textarea
       v-else
@@ -18,6 +19,7 @@
       :placeholder="label"
       :value="value"
       :rows="rows"
+      @input="$emit('input', $event.target.value)"
     />
     <label v-if="label" :for="`${name}__id`">{{ label }}</label>
   </div>
@@ -36,7 +38,7 @@ export default {
     },
     value: {
       type: String,
-      default: null,
+      default: '',
     },
     multiline: {
       type: [Boolean, Number],
