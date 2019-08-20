@@ -188,10 +188,12 @@ export default {
 <style lang="scss" scoped>
 .organization-list {
   background: #f6f2f0;
-  padding: 0 4em;
+  padding: 0 4rem 4rem;
+  margin-bottom: 3.5rem;
 
   @include media-breakpoint-down(sm) {
-    padding: 0 1rem;
+    padding: 0 1rem 1rem;
+    margin-bottom: 1rem;
   }
 
   form {
@@ -239,6 +241,8 @@ export default {
   }
 
   .table {
+    margin-bottom: 0;
+
     @include media-breakpoint-down(sm) {
       &,
       thead,
