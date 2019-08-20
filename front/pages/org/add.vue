@@ -73,70 +73,70 @@
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="equality"
+                value="1"
                 label="Človekove pravice, demokracija in enakost"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="education"
+                value="2"
                 label="Izobraževanje, raziskave in razvoj"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="culture"
+                value="3"
                 label="Kultura"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="youth"
+                value="4"
                 label="Mladina, otroci"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="development"
+                value="5"
                 label="Razvojno sodelovanje"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="social"
+                value="6"
                 label="Sociala"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="sport"
+                value="7"
                 label="Šport"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="environment"
+                value="8"
                 label="Okolje, narava in prostor"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="health"
+                value="9"
                 label="Zdravje"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="other"
+                value="10"
                 label="Drugo (navedite kaj):"
               />
             </form-category>
