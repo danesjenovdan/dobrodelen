@@ -39,6 +39,10 @@ export default {
     .custom-file-input,
     .custom-file-label {
       height: 5rem;
+
+      @include media-breakpoint-down(sm) {
+        height: 3.5rem;
+      }
     }
 
     .custom-file-input {
