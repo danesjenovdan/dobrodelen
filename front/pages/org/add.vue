@@ -40,10 +40,10 @@
 
             <form-category title="Spletna prisotnost">
               <text-input v-model="data[0].web_page" name="web_page" label="URL spletne strani" />
-              <template v-for="(social, i) in data[0].links">
+              <template v-for="(link, i) in data[0].links">
                 <text-input
-                  :key="`social-links-${i}`"
-                  v-model="social.url"
+                  :key="`link-${i}`"
+                  v-model="link.url"
                   :name="`links__${i}`"
                   label="URL profila na družbenem mediju"
                 />
@@ -226,7 +226,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 1,
+      activeStage: 0,
       data: [
         {
           name: null,

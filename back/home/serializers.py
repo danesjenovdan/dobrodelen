@@ -53,8 +53,8 @@ class OrganizationListSerializer(serializers.ModelSerializer):
 
 class OrganizationPublicSerializer(serializers.ModelSerializer):
     cover_photo = ImageRenditionAndUploadField("original")
-    links = LinkSerializer(many=True)
     area = serializers.SerializerMethodField(required=False)
+    links = serializers.SerializerMethodField(required=False)
 
     class Meta:
         model = models.Organization
@@ -78,14 +78,22 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "has_public_interest",
             "is_voluntary",
             "zero5",
+            "edit_key",  # TODO: remove when on production
         )
 
     def get_area(self, obj):
         areas = obj.area.all()
         if areas:
-            return ", ".join(list(areas.values_list("name", flat=True)))
-        else:
-            return obj.custom_area
+            # 10 is the id of other
+            has_other = len(areas.filter(id=10)) > 0
+            area_list = list(areas.exclude(id=10).values_list("name", flat=True))
+            if has_other and obj.custom_area:
+                area_list.append(obj.custom_area)
+            return area_list
+        return []
+
+    def get_links(self, obj):
+        return obj.links.values_list("url", flat=True)
 
 
 class OrganizationDetailSerializer(WritableNestedModelSerializer):
@@ -108,6 +116,7 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "tax_number",
             "mission",
             "area",
+            "custom_area",
             "avg_revenue",
             "employed",
             "is_charity",
@@ -142,6 +151,3 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
         )
         ll = BoardMemberSerializer(board_members, many=True)
         return ll.data
-
-    def get_links(self, obj):
-        return self.links.values_list("name", flat=True)

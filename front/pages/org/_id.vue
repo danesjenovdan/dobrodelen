@@ -40,16 +40,18 @@
             <dd class="col-8">
               <a
                 v-for="link in organization.links"
-                :key="link.url"
-                :href="link.url"
+                :key="link"
+                :href="link"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i :class="['icon', `icon-${getIconForUrl(link.url)}`]" />
+                <i :class="['icon', `icon-${getIconForUrl(link)}`]" />
               </a>
             </dd>
             <dt class="col-4">Področja delovanja</dt>
-            <dd class="col-8">{{ organization.area }}</dd>
+            <dd class="col-8">
+              <div v-for="area in organization.area" :key="area">{{ area }}</div>
+            </dd>
           </dl>
         </div>
         <div class="org-info">
