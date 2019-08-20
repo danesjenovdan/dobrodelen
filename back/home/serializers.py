@@ -20,139 +20,126 @@ class ImageRenditionAndUploadField(ImageRenditionField):
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Member
-        fields = (
-            'id',
-            'name',
-            'role'
-        )
+        fields = ("id", "name", "role")
 
 
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Board
-        fields = (
-            'id',
-            'name',
-            'meeting_dates',
-            'organization'
-        )
+        fields = ("id", "name", "meeting_dates", "organization")
 
 
 class LinkSerializer(WritableNestedModelSerializer):
     class Meta:
         model = models.Link
-        fields = (
-            'url',
-        )
+        fields = ("url",)
+
 
 class BoardMemberSerializer(WritableNestedModelSerializer):
     member = MemberSerializer()
+
     class Meta:
         model = models.BoardMember
-        fields = (
-            'id',
-            'member',
-            'board',
-            'organization',
-            'is_paid'
-        )
+        fields = ("id", "member", "board", "organization", "is_paid")
 
 
 class OrganizationListSerializer(serializers.ModelSerializer):
-    cover_photo = ImageRenditionAndUploadField('original')
+    cover_photo = ImageRenditionAndUploadField("original")
 
     class Meta:
         model = models.Organization
-        fields = ('id', 'name', 'description', 'cover_photo', 'stars')
+        fields = ("id", "name", "description", "cover_photo", "stars")
 
 
 class OrganizationPublicSerializer(serializers.ModelSerializer):
-    cover_photo = ImageRenditionAndUploadField('original')
+    cover_photo = ImageRenditionAndUploadField("original")
     links = LinkSerializer(many=True)
     area = serializers.SerializerMethodField(required=False)
+
     class Meta:
         model = models.Organization
         fields = (
-            'id',
-            'name',
-            'additional_names',
-            'contact_name',
-            'contact_email',
-            'contact_phone',
-            'web_page',
-            'description',
-            'cover_photo',
-            'stars',
-            'links',
-            'area',
-            'mission',
-            'avg_revenue',
-            'employed',
-            'is_charity',
-            'has_public_interest',
-            'is_voluntary',
-            'zero5',
+            "id",
+            "name",
+            "additional_names",
+            "contact_name",
+            "contact_email",
+            "contact_phone",
+            "web_page",
+            "description",
+            "cover_photo",
+            "stars",
+            "links",
+            "area",
+            "mission",
+            "avg_revenue",
+            "employed",
+            "is_charity",
+            "has_public_interest",
+            "is_voluntary",
+            "zero5",
         )
+
     def get_area(self, obj):
         areas = obj.area.all()
         if areas:
-            return ', '.join(list(areas.values_list('name', flat=True)))
+            return ", ".join(list(areas.values_list("name", flat=True)))
         else:
             return obj.custom_area
 
 
 class OrganizationDetailSerializer(WritableNestedModelSerializer):
-    cover_photo = ImageRenditionAndUploadField('original', required=False)
+    cover_photo = ImageRenditionAndUploadField("original", required=False)
     boards = BoardSerializer(many=True, required=False, read_only=True)
     board_members = serializers.SerializerMethodField(required=False)
-    links = LinkSerializer(many=True)
+    links = LinkSerializer(many=True, required=False)
 
     class Meta:
         model = models.Organization
         fields = (
-            'id',
-            'name',
-            'additional_names',
-            'contact_name',
-            'contact_email',
-            'contact_phone',
-            'web_page',
-            'description',
-            'tax_number',
-            'mission',
-            'area',
-            'avg_revenue',
-            'employed',
-            'is_charity',
-            'has_public_interest',
-            'is_voluntary',
-            'zero5',
-            'strategic_planning',
-            'milestiones_description',
-            'wages_ratio',
-            'boards',
-            'board_members',
-            'links',
-
-            'minutes_meeteng',
-            'strategic_goals',
-            'finance_report',
-            'finance_report_ajpes',
-            'audited_report',
-            'finance_plan',
-            'given_loan',
-            'received_loans',
-            'payment_classes',
-
-            'cover_photo',
-
-            'stars',
-            'signup_time',
-            'edit_key',
+            "id",
+            "name",
+            "additional_names",
+            "contact_name",
+            "contact_email",
+            "contact_phone",
+            "web_page",
+            "description",
+            "tax_number",
+            "mission",
+            "area",
+            "avg_revenue",
+            "employed",
+            "is_charity",
+            "has_public_interest",
+            "is_voluntary",
+            "zero5",
+            "strategic_planning",
+            "milestiones_description",
+            "wages_ratio",
+            "boards",
+            "board_members",
+            "links",
+            "minutes_meeteng",
+            "strategic_goals",
+            "finance_report",
+            "finance_report_ajpes",
+            "audited_report",
+            "finance_plan",
+            "given_loan",
+            "received_loans",
+            "payment_classes",
+            "cover_photo",
+            "stars",
+            "signup_time",
+            "edit_key",
         )
+
     def get_board_members(self, obj):
         members = obj.board_members.all()
-        board_members = models.BoardMember.objects.filter(member__in=members, organization=obj)
+        board_members = models.BoardMember.objects.filter(
+            member__in=members, organization=obj
+        )
         ll = BoardMemberSerializer(board_members, many=True)
         return ll.data
 

@@ -27,7 +27,9 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         print(self.action)
-        if self.action in ["create", "partial_update"] and self.is_valid_edit_key():
+        if self.action == "create":
+            return serializers.OrganizationDetailSerializer
+        if self.action == "partial_update" and self.is_valid_edit_key():
             return serializers.OrganizationDetailSerializer
         if self.action == "list":
             return serializers.OrganizationListSerializer
@@ -45,6 +47,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             except:
                 pass
         return False
+
 
 class OrganizationChildAuth(viewsets.ModelViewSet):
     def get_permissions(self):
