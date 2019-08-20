@@ -3,12 +3,17 @@
     <content-title icon="signup-form" title="Prijava organizacije" />
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 col-xxl-5">
-        <form-stages :stages="stages" :active="activeStage" @change="onChangeStage" />
+        <form-stages
+          ref="formStages"
+          :stages="stages"
+          :active="activeStage"
+          @change="onChangeStage"
+        />
       </div>
     </div>
     <div class="row justify-content-center form-row">
       <div class="col-12 col-md-7 col-xxl-5">
-        <form @submit.prevent>
+        <form ref="form" @submit.prevent>
           <template v-if="activeStage === 0">
             <form-category title="Ime">
               <text-input name="name" label="Uradno ime organizacije (iz AJPES)" />
@@ -113,6 +118,28 @@
               />
             </form-category>
           </template>
+
+          <div class="row button-row">
+            <div class="col-6">
+              <div v-if="activeStage > 0" class="prev-button float-left">
+                <button class="btn btn-primary" @click="onChangeStage(activeStage - 1)">
+                  Nazaj
+                </button>
+              </div>
+            </div>
+            <div class="col-6">
+              <div v-if="activeStage < stages.length" class="next-button float-right">
+                <button class="btn btn-primary" @click="onChangeStage(activeStage + 1)">
+                  <template v-if="activeStage < stages.length - 1">
+                    Naprej
+                  </template>
+                  <template v-else>
+                    Oddaj
+                  </template>
+                </button>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -160,6 +187,16 @@ export default {
   methods: {
     onChangeStage(activeStage) {
       this.activeStage = activeStage;
+      const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
+      this.$nextTick(() => {
+        window.scrollTo(window.scrollX, top);
+        const firstElem = this.$refs.form.querySelector(
+          'button, input:not([type=image]), select, textarea',
+        );
+        if (firstElem) {
+          firstElem.focus();
+        }
+      });
     },
     async onSubmit(event) {
       try {
@@ -193,6 +230,31 @@ export default {
 
     @include media-breakpoint-down(sm) {
       margin-top: 2rem;
+    }
+
+    .button-row {
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+
+      .prev-button,
+      .next-button {
+        .btn {
+          color: inherit;
+          height: 5rem;
+          padding: 0 2.5rem;
+          font-weight: 700;
+          font-size: 1.5rem;
+          color: #383838;
+          letter-spacing: 0.2em;
+          border-radius: 0.41em;
+
+          @include media-breakpoint-down(sm) {
+            font-size: 1rem;
+            height: 3.5rem;
+            padding: 0 1.5rem;
+          }
+        }
+      }
     }
   }
 }
