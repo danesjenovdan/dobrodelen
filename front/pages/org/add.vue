@@ -119,27 +119,7 @@
             </form-category>
           </template>
 
-          <div class="row button-row">
-            <div class="col-6">
-              <div v-if="activeStage > 0" class="prev-button float-left">
-                <button class="btn btn-primary" @click="onChangeStage(activeStage - 1)">
-                  Nazaj
-                </button>
-              </div>
-            </div>
-            <div class="col-6">
-              <div v-if="activeStage < stages.length" class="next-button float-right">
-                <button class="btn btn-primary" @click="onChangeStage(activeStage + 1)">
-                  <template v-if="activeStage < stages.length - 1">
-                    Naprej
-                  </template>
-                  <template v-else>
-                    Oddaj
-                  </template>
-                </button>
-              </div>
-            </div>
-          </div>
+          <prev-next-buttons :page="activeStage" :pages="stages.length" @change="onChangeStage" />
         </form>
       </div>
     </div>
@@ -154,6 +134,7 @@ import TextInput from '~/components/Form/TextInput.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
 import AddButton from '~/components/Form/AddButton.vue';
 import FileInput from '~/components/Form/FileInput.vue';
+import PrevNextButtons from '~/components/PrevNextButtons.vue';
 
 export default {
   components: {
@@ -164,6 +145,7 @@ export default {
     SelectionOption,
     AddButton,
     FileInput,
+    PrevNextButtons,
   },
   data() {
     return {
@@ -230,31 +212,6 @@ export default {
 
     @include media-breakpoint-down(sm) {
       margin-top: 2rem;
-    }
-
-    .button-row {
-      margin-top: 4rem;
-      margin-bottom: 4rem;
-
-      .prev-button,
-      .next-button {
-        .btn {
-          color: inherit;
-          height: 5rem;
-          padding: 0 2.5rem;
-          font-weight: 700;
-          font-size: 1.5rem;
-          color: #383838;
-          letter-spacing: 0.2em;
-          border-radius: 0.41em;
-
-          @include media-breakpoint-down(sm) {
-            font-size: 1rem;
-            height: 3.5rem;
-            padding: 0 1.5rem;
-          }
-        }
-      }
     }
   }
 }
