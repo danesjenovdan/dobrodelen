@@ -553,74 +553,131 @@ export default {
       this.saving = true;
 
       const data = this.data[stage];
-      const keys = Object.keys(data).filter((key) => {
-        return !isEqual(data[key], this.initialData[key]);
-      });
+      if (data) {
+        const keys = Object.keys(data).filter((key) => {
+          return !isEqual(data[key], this.initialData[key]);
+        });
 
-      const jsonData = {};
-      const formData = new FormData();
-      // There's no way to inspect or iterate on FormData in IE
-      let hasFormData = false;
+        const jsonData = {};
+        const formData = new FormData();
+        // There's no way to inspect or iterate on FormData in IE
+        let hasFormData = false;
 
-      keys.forEach((key) => {
-        // Add http:// to links if missing!
-        if (key === 'web_page') {
-          const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
-          data[key] = url;
-        }
-        if (key === 'links') {
-          const urls = data[key]
-            .filter((e) => e.url)
-            .map((e) => ({
-              url: /^https?:\/\//.test(e.url) ? e.url : `http://${e.url}`,
-            }));
-          data[key] = urls;
-        }
-        //
-        if (key === 'has_strategic_goals') {
-          if (data[key] === false) {
-            data.strategic_goals = null;
+        keys.forEach((key) => {
+          // Add http:// to links if missing!
+          if (key === 'web_page') {
+            const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
+            data[key] = url;
           }
-        }
-        //
-        const value = data[key];
-
-        if (value && value.file && value.file.name) {
-          formData.append(key, value.file, value.file.name);
-          hasFormData = true;
-        } else {
-          jsonData[key] = value;
-        }
-      });
-
-      try {
-        if (Object.keys(jsonData).length > 0) {
-          await this.createOrUpdateOrg(jsonData);
-        }
-        if (hasFormData) {
-          await this.createOrUpdateOrg(formData);
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.dir(error);
-
-        if (error.response && error.response.data) {
-          let focusedFirst = false;
-          Object.keys(error.response.data).forEach((key) => {
-            this.$set(this.dataErrors, key, error.response.data[key].join(', '));
-            if (!focusedFirst) {
-              const el = this.$refs.form.querySelector(`[name="${key}"]`);
-              if (el) {
-                el.focus();
-                focusedFirst = true;
-              }
+          if (key === 'links') {
+            const urls = data[key]
+              .filter((e) => e.url)
+              .map((e) => ({
+                url: /^https?:\/\//.test(e.url) ? e.url : `http://${e.url}`,
+              }));
+            data[key] = urls;
+          }
+          // Delete files if option not selected
+          if (key === 'has_minutes_meeting') {
+            if (data[key] === false) {
+              data.minutes_meeting = null;
+              jsonData.minutes_meeting = null;
             }
-          });
-        } else {
-          alert(error.message);
-        }
+          }
+          if (key === 'strategic_planning') {
+            if (data[key] === false) {
+              data.has_milestiones_description = false;
+              jsonData.has_milestiones_description = false;
+              data.milestiones_description = '';
+              jsonData.milestiones_description = '';
+              data.has_strategic_goals = false;
+              jsonData.has_strategic_goals = false;
+              data.strategic_goals = null;
+              jsonData.strategic_goals = null;
+            }
+          }
+          if (key === 'has_milestiones_description') {
+            if (data[key] === false) {
+              data.milestiones_description = '';
+              jsonData.milestiones_description = '';
+            }
+          }
+          if (key === 'has_strategic_goals') {
+            if (data[key] === false) {
+              data.strategic_goals = null;
+              jsonData.strategic_goals = null;
+            }
+          }
+          if (key === 'has_audited_report') {
+            if (data[key] === false) {
+              data.audited_report = null;
+              jsonData.audited_report = null;
+            }
+          }
+          if (key === 'has_finance_plan') {
+            if (data[key] === false) {
+              data.finance_plan = null;
+              jsonData.finance_plan = null;
+            }
+          }
+          if (key === 'has_given_loans') {
+            if (data[key] === false) {
+              data.given_loan = null;
+              jsonData.given_loan = null;
+            }
+          }
+          if (key === 'has_received_loans') {
+            if (data[key] === false) {
+              data.received_loans = null;
+              jsonData.received_loans = null;
+            }
+          }
+          if (key === 'has_payment_classes') {
+            if (data[key] === false) {
+              data.payment_classes = null;
+              jsonData.payment_classes = null;
+            }
+          }
+          //
+          const value = data[key];
 
-        return false;
+          if (value && value.file && value.file.name) {
+            formData.append(key, value.file, value.file.name);
+            hasFormData = true;
+          } else {
+            jsonData[key] = value;
+          }
+        });
+
+        try {
+          if (Object.keys(jsonData).length > 0) {
+            await this.createOrUpdateOrg(jsonData);
+          }
+          if (hasFormData) {
+            await this.createOrUpdateOrg(formData);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.dir(error);
+
+          if (error.response && error.response.data) {
+            let focusedFirst = false;
+            Object.keys(error.response.data).forEach((key) => {
+              this.$set(this.dataErrors, key, error.response.data[key].join(', '));
+              if (!focusedFirst) {
+                const el = this.$refs.form.querySelector(`[name="${key}"]`);
+                if (el) {
+                  el.focus();
+                  focusedFirst = true;
+                }
+              }
+            });
+          } else {
+            alert(error.message);
+          }
+
+          return false;
+        }
       }
 
       this.saving = false;
