@@ -7,7 +7,7 @@
           ref="formStages"
           :stages="stages"
           :active="activeStage"
-          @change="onChangeStage"
+          @change="onChangeStage(false, $event)"
         />
       </div>
     </div>
@@ -20,11 +20,13 @@
                 v-model="data[0].name"
                 name="name"
                 label="Uradno ime organizacije (iz AJPES)"
+                :has-error="dataErrors.name"
               />
               <text-input
                 v-model="data[0].additional_names"
                 name="additional_names"
                 label="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)"
+                :has-error="dataErrors.additional_names"
               />
             </form-category>
 
@@ -33,19 +35,36 @@
                 v-model="data[0].contact_name"
                 name="contact_name"
                 label="Ime in priimek"
+                :has-error="dataErrors.contact_name"
               />
-              <text-input v-model="data[0].contact_email" name="contact_email" label="E-naslov" />
-              <text-input v-model="data[0].contact_phone" name="contact_phone" label="Telefon" />
+              <text-input
+                v-model="data[0].contact_email"
+                name="contact_email"
+                label="E-naslov"
+                :has-error="dataErrors.contact_email"
+              />
+              <text-input
+                v-model="data[0].contact_phone"
+                name="contact_phone"
+                label="Telefon"
+                :has-error="dataErrors.contact_phone"
+              />
             </form-category>
 
             <form-category title="Spletna prisotnost">
-              <text-input v-model="data[0].web_page" name="web_page" label="URL spletne strani" />
+              <text-input
+                v-model="data[0].web_page"
+                name="web_page"
+                label="URL spletne strani"
+                :has-error="dataErrors.web_page"
+              />
               <template v-for="(link, i) in data[0].links">
                 <text-input
                   :key="`link-${i}`"
                   v-model="link.url"
                   :name="`links__${i}`"
                   label="URL profila na družbenem mediju"
+                  :has-error="dataErrors.links && dataErrors.links[i]"
                 />
               </template>
               <add-button
@@ -55,21 +74,40 @@
             </form-category>
 
             <form-category title="Slika">
-              <file-input v-model="data[0].cover_photo" name="cover_photo" />
+              <file-input
+                v-model="data[0].cover_photo"
+                name="cover_photo"
+                :has-error="dataErrors.cover_photo"
+              />
             </form-category>
 
             <form-category title="Davčna številka">
-              <text-input v-model="data[0].tax_number" name="tax_number" label="Davčna številka" />
+              <text-input
+                v-model="data[0].tax_number"
+                name="tax_number"
+                label="Davčna številka"
+                :has-error="dataErrors.tax_number"
+              />
             </form-category>
           </template>
 
           <template v-else-if="activeStage === 1">
             <form-category title="Poslanstvo" note="največ 500 znakov">
-              <text-input v-model="data[1].mission" name="mission" :multiline="9" />
+              <text-input
+                v-model="data[1].mission"
+                name="mission"
+                :multiline="9"
+                :has-error="dataErrors.mission"
+              />
             </form-category>
 
             <form-category title="Kratek opis" note="največ 1500 znakov">
-              <text-input v-model="data[1].description" name="description" :multiline="27" />
+              <text-input
+                v-model="data[1].description"
+                name="description"
+                :multiline="27"
+                :has-error="dataErrors.description"
+              />
             </form-category>
 
             <form-category title="Področja delovanja" note="lahko izberete več možnosti">
@@ -150,11 +188,13 @@
                 v-model="data[1].avg_revenue"
                 name="avg_revenue"
                 label="Povprečni letni proračun v zadnjih treh letih"
+                :has-error="dataErrors.avg_revenue"
               />
               <text-input
                 v-model="data[1].employed"
                 name="employed"
                 label="Število zaposlenih v zadnjem zaključenem letu"
+                :has-error="dataErrors.employed"
               />
             </form-category>
 
@@ -224,6 +264,7 @@
                   name="milestiones_description"
                   label="Kratek opis kako (največ 500 znakov)"
                   :multiline="9"
+                  :has-error="dataErrors.milestiones_description"
                 />
 
                 <selection-option
@@ -237,6 +278,7 @@
                   v-model="data[3].strategic_goals"
                   name="strategic_goals"
                   label="Priložite poročilo"
+                  :has-error="dataErrors.strategic_goals"
                 />
               </div>
             </form-category>
@@ -344,11 +386,16 @@
                 v-model="data[3].wages_ratio"
                 name="wages_ratio"
                 label="Razmerje med najvišjo in povprečno plačo v organizaciji"
+                :has-error="dataErrors.wages_ratio"
               />
             </form-category>
           </template>
 
-          <prev-next-buttons :page="activeStage" :pages="stages.length" @change="onChangeStage" />
+          <prev-next-buttons
+            :page="activeStage"
+            :pages="stages.length"
+            @change="onChangeStage(true, $event)"
+          />
         </form>
       </div>
     </div>
@@ -356,6 +403,7 @@
 </template>
 
 <script>
+import { isEqual, cloneDeep } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import FormStages from '~/components/FormStages.vue';
 import FormCategory from '~/components/Form/FormCategory.vue';
@@ -394,92 +442,106 @@ export default {
         },
       ],
       activeStage: 0,
-      data: [
-        {
-          name: null,
-          additional_names: null,
-          contact_name: null,
-          contact_email: null,
-          contact_phone: null,
-          web_page: null,
-          links: [{ url: null }],
-          cover_photo: null,
-          tax_number: null,
-        },
-        {
-          mission: null,
-          description: null,
-          area: [],
-          avg_revenue: null,
-          employed: null,
-          is_charity: false,
-          has_public_interest: false,
-          is_voluntary: false,
-          zero5: false,
-        },
-        {
-          has_minutes_meeting: false,
-          minutes_meeting: null,
-        },
-        {
-          strategic_planning: false,
-          has_milestiones_description: false,
-          milestiones_description: null,
-          has_strategic_goals: false,
-          strategic_goals: null,
-          finance_report: null,
-          finance_report_ajpes: null,
-          has_audited_report: false,
-          audited_report: null,
-          has_finance_plan: false,
-          finance_plan: null,
-          has_given_loans: false,
-          given_loans: null,
-          has_received_loans: false,
-          received_loans: null,
-          has_payment_classes: false,
-          payment_classes: null,
-          wages_ratio: null,
-        },
-      ],
     };
   },
   async asyncData({ $axios, query, error }) {
     const editId = query.edit_id || null;
     const editKey = query.edit_key || null;
-    let initialData = null;
+
+    let initialData = {};
     if (editId && editKey) {
       initialData = await $axios.$get(`/api/organizations/${editId}/?edit_key=${editKey}`);
     }
+
+    const data = [
+      {
+        name: initialData.name || '',
+        additional_names: initialData.additional_names || '',
+        contact_name: initialData.contact_name || '',
+        contact_email: initialData.contact_email || '',
+        contact_phone: initialData.contact_phone || '',
+        web_page: initialData.web_page || '',
+        links:
+          initialData.links && initialData.links.length
+            ? cloneDeep(initialData.links)
+            : [{ url: '' }],
+        cover_photo: initialData.cover_photo || null,
+        tax_number: initialData.tax_number || '',
+      },
+      {
+        mission: initialData.mission || '',
+        description: initialData.description || '',
+        area: initialData.area ? initialData.area.slice() : [],
+        avg_revenue: initialData.avg_revenue || '',
+        employed: initialData.employed || 0,
+        is_charity: initialData.is_charity || false,
+        has_public_interest: initialData.has_public_interest || false,
+        is_voluntary: initialData.is_voluntary || false,
+        zero5: initialData.zero5 || false,
+      },
+      {
+        has_minutes_meeting: initialData.has_minutes_meeting || false,
+        minutes_meeting: initialData.minutes_meeting || null,
+      },
+      {
+        strategic_planning: initialData.strategic_planning || false,
+        has_milestiones_description: initialData.has_milestiones_description || false,
+        milestiones_description: initialData.milestiones_description || '',
+        has_strategic_goals: initialData.has_strategic_goals || false,
+        strategic_goals: initialData.strategic_goals || null,
+        finance_report: initialData.finance_report || null,
+        finance_report_ajpes: initialData.finance_report_ajpes || null,
+        has_audited_report: initialData.has_audited_report || false,
+        audited_report: initialData.audited_report || null,
+        has_finance_plan: initialData.has_finance_plan || false,
+        finance_plan: initialData.finance_plan || null,
+        has_given_loans: initialData.has_given_loans || false,
+        given_loans: initialData.given_loans || null,
+        has_received_loans: initialData.has_received_loans || false,
+        received_loans: initialData.received_loans || null,
+        has_payment_classes: initialData.has_payment_classes || false,
+        payment_classes: initialData.payment_classes || null,
+        wages_ratio: initialData.wages_ratio || '',
+      },
+    ];
+
     return {
       editId,
       editKey,
       initialData,
+      data,
+      dataErrors: {},
     };
   },
   methods: {
-    async onChangeStage(activeStage) {
-      const saved = await this.saveData(this.activeStage);
-      if (saved) {
-        this.activeStage = activeStage;
+    async onChangeStage(save, activeStage) {
+      if (save) {
+        const saved = await this.saveData(this.activeStage);
+        if (saved) {
+          this.activeStage = activeStage;
 
-        const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
-        this.$nextTick(() => {
-          window.scrollTo(window.scrollX, top);
-          const firstElem = this.$refs.form.querySelector(
-            'button, input:not([type=image]), select, textarea',
-          );
-          if (firstElem) {
-            firstElem.focus();
-          }
-        });
+          const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
+          this.$nextTick(() => {
+            window.scrollTo(window.scrollX, top);
+            const firstElem = this.$refs.form.querySelector(
+              'button, input:not([type=image]), select, textarea',
+            );
+            if (firstElem) {
+              firstElem.focus();
+            }
+          });
+        }
+      } else {
+        this.activeStage = activeStage;
       }
     },
     async saveData(stage) {
       this.saving = true;
 
       const data = this.data[stage];
-      const keys = Object.keys(data).filter((key) => data[key] != null);
+      const keys = Object.keys(data).filter((key) => {
+        return !isEqual(data[key], this.initialData[key]);
+      });
 
       const jsonData = {};
       const formData = new FormData();
@@ -487,11 +549,10 @@ export default {
       let hasFormData = false;
 
       keys.forEach((key) => {
-        let value = data[key];
         // Add http:// to links if missing!
         if (key === 'web_page') {
           const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
-          value = url;
+          data[key] = url;
         }
         if (key === 'links') {
           const urls = data[key]
@@ -499,11 +560,12 @@ export default {
             .map((e) => ({
               url: /^https?:\/\//.test(e.url) ? e.url : `http://${e.url}`,
             }));
-          value = urls;
+          data[key] = urls;
         }
         //
+        const value = data[key];
 
-        if (value.file && value.file.name) {
+        if (value && value.file && value.file.name) {
           formData.append(key, value.file, value.file.name);
           hasFormData = true;
         } else {
@@ -511,30 +573,28 @@ export default {
         }
       });
 
-      let method = 'post';
-      let editKey = null;
-      let id = null;
       try {
         if (Object.keys(jsonData).length > 0) {
-          const jsonRes = await this.createOrUpdateOrg(method, jsonData, id, editKey);
-          editKey = editKey || jsonRes.edit_key;
-          id = id || jsonRes.id;
-          method = 'patch';
+          await this.createOrUpdateOrg(jsonData);
         }
         if (hasFormData) {
-          const formRes = await this.createOrUpdateOrg(method, formData, id, editKey);
-          editKey = editKey || formRes.edit_key;
-          id = id || formRes.id;
-          method = 'patch';
+          await this.createOrUpdateOrg(formData);
         }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.dir(error);
 
         if (error.response && error.response.data) {
+          let focusedFirst = false;
           Object.keys(error.response.data).forEach((key) => {
-            const el = this.$refs.form.querySelector(`[name="${key}"]`);
-            console.log(el);
+            this.$set(this.dataErrors, key, error.response.data[key].join(', '));
+            if (!focusedFirst) {
+              const el = this.$refs.form.querySelector(`[name="${key}"]`);
+              if (el) {
+                el.focus();
+                focusedFirst = true;
+              }
+            }
           });
         } else {
           alert(error.message);
@@ -543,23 +603,26 @@ export default {
         return false;
       }
 
-      console.log(id, editKey);
-      if (id && editKey) {
-        this.$router.replace({
-          query: {
-            edit_id: id,
-            edit_key: editKey,
-          },
-        });
-      }
-
       this.saving = false;
       return true;
     },
-    createOrUpdateOrg(method, data, id, editKey) {
-      const query = `${editKey ? `?edit_key=${editKey}` : ''}`;
-      const url = `/api/organizations/${id ? `${id}/` : ''}${query}`;
-      return this.$axios[`$${method}`](url, data);
+    async createOrUpdateOrg(data) {
+      const method = this.editId && this.editKey ? 'patch' : 'post';
+      const query = `${this.editKey ? `?edit_key=${this.editKey}` : ''}`;
+      const url = `/api/organizations/${this.editId ? `${this.editId}/` : ''}${query}`;
+      const res = await this.$axios[`$${method}`](url, data);
+      if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
+        this.editId = res.id;
+        this.editKey = res.edit_key;
+        this.$router.replace({
+          query: {
+            edit_id: this.editId,
+            edit_key: this.editKey,
+          },
+        });
+      }
+      this.initialData = res;
+      return res;
     },
   },
   head() {
