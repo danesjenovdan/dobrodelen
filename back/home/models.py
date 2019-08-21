@@ -186,6 +186,10 @@ class Organization(ClusterableModel):
         default=False, verbose_name='ima seznam prejetih posojil?')
     has_payment_classes = models.BooleanField(
         default=False, verbose_name='ima akt o sistematizaciji delovnih mest in plačnih razredov?')
+    has_milestiones_description = models.BooleanField(
+        default=False, verbose_name='ali organizacija spremlja doseganje strateških ciljev?')
+    has_strategic_goals = models.BooleanField(
+        default=False, verbose_name='ima pisna poročila o spremljanju stateških ciljev?')
 
 
     cover_photo = models.ForeignKey(
