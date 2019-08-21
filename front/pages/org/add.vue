@@ -342,13 +342,13 @@
 
             <form-category title="Posojila">
               <selection-option
-                v-model="data[3].has_given_loan"
+                v-model="data[3].has_given_loans"
                 type="checkbox"
-                name="has_given_loan"
+                name="has_given_loans"
                 label="Organizacija daje posojila povezanim osebam (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
               />
               <file-input
-                v-if="data[3].has_given_loan"
+                v-if="data[3].has_given_loans"
                 v-model="data[3].given_loan"
                 name="given_loan"
                 label="Priložite seznam danih posojil"
@@ -505,7 +505,7 @@ export default {
         has_finance_plan: initialData.has_finance_plan || false,
         finance_plan: initialData.finance_plan || null,
         has_given_loans: initialData.has_given_loans || false,
-        given_loans: initialData.given_loans || null,
+        given_loan: initialData.given_loan || null,
         has_received_loans: initialData.has_received_loans || false,
         received_loans: initialData.received_loans || null,
         has_payment_classes: initialData.has_payment_classes || false,
@@ -575,6 +575,12 @@ export default {
               url: /^https?:\/\//.test(e.url) ? e.url : `http://${e.url}`,
             }));
           data[key] = urls;
+        }
+        //
+        if (key === 'has_strategic_goals') {
+          if (data[key] === false) {
+            data.strategic_goals = null;
+          }
         }
         //
         const value = data[key];
