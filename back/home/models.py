@@ -90,6 +90,18 @@ class Organization(ClusterableModel):
     payment_classes = models.FileField(
         upload_to=get_intance_path, verbose_name='akt o sistematizaciji delovnih mest in plačnih razredov', blank=True, null=True)
 
+    has_audited_report = models.BooleanField(
+        default=False, verbose_name='ima revidirano poročilo?')
+    has_finance_plan = models.BooleanField(
+        default=False, verbose_name='ima finančni načrt za tekoče leto?')
+    has_given_loans = models.BooleanField(
+        default=False, verbose_name='ima seznam danih posojil?')
+    has_received_loans = models.BooleanField(
+        default=False, verbose_name='ima seznam prejetih posojil?')
+    has_payment_classes = models.BooleanField(
+        default=False, verbose_name='ima akt o sistematizaciji delovnih mest in plačnih razredov?')
+
+
     cover_photo = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
