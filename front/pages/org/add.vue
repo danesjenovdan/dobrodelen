@@ -183,7 +183,20 @@
           </template>
 
           <template v-else-if="activeStage === 2">
-            HELLO
+            <form-category title="Zapisniki seje">
+              <selection-option
+                v-model="data[2].has_minutes_meeting"
+                type="checkbox"
+                name="has_minutes_meeting"
+                label="Organizacija vodi zapisnike sej"
+              />
+              <file-input
+                v-if="data[2].has_minutes_meeting"
+                v-model="data[2].minutes_meeting"
+                name="minutes_meeting"
+                label="Priložite zapisnik zadnje seje"
+              />
+            </form-category>
           </template>
 
           <template v-else-if="activeStage === 3">
@@ -376,7 +389,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 3,
+      activeStage: 2,
       data: [
         {
           name: null,
@@ -399,7 +412,10 @@ export default {
           is_voluntary: false,
           zero5: false,
         },
-        {},
+        {
+          has_minutes_meeting: false,
+          minutes_meeting: null,
+        },
         {
           strategic_planning: false,
           has_milestiones_description: false,
