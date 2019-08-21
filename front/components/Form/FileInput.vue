@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <div class="custom-file">
+    <div :class="['custom-file', { 'is-invalid': hasError }]">
       <input
         :id="`${name}__id`"
         :name="name"
@@ -15,10 +15,13 @@
         </small>
       </label>
     </div>
+    <div v-if="hasError" class="invalid-feedback">* {{ errorMessage }}</div>
   </div>
 </template>
 
 <script>
+import { last } from 'lodash';
+
 export default {
   model: {
     prop: 'value',
@@ -37,15 +40,25 @@ export default {
       type: Object,
       default: null,
     },
+    hasError: {
+      type: [Boolean, String],
+      default: false,
+    },
   },
   data() {
     const fileName =
       (this.value && this.value.file && this.value.file.name) ||
       (this.value && this.value.name) ||
+      (this.value && this.value.url && last(this.value.url.split('/'))) ||
       null;
     return {
       fileName,
     };
+  },
+  computed: {
+    errorMessage() {
+      return typeof this.hasError === 'string' ? this.hasError : 'napaka pri vnosu';
+    },
   },
   methods: {
     onFileChanged(event) {
@@ -78,6 +91,17 @@ export default {
 
       @include media-breakpoint-down(sm) {
         height: 3.5rem;
+      }
+    }
+
+    &.is-invalid {
+      .custom-file-input,
+      .custom-file-label {
+        border-color: $red;
+      }
+
+      input:focus + .custom-file-label {
+        box-shadow: 0 0 0 0.2rem rgba($red, 0.25);
       }
     }
 
@@ -136,6 +160,16 @@ export default {
 
     .custom-file-input:hover ~ .custom-file-label {
       background-color: $blue;
+    }
+  }
+
+  .invalid-feedback {
+    display: block;
+    font-size: 0.9375rem;
+    padding: 0 2rem;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0 1.5rem;
     }
   }
 }
