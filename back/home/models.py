@@ -121,7 +121,7 @@ class Organization(ClusterableModel):
     )
 
     # documents
-    minutes_meeteng = models.FileField(
+    minutes_meeting = models.FileField(
         upload_to=get_intance_path,
         verbose_name="priloga zapisnik zadnje seje",
         blank=True,
@@ -190,6 +190,8 @@ class Organization(ClusterableModel):
         default=False, verbose_name='ali organizacija spremlja doseganje strateških ciljev?')
     has_strategic_goals = models.BooleanField(
         default=False, verbose_name='ima pisna poročila o spremljanju stateških ciljev?')
+    has_minutes_meeting = models.BooleanField(
+        default=False, verbose_name='ima priloga zapisnik zadnje seje?')
 
 
     cover_photo = models.ForeignKey(
@@ -242,7 +244,7 @@ class Organization(ClusterableModel):
         FieldPanel("strategic_planning"),
         FieldPanel("milestiones_description"),
         FieldPanel("wages_ratio"),
-        FieldPanel("minutes_meeteng"),
+        FieldPanel("minutes_meeting"),
         FieldPanel("strategic_goals"),
         FieldPanel("finance_report"),
         FieldPanel("finance_report_ajpes"),
