@@ -182,6 +182,155 @@
             </form-category>
           </template>
 
+          <template v-else-if="activeStage === 2">
+            HELLO
+          </template>
+
+          <template v-else-if="activeStage === 3">
+            <form-category title="Strateško načrtovanje">
+              <selection-option
+                v-model="data[3].strategic_planning"
+                type="checkbox"
+                name="strategic_planning"
+                label="Organizacija strateško načrtuje"
+              />
+              <div v-if="data[3].strategic_planning">
+                <selection-option
+                  v-model="data[3].has_milestiones_description"
+                  type="checkbox"
+                  name="has_milestiones_description"
+                  label="Organizacija spremlja doseganje strateških ciljev"
+                />
+                <text-input
+                  v-if="data[3].has_milestiones_description"
+                  v-model="data[3].milestiones_description"
+                  name="milestiones_description"
+                  label="Kratek opis kako (največ 500 znakov)"
+                  :multiline="9"
+                />
+
+                <selection-option
+                  v-model="data[3].has_strategic_goals"
+                  type="checkbox"
+                  name="has_strategic_goals"
+                  label="Organizacija vodi pisna poročila o spremljanju stateških ciljev"
+                />
+                <file-input
+                  v-if="data[3].has_strategic_goals"
+                  v-model="data[3].strategic_goals"
+                  name="strategic_goals"
+                  label="Priložite poročilo"
+                />
+              </div>
+            </form-category>
+
+            <form-category title="Finančno poročilo">
+              <p>
+                Finančno poročilo pripravljeno po
+                <a
+                  :href="`${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>vzorcu finančnega poročila</span>
+                </a>
+                .
+              </p>
+              <file-input
+                v-model="data[3].finance_report"
+                name="finance_report"
+                label="Priložite finančno poročilo"
+              />
+            </form-category>
+
+            <form-category title="Finančno poročilo, ki je bilo oddano na AJPES">
+              <file-input
+                v-model="data[3].finance_report_ajpes"
+                name="finance_report_ajpes"
+                label="Priložite finančno poročilo"
+              />
+            </form-category>
+
+            <form-category title="Revidiranje finančnega poročila">
+              <selection-option
+                v-model="data[3].has_audited_report"
+                type="checkbox"
+                name="has_audited_report"
+                label="Organizacija je dolžna revidirati svoja finančna poročila"
+              />
+              <file-input
+                v-if="data[3].has_audited_report"
+                v-model="data[3].audited_report"
+                name="audited_report"
+                label="Priložite revidirano poročilo"
+              />
+            </form-category>
+
+            <form-category title="Finančni načrt">
+              <selection-option
+                v-model="data[3].has_finance_plan"
+                type="checkbox"
+                name="has_finance_plan"
+                label="Organizacija ima finančni načrt za tekoče leto"
+              />
+              <file-input
+                v-if="data[3].has_finance_plan"
+                v-model="data[3].finance_plan"
+                name="finance_plan"
+                label="Priložite finančni načrt"
+              />
+            </form-category>
+
+            <form-category title="Posojila">
+              <selection-option
+                v-model="data[3].has_given_loan"
+                type="checkbox"
+                name="has_given_loan"
+                label="Organizacija daje posojila povezanim osebam (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
+              />
+              <file-input
+                v-if="data[3].has_given_loan"
+                v-model="data[3].given_loan"
+                name="given_loan"
+                label="Priložite seznam danih posojil"
+              />
+
+              <selection-option
+                v-model="data[3].has_received_loans"
+                type="checkbox"
+                name="has_received_loans"
+                label="Organizacija prejema posojila od povezanih oseb (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
+              />
+              <file-input
+                v-if="data[3].has_received_loans"
+                v-model="data[3].received_loans"
+                name="received_loans"
+                label="Priložite seznam prejetih posojil"
+              />
+            </form-category>
+
+            <form-category title="Plačilni razredi">
+              <selection-option
+                v-model="data[3].has_payment_classes"
+                type="checkbox"
+                name="has_payment_classes"
+                label="Organizacija ima akt o sistematizaciji delovnih mest in plačnih razredov"
+              />
+              <file-input
+                v-if="data[3].has_payment_classes"
+                v-model="data[3].payment_classes"
+                name="payment_classes"
+                label="Priložite akt"
+              />
+
+              <text-input
+                v-model="data[3].wages_ratio"
+                name="wages_ratio"
+                label="Razmerje med najvišjo in povprečno plačo v organizaciji"
+              />
+            </form-category>
+          </template>
+
           <prev-next-buttons :page="activeStage" :pages="stages.length" @change="onChangeStage" />
         </form>
       </div>
@@ -212,6 +361,7 @@ export default {
   },
   data() {
     return {
+      apiBaseUrl: process.env.API_BASE_URL,
       stages: [
         {
           label: 'Osnovni podatki',
@@ -226,7 +376,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 0,
+      activeStage: 3,
       data: [
         {
           name: null,
@@ -250,7 +400,26 @@ export default {
           zero5: false,
         },
         {},
-        {},
+        {
+          strategic_planning: false,
+          has_milestiones_description: false,
+          milestiones_description: null,
+          has_strategic_goals: false,
+          strategic_goals: null,
+          finance_report: null,
+          finance_report_ajpes: null,
+          has_audited_report: false,
+          audited_report: null,
+          has_finance_plan: false,
+          finance_plan: null,
+          has_given_loans: false,
+          given_loans: null,
+          has_received_loans: false,
+          received_loans: null,
+          has_payment_classes: false,
+          payment_classes: null,
+          wages_ratio: null,
+        },
       ],
     };
   },
@@ -342,6 +511,10 @@ export default {
 
     @include media-breakpoint-down(sm) {
       margin-top: 2rem;
+    }
+
+    legend + p {
+      margin-top: -1.5rem;
     }
   }
 }
