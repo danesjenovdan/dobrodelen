@@ -36,8 +36,9 @@ export default {
     font-weight: 700;
     font-size: 1.5rem;
     color: $body-color;
-    letter-spacing: 0.2em;
+    // letter-spacing: 0.2em;
     width: auto;
+    max-width: 100%;
     height: 5rem;
     padding: 0 1.5rem 0 5rem;
     background-position: left center;

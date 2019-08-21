@@ -69,6 +69,7 @@ export default {
 
   .custom-file {
     width: auto;
+    max-width: 100%;
 
     &,
     .custom-file-input,
@@ -114,7 +115,7 @@ export default {
         display: block;
         font-weight: 700;
         font-size: 1.5rem;
-        letter-spacing: 0.2em;
+        // letter-spacing: 0.2em;
 
         @include media-breakpoint-down(sm) {
           font-size: 1rem;
