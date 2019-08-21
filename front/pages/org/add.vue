@@ -57,6 +57,10 @@
             <form-category title="Slika">
               <file-input v-model="data[0].cover_photo" name="cover_photo" />
             </form-category>
+
+            <form-category title="Davčna številka">
+              <text-input v-model="data[0].tax_number" name="tax_number" label="Davčna številka" />
+            </form-category>
           </template>
 
           <template v-else-if="activeStage === 1">
@@ -400,6 +404,7 @@ export default {
           web_page: null,
           links: [{ url: null }],
           cover_photo: null,
+          tax_number: null,
         },
         {
           mission: null,
