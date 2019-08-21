@@ -26,13 +26,16 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         return models.Organization.objects.filter(published=True)
 
     def get_serializer_class(self):
-        print(self.action)
-        if self.action in ["create", "partial_update"] and self.is_valid_edit_key():
+        if self.action == "create":
             return serializers.OrganizationDetailSerializer
-        if self.action == "list":
-            return serializers.OrganizationListSerializer
+        if self.action == "partial_update" and self.is_valid_edit_key():
+            return serializers.OrganizationDetailSerializer
+        if self.action == "retrieve" and self.is_valid_edit_key():
+            return serializers.OrganizationDetailSerializer
         if self.action == "retrieve":
             return serializers.OrganizationPublicSerializer
+        if self.action == "list":
+            return serializers.OrganizationListSerializer
         return serializers.OrganizationListSerializer
 
     def is_valid_edit_key(self):
@@ -45,6 +48,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             except:
                 pass
         return False
+
 
 class OrganizationChildAuth(viewsets.ModelViewSet):
     def get_permissions(self):
@@ -86,3 +90,37 @@ class BoardMemberViewSet(OrganizationChildAuth):
 class LinkViewSet(OrganizationChildAuth):
     serializer_class = serializers.LinkSerializer
     queryset = models.Link.objects.all()
+
+
+# __ FILLDATA __
+
+
+def _fill_areas():
+    areas = [
+        (1, "Človekove pravice, demokracija in enakost"),
+        (2, "Izobraževanje, raziskave in razvoj"),
+        (3, "Kultura"),
+        (4, "Mladina, otroci"),
+        (5, "Razvojno sodelovanje"),
+        (6, "Sociala"),
+        (7, "Šport"),
+        (8, "Okolje, narava in prostor"),
+        (9, "Zdravje"),
+        (10, "Drugo (navedite kaj):"),
+    ]
+    ids = list(range(1, len(areas) + 1))
+    models.Area.objects.exclude(id__in=ids).delete()
+
+    for id, name in areas:
+        area, created = models.Area.objects.get_or_create(
+            id=id, defaults={"name": name}
+        )
+        if not created:
+            area.name = name
+            area.save()
+    print("done _fill_areas")
+
+
+def fill():
+    _fill_areas()
+    return "done"

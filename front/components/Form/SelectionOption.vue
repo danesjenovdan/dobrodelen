@@ -6,12 +6,15 @@
       :name="name"
       class="custom-control-input"
       :value="value"
+      :checked="isChecked"
+      @change="onChange"
     />
     <label class="custom-control-label" :for="`${name}__${value}__id`">{{ label }}</label>
   </div>
 </template>
 
 <!--
+
 <fieldset>
   <div class="custom-control custom-radio">
     <input id="cr3" type="radio" name="cr" class="custom-control-input" />
@@ -25,6 +28,10 @@
 
 <script>
 export default {
+  model: {
+    prop: 'checked',
+    event: 'change',
+  },
   props: {
     name: {
       type: String,
@@ -38,6 +45,10 @@ export default {
       type: String,
       default: null,
     },
+    checked: {
+      type: [Boolean, Array],
+      default: false,
+    },
     type: {
       type: String,
       default: 'radio',
@@ -47,6 +58,28 @@ export default {
         }
         return false;
       },
+    },
+  },
+  computed: {
+    isChecked() {
+      if (Array.isArray(this.checked)) {
+        return this.checked.filter((e) => e === this.value).length > 0;
+      }
+      return this.checked;
+    },
+  },
+  methods: {
+    onChange(event) {
+      let val = event.target.checked;
+      if (Array.isArray(this.checked)) {
+        if (val) {
+          val = this.checked.slice();
+          val.push(this.value);
+        } else {
+          val = this.checked.filter((e) => e !== this.value);
+        }
+      }
+      this.$emit('change', val);
     },
   },
 };
