@@ -2,14 +2,14 @@
   <div class="row button-row">
     <div class="col-6">
       <div v-if="page > 0" class="prev-button float-left">
-        <button class="btn btn-primary" @click="$emit('change', page - 1)">
+        <button class="btn btn-primary" :disabled="disabled" @click="$emit('change', page - 1)">
           Nazaj
         </button>
       </div>
     </div>
     <div class="col-6">
       <div v-if="page < pages" class="next-button float-right">
-        <button class="btn btn-primary" @click="$emit('change', page + 1)">
+        <button class="btn btn-primary" :disabled="disabled" @click="$emit('change', page + 1)">
           <template v-if="page < pages - 1">
             Naprej
           </template>
@@ -32,6 +32,10 @@ export default {
     pages: {
       type: Number,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };

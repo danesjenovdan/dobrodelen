@@ -115,70 +115,70 @@
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="1"
+                :value="1"
                 label="Človekove pravice, demokracija in enakost"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="2"
+                :value="2"
                 label="Izobraževanje, raziskave in razvoj"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="3"
+                :value="3"
                 label="Kultura"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="4"
+                :value="4"
                 label="Mladina, otroci"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="5"
+                :value="5"
                 label="Razvojno sodelovanje"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="6"
+                :value="6"
                 label="Sociala"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="7"
+                :value="7"
                 label="Šport"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="8"
+                :value="8"
                 label="Okolje, narava in prostor"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="9"
+                :value="9"
                 label="Zdravje"
               />
               <selection-option
                 v-model="data[1].area"
                 type="checkbox"
                 name="area"
-                value="10"
+                :value="10"
                 label="Drugo (navedite kaj):"
               />
             </form-category>
@@ -391,9 +391,16 @@
             </form-category>
           </template>
 
+          <template v-else-if="activeStage === 4">
+            <h4>Prijava je bila uspešna!</h4>
+            <p>Za ponovno urejanje podatkov, si shranite ta url:</p>
+            <code>{{ windowLocation }}</code>
+          </template>
+
           <prev-next-buttons
             :page="activeStage"
             :pages="stages.length"
+            :disabled="saving"
             @change="onChangeStage(true, $event)"
           />
         </form>
@@ -427,6 +434,7 @@ export default {
   data() {
     return {
       apiBaseUrl: process.env.API_BASE_URL,
+      windowLocation: '',
       stages: [
         {
           label: 'Osnovni podatki',
@@ -441,7 +449,8 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 0,
+      activeStage: 2,
+      saving: false,
     };
   },
   async asyncData({ $axios, query, error }) {
@@ -512,6 +521,11 @@ export default {
       data,
       dataErrors: {},
     };
+  },
+  mounted() {
+    if (typeof window !== 'undefined') {
+      this.windowLocation = window.location.href;
+    }
   },
   methods: {
     async onChangeStage(save, activeStage) {

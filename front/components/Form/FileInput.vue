@@ -37,7 +37,7 @@ export default {
       default: 'Naloži datoteko',
     },
     value: {
-      type: Object,
+      type: [Object, String],
       default: null,
     },
     hasError: {
@@ -46,11 +46,13 @@ export default {
     },
   },
   data() {
-    const fileName =
+    const filePath =
+      (typeof this.value === 'string' && this.value) ||
       (this.value && this.value.file && this.value.file.name) ||
       (this.value && this.value.name) ||
-      (this.value && this.value.url && last(this.value.url.split('/'))) ||
+      (this.value && this.value.url) ||
       null;
+    const fileName = (filePath && decodeURIComponent(last(filePath.split('/')))) || null;
     return {
       fileName,
     };
