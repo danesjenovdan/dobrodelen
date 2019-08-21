@@ -1,7 +1,11 @@
 <template>
   <div class="content">
     <intro-text lead="Doniraj pametno." icon="heart" />
-    <organization-list :organizations="organizations" />
+    <organization-list
+      :organizations="organizations"
+      :sort-query="orgSortQuery"
+      @change="onOrgListChange"
+    />
   </div>
 </template>
 
@@ -14,11 +18,27 @@ export default {
     IntroText,
     OrganizationList,
   },
-  async asyncData({ $axios }) {
-    const orgsResp = await $axios.$get('http://127.0.0.1:8000/api/organizations/');
+  async asyncData({ $axios, query }) {
+    const orgSortQuery = query.sort || undefined;
+    const orgsResp = await $axios.$get('/api/organizations/');
     return {
       organizations: orgsResp.results,
+      orgSortQuery,
     };
+  },
+  methods: {
+    onOrgListChange(changes) {
+      const query = {};
+      if (changes.sort) {
+        query.sort = changes.sort;
+      }
+      if (changes.search) {
+        query.q = changes.search;
+      }
+      this.$router.replace({
+        query,
+      });
+    },
   },
   head() {
     return {

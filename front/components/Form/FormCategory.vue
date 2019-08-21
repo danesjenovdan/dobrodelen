@@ -31,10 +31,19 @@ fieldset {
     letter-spacing: 0.2em;
     margin-bottom: 1.5rem;
 
+    @include media-breakpoint-down(sm) {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     + small {
       margin-top: -1.5rem;
       margin-bottom: 1.5rem;
       font-size: 0.9375rem;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 0.75rem;
+      }
     }
   }
 }

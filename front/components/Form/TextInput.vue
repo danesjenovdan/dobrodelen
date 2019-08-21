@@ -74,15 +74,25 @@ export default {
   overflow: hidden;
   margin-bottom: 3rem;
 
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1.5rem;
+  }
+
   .form-control {
     border: 0;
     background: rgba(#f6f2f0, 0.4);
     font-size: 1.85rem;
     font-weight: 300;
-    padding: 1rem 2rem;
+    // padding: 1rem 2rem;
     padding: 1.5rem 2rem 0.25rem;
     height: 5rem;
     border-bottom: 2px solid rgba($blue, 0.3);
+
+    @include media-breakpoint-down(sm) {
+      height: 3.5rem;
+      font-size: 1.5rem;
+      padding: 1rem 1.5rem 0;
+    }
 
     &::placeholder {
       font-weight: 300;
@@ -123,6 +133,11 @@ export default {
     transform: translate(0.1rem, 0.75rem) scale(1);
     cursor: text;
     transition: all 0.2s;
+
+    @include media-breakpoint-down(sm) {
+      margin-left: 1.5rem;
+      transform: translate(0.05rem, 0.4rem) scale(1);
+    }
   }
 
   .form-control::placeholder {
@@ -130,7 +145,7 @@ export default {
   }
 
   .form-control:placeholder-shown + label {
-    max-width: 80%;
+    max-width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -138,18 +153,30 @@ export default {
     font-weight: 300;
     transform-origin: left bottom;
     transform: translate(-0.075rem, 2.5rem) scale(1.97);
+
+    @include media-breakpoint-down(sm) {
+      transform: translate(-0.05rem, 1.75rem) scale(1.61);
+    }
   }
 
   .form-control:not(:placeholder-shown) + label,
   .form-control:focus + label {
     font-weight: 400;
     transform: translate(0.1rem, 0.75rem) scale(1);
+
+    @include media-breakpoint-down(sm) {
+      transform: translate(0.05rem, 0.4rem) scale(1);
+    }
   }
 
   .invalid-feedback {
     display: block;
     font-size: 0.9375rem;
     padding: 0 2rem;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0 1.5rem;
+    }
   }
 }
 </style>

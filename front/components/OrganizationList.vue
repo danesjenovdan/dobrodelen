@@ -2,39 +2,58 @@
   <div class="organization-list">
     <form action="#" method="get" @submit.prevent>
       <div class="form-row align-items-center justify-content-center">
-        <div class="col-auto">
-          <input class="form-control" type="text" placeholder="Poišči organizacijo" />
+        <div class="col-12 col-md-6 col-md-auto">
+          <input
+            v-model="searchText"
+            class="form-control"
+            type="text"
+            placeholder="Poišči organizacijo"
+          />
         </div>
-        <div class="col-auto">
+        <!-- <div class="col-3 col-md-auto">
           <input class="form-control btn btn-warning" type="submit" value="Išči" />
-        </div>
+        </div> -->
       </div>
     </form>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th class="can-sort desc">
+          <th
+            :class="[
+              'can-sort',
+              { desc: sortKey === 'name' && !sortAsc },
+              { asc: sortKey === 'name' && sortAsc },
+            ]"
+            @click="changeSort('name')"
+          >
             <span>Ime</span>
           </th>
           <th>
             <span>Opis</span>
           </th>
-          <th class="can-sort">
+          <th
+            :class="[
+              'can-sort',
+              { desc: sortKey === 'stars' && !sortAsc },
+              { asc: sortKey === 'stars' && sortAsc },
+            ]"
+            @click="changeSort('stars')"
+          >
             <span>Ocena</span>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="org in organizations" :key="org.id" @click="onOrgClick(org)">
+        <tr v-for="org in sortedOrgs" :key="org.id" @click="onOrgClick(org)">
           <td>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
+            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-image-link">
               <div class="embed-responsive embed-responsive-1by1">
                 <div class="embed-responsive-item">
                   <div class="img-container">
                     <img
                       :src="
                         org.cover_photo
-                          ? `http://127.0.0.1:8000${org.cover_photo.url}`
+                          ? `${apiBaseUrl}${org.cover_photo.url}`
                           : '/img/placeholder.png'
                       "
                       alt="organization image"
@@ -44,19 +63,21 @@
                 </div>
               </div>
             </nuxt-link>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }">
+            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-title-link">
               <strong class="lead">{{ org.name }}</strong>
             </nuxt-link>
           </td>
           <td>
-            <p class="lead">{{ org.description }}</p>
+            <p class="lead">{{ shorten(org.description) }}</p>
           </td>
           <td>
-            <i
-              v-for="i in 5"
-              :key="i"
-              :class="['icon', 'icon-star', { 'icon-star--full': org.stars >= i }]"
-            />
+            <div class="stars">
+              <i
+                v-for="i in 5"
+                :key="i"
+                :class="['icon', 'icon-star', { 'icon-star--full': org.stars >= i }]"
+              />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -65,16 +86,100 @@
 </template>
 
 <script>
+import { debounce } from 'lodash';
+
 export default {
   props: {
     organizations: {
       type: Array,
       required: true,
     },
+    sortQuery: {
+      type: String,
+      default: '-stars',
+    },
+  },
+  data() {
+    const [sortKey, sortAsc] =
+      this.sortQuery[0] === '-' ? [this.sortQuery.slice(1), false] : [this.sortQuery, true];
+    return {
+      apiBaseUrl: process.env.API_BASE_URL,
+      sortKey,
+      sortAsc,
+      searchText: '',
+    };
+  },
+  computed: {
+    filteredOrgs() {
+      const orgs = this.organizations || [];
+      const filters = this.searchText
+        .toLowerCase()
+        .split(/\s+/g)
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      if (!filters || !filters.length) {
+        return orgs;
+      }
+
+      return orgs.filter((org) => {
+        return filters.every((filter) => {
+          return org.name.toLowerCase().indexOf(filter) !== -1;
+        });
+      });
+    },
+    sortedOrgs() {
+      const orgs = this.filteredOrgs.slice();
+      orgs.sort((a, b) => {
+        if (!this.sortAsc) {
+          [a, b] = [b, a];
+        }
+        const aVal = a[this.sortKey];
+        const bVal = b[this.sortKey];
+        const aType = typeof aVal;
+        const bType = typeof bVal;
+        if (aType === bType) {
+          if (aType === 'number') {
+            return aVal - bVal;
+          }
+          if (aType === 'string') {
+            return aVal.localeCompare(bVal, 'sl');
+          }
+        }
+        return String(aVal).localeCompare(String(bVal), 'sl');
+      });
+      return orgs;
+    },
+  },
+  watch: {
+    searchText() {
+      this.emitChange();
+    },
   },
   methods: {
+    changeSort(key) {
+      if (key === this.sortKey) {
+        this.sortAsc = !this.sortAsc;
+      } else {
+        this.sortAsc = true;
+        this.sortKey = key;
+      }
+      this.emitChange();
+    },
+    emitChange: debounce(function emitChange() {
+      this.$emit('change', {
+        sort: `${this.sortAsc ? '' : '-'}${this.sortKey}`,
+        search: this.searchText,
+      });
+    }, 250),
     onOrgClick(org) {
       this.$router.push({ name: 'org-id', params: { id: org.id } });
+    },
+    shorten(text, max = 320) {
+      if (text.length > max) {
+        return `${text.slice(0, text.lastIndexOf(' ', max))} ...`;
+      }
+      return text;
     },
   },
 };
@@ -85,19 +190,36 @@ export default {
   background: #f6f2f0;
   padding: 0 4em;
 
+  @include media-breakpoint-down(sm) {
+    padding: 0 1rem;
+  }
+
   form {
     padding: 7rem 0;
+
+    @include media-breakpoint-down(sm) {
+      padding: 3rem 0;
+    }
 
     .form-control {
       height: 61px;
       padding: 0 2rem;
       font-size: 1.5rem;
-
       border: 0;
 
+      @include media-breakpoint-down(sm) {
+        height: 3rem;
+        padding: 0 1.25rem;
+        font-size: 1rem;
+      }
+
       &[type='text'] {
-        width: 42rem;
+        // width: 42rem;
         margin-right: 0.6rem;
+
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+        }
 
         &::placeholder {
           letter-spacing: 0.2em;
@@ -108,15 +230,96 @@ export default {
         width: 12rem;
         font-weight: 600;
         letter-spacing: 0.2em;
+
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+        }
       }
     }
   }
 
   .table {
+    @include media-breakpoint-down(sm) {
+      &,
+      thead,
+      tbody {
+        display: block;
+      }
+
+      tr {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      thead tr {
+        flex-direction: row;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        display: none;
+      }
+
+      tbody {
+        tr {
+          position: relative;
+
+          td:nth-child(1) {
+            padding: 0 1rem 1rem;
+          }
+
+          .org-image-link {
+            // display: none;
+            position: absolute;
+            top: 1rem;
+
+            .embed-responsive {
+              width: 3rem;
+              height: 3rem;
+              margin: 0;
+            }
+          }
+
+          // .org-title-link {
+          //   // display: inline-block;
+          //   // margin-top: 2rem;
+          // }
+
+          strong.lead {
+            display: block;
+            // text-align: center;
+            font-size: 1.15rem;
+          }
+
+          td:nth-child(3) {
+            padding: 1rem 1rem 0.5rem;
+            border-bottom: 0;
+
+            .stars {
+              text-align: right;
+              // position: absolute;
+              bottom: 0.5rem;
+              right: 0.5rem;
+              height: 3rem;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+
+              .icon {
+                width: 2rem;
+                height: 2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
     th,
     td {
       padding-left: 1rem;
       padding-right: 1rem;
+      border-top: 0;
     }
 
     th {
@@ -127,6 +330,10 @@ export default {
       cursor: default;
       border-top: 0;
       border-bottom: 1px solid $blue;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem;
+      }
 
       &:first-child {
         width: 31rem;
@@ -218,8 +425,10 @@ export default {
         font-weight: 600;
       }
 
-      .icon {
-        margin: 0 0.2rem;
+      .stars {
+        .icon {
+          margin: 0 0.2rem;
+        }
       }
     }
 

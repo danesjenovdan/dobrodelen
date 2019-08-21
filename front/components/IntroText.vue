@@ -1,12 +1,12 @@
 <template>
   <div class="jumbotron">
     <div class="row justify-content-center">
-      <div class="col-10 text-center">
+      <div class="col-12 col-md-10 text-center">
         <p v-if="lead" class="lead" v-text="lead" />
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-7 text-center">
+      <div class="col-12 col-md-7 text-center">
         <p v-if="text" class="text" v-text="text" />
         <div v-if="icon" :class="`icon icon-${icon} mt-4`" />
       </div>
@@ -38,11 +38,20 @@ export default {
   background: transparent;
   padding: 5rem 2rem 5rem;
 
+  @include media-breakpoint-down(sm) {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+  }
+
   p.lead {
     font-size: 3.1rem;
     line-height: 1.25;
     letter-spacing: 0.2em;
     margin: 0;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1.5rem;
+    }
   }
 
   p.text {
@@ -51,11 +60,21 @@ export default {
     color: #696969;
     font-weight: 300;
     margin-top: 2rem;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
   }
 
   .icon {
     width: 13rem;
     height: 13rem;
+
+    @include media-breakpoint-down(sm) {
+      width: 7rem;
+      height: 7rem;
+    }
   }
 }
 </style>

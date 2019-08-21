@@ -26,6 +26,10 @@ export default {
 .form-group {
   margin-bottom: 3rem;
 
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1.5rem;
+  }
+
   .btn-form {
     border-width: 2px;
     border-radius: 0.41em;
@@ -35,9 +39,17 @@ export default {
     letter-spacing: 0.2em;
     width: auto;
     height: 5rem;
-    padding: 1rem 1.5rem 1rem 5rem;
+    padding: 0 1.5rem 0 5rem;
     background-position: left center;
     background-size: 5rem 45%;
+    text-align: left;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+      height: 3.5rem;
+      padding: 0 1.5rem 0 3.5rem;
+      background-size: 3.5rem 45%;
+    }
   }
 }
 </style>

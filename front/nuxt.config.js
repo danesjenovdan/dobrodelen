@@ -1,3 +1,5 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default {
   mode: 'universal',
   /*
@@ -14,7 +16,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content: '',
       },
     ],
     link: [
@@ -50,7 +52,15 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: isProduction ? '/' : 'http://localhost:8000',
+  },
+  /*
+   ** Environment variables for webpack (via definePlugin)
+   */
+  env: {
+    API_BASE_URL: isProduction ? '/' : 'http://localhost:8000',
+  },
   /*
    ** Build configuration
    */

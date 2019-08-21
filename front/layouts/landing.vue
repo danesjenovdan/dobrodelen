@@ -12,5 +12,11 @@
   align-items: center;
   justify-content: center;
   padding: 8rem 13rem;
+
+  @include media-breakpoint-down(sm) {
+    height: auto;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
 }
 </style>
