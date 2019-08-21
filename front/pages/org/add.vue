@@ -393,7 +393,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 2,
+      activeStage: 0,
       data: [
         {
           name: null,
@@ -444,24 +444,40 @@ export default {
       ],
     };
   },
+  async asyncData({ $axios, query, error }) {
+    const editId = query.edit_id || null;
+    const editKey = query.edit_key || null;
+    let initialData = null;
+    if (editId && editKey) {
+      initialData = await $axios.$get(`/api/organizations/${editId}/?edit_key=${editKey}`);
+    }
+    return {
+      editId,
+      editKey,
+      initialData,
+    };
+  },
   methods: {
-    onChangeStage(activeStage) {
-      this.saveData(this.activeStage);
+    async onChangeStage(activeStage) {
+      const saved = await this.saveData(this.activeStage);
+      if (saved) {
+        this.activeStage = activeStage;
 
-      this.activeStage = activeStage;
-
-      const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
-      this.$nextTick(() => {
-        window.scrollTo(window.scrollX, top);
-        const firstElem = this.$refs.form.querySelector(
-          'button, input:not([type=image]), select, textarea',
-        );
-        if (firstElem) {
-          firstElem.focus();
-        }
-      });
+        const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
+        this.$nextTick(() => {
+          window.scrollTo(window.scrollX, top);
+          const firstElem = this.$refs.form.querySelector(
+            'button, input:not([type=image]), select, textarea',
+          );
+          if (firstElem) {
+            firstElem.focus();
+          }
+        });
+      }
     },
     async saveData(stage) {
+      this.saving = true;
+
       const data = this.data[stage];
       const keys = Object.keys(data).filter((key) => data[key] != null);
 
@@ -498,18 +514,47 @@ export default {
       let method = 'post';
       let editKey = null;
       let id = null;
-      if (Object.keys(jsonData).length > 0) {
-        const jsonRes = await this.createOrUpdateOrg(method, jsonData, id, editKey);
-        editKey = editKey || jsonRes.edit_key;
-        id = id || jsonRes.id;
-        method = 'patch';
+      try {
+        if (Object.keys(jsonData).length > 0) {
+          const jsonRes = await this.createOrUpdateOrg(method, jsonData, id, editKey);
+          editKey = editKey || jsonRes.edit_key;
+          id = id || jsonRes.id;
+          method = 'patch';
+        }
+        if (hasFormData) {
+          const formRes = await this.createOrUpdateOrg(method, formData, id, editKey);
+          editKey = editKey || formRes.edit_key;
+          id = id || formRes.id;
+          method = 'patch';
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.dir(error);
+
+        if (error.response && error.response.data) {
+          Object.keys(error.response.data).forEach((key) => {
+            const el = this.$refs.form.querySelector(`[name="${key}"]`);
+            console.log(el);
+          });
+        } else {
+          alert(error.message);
+        }
+
+        return false;
       }
-      if (hasFormData) {
-        const formRes = await this.createOrUpdateOrg(method, formData, id, editKey);
-        editKey = editKey || formRes.edit_key;
-        id = id || formRes.id;
-        method = 'patch';
+
+      console.log(id, editKey);
+      if (id && editKey) {
+        this.$router.replace({
+          query: {
+            edit_id: id,
+            edit_key: editKey,
+          },
+        });
       }
+
+      this.saving = false;
+      return true;
     },
     createOrUpdateOrg(method, data, id, editKey) {
       const query = `${editKey ? `?edit_key=${editKey}` : ''}`;
