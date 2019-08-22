@@ -72,6 +72,9 @@ export default {
       if (Array.isArray(this.checked)) {
         return this.checked.filter((e) => e === this.value).length > 0;
       }
+      if (this.type === 'radio') {
+        return this.checked === this.value;
+      }
       return this.checked;
     },
   },
@@ -88,6 +91,8 @@ export default {
         } else {
           val = this.checked.filter((e) => e !== this.value);
         }
+      } else if (this.type === 'radio') {
+        val = this.value;
       }
       this.$emit('change', val);
     },
