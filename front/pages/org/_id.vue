@@ -146,7 +146,7 @@
 </template>
 
 <script>
-import { keys } from 'lodash';
+import { keys, escape as _escape } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import formatPhoneNumberMixin from '~/mixins/formatPhoneNumber.js';
 
@@ -197,7 +197,7 @@ export default {
       return keys(domains).find((key) => domains[key].some((d) => url.indexOf(d) !== -1)) || 'link';
     },
     paragraphise(text) {
-      const paragraphs = text
+      const paragraphs = _escape(text)
         .trim()
         .replace(/\r\n/g, '\n')
         .replace(/\r/g, '\n')
