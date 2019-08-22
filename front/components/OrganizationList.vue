@@ -87,6 +87,7 @@
 
 <script>
 import { debounce } from 'lodash';
+import stableSort from 'stable';
 
 export default {
   props: {
@@ -129,13 +130,17 @@ export default {
       });
     },
     sortedOrgs() {
-      const orgs = this.filteredOrgs.slice();
-      orgs.sort((a, b) => {
+      return stableSort(this.filteredOrgs, (a, b) => {
         if (!this.sortAsc) {
           [a, b] = [b, a];
         }
+
         const aVal = a[this.sortKey];
         const bVal = b[this.sortKey];
+        if (aVal === bVal) {
+          return 0;
+        }
+
         const aType = typeof aVal;
         const bType = typeof bVal;
         if (aType === bType) {
@@ -148,7 +153,6 @@ export default {
         }
         return String(aVal).localeCompare(String(bVal), 'sl');
       });
-      return orgs;
     },
   },
   watch: {
