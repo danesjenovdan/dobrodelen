@@ -179,7 +179,10 @@
                 type="checkbox"
                 name="area"
                 :value="10"
-                label="Drugo (navedite kaj):"
+                label="Drugo:"
+                custom-input
+                :custom-input-value="data[1].custom_area"
+                @custom-change="data[1].custom_area = $event"
               />
             </form-category>
 
@@ -481,6 +484,7 @@ export default {
         mission: initialData.mission || '',
         description: initialData.description || '',
         area: initialData.area ? initialData.area.slice() : [],
+        custom_area: initialData.custom_area || '',
         avg_revenue: initialData.avg_revenue || '',
         employed: initialData.employed || 0,
         is_charity: initialData.is_charity || false,
@@ -554,6 +558,11 @@ export default {
 
       const data = this.data[stage];
       if (data) {
+        // Delete custom area if not selected
+        if (data.area && data.area.filter((e) => e === 10).length === 0) {
+          data.custom_area = '';
+        }
+
         const keys = Object.keys(data).filter((key) => {
           return !isEqual(data[key], this.initialData[key]);
         });

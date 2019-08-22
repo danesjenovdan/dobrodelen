@@ -9,22 +9,21 @@
       :checked="isChecked"
       @change="onChange"
     />
-    <label class="custom-control-label" :for="`${name}__${value}__id`">{{ label }}</label>
-  </div>
-</template>
-
-<!--
-
-<fieldset>
-  <div class="custom-control custom-radio">
-    <input id="cr3" type="radio" name="cr" class="custom-control-input" />
-    <label class="custom-control-label d-flex align-items-center" for="cr3">
-      Drugo:
-      <input class="form-control" />
+    <label
+      :class="['custom-control-label', { 'has-custom-input': customInput }]"
+      :for="`${name}__${value}__id`"
+    >
+      {{ label }}
+      <input
+        v-if="customInput"
+        ref="customInput"
+        class="form-control"
+        :value="customInputValue"
+        @input="onCustomChange"
+      />
     </label>
   </div>
-</fieldset>
--->
+</template>
 
 <script>
 export default {
@@ -59,6 +58,14 @@ export default {
         return false;
       },
     },
+    customInput: {
+      type: Boolean,
+      default: false,
+    },
+    customInputValue: {
+      type: String,
+      default: null,
+    },
   },
   computed: {
     isChecked() {
@@ -71,6 +78,9 @@ export default {
   methods: {
     onChange(event) {
       let val = event.target.checked;
+      if (val && this.customInput) {
+        this.$refs.customInput.focus();
+      }
       if (Array.isArray(this.checked)) {
         if (val) {
           val = this.checked.slice();
@@ -80,6 +90,15 @@ export default {
         }
       }
       this.$emit('change', val);
+    },
+    onCustomChange(event) {
+      if (event.target.value && !this.isChecked) {
+        this.onChange({ target: { checked: true } });
+      }
+      if (!event.target.value && this.isChecked) {
+        this.onChange({ target: { checked: false } });
+      }
+      this.$emit('custom-change', event.target.value);
     },
   },
 };
@@ -118,8 +137,10 @@ export default {
       border-width: 2px;
     }
 
-    &.d-flex {
+    &.has-custom-input {
       .form-control {
+        margin-top: -1rem;
+        margin-bottom: -1rem;
         margin-left: 1.5rem;
         border: 0;
         background: rgba(#f6f2f0, 0.4);
@@ -128,6 +149,13 @@ export default {
         padding: 0.5rem 1.75rem;
         border-bottom: 2px solid rgba($blue, 0.3);
         height: 4rem;
+
+        @include media-breakpoint-down(sm) {
+          font-size: 1.25rem;
+          padding-left: 1rem;
+          margin-left: 1rem;
+          height: 2.5rem;
+        }
 
         &,
         &:focus {
