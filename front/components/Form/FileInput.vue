@@ -34,7 +34,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Naloži datoteko',
+      default: 'Naložite datoteko',
     },
     value: {
       type: [Object, String],

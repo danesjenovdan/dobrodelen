@@ -68,7 +68,7 @@
                 />
               </template>
               <add-button
-                text="Dodaj družbeni profil"
+                text="Dodajte družbeni profil"
                 @click.native="data[0].links.push({ url: null })"
               />
             </form-category>
@@ -77,6 +77,7 @@
               <file-input
                 v-model="data[0].cover_photo"
                 name="cover_photo"
+                label="Naložite sliko"
                 :has-error="dataErrors.cover_photo"
               />
             </form-category>
@@ -230,6 +231,430 @@
           </template>
 
           <template v-else-if="activeStage === 2">
+            <form-category title="Nadzorni odbor">
+              <selection-option
+                v-model="data[2].has_supervisory_board"
+                type="checkbox"
+                name="has_supervisory_board"
+                label="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal"
+              />
+              <text-input
+                v-if="data[2].has_supervisory_board"
+                v-model="data[2].supervisory_board_dates"
+                name="supervisory_board_dates"
+                label="Datumi srečanj v preteklem letu"
+                :has-error="dataErrors.supervisory_board_dates"
+              />
+            </form-category>
+            <form-category v-if="data[2].has_supervisory_board" title="Člani nadzornega odbora">
+              <template v-for="(member, i) in data[2].supervisory_board_members">
+                <div :key="`supervisory_board_members__${i}`">
+                  <text-input
+                    v-model="member.name"
+                    :name="`supervisory_board_members__name__${i}`"
+                    label="Ime in priimek"
+                    :has-error="
+                      dataErrors.supervisory_board_members &&
+                        dataErrors.supervisory_board_members[i]
+                    "
+                  />
+                  <div>
+                    <h4>Povezava z organizacijo</h4>
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="1"
+                      label="Član"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="2"
+                      label="Predstavnik uporabnikov"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="3"
+                      label="Predstavnik zaposlenih"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="4"
+                      label="Predstavnik ustanoviteljev"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="5"
+                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="6"
+                      label="Neodvisni predstavnik"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`supervisory_board_members__role__${i}`"
+                      :value="7"
+                      label="Drugo:"
+                      custom-input
+                      :custom-input-value="member.custom_role"
+                      @custom-change="member.custom_role = $event"
+                    />
+                  </div>
+                  <h4>Nadomestilo</h4>
+                  <selection-option
+                    v-model="member.is_paid"
+                    type="checkbox"
+                    :name="`supervisory_board_members__is_paid__${i}`"
+                    label="Za svoje delo v odboru prejema nadomestilo"
+                  />
+                  <hr />
+                  <br />
+                </div>
+              </template>
+              <add-button
+                text="Dodajte člana"
+                @click.native="
+                  data[2].supervisory_board_members.push({
+                    name: '',
+                    role: 0,
+                    custom_role: '',
+                    is_paid: false,
+                  })
+                "
+              />
+            </form-category>
+
+            <form-category title="Upravni odbor">
+              <selection-option
+                v-model="data[2].has_management_board"
+                type="checkbox"
+                name="has_management_board"
+                label="Organizacija ima upravni odbor, ki se je v preteklem letu srečal"
+              />
+              <text-input
+                v-if="data[2].has_management_board"
+                v-model="data[2].management_board_dates"
+                name="management_board_dates"
+                label="Datumi srečanj v preteklem letu"
+                :has-error="dataErrors.management_board_dates"
+              />
+            </form-category>
+            <form-category v-if="data[2].has_management_board" title="Člani upravnega odbora">
+              <template v-for="(member, i) in data[2].management_board_members">
+                <div :key="`management_board_members__${i}`">
+                  <text-input
+                    v-model="member.name"
+                    :name="`management_board_members__name__${i}`"
+                    label="Ime in priimek"
+                    :has-error="
+                      dataErrors.management_board_members && dataErrors.management_board_members[i]
+                    "
+                  />
+                  <div>
+                    <h4>Povezava z organizacijo</h4>
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="1"
+                      label="Član"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="2"
+                      label="Predstavnik uporabnikov"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="3"
+                      label="Predstavnik zaposlenih"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="4"
+                      label="Predstavnik ustanoviteljev"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="5"
+                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="6"
+                      label="Neodvisni predstavnik"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`management_board_members__role__${i}`"
+                      :value="7"
+                      label="Drugo:"
+                      custom-input
+                      :custom-input-value="member.custom_role"
+                      @custom-change="member.custom_role = $event"
+                    />
+                  </div>
+                  <h4>Nadomestilo</h4>
+                  <selection-option
+                    v-model="member.is_paid"
+                    type="checkbox"
+                    :name="`management_board_members__is_paid__${i}`"
+                    label="Za svoje delo v odboru prejema nadomestilo"
+                  />
+                  <hr />
+                  <br />
+                </div>
+              </template>
+              <add-button
+                text="Dodajte člana"
+                @click.native="
+                  data[2].management_board_members.push({
+                    name: '',
+                    role: 0,
+                    custom_role: '',
+                    is_paid: false,
+                  })
+                "
+              />
+            </form-category>
+
+            <form-category title="Svet zavoda">
+              <selection-option
+                v-model="data[2].has_council"
+                type="checkbox"
+                name="has_council"
+                label="Organizacija ima svet zavoda, ki se je v preteklem letu srečal"
+              />
+              <text-input
+                v-if="data[2].has_council"
+                v-model="data[2].council_dates"
+                name="council_dates"
+                label="Datumi srečanj v preteklem letu"
+                :has-error="dataErrors.council_dates"
+              />
+            </form-category>
+            <form-category v-if="data[2].has_council" title="Člani sveta zavoda">
+              <template v-for="(member, i) in data[2].council_members">
+                <div :key="`council_members__${i}`">
+                  <text-input
+                    v-model="member.name"
+                    :name="`council_members__name__${i}`"
+                    label="Ime in priimek"
+                    :has-error="dataErrors.council_members && dataErrors.council_members[i]"
+                  />
+                  <div>
+                    <h4>Povezava z organizacijo</h4>
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="1"
+                      label="Član"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="2"
+                      label="Predstavnik uporabnikov"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="3"
+                      label="Predstavnik zaposlenih"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="4"
+                      label="Predstavnik ustanoviteljev"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="5"
+                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="6"
+                      label="Neodvisni predstavnik"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`council_members__role__${i}`"
+                      :value="7"
+                      label="Drugo:"
+                      custom-input
+                      :custom-input-value="member.custom_role"
+                      @custom-change="member.custom_role = $event"
+                    />
+                  </div>
+                  <h4>Nadomestilo</h4>
+                  <selection-option
+                    v-model="member.is_paid"
+                    type="checkbox"
+                    :name="`council_members__is_paid__${i}`"
+                    label="Za svoje delo v odboru prejema nadomestilo"
+                  />
+                  <hr />
+                  <br />
+                </div>
+              </template>
+              <add-button
+                text="Dodajte člana"
+                @click.native="
+                  data[2].council_members.push({
+                    name: '',
+                    role: 0,
+                    custom_role: '',
+                    is_paid: false,
+                  })
+                "
+              />
+            </form-category>
+
+            <form-category title="Drugo">
+              <selection-option
+                v-model="data[2].has_other_board"
+                type="checkbox"
+                name="has_other_board"
+                label="Organizacija ima drug organ, ki se je v preteklem letu srečal"
+              />
+              <text-input
+                v-if="data[2].has_other_board"
+                v-model="data[2].other_board_name"
+                name="other_board_name"
+                label="Ime organa"
+                :has-error="dataErrors.other_board_dates"
+              />
+              <text-input
+                v-if="data[2].has_other_board"
+                v-model="data[2].other_board_dates"
+                name="other_board_dates"
+                label="Datumi srečanj v preteklem letu"
+                :has-error="dataErrors.other_board_dates"
+              />
+            </form-category>
+            <form-category v-if="data[2].has_other_board" title="Člani organa">
+              <template v-for="(member, i) in data[2].other_board_members">
+                <div :key="`other_board_members__${i}`">
+                  <text-input
+                    v-model="member.name"
+                    :name="`other_board_members__name__${i}`"
+                    label="Ime in priimek"
+                    :has-error="dataErrors.other_board_members && dataErrors.other_board_members[i]"
+                  />
+                  <div>
+                    <h4>Povezava z organizacijo</h4>
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="1"
+                      label="Član"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="2"
+                      label="Predstavnik uporabnikov"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="3"
+                      label="Predstavnik zaposlenih"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="4"
+                      label="Predstavnik ustanoviteljev"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="5"
+                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="6"
+                      label="Neodvisni predstavnik"
+                    />
+                    <selection-option
+                      v-model="member.role"
+                      type="radio"
+                      :name="`other_board_members__role__${i}`"
+                      :value="7"
+                      label="Drugo:"
+                      custom-input
+                      :custom-input-value="member.custom_role"
+                      @custom-change="member.custom_role = $event"
+                    />
+                  </div>
+                  <h4>Nadomestilo</h4>
+                  <selection-option
+                    v-model="member.is_paid"
+                    type="checkbox"
+                    :name="`other_board_members__is_paid__${i}`"
+                    label="Za svoje delo v odboru prejema nadomestilo"
+                  />
+                  <hr />
+                  <br />
+                </div>
+              </template>
+              <add-button
+                text="Dodajte člana"
+                @click.native="
+                  data[2].other_board_members.push({
+                    name: '',
+                    role: 0,
+                    custom_role: '',
+                    is_paid: false,
+                  })
+                "
+              />
+            </form-category>
+
             <form-category title="Zapisniki seje">
               <selection-option
                 v-model="data[2].has_minutes_meeting"
@@ -493,6 +918,21 @@ export default {
         zero5: initialData.zero5 || false,
       },
       {
+        //
+        has_supervisory_board: false,
+        supervisory_board_dates: '',
+        supervisory_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
+        has_management_board: false,
+        management_board_dates: '',
+        management_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
+        has_council: false,
+        council_dates: '',
+        council_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
+        has_other_board: false,
+        other_board_name: '',
+        other_board_dates: '',
+        other_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
+        //
         has_minutes_meeting: initialData.has_minutes_meeting || false,
         minutes_meeting: initialData.minutes_meeting || null,
       },
@@ -730,6 +1170,20 @@ export default {
 
     legend + p {
       margin-top: -1.5rem;
+    }
+
+    fieldset h4 {
+      font-weight: 300;
+      // letter-spacing: 0.2em;
+      font-size: 1.5rem;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 1.25rem;
+      }
+    }
+
+    hr {
+      border-top: 2px solid $blue;
     }
   }
 }
