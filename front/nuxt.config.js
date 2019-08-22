@@ -53,13 +53,13 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: isProduction ? '/' : 'http://localhost:8000',
+    baseURL: isProduction ? '' : 'http://localhost:8000',
   },
   /*
    ** Environment variables for webpack (via definePlugin)
    */
   env: {
-    API_BASE_URL: isProduction ? '/' : 'http://localhost:8000',
+    API_BASE_URL: isProduction ? '' : 'http://localhost:8000',
   },
   /*
    ** Build configuration

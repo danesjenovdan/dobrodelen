@@ -877,7 +877,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 2,
+      activeStage: 0,
       saving: false,
     };
   },
