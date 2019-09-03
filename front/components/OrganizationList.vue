@@ -195,7 +195,7 @@ export default {
   padding: 0 4rem 4rem;
   margin-bottom: 3.5rem;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     padding: 0 1rem 1rem;
     margin-bottom: 1rem;
   }
@@ -203,7 +203,7 @@ export default {
   form {
     padding: 7rem 0;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       padding: 3rem 0;
     }
 
@@ -213,7 +213,7 @@ export default {
       font-size: 1.5rem;
       border: 0;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         height: 3rem;
         padding: 0 1.25rem;
         font-size: 1rem;
@@ -223,7 +223,7 @@ export default {
         // width: 42rem;
         margin-right: 0.6rem;
 
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
           width: 100%;
         }
 
@@ -237,7 +237,7 @@ export default {
         font-weight: 600;
         letter-spacing: 0.2em;
 
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
           width: 100%;
         }
       }
@@ -247,7 +247,7 @@ export default {
   .table {
     margin-bottom: 0;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       &,
       thead,
       tbody {
@@ -339,12 +339,16 @@ export default {
       border-top: 0;
       border-bottom: 1px solid $blue;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         font-size: 1rem;
       }
 
       &:first-child {
         width: 31rem;
+
+        @include media-breakpoint-down(xl) {
+          width: 20rem;
+        }
       }
 
       &:last-child {

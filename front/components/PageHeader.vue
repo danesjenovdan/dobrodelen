@@ -11,11 +11,11 @@
         </nuxt-link>
         <hr />
         <div v-click-outside="() => toggleMenu(null, false)">
-          <button class="menu-button btn icon icon-menu d-md-none" @click="toggleMenu">
+          <button class="menu-button btn icon icon-menu d-lg-none" @click="toggleMenu">
             <span class="sr-only">menu</span>
           </button>
           <transition name="fade-menu">
-            <div v-if="menuOpen" class="menu-content d-md-none">
+            <div v-if="menuOpen" class="menu-content d-lg-none">
               <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-primary">
                 <span>prijava organizacije</span>
               </nuxt-link>
@@ -61,7 +61,7 @@ export default {
 header {
   margin: 3.5em 0;
 
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     margin: 1rem 0 1.5rem;
   }
 
@@ -81,7 +81,7 @@ header {
       text-align: center;
       text-decoration: none;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         display: none;
       }
 
@@ -115,8 +115,9 @@ header {
       font-weight: 700;
       line-height: 1;
       letter-spacing: 0.2em;
+      flex: 2;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         font-size: 1.5rem;
         flex: 1 0 0%;
       }
@@ -124,24 +125,25 @@ header {
       hr {
         margin: 0;
         border: none;
-        width: 3.4em;
+        flex: 1 1 0%;
+        max-width: 3.4em;
+        display: block;
         height: 0.2em;
         background: linear-gradient(to right, $blue 20%, $yellow);
         // transformed elements are antialiased differently
         // used for consistency with the opposite one that is rotated 180deg
         transform: rotate(360deg);
 
-        @include media-breakpoint-down(sm) {
-          width: auto;
-          flex: 1 1 0%;
+        @include media-breakpoint-down(md) {
           display: none;
         }
 
         &:last-of-type {
           transform: rotate(180deg);
 
-          @include media-breakpoint-down(sm) {
+          @include media-breakpoint-down(md) {
             display: block;
+            max-width: none;
           }
         }
       }
@@ -152,7 +154,7 @@ header {
         text-decoration: none;
         margin: 0 0.65em 0 0.85em;
 
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
           margin-left: 0.2rem;
           margin-right: 0.6rem;
         }
