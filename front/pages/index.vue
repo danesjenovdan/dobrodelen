@@ -1,11 +1,11 @@
 <template>
   <div class="content">
     <div class="row">
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-lg-8">
         <h1 class="text-warning">
           <striped-text-shadow text="DOBRODELEN.SI" />
         </h1>
-        <div class="icon-container-sm d-md-none">
+        <div class="icon-container-sm d-lg-none">
           <div class="icon icon-heart" />
         </div>
         <p class="lead mt-3">
@@ -22,7 +22,7 @@
           <span>VSTOPI</span>
         </nuxt-link>
       </div>
-      <div class="col-12 col-md-4 d-none d-md-block">
+      <div class="col-12 col-lg-4 d-none d-lg-block">
         <div class="icon icon-heart" />
       </div>
     </div>
@@ -49,7 +49,11 @@ export default {
     font-weight: 900;
     letter-spacing: 0.2em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(lg) {
+      font-size: 4rem;
+    }
+
+    @include media-breakpoint-down(md) {
       font-size: 2rem;
       word-break: break-all;
       text-align: center;
@@ -64,7 +68,7 @@ export default {
     color: #696969;
     margin-right: 12rem;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       font-size: 1rem;
       margin-right: 0;
       text-align: center;
@@ -77,7 +81,7 @@ export default {
       color: inherit;
       margin-right: 0;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         font-size: 1.25rem;
         text-align: center;
       }
@@ -94,7 +98,7 @@ export default {
     padding: 0.75rem 4rem;
     letter-spacing: 0.2em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       font-size: 1.25rem;
       display: block;
       margin: 0 auto;
@@ -106,6 +110,10 @@ export default {
     width: 100%;
     height: 100%;
     background-position: top 2rem center;
+
+    @include media-breakpoint-down(xl) {
+      margin-top: 7rem;
+    }
   }
 
   .icon-container-sm {
@@ -116,6 +124,7 @@ export default {
       width: 100%;
       height: 100%;
       background-position: center;
+      margin-top: 0;
     }
   }
 }
