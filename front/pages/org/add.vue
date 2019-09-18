@@ -1092,6 +1092,11 @@ export default {
           }
         });
 
+        if (stage === this.data.length - 1) {
+          // last stage
+          jsonData.is_complete = true;
+        }
+
         try {
           if (Object.keys(jsonData).length > 0) {
             await this.createOrUpdateOrg(jsonData);

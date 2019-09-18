@@ -148,7 +148,9 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "has_payment_classes",
             "cover_photo",
             "stars",
+            "signup_time_start",
             "signup_time",
+            "is_complete",
             "edit_key",
         )
 

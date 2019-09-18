@@ -29,6 +29,9 @@ class Organization(ClusterableModel):
         default=False, verbose_name="Je organizacija objavljena?"
     )
     is_complete = models.BooleanField(default=False, verbose_name="Je prijava končana?")
+    signup_time_start = models.DateTimeField(
+        blank=True, null=True, verbose_name="Čas začetka prijave"
+    )
     signup_time = models.DateTimeField(
         blank=True, null=True, verbose_name="Čas končane prijave"
     )
@@ -236,13 +239,18 @@ class Organization(ClusterableModel):
         return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
 
     def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.signup_time_start = timezone.now()
+
         if self.is_complete and not self.signup_time:
             self.signup_time = timezone.now()
+
         super().save(*args, **kwargs)
 
     panels = [
         FieldPanel("published"),
         FieldPanel("is_complete"),
+        FieldPanel("signup_time_start"),
         FieldPanel("signup_time"),
         #
         FieldPanel("name"),
