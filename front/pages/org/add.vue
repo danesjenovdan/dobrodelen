@@ -1112,19 +1112,24 @@ export default {
           if (error.response && error.response.data) {
             let focusedFirst = false;
             Object.keys(error.response.data).forEach((key) => {
-              this.$set(this.dataErrors, key, error.response.data[key].join(', '));
-              if (!focusedFirst) {
-                const el = this.$refs.form.querySelector(`[name="${key}"]`);
-                if (el) {
-                  el.focus();
-                  focusedFirst = true;
+              if (Array.isArray(error.response.data[key]) && key !== 'detail') {
+                this.$set(this.dataErrors, key, error.response.data[key].join(', '));
+                if (!focusedFirst) {
+                  const el = this.$refs.form.querySelector(`[name="${key}"]`);
+                  if (el) {
+                    el.focus();
+                    focusedFirst = true;
+                  }
                 }
+              } else {
+                alert(key + ': ' + String(error.response.data[key]));
               }
             });
           } else {
             alert(error.message);
           }
 
+          this.saving = false;
           return false;
         }
       }
