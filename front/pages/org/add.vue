@@ -822,7 +822,7 @@
           <template v-else-if="activeStage === 4">
             <h4>Prijava je bila uspešna!</h4>
             <p>Za ponovno urejanje podatkov, si shranite ta url:</p>
-            <code>{{ windowLocation }}</code>
+            <code>{{ getWindowLocation() }}</code>
           </template>
 
           <prev-next-buttons
@@ -862,7 +862,6 @@ export default {
   data() {
     return {
       apiBaseUrl: process.env.API_BASE_URL,
-      windowLocation: '',
       stages: [
         {
           label: 'Osnovni podatki',
@@ -965,11 +964,6 @@ export default {
       data,
       dataErrors: {},
     };
-  },
-  mounted() {
-    if (typeof window !== 'undefined') {
-      this.windowLocation = window.location.href;
-    }
   },
   methods: {
     async onChangeStage(save, activeStage) {
@@ -1154,6 +1148,9 @@ export default {
       }
       this.initialData = res;
       return res;
+    },
+    getWindowLocation() {
+      return typeof window !== 'undefined' ? window.location.href : '';
     },
   },
   head() {
