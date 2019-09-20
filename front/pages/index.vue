@@ -18,7 +18,7 @@
           kriterijih, ki se nanašajo na 4 področja – nadzor nad poslovanjem; strateško načrtovanje;
           finančno upravljanje in transparentnost.
         </p>
-        <nuxt-link :to="{ name: 'organizations' }" class="btn btn-warning mt-5">
+        <nuxt-link :to="{ name: 'organizacije' }" class="btn btn-warning mt-5">
           <span>VSTOPI</span>
         </nuxt-link>
       </div>

@@ -46,7 +46,10 @@
       <tbody>
         <tr v-for="org in sortedOrgs" :key="org.id" @click="onOrgClick(org)">
           <td>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-image-link">
+            <nuxt-link
+              :to="{ name: 'organizacija-id', params: { id: org.id } }"
+              class="org-image-link"
+            >
               <div class="embed-responsive embed-responsive-1by1">
                 <div class="embed-responsive-item">
                   <div class="img-container">
@@ -63,7 +66,10 @@
                 </div>
               </div>
             </nuxt-link>
-            <nuxt-link :to="{ name: 'org-id', params: { id: org.id } }" class="org-title-link">
+            <nuxt-link
+              :to="{ name: 'organizacija-id', params: { id: org.id } }"
+              class="org-title-link"
+            >
               <strong class="lead">{{ org.name }}</strong>
             </nuxt-link>
           </td>
@@ -177,7 +183,7 @@ export default {
       });
     }, 250),
     onOrgClick(org) {
-      this.$router.push({ name: 'org-id', params: { id: org.id } });
+      this.$router.push({ name: 'organizacija-id', params: { id: org.id } });
     },
     shorten(text, max = 320) {
       if (text.length > max) {

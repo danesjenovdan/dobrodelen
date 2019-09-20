@@ -1,12 +1,12 @@
 <template>
   <header>
     <nav>
-      <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-primary">
+      <nuxt-link :to="{ name: 'organizacija-prijava' }" class="nav-link text-primary">
         <span>prijava organizacije</span>
       </nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'organizations' }" class="title-link text-warning">
+        <nuxt-link :to="{ name: 'organizacije' }" class="title-link text-warning">
           <span>DOBRODELEN.SI</span>
         </nuxt-link>
         <hr />
@@ -16,17 +16,17 @@
           </button>
           <transition name="fade-menu">
             <div v-if="menuOpen" class="menu-content d-lg-none">
-              <nuxt-link :to="{ name: 'org-add' }" class="nav-link text-primary">
+              <nuxt-link :to="{ name: 'organizacija-prijava' }" class="nav-link text-primary">
                 <span>prijava organizacije</span>
               </nuxt-link>
-              <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
+              <nuxt-link :to="{ name: 'metodologija' }" class="nav-link text-primary">
                 <span>metodologija</span>
               </nuxt-link>
             </div>
           </transition>
         </div>
       </h1>
-      <nuxt-link :to="{ name: 'methodology' }" class="nav-link text-primary">
+      <nuxt-link :to="{ name: 'metodologija' }" class="nav-link text-primary">
         <span>metodologija</span>
       </nuxt-link>
     </nav>
