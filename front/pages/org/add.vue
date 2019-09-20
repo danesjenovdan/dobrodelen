@@ -669,26 +669,24 @@
                 label="Priložite zapisnik zadnje seje"
               />
             </form-category>
-          </template>
 
-          <template v-else-if="activeStage === 3">
             <form-category title="Strateško načrtovanje">
               <selection-option
-                v-model="data[3].strategic_planning"
+                v-model="data[2].strategic_planning"
                 type="checkbox"
                 name="strategic_planning"
                 label="Organizacija strateško načrtuje"
               />
-              <div v-if="data[3].strategic_planning">
+              <div v-if="data[2].strategic_planning">
                 <selection-option
-                  v-model="data[3].has_milestiones_description"
+                  v-model="data[2].has_milestiones_description"
                   type="checkbox"
                   name="has_milestiones_description"
                   label="Organizacija spremlja doseganje strateških ciljev"
                 />
                 <text-input
-                  v-if="data[3].has_milestiones_description"
-                  v-model="data[3].milestiones_description"
+                  v-if="data[2].has_milestiones_description"
+                  v-model="data[2].milestiones_description"
                   name="milestiones_description"
                   label="Kratek opis kako (največ 500 znakov)"
                   :multiline="9"
@@ -696,21 +694,23 @@
                 />
 
                 <selection-option
-                  v-model="data[3].has_strategic_goals"
+                  v-model="data[2].has_strategic_goals"
                   type="checkbox"
                   name="has_strategic_goals"
                   label="Organizacija vodi pisna poročila o spremljanju stateških ciljev"
                 />
                 <file-input
-                  v-if="data[3].has_strategic_goals"
-                  v-model="data[3].strategic_goals"
+                  v-if="data[2].has_strategic_goals"
+                  v-model="data[2].strategic_goals"
                   name="strategic_goals"
                   label="Priložite poročilo"
                   :has-error="dataErrors.strategic_goals"
                 />
               </div>
             </form-category>
+          </template>
 
+          <template v-else-if="activeStage === 3">
             <form-category title="Finančno poročilo">
               <p>
                 Finančno poročilo pripravljeno po
@@ -870,7 +870,7 @@ export default {
           label: 'Poslanstvo',
         },
         {
-          label: 'Odbori',
+          label: 'Poslovanje',
         },
         {
           label: 'Finance',
@@ -934,13 +934,13 @@ export default {
         //
         has_minutes_meeting: initialData.has_minutes_meeting || false,
         minutes_meeting: initialData.minutes_meeting || null,
-      },
-      {
         strategic_planning: initialData.strategic_planning || false,
         has_milestiones_description: initialData.has_milestiones_description || false,
         milestiones_description: initialData.milestiones_description || '',
         has_strategic_goals: initialData.has_strategic_goals || false,
         strategic_goals: initialData.strategic_goals || null,
+      },
+      {
         finance_report: initialData.finance_report || null,
         finance_report_ajpes: initialData.finance_report_ajpes || null,
         has_audited_report: initialData.has_audited_report || false,
