@@ -1,9 +1,6 @@
 <template>
   <div class="form-group">
-    <button
-      :class="['btn', 'btn-outline-primary', 'btn-form', 'icon', `icon-${icon}`]"
-      v-text="text"
-    />
+    <button :class="['btn', 'btn-outline-primary', 'btn-form', 'icon', 'icon-add']" v-text="text" />
   </div>
 </template>
 
@@ -13,10 +10,6 @@ export default {
     text: {
       type: String,
       required: true,
-    },
-    icon: {
-      type: String,
-      default: 'add',
     },
   },
 };
