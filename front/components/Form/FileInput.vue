@@ -8,11 +8,18 @@
         class="custom-file-input"
         @change="onFileChanged"
       />
-      <label class="custom-file-label icon icon-upload" :for="`${name}__id`">
-        <span>{{ label }}</span>
-        <small>
-          {{ fileName }}
-        </small>
+      <label class="custom-file-label" :for="`${name}__id`">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10.2 1.025 79.9 97.975">
+          <path
+            d="M83.4 32.5H67.9c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2h15.5c1.2 0 2.2.9 2.2 2.1v53.5c0 1.1-1 2.1-2.2 2.1H16.9c-1.2 0-2.2-.9-2.2-2.1V39c0-1.1 1-2.1 2.2-2.1h15.5c1.2 0 2.2-1 2.2-2.2 0-1.2-1-2.2-2.2-2.2H16.9c-3.7 0-6.7 2.9-6.7 6.5v53.5c0 3.6 3 6.5 6.7 6.5h66.5c3.7 0 6.7-2.9 6.7-6.5V39c-.1-3.6-3-6.5-6.7-6.5zM36.2 18.6L47.9 6.8V73c0 1.2 1 2.2 2.2 2.2 1.2 0 2.2-1 2.2-2.2V6.7L64 18.5c.4.4 1 .7 1.6.7.6 0 1.1-.2 1.6-.6.9-.9.9-2.3 0-3.1L54.9 2.9C52.4.4 48 .4 45.4 2.9L33 15.4c-.9.9-.9 2.3 0 3.1.9.9 2.3.9 3.2.1z"
+          />
+        </svg>
+        <div class="text">
+          <span>{{ label }}</span>
+          <small>
+            {{ fileName }}
+          </small>
+        </div>
       </label>
     </div>
     <div v-if="hasError" class="invalid-feedback">* {{ errorMessage }}</div>
@@ -119,40 +126,48 @@ export default {
     .custom-file-label {
       position: relative;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      flex-direction: row;
+      align-items: center;
       width: 100%;
       margin: 0;
       border-width: 2px;
       border-radius: 0.41em;
       border-color: $blue;
       color: $body-color;
-      padding: 0 1.5rem 0 5rem;
-      background-position: left center;
-      background-size: 5rem 45%;
+      padding: 0 1.5rem 0 0;
 
       @include media-breakpoint-down(sm) {
         height: 3.5rem;
-        padding: 0 1.5rem 0 3.5rem;
-        background-size: 3.5rem 45%;
       }
 
-      span {
-        display: block;
-        font-weight: 700;
-        font-size: 1.5rem;
-        // letter-spacing: 0.2em;
-
-        @include media-breakpoint-down(sm) {
-          font-size: 1rem;
-        }
+      svg {
+        flex-shrink: 0;
+        width: 5rem;
+        height: 45%;
+        float: left;
+        fill: $primary;
+        transition: fill 0.15s ease-in-out;
       }
 
-      small {
-        display: block;
-        white-space: nowrap;
+      .text {
         overflow: hidden;
-        text-overflow: ellipsis;
+
+        span {
+          display: block;
+          font-weight: 700;
+          font-size: 1.5rem;
+
+          @include media-breakpoint-down(sm) {
+            font-size: 1rem;
+          }
+        }
+
+        small {
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       &::after {
@@ -160,8 +175,13 @@ export default {
       }
     }
 
+    .custom-file-input:active ~ .custom-file-label,
     .custom-file-input:hover ~ .custom-file-label {
       background-color: $blue;
+
+      svg {
+        fill: $body-color;
+      }
     }
   }
 

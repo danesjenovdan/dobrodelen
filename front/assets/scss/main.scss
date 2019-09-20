@@ -96,23 +96,8 @@
   background-image: url('~assets/svg/add.svg');
 }
 
-
-button.icon-add:hover,
-button.icon-add:active,
-input:hover ~ label.icon-add,
-input:active ~ label.icon-add {
-  background-image: url('~assets/svg/add-black.svg');
-}
-
 .icon-upload {
   background-image: url('~assets/svg/upload.svg');
-}
-
-button.icon-upload:hover,
-button.icon-upload:active,
-input:hover ~ label.icon-upload,
-input:active ~ label.icon-upload {
-  background-image: url('~assets/svg/upload-black.svg');
 }
 
 .icon-menu {
