@@ -194,7 +194,7 @@ export default {
         vimeo: ['vimeo.com'],
       };
 
-      return keys(domains).find((key) => domains[key].some((d) => url.indexOf(d) !== -1)) || 'link';
+      return keys(domains).find((key) => domains[key].some((d) => url.includes(d))) || 'link';
     },
     paragraphise(text) {
       const paragraphs = _escape(text)

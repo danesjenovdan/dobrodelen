@@ -46,6 +46,12 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+  ],
+  /*
+   ** Nuxt.js build modules
+   */
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
   ],
   /*

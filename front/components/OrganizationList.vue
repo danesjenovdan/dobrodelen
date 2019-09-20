@@ -125,7 +125,7 @@ export default {
 
       return orgs.filter((org) => {
         return filters.every((filter) => {
-          return org.name.toLowerCase().indexOf(filter) !== -1;
+          return org.name.toLowerCase().includes(filter);
         });
       });
     },

@@ -17,12 +17,12 @@ module.exports = {
   plugins: ['prettier'],
   // add your custom rules here
   rules: {
-    'no-console': 'warn',
+    // 'no-console': 'warn',
     semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     'arrow-parens': ['error', 'always'],
+    'space-before-function-paren': ['error', 'never'],
     'vue/singleline-html-element-content-newline': 'off',
-    // 'vue/multiline-html-element-content-newline': 'off',
     'vue/html-self-closing': [
       'warn',
       {
