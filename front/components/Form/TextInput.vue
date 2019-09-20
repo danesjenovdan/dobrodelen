@@ -19,6 +19,7 @@
       :placeholder="label"
       :value="value"
       :rows="rows"
+      :maxlength="maxlength"
       @input="$emit('input', $event.target.value)"
     />
     <label v-if="label" :for="`${name}__id`">{{ label }}</label>
@@ -52,6 +53,10 @@ export default {
         }
         return false;
       },
+    },
+    maxlength: {
+      type: Number,
+      default: 1500,
     },
     hasError: {
       type: [Boolean, String],
@@ -123,7 +128,11 @@ export default {
 
   textarea.form-control {
     height: auto;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1rem;
+    }
   }
 
   label {

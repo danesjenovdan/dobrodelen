@@ -103,6 +103,7 @@
                 v-model="data[1].mission"
                 name="mission"
                 :multiline="9"
+                :maxlength="500"
                 :has-error="dataErrors.mission"
               />
             </form-category>
@@ -112,6 +113,7 @@
                 v-model="data[1].description"
                 name="description"
                 :multiline="27"
+                :maxlength="1500"
                 :has-error="dataErrors.description"
               />
             </form-category>
@@ -695,6 +697,7 @@
                   name="milestiones_description"
                   label="Kratek opis kako (največ 500 znakov)"
                   :multiline="9"
+                  :maxlength="500"
                   :has-error="dataErrors.milestiones_description"
                 />
 
