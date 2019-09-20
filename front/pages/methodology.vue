@@ -12,10 +12,10 @@
           :key="`accordion-item-${i}`"
           class="card"
         >
-          <div :id="`accordion-item-heading-${i}`" class="card-header">
+          <div :id="`accordion-item-heading-${i}`" class="card-header position-relative">
             <h2 class="mb-0">
               <button
-                :class="['btn', { collapsed: item.collapsed }]"
+                :class="['btn', 'stretched-link', { collapsed: item.collapsed }]"
                 type="button"
                 :aria-expanded="`${!item.collapsed}`"
                 :aria-controls="`accordion-item-content-${i}`"
