@@ -22,13 +22,13 @@
           <template v-if="activeStage === 0">
             <form-category title="Ime">
               <text-input
-                v-model="data[0].name"
+                v-model="data[activeStage].name"
                 name="name"
                 label="Uradno ime organizacije (iz AJPES)"
                 :has-error="dataErrors.name"
               />
               <text-input
-                v-model="data[0].additional_names"
+                v-model="data[activeStage].additional_names"
                 name="additional_names"
                 label="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)"
                 :has-error="dataErrors.additional_names"
@@ -37,19 +37,19 @@
 
             <form-category title="Kontakt">
               <text-input
-                v-model="data[0].contact_name"
+                v-model="data[activeStage].contact_name"
                 name="contact_name"
                 label="Ime in priimek"
                 :has-error="dataErrors.contact_name"
               />
               <text-input
-                v-model="data[0].contact_email"
+                v-model="data[activeStage].contact_email"
                 name="contact_email"
                 label="E-naslov"
                 :has-error="dataErrors.contact_email"
               />
               <text-input
-                v-model="data[0].contact_phone"
+                v-model="data[activeStage].contact_phone"
                 name="contact_phone"
                 label="Telefon"
                 :has-error="dataErrors.contact_phone"
@@ -58,12 +58,12 @@
 
             <form-category title="Spletna prisotnost">
               <text-input
-                v-model="data[0].web_page"
+                v-model="data[activeStage].web_page"
                 name="web_page"
                 label="URL spletne strani"
                 :has-error="dataErrors.web_page"
               />
-              <template v-for="(link, i) in data[0].links">
+              <template v-for="(link, i) in data[activeStage].links">
                 <text-input
                   :key="`link-${i}`"
                   v-model="link.url"
@@ -74,13 +74,13 @@
               </template>
               <add-button
                 text="Dodajte družbeni profil"
-                @click.native="data[0].links.push({ url: null })"
+                @click.native="data[activeStage].links.push({ url: null })"
               />
             </form-category>
 
             <form-category title="Slika">
               <file-input
-                v-model="data[0].cover_photo"
+                v-model="data[activeStage].cover_photo"
                 name="cover_photo"
                 label="Naložite sliko"
                 :has-error="dataErrors.cover_photo"
@@ -89,7 +89,7 @@
 
             <form-category title="Davčna številka">
               <text-input
-                v-model="data[0].tax_number"
+                v-model="data[activeStage].tax_number"
                 name="tax_number"
                 label="Davčna številka"
                 :has-error="dataErrors.tax_number"
@@ -100,7 +100,7 @@
           <template v-else-if="activeStage === 1">
             <form-category title="Poslanstvo" note="največ 500 znakov">
               <text-input
-                v-model="data[1].mission"
+                v-model="data[activeStage].mission"
                 name="mission"
                 :multiline="9"
                 :maxlength="500"
@@ -110,7 +110,7 @@
 
             <form-category title="Kratek opis" note="največ 1500 znakov">
               <text-input
-                v-model="data[1].description"
+                v-model="data[activeStage].description"
                 name="description"
                 :multiline="27"
                 :maxlength="1500"
@@ -120,89 +120,89 @@
 
             <form-category title="Področja delovanja" note="lahko izberete več možnosti">
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="1"
                 label="Človekove pravice, demokracija in enakost"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="2"
                 label="Izobraževanje, raziskave in razvoj"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="3"
                 label="Kultura"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="4"
                 label="Mladina, otroci"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="5"
                 label="Razvojno sodelovanje"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="6"
                 label="Sociala"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="7"
                 label="Šport"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="8"
                 label="Okolje, narava in prostor"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="9"
                 label="Zdravje"
               />
               <selection-option
-                v-model="data[1].area"
+                v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="10"
                 label="Drugo:"
                 custom-input
-                :custom-input-value="data[1].custom_area"
-                @custom-change="data[1].custom_area = $event"
+                :custom-input-value="data[activeStage].custom_area"
+                @custom-change="data[activeStage].custom_area = $event"
               />
             </form-category>
 
             <form-category title="Proračun">
               <text-input
-                v-model="data[1].avg_revenue"
+                v-model="data[activeStage].avg_revenue"
                 name="avg_revenue"
                 label="Povprečni letni proračun v zadnjih treh letih"
                 :has-error="dataErrors.avg_revenue"
               />
               <text-input
-                v-model="data[1].employed"
+                v-model="data[activeStage].employed"
                 name="employed"
                 label="Število zaposlenih v zadnjem zaključenem letu"
                 :has-error="dataErrors.employed"
@@ -211,25 +211,25 @@
 
             <form-category title="Statusi">
               <selection-option
-                v-model="data[1].is_charity"
+                v-model="data[activeStage].is_charity"
                 type="checkbox"
                 name="is_charity"
                 label="Organizacija ima status humanitarne organizacije"
               />
               <selection-option
-                v-model="data[1].has_public_interest"
+                v-model="data[activeStage].has_public_interest"
                 type="checkbox"
                 name="has_public_interest"
                 label="Organizacija ima status delovanja v javnem interesu"
               />
               <selection-option
-                v-model="data[1].is_voluntary"
+                v-model="data[activeStage].is_voluntary"
                 type="checkbox"
                 name="is_voluntary"
                 label="Organizacija je vpisana v evidenco prostotovoljskih organizacij"
               />
               <selection-option
-                v-model="data[1].zero5"
+                v-model="data[activeStage].zero5"
                 type="checkbox"
                 name="zero5"
                 label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
@@ -240,21 +240,24 @@
           <template v-else-if="activeStage === 2">
             <form-category title="Nadzorni odbor">
               <selection-option
-                v-model="data[2].has_supervisory_board"
+                v-model="data[activeStage].has_supervisory_board"
                 type="checkbox"
                 name="has_supervisory_board"
                 label="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal"
               />
               <text-input
-                v-if="data[2].has_supervisory_board"
-                v-model="data[2].supervisory_board_dates"
+                v-if="data[activeStage].has_supervisory_board"
+                v-model="data[activeStage].supervisory_board_dates"
                 name="supervisory_board_dates"
                 label="Datumi srečanj v preteklem letu"
                 :has-error="dataErrors.supervisory_board_dates"
               />
             </form-category>
-            <form-category v-if="data[2].has_supervisory_board" title="Člani nadzornega odbora">
-              <template v-for="(member, i) in data[2].supervisory_board_members">
+            <form-category
+              v-if="data[activeStage].has_supervisory_board"
+              title="Člani nadzornega odbora"
+            >
+              <template v-for="(member, i) in data[activeStage].supervisory_board_members">
                 <div :key="`supervisory_board_members__${i}`">
                   <text-input
                     v-model="member.name"
@@ -334,7 +337,7 @@
               <add-button
                 text="Dodajte člana"
                 @click.native="
-                  data[2].supervisory_board_members.push({
+                  data[activeStage].supervisory_board_members.push({
                     name: '',
                     role: 0,
                     custom_role: '',
@@ -346,21 +349,24 @@
 
             <form-category title="Upravni odbor">
               <selection-option
-                v-model="data[2].has_management_board"
+                v-model="data[activeStage].has_management_board"
                 type="checkbox"
                 name="has_management_board"
                 label="Organizacija ima upravni odbor, ki se je v preteklem letu srečal"
               />
               <text-input
-                v-if="data[2].has_management_board"
-                v-model="data[2].management_board_dates"
+                v-if="data[activeStage].has_management_board"
+                v-model="data[activeStage].management_board_dates"
                 name="management_board_dates"
                 label="Datumi srečanj v preteklem letu"
                 :has-error="dataErrors.management_board_dates"
               />
             </form-category>
-            <form-category v-if="data[2].has_management_board" title="Člani upravnega odbora">
-              <template v-for="(member, i) in data[2].management_board_members">
+            <form-category
+              v-if="data[activeStage].has_management_board"
+              title="Člani upravnega odbora"
+            >
+              <template v-for="(member, i) in data[activeStage].management_board_members">
                 <div :key="`management_board_members__${i}`">
                   <text-input
                     v-model="member.name"
@@ -439,7 +445,7 @@
               <add-button
                 text="Dodajte člana"
                 @click.native="
-                  data[2].management_board_members.push({
+                  data[activeStage].management_board_members.push({
                     name: '',
                     role: 0,
                     custom_role: '',
@@ -451,21 +457,21 @@
 
             <form-category title="Svet zavoda">
               <selection-option
-                v-model="data[2].has_council"
+                v-model="data[activeStage].has_council"
                 type="checkbox"
                 name="has_council"
                 label="Organizacija ima svet zavoda, ki se je v preteklem letu srečal"
               />
               <text-input
-                v-if="data[2].has_council"
-                v-model="data[2].council_dates"
+                v-if="data[activeStage].has_council"
+                v-model="data[activeStage].council_dates"
                 name="council_dates"
                 label="Datumi srečanj v preteklem letu"
                 :has-error="dataErrors.council_dates"
               />
             </form-category>
-            <form-category v-if="data[2].has_council" title="Člani sveta zavoda">
-              <template v-for="(member, i) in data[2].council_members">
+            <form-category v-if="data[activeStage].has_council" title="Člani sveta zavoda">
+              <template v-for="(member, i) in data[activeStage].council_members">
                 <div :key="`council_members__${i}`">
                   <text-input
                     v-model="member.name"
@@ -542,7 +548,7 @@
               <add-button
                 text="Dodajte člana"
                 @click.native="
-                  data[2].council_members.push({
+                  data[activeStage].council_members.push({
                     name: '',
                     role: 0,
                     custom_role: '',
@@ -554,28 +560,28 @@
 
             <form-category title="Drugo">
               <selection-option
-                v-model="data[2].has_other_board"
+                v-model="data[activeStage].has_other_board"
                 type="checkbox"
                 name="has_other_board"
                 label="Organizacija ima drug organ, ki se je v preteklem letu srečal"
               />
               <text-input
-                v-if="data[2].has_other_board"
-                v-model="data[2].other_board_name"
+                v-if="data[activeStage].has_other_board"
+                v-model="data[activeStage].other_board_name"
                 name="other_board_name"
                 label="Ime organa"
                 :has-error="dataErrors.other_board_dates"
               />
               <text-input
-                v-if="data[2].has_other_board"
-                v-model="data[2].other_board_dates"
+                v-if="data[activeStage].has_other_board"
+                v-model="data[activeStage].other_board_dates"
                 name="other_board_dates"
                 label="Datumi srečanj v preteklem letu"
                 :has-error="dataErrors.other_board_dates"
               />
             </form-category>
-            <form-category v-if="data[2].has_other_board" title="Člani organa">
-              <template v-for="(member, i) in data[2].other_board_members">
+            <form-category v-if="data[activeStage].has_other_board" title="Člani organa">
+              <template v-for="(member, i) in data[activeStage].other_board_members">
                 <div :key="`other_board_members__${i}`">
                   <text-input
                     v-model="member.name"
@@ -652,7 +658,7 @@
               <add-button
                 text="Dodajte člana"
                 @click.native="
-                  data[2].other_board_members.push({
+                  data[activeStage].other_board_members.push({
                     name: '',
                     role: 0,
                     custom_role: '',
@@ -664,14 +670,14 @@
 
             <form-category title="Zapisniki seje">
               <selection-option
-                v-model="data[2].has_minutes_meeting"
+                v-model="data[activeStage].has_minutes_meeting"
                 type="checkbox"
                 name="has_minutes_meeting"
                 label="Organizacija vodi zapisnike sej"
               />
               <file-input
-                v-if="data[2].has_minutes_meeting"
-                v-model="data[2].minutes_meeting"
+                v-if="data[activeStage].has_minutes_meeting"
+                v-model="data[activeStage].minutes_meeting"
                 name="minutes_meeting"
                 label="Priložite zapisnik zadnje seje"
               />
@@ -679,21 +685,21 @@
 
             <form-category title="Strateško načrtovanje">
               <selection-option
-                v-model="data[2].strategic_planning"
+                v-model="data[activeStage].strategic_planning"
                 type="checkbox"
                 name="strategic_planning"
                 label="Organizacija strateško načrtuje"
               />
-              <div v-if="data[2].strategic_planning">
+              <div v-if="data[activeStage].strategic_planning">
                 <selection-option
-                  v-model="data[2].has_milestiones_description"
+                  v-model="data[activeStage].has_milestiones_description"
                   type="checkbox"
                   name="has_milestiones_description"
                   label="Organizacija spremlja doseganje strateških ciljev"
                 />
                 <text-input
-                  v-if="data[2].has_milestiones_description"
-                  v-model="data[2].milestiones_description"
+                  v-if="data[activeStage].has_milestiones_description"
+                  v-model="data[activeStage].milestiones_description"
                   name="milestiones_description"
                   label="Kratek opis kako (največ 500 znakov)"
                   :multiline="9"
@@ -702,14 +708,14 @@
                 />
 
                 <selection-option
-                  v-model="data[2].has_strategic_goals"
+                  v-model="data[activeStage].has_strategic_goals"
                   type="checkbox"
                   name="has_strategic_goals"
                   label="Organizacija vodi pisna poročila o spremljanju stateških ciljev"
                 />
                 <file-input
-                  v-if="data[2].has_strategic_goals"
-                  v-model="data[2].strategic_goals"
+                  v-if="data[activeStage].has_strategic_goals"
+                  v-model="data[activeStage].strategic_goals"
                   name="strategic_goals"
                   label="Priložite poročilo"
                   :has-error="dataErrors.strategic_goals"
@@ -732,7 +738,7 @@
                 .
               </p>
               <file-input
-                v-model="data[3].finance_report"
+                v-model="data[activeStage].finance_report"
                 name="finance_report"
                 label="Priložite finančno poročilo"
               />
@@ -740,7 +746,7 @@
 
             <form-category title="Finančno poročilo, ki je bilo oddano na AJPES">
               <file-input
-                v-model="data[3].finance_report_ajpes"
+                v-model="data[activeStage].finance_report_ajpes"
                 name="finance_report_ajpes"
                 label="Priložite finančno poročilo"
               />
@@ -748,14 +754,14 @@
 
             <form-category title="Revidiranje finančnega poročila">
               <selection-option
-                v-model="data[3].has_audited_report"
+                v-model="data[activeStage].has_audited_report"
                 type="checkbox"
                 name="has_audited_report"
                 label="Organizacija je dolžna revidirati svoja finančna poročila"
               />
               <file-input
-                v-if="data[3].has_audited_report"
-                v-model="data[3].audited_report"
+                v-if="data[activeStage].has_audited_report"
+                v-model="data[activeStage].audited_report"
                 name="audited_report"
                 label="Priložite revidirano poročilo"
               />
@@ -763,14 +769,14 @@
 
             <form-category title="Finančni načrt">
               <selection-option
-                v-model="data[3].has_finance_plan"
+                v-model="data[activeStage].has_finance_plan"
                 type="checkbox"
                 name="has_finance_plan"
                 label="Organizacija ima finančni načrt za tekoče leto"
               />
               <file-input
-                v-if="data[3].has_finance_plan"
-                v-model="data[3].finance_plan"
+                v-if="data[activeStage].has_finance_plan"
+                v-model="data[activeStage].finance_plan"
                 name="finance_plan"
                 label="Priložite finančni načrt"
               />
@@ -778,27 +784,27 @@
 
             <form-category title="Posojila">
               <selection-option
-                v-model="data[3].has_given_loans"
+                v-model="data[activeStage].has_given_loans"
                 type="checkbox"
                 name="has_given_loans"
                 label="Organizacija daje posojila povezanim osebam (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
               />
               <file-input
-                v-if="data[3].has_given_loans"
-                v-model="data[3].given_loan"
+                v-if="data[activeStage].has_given_loans"
+                v-model="data[activeStage].given_loan"
                 name="given_loan"
                 label="Priložite seznam danih posojil"
               />
 
               <selection-option
-                v-model="data[3].has_received_loans"
+                v-model="data[activeStage].has_received_loans"
                 type="checkbox"
                 name="has_received_loans"
                 label="Organizacija prejema posojila od povezanih oseb (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
               />
               <file-input
-                v-if="data[3].has_received_loans"
-                v-model="data[3].received_loans"
+                v-if="data[activeStage].has_received_loans"
+                v-model="data[activeStage].received_loans"
                 name="received_loans"
                 label="Priložite seznam prejetih posojil"
               />
@@ -806,20 +812,20 @@
 
             <form-category title="Plačilni razredi">
               <selection-option
-                v-model="data[3].has_payment_classes"
+                v-model="data[activeStage].has_payment_classes"
                 type="checkbox"
                 name="has_payment_classes"
                 label="Organizacija ima akt o sistematizaciji delovnih mest in plačnih razredov"
               />
               <file-input
-                v-if="data[3].has_payment_classes"
-                v-model="data[3].payment_classes"
+                v-if="data[activeStage].has_payment_classes"
+                v-model="data[activeStage].payment_classes"
                 name="payment_classes"
                 label="Priložite akt"
               />
 
               <text-input
-                v-model="data[3].wages_ratio"
+                v-model="data[activeStage].wages_ratio"
                 name="wages_ratio"
                 label="Razmerje med najvišjo in povprečno plačo v organizaciji"
                 :has-error="dataErrors.wages_ratio"
@@ -828,6 +834,10 @@
           </template>
 
           <template v-else-if="activeStage === 4">
+            HELLO
+          </template>
+
+          <template v-else-if="activeStage === stages.length">
             <h4>Prijava je bila uspešna!</h4>
             <p>Za ponovno urejanje podatkov, si shranite ta url:</p>
             <code>{{ getWindowLocation() }}</code>
@@ -883,8 +893,11 @@ export default {
         {
           label: 'Finance',
         },
+        {
+          label: 'Transparentnost',
+        },
       ],
-      activeStage: -1,
+      activeStage: 4,
       saving: false,
     };
   },
