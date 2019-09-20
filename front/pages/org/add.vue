@@ -14,6 +14,11 @@
     <div class="row justify-content-center form-row">
       <div class="col-12 col-md-7 col-xxl-5">
         <form ref="form" @submit.prevent>
+          <template v-if="activeStage === -1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora reiciendis qui, maxime,
+            iure odit magnam molestias illo sequi, dolorum vitae atque cupiditate ipsa autem
+            excepturi aspernatur deleniti voluptatem? Repudiandae, amet.
+          </template>
           <template v-if="activeStage === 0">
             <form-category title="Ime">
               <text-input
@@ -829,7 +834,7 @@
             :page="activeStage"
             :pages="stages.length"
             :disabled="saving"
-            @change="onChangeStage(true, $event)"
+            @change="onChangeStage"
           />
         </form>
       </div>
@@ -876,7 +881,7 @@ export default {
           label: 'Finance',
         },
       ],
-      activeStage: 0,
+      activeStage: -1,
       saving: false,
     };
   },
