@@ -834,7 +834,97 @@
           </template>
 
           <template v-else-if="activeStage === 4">
-            HELLO
+            <selection-option
+              v-model="data[activeStage].has_published_work_reports"
+              type="checkbox"
+              name="has_published_work_reports"
+              label="Organizacija ima objavljena letna poročila o delu"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_work_reports"
+              v-model="data[activeStage].published_work_reports_url"
+              name="published_work_reports_url"
+              label="URL do objavljenih letnih poročil o delu"
+              :has-error="dataErrors.published_work_reports_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_financial_reports"
+              type="checkbox"
+              name="has_published_financial_reports"
+              label="Organizacija ima objavljena letna finančna poročila"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_financial_reports"
+              v-model="data[activeStage].published_financial_reports_url"
+              name="published_financial_reports_url"
+              label="URL do objavljenih finančnih poročil"
+              :has-error="dataErrors.published_financial_reports_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_executive_salaries"
+              type="checkbox"
+              name="has_published_executive_salaries"
+              label="Objavljene so plače vodstva"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_executive_salaries"
+              v-model="data[activeStage].published_executive_salaries_url"
+              name="published_executive_salaries_url"
+              label="URL do objavljenih plač vodstva"
+              :has-error="dataErrors.published_executive_salaries_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_salary_ratio"
+              type="checkbox"
+              name="has_published_salary_ratio"
+              label="Objavljeno je razmerje med plačami"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_salary_ratio"
+              v-model="data[activeStage].published_salary_ratio_url"
+              name="published_salary_ratio_url"
+              label="URL do objavljenih razmerij med plačami"
+              :has-error="dataErrors.published_salary_ratio_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_employee_list"
+              type="checkbox"
+              name="has_published_employee_list"
+              label="Objavljen je seznam ključnih zaposlenih"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_employee_list"
+              v-model="data[activeStage].published_employee_list_url"
+              name="published_employee_list_url"
+              label="URL do objavljenega seznama ključnih zaposlenih"
+              :has-error="dataErrors.published_employee_list_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_board_members"
+              type="checkbox"
+              name="has_published_board_members"
+              label="Obljavljeni so člani nadzornega/upravnega odbora"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_board_members"
+              v-model="data[activeStage].published_board_members_url"
+              name="published_board_members_url"
+              label="URL do objavljenega seznama članov odbora"
+              :has-error="dataErrors.published_board_members_url"
+            />
+            <selection-option
+              v-model="data[activeStage].has_published_financial_plan"
+              type="checkbox"
+              name="has_published_financial_plan"
+              label="Objavljen je finančni načrt za tekoče leto"
+            />
+            <text-input
+              v-if="data[activeStage].has_published_financial_plan"
+              v-model="data[activeStage].published_financial_plan_url"
+              name="published_financial_plan_url"
+              label="URL do objavljenega finančnega načrta za tekoče leto"
+              :has-error="dataErrors.published_financial_plan_url"
+            />
           </template>
 
           <template v-else-if="activeStage === stages.length">
@@ -975,6 +1065,22 @@ export default {
         has_payment_classes: initialData.has_payment_classes || false,
         payment_classes: initialData.payment_classes || null,
         wages_ratio: initialData.wages_ratio || '',
+      },
+      {
+        has_published_work_reports: initialData.has_published_work_reports || false,
+        published_work_reports_url: initialData.published_work_reports_url || null,
+        has_published_financial_reports: initialData.has_published_financial_reports || false,
+        published_financial_reports_url: initialData.published_financial_reports_url || null,
+        has_published_executive_salaries: initialData.has_published_executive_salaries || false,
+        published_executive_salaries_url: initialData.published_executive_salaries_url || null,
+        has_published_salary_ratio: initialData.has_published_salary_ratio || false,
+        published_salary_ratio_url: initialData.published_salary_ratio_url || null,
+        has_published_employee_list: initialData.has_published_employee_list || false,
+        published_employee_list_url: initialData.published_employee_list_url || null,
+        has_published_board_members: initialData.has_published_board_members || false,
+        published_board_members_url: initialData.published_board_members_url || null,
+        has_published_financial_plan: initialData.has_published_financial_plan || false,
+        published_financial_plan_url: initialData.published_financial_plan_url || null,
       },
     ];
 
