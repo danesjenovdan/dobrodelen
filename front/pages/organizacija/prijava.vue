@@ -987,7 +987,7 @@ export default {
           label: 'Transparentnost',
         },
       ],
-      activeStage: 4,
+      activeStage: -1,
       saving: false,
     };
   },
