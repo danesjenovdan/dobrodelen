@@ -152,6 +152,20 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "signup_time",
             "is_complete",
             "edit_key",
+            "has_published_work_reports",
+            "published_work_reports_url",
+            "has_published_financial_reports",
+            "published_financial_reports_url",
+            "has_published_executive_salaries",
+            "published_executive_salaries_url",
+            "has_published_salary_ratio",
+            "published_salary_ratio_url",
+            "has_published_employee_list",
+            "published_employee_list_url",
+            "has_published_board_members",
+            "published_board_members_url",
+            "has_published_financial_plan",
+            "published_financial_plan_url",
         )
 
     def get_board_members(self, obj):

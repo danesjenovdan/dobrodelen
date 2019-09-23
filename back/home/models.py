@@ -220,6 +220,71 @@ class Organization(ClusterableModel):
         max_length=256,
     )
     #
+    has_published_work_reports = models.BooleanField(
+        default=False, verbose_name="Organizacija ima objavljena letna poročila o delu"
+    )
+    published_work_reports_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenih letnih poročil o delu",
+        blank=True,
+        null=True,
+    )
+    has_published_financial_reports = models.BooleanField(
+        default=False,
+        verbose_name="Organizacija ima objavljena letna finančna poročila",
+    )
+    published_financial_reports_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenih finančnih poročil",
+        blank=True,
+        null=True,
+    )
+    has_published_executive_salaries = models.BooleanField(
+        default=False, verbose_name="Objavljene so plače vodstva"
+    )
+    published_executive_salaries_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenih plač vodstva",
+        blank=True,
+        null=True,
+    )
+    has_published_salary_ratio = models.BooleanField(
+        default=False, verbose_name="Objavljeno je razmerje med plačami"
+    )
+    published_salary_ratio_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenih razmerij med plačami",
+        blank=True,
+        null=True,
+    )
+    has_published_employee_list = models.BooleanField(
+        default=False, verbose_name="Objavljen je seznam ključnih zaposlenih"
+    )
+    published_employee_list_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenega seznama ključnih zaposlenih",
+        blank=True,
+        null=True,
+    )
+    has_published_board_members = models.BooleanField(
+        default=False, verbose_name="Obljavljeni so člani nadzornega/upravnega odbora"
+    )
+    published_board_members_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenega seznama članov odbora",
+        blank=True,
+        null=True,
+    )
+    has_published_financial_plan = models.BooleanField(
+        default=False, verbose_name="Objavljen je finančni načrt za tekoče leto"
+    )
+    published_financial_plan_url = models.URLField(
+        max_length=512,
+        verbose_name="URL do objavljenega finančnega načrta za tekoče leto",
+        blank=True,
+        null=True,
+    )
+    #
     #
     board_members = ParentalManyToManyField(
         "Member",
@@ -298,6 +363,21 @@ class Organization(ClusterableModel):
         FieldPanel("has_payment_classes"),
         FieldPanel("payment_classes"),
         FieldPanel("wages_ratio"),
+        #
+        FieldPanel("has_published_work_reports"),
+        FieldPanel("published_work_reports_url"),
+        FieldPanel("has_published_financial_reports"),
+        FieldPanel("published_financial_reports_url"),
+        FieldPanel("has_published_executive_salaries"),
+        FieldPanel("published_executive_salaries_url"),
+        FieldPanel("has_published_salary_ratio"),
+        FieldPanel("published_salary_ratio_url"),
+        FieldPanel("has_published_employee_list"),
+        FieldPanel("published_employee_list_url"),
+        FieldPanel("has_published_board_members"),
+        FieldPanel("published_board_members_url"),
+        FieldPanel("has_published_financial_plan"),
+        FieldPanel("published_financial_plan_url"),
         #
         #
         InlinePanel(
