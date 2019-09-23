@@ -17,30 +17,34 @@ class ImageRenditionAndUploadField(ImageRenditionField):
             return Image.objects.create(title=clean_data._name, file=clean_data)
 
 
-class MemberSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Member
-        fields = ("id", "name", "role")
-
-
-class BoardSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Board
-        fields = ("id", "name", "meeting_dates", "organization")
-
-
 class LinkSerializer(WritableNestedModelSerializer):
     class Meta:
         model = models.Link
         fields = ("url",)
 
 
-class BoardMemberSerializer(WritableNestedModelSerializer):
-    member = MemberSerializer()
-
+class SupervisoryBoardMemberSerializer(WritableNestedModelSerializer):
     class Meta:
-        model = models.BoardMember
-        fields = ("id", "member", "board", "organization", "is_paid")
+        model = models.SupervisoryBoardMember
+        fields = ("id", "name", "role", "custom_role", "is_paid")
+
+
+class ManagementBoardMemberSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = models.ManagementBoardMember
+        fields = ("id", "name", "role", "custom_role", "is_paid")
+
+
+class CouncilBoardMemberSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = models.CouncilBoardMember
+        fields = ("id", "name", "role", "custom_role", "is_paid")
+
+
+class OtherBoardMemberSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = models.OtherBoardMember
+        fields = ("id", "name", "role", "custom_role", "is_paid")
 
 
 class OrganizationListSerializer(serializers.ModelSerializer):
@@ -98,9 +102,15 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
 
 class OrganizationDetailSerializer(WritableNestedModelSerializer):
     cover_photo = ImageRenditionAndUploadField("original", required=False)
-    boards = BoardSerializer(many=True, required=False, read_only=True)
-    board_members = serializers.SerializerMethodField(required=False)
     links = LinkSerializer(many=True, required=False)
+    supervisory_board_members = SupervisoryBoardMemberSerializer(
+        many=True, required=False
+    )
+    management_board_members = ManagementBoardMemberSerializer(
+        many=True, required=False
+    )
+    council_members = CouncilBoardMemberSerializer(many=True, required=False)
+    other_board_members = OtherBoardMemberSerializer(many=True, required=False)
 
     class Meta:
         model = models.Organization
@@ -127,8 +137,6 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "milestiones_description",
             "has_milestiones_description",
             "wages_ratio",
-            "boards",
-            "board_members",
             "links",
             "minutes_meeting",
             "has_minutes_meeting",
@@ -166,12 +174,19 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "published_board_members_url",
             "has_published_financial_plan",
             "published_financial_plan_url",
+            "has_supervisory_board",
+            "supervisory_board_dates",
+            "supervisory_board_members",
+            "has_management_board",
+            "management_board_dates",
+            "management_board_members",
+            "has_council",
+            "council_dates",
+            "council_members",
+            "has_other_board",
+            "other_board_name",
+            "other_board_dates",
+            "other_board_members",
+            "has_minutes_meeting",
+            "minutes_meeting",
         )
-
-    def get_board_members(self, obj):
-        members = obj.board_members.all()
-        board_members = models.BoardMember.objects.filter(
-            member__in=members, organization=obj
-        )
-        ll = BoardMemberSerializer(board_members, many=True)
-        return ll.data

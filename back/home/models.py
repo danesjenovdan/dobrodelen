@@ -1,7 +1,6 @@
 from django.db import models
 from django.core import signing
 from modelcluster.models import ClusterableModel, ParentalKey
-from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     FieldRowPanel,
@@ -117,6 +116,54 @@ class Organization(ClusterableModel):
         default=False,
         verbose_name="Organizacija je na seznamu upravičencev do 0,5 dohodnine",
         blank=True,
+    )
+    #
+    has_supervisory_board = models.BooleanField(
+        default=False,
+        verbose_name="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal",
+        blank=True,
+    )
+    supervisory_board_dates = models.CharField(
+        verbose_name="Datumi srečanj v preteklem letu (nadzorni odbor)",
+        default="",
+        blank=True,
+        max_length=512,
+    )
+    has_management_board = models.BooleanField(
+        default=False,
+        verbose_name="Organizacija ima upravni odbor, ki se je v preteklem letu srečal",
+        blank=True,
+    )
+    management_board_dates = models.CharField(
+        verbose_name="Datumi srečanj v preteklem letu (upravni odbor)",
+        default="",
+        blank=True,
+        max_length=512,
+    )
+    has_council = models.BooleanField(
+        default=False,
+        verbose_name="Organizacija ima svet zavoda, ki se je v preteklem letu srečal",
+        blank=True,
+    )
+    council_dates = models.CharField(
+        verbose_name="Datumi srečanj v preteklem letu (svet zavoda)",
+        default="",
+        blank=True,
+        max_length=512,
+    )
+    has_other_board = models.BooleanField(
+        default=False,
+        verbose_name="Organizacija ima drug organ, ki se je v preteklem letu srečal",
+        blank=True,
+    )
+    other_board_name = models.CharField(
+        verbose_name="Ime organa", default="", blank=True, max_length=128
+    )
+    other_board_dates = models.CharField(
+        verbose_name="Datumi srečanj v preteklem letu (drug organ)",
+        default="",
+        blank=True,
+        max_length=512,
     )
     #
     has_minutes_meeting = models.BooleanField(
@@ -285,13 +332,6 @@ class Organization(ClusterableModel):
         null=True,
     )
     #
-    #
-    board_members = ParentalManyToManyField(
-        "Member",
-        related_name="organization_supervisor",
-        blank=True,
-        through="BoardMember",
-    )
 
     @property
     def stars(self):
@@ -339,8 +379,19 @@ class Organization(ClusterableModel):
         FieldPanel("is_voluntary"),
         FieldPanel("zero5"),
         #
-        # InlinePanel("boards", label="Boards"),
-        # InlinePanel("memberships", label="Memberships"),
+        FieldPanel("has_supervisory_board"),
+        FieldPanel("supervisory_board_dates"),
+        InlinePanel("supervisory_board_members", label="Člani nadzornega odbora"),
+        FieldPanel("has_management_board"),
+        FieldPanel("management_board_dates"),
+        InlinePanel("management_board_members", label="Člani upravnega odbora"),
+        FieldPanel("has_council"),
+        FieldPanel("council_dates"),
+        InlinePanel("council_members", label="Člani sveta zavoda"),
+        FieldPanel("has_other_board"),
+        FieldPanel("other_board_name"),
+        FieldPanel("other_board_dates"),
+        InlinePanel("other_board_members", label="Člani organa"),
         FieldPanel("has_minutes_meeting"),
         FieldPanel("minutes_meeting"),
         #
@@ -393,64 +444,83 @@ class Organization(ClusterableModel):
         verbose_name_plural = "Organizacije"
 
 
-class Member(ClusterableModel):
+ROLE_CHOICES = [
+    ("1", "Član"),
+    ("2", "Predstavnik uporabnikov"),
+    ("3", "Predstavnik zaposlenih"),
+    ("4", "Predstavnik ustanoviteljev"),
+    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
+    ("6", "Neodvisni predstavnik"),
+    ("7", "Drugo:"),
+]
+
+
+class SupervisoryBoardMember(models.Model):
+    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="supervisory_board_members")
     name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
-    role = models.CharField(
-        max_length=512, default="", verbose_name="povezava z organizacijo"
-    )
-
-
-class Board(ClusterableModel):
-    name = models.CharField(max_length=256)
-    meeting_dates = models.TextField(blank=True, default="")
-
-    organization = ParentalKey(
-        "Organization",
-        related_name="boards",
-        on_delete=models.CASCADE,
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    custom_role = models.CharField(
+        verbose_name="Povezava z organizacijo: Drugo",
+        default="",
         blank=True,
-        null=True,
-    )
-
-    def __str__(self):
-        return (
-            self.name + " --> " + str(self.organization.name)
-            if self.organization
-            else ""
-        )
-
-
-class BoardMember(models.Model):
-    board = ParentalKey(
-        "Board", related_name="memberships", on_delete=models.CASCADE, null=True
-    )
-    member = ParentalKey(
-        "Member", related_name="memberships", on_delete=models.CASCADE, null=True
-    )
-    organization = ParentalKey(
-        "Organization", related_name="memberships", on_delete=models.CASCADE, null=True
+        max_length=128,
     )
     is_paid = models.BooleanField(
         default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
     )
 
-    def __str__(self):
-        return (
-            str(self.member.name)
-            if self.member
-            else "" + "->" + str(self.member.organization.name)
-            if self.member.organization.name
-            else "" + "->" + str(self.member.board.name)
-            if self.member.board.anme
-            else ""
-        )
+
+class ManagementBoardMember(models.Model):
+    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="management_board_members")
+    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    custom_role = models.CharField(
+        verbose_name="Povezava z organizacijo: Drugo",
+        default="",
+        blank=True,
+        max_length=128,
+    )
+    is_paid = models.BooleanField(
+        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+    )
+
+
+class CouncilBoardMember(models.Model):
+    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="council_members")
+    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    custom_role = models.CharField(
+        verbose_name="Povezava z organizacijo: Drugo",
+        default="",
+        blank=True,
+        max_length=128,
+    )
+    is_paid = models.BooleanField(
+        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+    )
+
+
+class OtherBoardMember(models.Model):
+    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="other_board_members")
+    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    custom_role = models.CharField(
+        verbose_name="Povezava z organizacijo: Drugo",
+        default="",
+        blank=True,
+        max_length=128,
+    )
+    is_paid = models.BooleanField(
+        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+    )
 
 
 class Link(models.Model):
-    url = models.URLField(verbose_name="Povezava", default="", blank=True)
     organization = ParentalKey(
         "Organization", on_delete=models.CASCADE, related_name="links"
     )
+
+    url = models.URLField(verbose_name="Povezava", default="", blank=True)
 
 
 class Criteria(models.Model):

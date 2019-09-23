@@ -45,8 +45,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
                 org_id = signing.loads(edit_key, salt="ORG_EDIT_KEY")
                 if self.detail:
                     return self.kwargs.get("pk") == str(org_id)
-            except:
-                pass
+            except Exception as e:
+                print(e)
         return False
 
 
@@ -62,29 +62,20 @@ class OrganizationChildAuth(viewsets.ModelViewSet):
 
     def is_valid_edit_key(self):
         edit_key = self.request.query_params.get("edit_key")
-        print(edit_key)
         if edit_key:
             try:
                 org_id = signing.loads(edit_key, salt="ORG_EDIT_KEY")
-                print(org_id)
                 obj = self.get_queryset().filter(pk=self.kwargs.get("pk"))
-                print(obj)
                 if obj:
-                    print(obj[0].organization_id == org_id)
                     return obj[0].organization_id == org_id
             except Exception as e:
                 print(e)
         return False
 
 
-class BoardViewSet(OrganizationChildAuth):
-    serializer_class = serializers.BoardSerializer
-    queryset = models.Board.objects.all()
-
-
-class BoardMemberViewSet(OrganizationChildAuth):
-    serializer_class = serializers.BoardMemberSerializer
-    queryset = models.BoardMember.objects.all()
+# class BoardMemberViewSet(OrganizationChildAuth):
+#     serializer_class = serializers.BoardMemberSerializer
+#     queryset = models.BoardMember.objects.all()
 
 
 class LinkViewSet(OrganizationChildAuth):

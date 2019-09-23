@@ -7,7 +7,7 @@ from wagtail.contrib.modeladmin.options import (
     modeladmin_register,
 )
 
-from home import models
+from . import models
 
 
 class OrganizationModelAdmin(ModelAdmin):
@@ -27,22 +27,6 @@ class OrganizationAdminGroup(ModelAdminGroup):
     items = (OrganizationModelAdmin,)
 
 
-class BoardModelAdmin(ModelAdmin):
-    model = models.Board
-    menu_icon = "form"
-    menu_order = 250  # will put in 3rd place (000 being 1st, 100 2nd)
-    add_to_settings_menu = False
-    list_display = ("name",)
-    search_fields = ("name",)
-
-
-class BoardAdminGroup(ModelAdminGroup):
-    menu_label = "Odbori"
-    menu_icon = "folder-open-inverse"
-    menu_order = 250  # will put in 3rd place (000 being 1st, 100 2nd)
-    items = (BoardModelAdmin,)
-
-
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
     return format_html(
@@ -51,4 +35,3 @@ def global_admin_css():
 
 
 modeladmin_register(OrganizationAdminGroup)
-modeladmin_register(BoardAdminGroup)
