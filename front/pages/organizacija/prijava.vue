@@ -274,49 +274,49 @@
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="1"
+                      value="1"
                       label="Član"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="2"
+                      value="2"
                       label="Predstavnik uporabnikov"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="3"
+                      value="3"
                       label="Predstavnik zaposlenih"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="4"
+                      value="4"
                       label="Predstavnik ustanoviteljev"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="5"
+                      value="5"
                       label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="6"
+                      value="6"
                       label="Neodvisni predstavnik"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
-                      :value="7"
+                      value="7"
                       label="Drugo:"
                       custom-input
                       :custom-input-value="member.custom_role"
@@ -339,7 +339,7 @@
                 @click.native="
                   data[activeStage].supervisory_board_members.push({
                     name: '',
-                    role: 0,
+                    role: '1',
                     custom_role: '',
                     is_paid: false,
                   })
@@ -382,49 +382,49 @@
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="1"
+                      value="1"
                       label="Član"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="2"
+                      value="2"
                       label="Predstavnik uporabnikov"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="3"
+                      value="3"
                       label="Predstavnik zaposlenih"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="4"
+                      value="4"
                       label="Predstavnik ustanoviteljev"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="5"
+                      value="5"
                       label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="6"
+                      value="6"
                       label="Neodvisni predstavnik"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
-                      :value="7"
+                      value="7"
                       label="Drugo:"
                       custom-input
                       :custom-input-value="member.custom_role"
@@ -447,7 +447,7 @@
                 @click.native="
                   data[activeStage].management_board_members.push({
                     name: '',
-                    role: 0,
+                    role: '1',
                     custom_role: '',
                     is_paid: false,
                   })
@@ -485,49 +485,49 @@
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="1"
+                      value="1"
                       label="Član"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="2"
+                      value="2"
                       label="Predstavnik uporabnikov"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="3"
+                      value="3"
                       label="Predstavnik zaposlenih"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="4"
+                      value="4"
                       label="Predstavnik ustanoviteljev"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="5"
+                      value="5"
                       label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="6"
+                      value="6"
                       label="Neodvisni predstavnik"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
-                      :value="7"
+                      value="7"
                       label="Drugo:"
                       custom-input
                       :custom-input-value="member.custom_role"
@@ -550,7 +550,7 @@
                 @click.native="
                   data[activeStage].council_members.push({
                     name: '',
-                    role: 0,
+                    role: '1',
                     custom_role: '',
                     is_paid: false,
                   })
@@ -595,49 +595,49 @@
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="1"
+                      value="1"
                       label="Član"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="2"
+                      value="2"
                       label="Predstavnik uporabnikov"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="3"
+                      value="3"
                       label="Predstavnik zaposlenih"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="4"
+                      value="4"
                       label="Predstavnik ustanoviteljev"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="5"
+                      value="5"
                       label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="6"
+                      value="6"
                       label="Neodvisni predstavnik"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
-                      :value="7"
+                      value="7"
                       label="Drugo:"
                       custom-input
                       :custom-input-value="member.custom_role"
@@ -660,7 +660,7 @@
                 @click.native="
                   data[activeStage].other_board_members.push({
                     name: '',
-                    role: 0,
+                    role: '1',
                     custom_role: '',
                     is_paid: false,
                   })
@@ -1029,19 +1029,31 @@ export default {
       },
       {
         //
-        has_supervisory_board: false,
-        supervisory_board_dates: '',
-        supervisory_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
-        has_management_board: false,
-        management_board_dates: '',
-        management_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
-        has_council: false,
-        council_dates: '',
-        council_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
-        has_other_board: false,
-        other_board_name: '',
-        other_board_dates: '',
-        other_board_members: [{ name: '', role: 0, custom_role: '', is_paid: false }],
+        has_supervisory_board: initialData.has_supervisory_board || false,
+        supervisory_board_dates: initialData.supervisory_board_dates || '',
+        supervisory_board_members:
+          initialData.supervisory_board_members && initialData.supervisory_board_members.length
+            ? cloneDeep(initialData.supervisory_board_members)
+            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
+        has_management_board: initialData.has_management_board || false,
+        management_board_dates: initialData.management_board_dates || '',
+        management_board_members:
+          initialData.management_board_members && initialData.management_board_members.length
+            ? cloneDeep(initialData.management_board_members)
+            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
+        has_council: initialData.has_council || false,
+        council_dates: initialData.council_dates || '',
+        council_members:
+          initialData.council_members && initialData.council_members.length
+            ? cloneDeep(initialData.council_members)
+            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
+        has_other_board: initialData.has_other_board || false,
+        other_board_name: initialData.other_board_name || '',
+        other_board_dates: initialData.other_board_dates || '',
+        other_board_members:
+          initialData.other_board_members && initialData.other_board_members.length
+            ? cloneDeep(initialData.other_board_members)
+            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
         //
         has_minutes_meeting: initialData.has_minutes_meeting || false,
         minutes_meeting: initialData.minutes_meeting || null,
@@ -1122,6 +1134,23 @@ export default {
         // Delete custom area if not selected
         if (data.area && data.area.filter((e) => e === 10).length === 0) {
           data.custom_area = '';
+        }
+        // Delete member placeholders if not selected
+        if (data.has_supervisory_board === false) {
+          data.supervisory_board_dates = '';
+          data.supervisory_board_members = [];
+        }
+        if (data.has_management_board === false) {
+          data.management_board_dates = '';
+          data.management_board_members = [];
+        }
+        if (data.has_council === false) {
+          data.council_dates = '';
+          data.council_members = [];
+        }
+        if (data.has_other_board === false) {
+          data.other_board_dates = '';
+          data.other_board_members = [];
         }
 
         const keys = Object.keys(data).filter((key) => {

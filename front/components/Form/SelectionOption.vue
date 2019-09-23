@@ -45,7 +45,7 @@ export default {
       default: null,
     },
     checked: {
-      type: [Boolean, Array],
+      type: [Boolean, Array, String],
       default: false,
     },
     type: {
