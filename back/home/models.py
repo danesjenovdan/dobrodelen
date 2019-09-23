@@ -110,7 +110,7 @@ class Organization(ClusterableModel):
     )
     is_voluntary = models.BooleanField(
         default=False,
-        verbose_name="Organizacija je vpisana v evidenco prostotovoljskih organizacij",
+        verbose_name="Organizacija je vpisana v evidenco prostovoljskih organizacij",
         blank=True,
     )
     zero5 = models.BooleanField(

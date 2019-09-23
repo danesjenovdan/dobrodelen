@@ -64,7 +64,7 @@
             <dd class="col-3">{{ organization.is_charity ? 'DA' : 'NE' }}</dd>
             <dt class="col-9">Organizacija ima status delovanja v javnem interesu</dt>
             <dd class="col-3">{{ organization.has_public_interest ? 'DA' : 'NE' }}</dd>
-            <dt class="col-9">Organizacija je vpisana v evidenco prostotovoljskih organizacij</dt>
+            <dt class="col-9">Organizacija je vpisana v evidenco prostovoljskih organizacij</dt>
             <dd class="col-3">{{ organization.is_voluntary ? 'DA' : 'NE' }}</dd>
             <dt class="col-9">Organizacija je na seznamu upravičencev do 0,5 % dohodnine</dt>
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>

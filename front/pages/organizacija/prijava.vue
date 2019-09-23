@@ -226,7 +226,7 @@
                 v-model="data[activeStage].is_voluntary"
                 type="checkbox"
                 name="is_voluntary"
-                label="Organizacija je vpisana v evidenco prostotovoljskih organizacij"
+                label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
               />
               <selection-option
                 v-model="data[activeStage].zero5"
