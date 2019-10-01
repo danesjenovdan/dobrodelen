@@ -155,6 +155,11 @@ export default {
     opacity: 0;
   }
 
+  .form-control:-ms-input-placeholder {
+    opacity: 1;
+    color: transparent;
+  }
+
   .form-control:placeholder-shown + label {
     max-width: 90%;
     white-space: nowrap;
