@@ -595,7 +595,7 @@ class Criteria(models.Model):
         default=0, verbose_name="1.3 - Odstotek neodvisnih članov z glasovalno pravico"
     )
     control_of_business_4 = models.IntegerField(
-        default=0, verbose_name="1.4 - Organizacija ima zapisnike sej"
+        default=0, verbose_name="1.4 - Organizacija vodi zapisnike sej"
     )
 
     strategic_planning_2_1 = models.IntegerField(
