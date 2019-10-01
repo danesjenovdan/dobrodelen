@@ -643,10 +643,10 @@ class Criteria(models.Model):
 
     transparency_of_organizations_4_1 = models.IntegerField(
         default=0,
-        verbose_name="4.1 - Organizacija ima objavljena letna poročila o delu",
+        verbose_name="4.1.1 - Organizacija ima objavljena letna poročila o delu",
     )
     transparency_of_organizations_4_2 = models.IntegerField(
-        default=0, verbose_name="4.2 - Letna poročila o delu so razumljiva"
+        default=0, verbose_name="4.1.2 - Letna poročila o delu so razumljiva"
     )
     transparency_of_organizations_4_2_1 = models.IntegerField(
         default=0,
