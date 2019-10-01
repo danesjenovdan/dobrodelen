@@ -340,6 +340,26 @@ class Organization(ClusterableModel):
         return -1
 
     @property
+    def points(self):
+        criteria_class = self.criteria.first().__class__
+        fields = [
+            f.name
+            for f in criteria_class._meta.fields
+            if f.name not in ["id", "organization", "stars"]
+        ]
+        values = list(
+            map(
+                lambda f: {
+                    "name": f,
+                    "verbose_name": criteria_class._meta.get_field(f).verbose_name,
+                    "value": getattr(self, f, 0),
+                },
+                fields,
+            )
+        )
+        return values
+
+    @property
     def edit_key(self):
         return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
 
@@ -456,9 +476,18 @@ ROLE_CHOICES = [
 
 
 class SupervisoryBoardMember(models.Model):
-    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="supervisory_board_members")
+    organization = ParentalKey(
+        "Organization",
+        on_delete=models.CASCADE,
+        related_name="supervisory_board_members",
+    )
     name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
-    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    role = models.CharField(
+        max_length=2,
+        choices=ROLE_CHOICES,
+        default="1",
+        verbose_name="Povezava z organizacijo",
+    )
     custom_role = models.CharField(
         verbose_name="Povezava z organizacijo: Drugo",
         default="",
@@ -471,9 +500,18 @@ class SupervisoryBoardMember(models.Model):
 
 
 class ManagementBoardMember(models.Model):
-    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="management_board_members")
+    organization = ParentalKey(
+        "Organization",
+        on_delete=models.CASCADE,
+        related_name="management_board_members",
+    )
     name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
-    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    role = models.CharField(
+        max_length=2,
+        choices=ROLE_CHOICES,
+        default="1",
+        verbose_name="Povezava z organizacijo",
+    )
     custom_role = models.CharField(
         verbose_name="Povezava z organizacijo: Drugo",
         default="",
@@ -486,9 +524,16 @@ class ManagementBoardMember(models.Model):
 
 
 class CouncilBoardMember(models.Model):
-    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="council_members")
+    organization = ParentalKey(
+        "Organization", on_delete=models.CASCADE, related_name="council_members"
+    )
     name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
-    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    role = models.CharField(
+        max_length=2,
+        choices=ROLE_CHOICES,
+        default="1",
+        verbose_name="Povezava z organizacijo",
+    )
     custom_role = models.CharField(
         verbose_name="Povezava z organizacijo: Drugo",
         default="",
@@ -501,9 +546,16 @@ class CouncilBoardMember(models.Model):
 
 
 class OtherBoardMember(models.Model):
-    organization = ParentalKey('Organization', on_delete=models.CASCADE, related_name="other_board_members")
+    organization = ParentalKey(
+        "Organization", on_delete=models.CASCADE, related_name="other_board_members"
+    )
     name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
-    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default="1", verbose_name="Povezava z organizacijo")
+    role = models.CharField(
+        max_length=2,
+        choices=ROLE_CHOICES,
+        default="1",
+        verbose_name="Povezava z organizacijo",
+    )
     custom_role = models.CharField(
         verbose_name="Povezava z organizacijo: Drugo",
         default="",

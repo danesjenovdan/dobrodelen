@@ -73,6 +73,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "description",
             "cover_photo",
             "stars",
+            "points",
             "links",
             "area",
             "mission",
