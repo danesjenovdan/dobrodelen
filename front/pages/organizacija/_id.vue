@@ -113,11 +113,10 @@
               </button>
             </div>
             <div class="modal-body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                quis, sem. Nulla consequat massa quis enim.
+              <p class="text-center">
+                Skupna ocena organizacije je seštevek točk, ki jih organizacija prejme po posameznih
+                kriterijih, ki so razvidni v spodnji tabeli. Več informacij o metodologiji lahko
+                dobite <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
               </p>
               <table v-if="organization.points" class="table">
                 <tbody>
