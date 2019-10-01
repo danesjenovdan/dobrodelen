@@ -15,9 +15,21 @@
       <div class="col-12 col-md-7 col-xxl-5">
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora reiciendis qui, maxime,
-            iure odit magnam molestias illo sequi, dolorum vitae atque cupiditate ipsa autem
-            excepturi aspernatur deleniti voluptatem? Repudiandae, amet.
+            <p class="lead">
+              Veseli nas, da ste se odločili vpisati vašo organizacijo na spletno stran
+              <em>dobrodelen.si</em> in širši javnosti pokazati, kako transparenti in odgovorni ste
+              pri svojem poslovanju.
+            </p>
+            <p class="lead">
+              <!-- eslint-disable prettier/prettier -->
+              Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno preberite
+              <a href="#">Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
+                organizacij – Nabor kriterijev s pojasnili in smernice za pripravo podatkov</a>,
+              kjer so predstavljeni kriteriji in pogoji za dodelitev točk, posebna pozornost pa
+              je namenjena predstavitvi finančnih podatkov, ki jih bomo od vas potrebovali in kako
+              morajo biti pripravljeni.
+              <!-- eslint-enable prettier/prettier -->
+            </p>
           </template>
           <template v-if="activeStage === 0">
             <form-category title="Ime">
@@ -1324,6 +1336,12 @@ export default {
 
 <style lang="scss" scoped>
 .content {
+  em {
+    // font-weight: 400;
+    // font-style: italic;
+    font-style: normal;
+  }
+
   .form-row {
     margin-top: 6rem;
 

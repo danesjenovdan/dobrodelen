@@ -24,7 +24,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900&display=swap&subset=latin-ext',
+          'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900&display=swap&subset=latin-ext',
       },
     ],
   },
@@ -88,6 +88,13 @@ export default {
           `;
           // sassLoader.options.functions = scssCustomFunctions;
         }
+      });
+
+      config.module.rules.push({
+        enforce: 'pre',
+        test: /\.inc\.html$/,
+        loader: 'raw-loader',
+        exclude: /(node_modules)/,
       });
     },
   },

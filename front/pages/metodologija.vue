@@ -2,7 +2,6 @@
   <div class="content">
     <intro-text
       lead="Metodologija za ocenjevanje in razvrščanje slovenskih nevladnih organizacij"
-      text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse."
     />
     <div class="faq">
       <div class="accordion">
@@ -15,16 +14,14 @@
           <div :id="`accordion-item-heading-${i}`" class="card-header position-relative">
             <h2 class="mb-0">
               <button
-                :class="['btn', 'stretched-link', { collapsed: item.collapsed }]"
+                :class="['btn', 'stretched-link', 'text-left', { collapsed: item.collapsed }]"
                 type="button"
                 :aria-expanded="`${!item.collapsed}`"
                 :aria-controls="`accordion-item-content-${i}`"
                 @click="toggleItem(i)"
               >
-                <span>
-                  Kriterij 1:
-                  <strong>Nadzor nad poslovanjem</strong>
-                </span>
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="item.headerHTML" />
               </button>
               <i class="icon icon-arrow icon-arrow--right" />
             </h2>
@@ -35,99 +32,8 @@
             :class="['accordion-item-content', 'collapse', { show: !item.collapsed }]"
             :aria-labelledby="`accordion-item-heading-${i}`"
           >
-            <div class="card-body">
-              <p>
-                <strong>
-                  Organizacija dosega strateške cilje organizacije (strateški cilji postavljeni,
-                  napredek se spremlja vsaj na 2 leti, obstajajo poročila o napredku).
-                </strong>
-              </p>
-              <p>
-                Poleg letnega načrta dela ima organizacija tudi strateške oziroma dolgoročne cilje,
-                ki usmerjajo njeno delo in aktivnosti proti uresničevanju njenega poslanstva. Pri
-                tem samo poimenovanje dokumenta ni pomembno, tudi kakovost dokumenta se ne točkuje.
-                V tej fazi je pomembno le to, da ima organizacija dolgoročne načrte in cilje in da
-                se jih trudi uresničevati.
-              </p>
-              <p>Podatki, ki jih pri tem organizacije posredujejo:</p>
-              <ul>
-                <li>opredelitev, ali organizacija strateško načrtuje,</li>
-                <li>predložitev strateškega načrta, če ga ima,</li>
-                <li>
-                  opredelitev, ali organizacija spremlja doseganje strateških ciljev in predložitev
-                  poročila, če obstaja.
-                </li>
-              </ul>
-              <p>
-                <strong>Točkovnik</strong>
-              </p>
-              <p>2.1 - organizacija ima strateški načrt</p>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <strong>da</strong>
-                    </td>
-                    <td>
-                      <strong>2 točki</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>ne</strong>
-                    </td>
-                    <td>
-                      <strong>0 točk</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>2.2 - organizacija spremlja doseganje strateškega načrta</p>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <strong>da</strong>
-                    </td>
-                    <td>
-                      <strong>2 točki</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>ne</strong>
-                    </td>
-                    <td>
-                      <strong>0 točk</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>
-                2.3 - organizacija pripravlja poročila o spremljanju napredka pri doseganju
-                strateških ciljev
-              </p>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <strong>da</strong>
-                    </td>
-                    <td>
-                      <strong>2 točki</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>ne</strong>
-                    </td>
-                    <td>
-                      <strong>0 točk</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div class="card-body" v-html="item.contentHTML" />
           </div>
         </div>
       </div>
@@ -147,18 +53,28 @@ export default {
       items: [
         {
           collapsed: true,
+          headerHTML: 'Kriterij 1: <strong>Nadzor nad poslovanjem</strong>',
+          contentHTML: require('../assets/metodologija/kriterij1.inc.html').default,
         },
         {
           collapsed: true,
+          headerHTML: 'Kriterij 2: <strong>Strateško načrtovanje organizacij</strong>',
+          contentHTML: require('../assets/metodologija/kriterij2.inc.html').default,
         },
         {
           collapsed: true,
+          headerHTML: 'Kriterij 3: <strong>Finančno upravljanje</strong>',
+          contentHTML: require('../assets/metodologija/kriterij3.inc.html').default,
         },
         {
           collapsed: true,
+          headerHTML: 'Kriterij 4: <strong>Transparentnost organizacij</strong>',
+          contentHTML: require('../assets/metodologija/kriterij4.inc.html').default,
         },
         {
           collapsed: true,
+          headerHTML: '<strong>Skupna ocena</strong>',
+          contentHTML: require('../assets/metodologija/skupnaocena.inc.html').default,
         },
       ],
     };
@@ -234,7 +150,7 @@ export default {
               font-size: 1.25rem;
             }
 
-            span {
+            /deep/ span {
               font-weight: 300;
               letter-spacing: 0.2em;
 
@@ -264,7 +180,7 @@ export default {
           height: 0;
         }
 
-        .card-body {
+        /deep/ .card-body {
           padding-top: 4rem;
           padding-bottom: 4rem;
           font-size: 1.5rem;
@@ -279,7 +195,12 @@ export default {
           }
 
           strong {
+            font-weight: 400;
+          }
+
+          em {
             font-weight: 600;
+            font-style: italic;
           }
 
           p {
@@ -297,7 +218,9 @@ export default {
               margin-top: 0.5rem;
             }
 
-            & + table {
+            & + table,
+            & + .table,
+            & + .table-responsive {
               margin-top: 0.75rem;
             }
           }
@@ -322,14 +245,16 @@ export default {
 
           table {
             margin-bottom: 2rem;
+            font-size: 1.25rem;
 
             @include media-breakpoint-down(sm) {
               margin-bottom: 1rem;
+              font-size: 1rem;
             }
 
             td {
               border: 1px solid $blue;
-              padding: 0.5rem 3rem;
+              padding: 0.5rem 1.5rem;
             }
           }
         }
