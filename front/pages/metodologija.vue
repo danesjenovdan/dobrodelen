@@ -238,8 +238,8 @@ export default {
               padding-left: 1.4em;
               background-image: url('~assets/svg/arrow-list.svg');
               background-repeat: no-repeat;
-              background-position: top 0.38em left;
-              background-size: 1em;
+              background-position: top 0.3em left;
+              background-size: 1em 1em;
             }
           }
 
