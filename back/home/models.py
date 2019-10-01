@@ -673,6 +673,9 @@ class Criteria(models.Model):
     transparency_of_organizations_4_7 = models.IntegerField(
         default=0, verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto"
     )
+    transparency_of_organizations_4_8 = models.IntegerField(
+        default=0, verbose_name="4.8 - Informacije so dostopne"
+    )
 
     stars = models.IntegerField(default=-1, editable=False)
 
@@ -725,6 +728,7 @@ class Criteria(models.Model):
         "4.5": 1,
         "4.6": 1,
         "4.7": 1,
+        "4.8": 2,
     }
 
     panels = [
@@ -770,6 +774,7 @@ class Criteria(models.Model):
                 FieldPanel("transparency_of_organizations_4_5"),
                 FieldPanel("transparency_of_organizations_4_6"),
                 FieldPanel("transparency_of_organizations_4_7"),
+                FieldPanel("transparency_of_organizations_4_8"),
             ],
             heading="Kriterij 4: Transparentnost organizacij",
         ),
