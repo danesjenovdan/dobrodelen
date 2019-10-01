@@ -122,15 +122,11 @@
                 nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
                 quis, sem. Nulla consequat massa quis enim.
               </p>
-              <table class="table">
+              <table v-if="organization.points" class="table">
                 <tbody>
-                  <tr>
-                    <td>Število zaposlenih v zadnjem zaključenem letu</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <td>Število zaposlenih v zadnjem zaključenem letu</td>
-                    <td>1</td>
+                  <tr v-for="criterion in organization.points" :key="criterion.name">
+                    <td v-text="criterion.verbose_name" />
+                    <td v-text="criterion.value" />
                   </tr>
                 </tbody>
               </table>
@@ -314,6 +310,7 @@ export default {
 
     .table {
       margin-top: 4rem;
+      font-size: 1.25rem;
 
       tr {
         border-top: 1px solid $blue;

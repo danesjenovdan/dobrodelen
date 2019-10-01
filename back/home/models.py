@@ -341,18 +341,18 @@ class Organization(ClusterableModel):
 
     @property
     def points(self):
-        criteria_class = self.criteria.first().__class__
+        criteria = self.criteria.first()
         fields = [
             f.name
-            for f in criteria_class._meta.fields
+            for f in criteria.__class__._meta.fields
             if f.name not in ["id", "organization", "stars"]
         ]
         values = list(
             map(
                 lambda f: {
                     "name": f,
-                    "verbose_name": criteria_class._meta.get_field(f).verbose_name,
-                    "value": getattr(self, f, 0),
+                    "verbose_name": criteria.__class__._meta.get_field(f).verbose_name,
+                    "value": getattr(criteria, f, 0),
                 },
                 fields,
             )
