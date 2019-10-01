@@ -23,8 +23,12 @@
             <p class="lead">
               <!-- eslint-disable prettier/prettier -->
               Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno preberite
-              <a href="#">Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
-                organizacij – Nabor kriterijev s pojasnili in smernice za pripravo podatkov</a>,
+              <a
+                :href="`${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih organizacij – Nabor
+                kriterijev s pojasnili in smernice za pripravo podatkov</a>,
               kjer so predstavljeni kriteriji in pogoji za dodelitev točk, posebna pozornost pa
               je namenjena predstavitvi finančnih podatkov, ki jih bomo od vas potrebovali in kako
               morajo biti pripravljeni.
