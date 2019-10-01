@@ -308,6 +308,11 @@ export default {
       margin-top: 4rem;
       font-size: 1.25rem;
 
+      @include media-breakpoint-down(sm) {
+        margin-top: 2rem;
+        font-size: 1rem;
+      }
+
       tr {
         border-top: 1px solid $blue;
 
@@ -320,8 +325,18 @@ export default {
           padding-top: 1.25rem;
           padding-bottom: 1.25rem;
 
+          @include media-breakpoint-down(sm) {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
           &:first-of-type {
             padding-left: 0;
+          }
+
+          &:last-of-type {
+            text-align: right;
+            min-width: 4rem;
           }
         }
       }
