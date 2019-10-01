@@ -74,7 +74,7 @@
             </nuxt-link>
           </td>
           <td>
-            <p class="lead">{{ shorten(org.description) }}</p>
+            <p class="lead clamp-lines">{{ shorten(org.description) }}</p>
           </td>
           <td>
             <div class="stars">
@@ -294,11 +294,6 @@ export default {
             }
           }
 
-          // .org-title-link {
-          //   // display: inline-block;
-          //   // margin-top: 2rem;
-          // }
-
           strong.lead {
             display: block;
             // text-align: center;
@@ -354,6 +349,10 @@ export default {
 
         @include media-breakpoint-down(xl) {
           width: 20rem;
+        }
+
+        @include media-breakpoint-down(md) {
+          width: 95%;
         }
       }
 
@@ -435,12 +434,28 @@ export default {
         }
       }
 
+      .org-title-link {
+        float: left;
+        width: calc(100% - 6rem);
+
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
+
       .lead {
         line-height: 1.4;
       }
 
       strong.lead {
         font-weight: 600;
+      }
+
+      .clamp-lines {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .stars {
