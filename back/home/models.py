@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 from django.core import signing
 from modelcluster.models import ClusterableModel, ParentalKey
@@ -393,7 +394,7 @@ class Organization(ClusterableModel):
         #
         FieldPanel("mission"),
         FieldPanel("description"),
-        FieldPanel("area"),
+        FieldPanel("area", widget=forms.CheckboxSelectMultiple),
         FieldPanel("custom_area"),
         FieldPanel("avg_revenue"),
         FieldPanel("employed"),
