@@ -91,10 +91,7 @@
         role="dialog"
         style="display:block"
       >
-        <div
-          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-          role="document"
-        >
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Skupna ocena</h5>
@@ -126,7 +123,7 @@
                 <tbody>
                   <tr v-for="criterion in organization.points" :key="criterion.name">
                     <td v-text="criterion.verbose_name" />
-                    <td v-text="criterion.value" />
+                    <td v-text="`${criterion.value} / ${criterion.max_value}`" />
                   </tr>
                 </tbody>
               </table>

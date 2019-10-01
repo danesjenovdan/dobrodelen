@@ -347,16 +347,19 @@ class Organization(ClusterableModel):
             for f in criteria.__class__._meta.fields
             if f.name not in ["id", "organization", "stars"]
         ]
-        values = list(
-            map(
-                lambda f: {
-                    "name": f,
-                    "verbose_name": criteria.__class__._meta.get_field(f).verbose_name,
-                    "value": getattr(criteria, f, 0),
-                },
-                fields,
-            )
-        )
+
+        def field_to_object(f):
+            verbose_name = criteria.__class__._meta.get_field(f).verbose_name
+            return {
+                "name": f,
+                "verbose_name": verbose_name,
+                "value": getattr(criteria, f, 0),
+                "max_value": criteria.__class__.max_values.get(
+                    verbose_name.split(" - ")[0], 0
+                ),
+            }
+
+        values = list(map(field_to_object, fields))
         return values
 
     @property
@@ -695,6 +698,34 @@ class Criteria(models.Model):
     def save(self, *args, **kwargs):
         self.stars = self.compute_stars()
         super().save(*args, **kwargs)
+
+    max_values = {
+        "1.1": 5,
+        "1.2": 3,
+        "1.3": 3,
+        "1.4": 2,
+        "2.1": 2,
+        "2.2": 2,
+        "2.3": 1,
+        "3.1": 5,
+        "3.2": 5,
+        "3.3": 5,
+        "3.4.1": 5,
+        "3.4.2": 5,
+        "3.5.1": 4,
+        "3.5.2": 2,
+        "3.6": 5,
+        "4.1.1": 2,
+        "4.1.2": 2,
+        "4.2.1": 2,
+        "4.2.2": 2,
+        "4.2.3": 2,
+        "4.3": 2,
+        "4.4": 1,
+        "4.5": 1,
+        "4.6": 1,
+        "4.7": 1,
+    }
 
     panels = [
         MultiFieldPanel(
