@@ -286,6 +286,7 @@ export default {
             // display: none;
             position: absolute;
             top: 1rem;
+            left: 1rem;
 
             .embed-responsive {
               width: 3rem;
