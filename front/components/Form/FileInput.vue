@@ -3,6 +3,7 @@
     <div :class="['custom-file', { 'is-invalid': hasError }]">
       <input
         :id="`${name}__id`"
+        ref="input"
         :name="name"
         type="file"
         class="custom-file-input"
@@ -21,6 +22,14 @@
           </small>
         </div>
       </label>
+      <button
+        v-if="fileName"
+        type="button"
+        class="btn btn-link remove-file"
+        @click="onFileChanged(null)"
+      >
+        <span>&times;</span> Odstrani
+      </button>
     </div>
     <div v-if="hasError" class="invalid-feedback">* {{ errorMessage }}</div>
   </div>
@@ -71,6 +80,12 @@ export default {
   },
   methods: {
     onFileChanged(event) {
+      if (event == null) {
+        this.fileName = null;
+        this.$refs.input.value = null;
+        this.$emit('change', null);
+        return;
+      }
       const file = event.target.files[0];
       if (file) {
         this.fileName = file.name;
@@ -181,6 +196,25 @@ export default {
 
       svg {
         fill: $body-color;
+      }
+    }
+
+    .remove-file {
+      display: flex;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 2rem;
+      z-index: 1;
+
+      &,
+      &:hover {
+        text-decoration: none;
+      }
+
+      span {
+        font-size: 2rem;
+        line-height: 2rem;
+        margin-right: 0.5rem;
       }
     }
   }
