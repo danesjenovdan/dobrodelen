@@ -88,6 +88,14 @@
                   :has-error="dataErrors.links && dataErrors.links[i]"
                 />
               </template>
+              <button
+                v-if="data[activeStage].links.length"
+                type="button"
+                class="btn btn-link remove-member"
+                @click="data[activeStage].links.pop()"
+              >
+                <span>&times;</span> Odstrani družbeni profil
+              </button>
               <add-button
                 text="Dodajte družbeni profil"
                 @click.native="data[activeStage].links.push({ url: null })"
@@ -350,6 +358,14 @@
                   <br />
                 </div>
               </template>
+              <button
+                v-if="data[activeStage].supervisory_board_members.length"
+                type="button"
+                class="btn btn-link remove-member"
+                @click="data[activeStage].supervisory_board_members.pop()"
+              >
+                <span>&times;</span> Odstrani člana
+              </button>
               <add-button
                 text="Dodajte člana"
                 @click.native="
@@ -458,6 +474,14 @@
                   <br />
                 </div>
               </template>
+              <button
+                v-if="data[activeStage].management_board_members.length"
+                type="button"
+                class="btn btn-link remove-member"
+                @click="data[activeStage].management_board_members.pop()"
+              >
+                <span>&times;</span> Odstrani člana
+              </button>
               <add-button
                 text="Dodajte člana"
                 @click.native="
@@ -561,6 +585,14 @@
                   <br />
                 </div>
               </template>
+              <button
+                v-if="data[activeStage].council_members.length"
+                type="button"
+                class="btn btn-link remove-member"
+                @click="data[activeStage].council_members.pop()"
+              >
+                <span>&times;</span> Odstrani člana
+              </button>
               <add-button
                 text="Dodajte člana"
                 @click.native="
@@ -671,6 +703,14 @@
                   <br />
                 </div>
               </template>
+              <button
+                v-if="data[activeStage].other_board_members.length"
+                type="button"
+                class="btn btn-link remove-member"
+                @click="data[activeStage].other_board_members.pop()"
+              >
+                <span>&times;</span> Odstrani člana
+              </button>
               <add-button
                 text="Dodajte člana"
                 @click.native="
@@ -1369,6 +1409,25 @@ export default {
 
     hr {
       border-top: 2px solid $blue;
+    }
+
+    .remove-member {
+      display: flex;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 2rem;
+      z-index: 1;
+
+      &,
+      &:hover {
+        text-decoration: none;
+      }
+
+      span {
+        font-size: 2rem;
+        line-height: 2rem;
+        margin-right: 0.5rem;
+      }
     }
   }
 }
