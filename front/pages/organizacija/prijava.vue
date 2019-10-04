@@ -1221,8 +1221,10 @@ export default {
         keys.forEach((key) => {
           // Add http:// to links if missing!
           if (key === 'web_page') {
-            const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
-            data[key] = url;
+            if (data[key]) {
+              const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
+              data[key] = url;
+            }
           }
           if (key === 'links') {
             const urls = data[key]

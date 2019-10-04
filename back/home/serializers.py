@@ -102,7 +102,9 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
 
 
 class OrganizationDetailSerializer(WritableNestedModelSerializer):
-    cover_photo = ImageRenditionAndUploadField("original", required=False)
+    cover_photo = ImageRenditionAndUploadField(
+        "original", required=False, allow_null=True
+    )
     links = LinkSerializer(many=True, required=False)
     supervisory_board_members = SupervisoryBoardMemberSerializer(
         many=True, required=False
