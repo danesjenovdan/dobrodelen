@@ -1,6 +1,8 @@
 from django import forms
 from django.db import models
 from django.core import signing
+from django.conf import settings
+from django.utils import timezone
 from modelcluster.models import ClusterableModel, ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -10,7 +12,44 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
-from django.utils import timezone
+
+import requests
+
+
+def try_send_mail_updated_org(id, inst):
+    try:
+        to_mail = "dobrodelen@cnvos.si"
+        subject = '[dobrodelen.si] Organizacija "{name}" je posodobila podatke'.format(
+            name=inst.name
+        )
+        content = """
+            Hej, to je avtomatsko sporočilo da je nekdo spremenil podatke organizaciji!
+
+            Ime organizacije: {name}
+            Povezava do profila: http://dobrotest.djnd.si/organizacija/{id}
+            Povezava do admin strani: http://dobrotest.djnd.si/admin/home/organization/edit/{id}/
+
+            LP
+        """.format(
+            id=id, name=inst.name
+        )
+
+        if (settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY):
+            requests.post(
+                settings.MAILGUN_API,
+                auth=("api", settings.MAILGUN_ACCESS_KEY),
+                data={
+                    "from": settings.FROM_MAIL,
+                    "to": to_mail,
+                    "subject": subject,
+                    "text": content,
+                },
+            )
+            print("Sent mail - organization updated:", id)
+
+    except Exception as e:
+        print("Failed to send mail - organization updated:", id)
+        print(e)
 
 
 def get_intance_path(instance, file_name):
@@ -368,13 +407,18 @@ class Organization(ClusterableModel):
         return signing.dumps(self.pk, salt="ORG_EDIT_KEY")
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
+        is_new = self.pk is None
+        if is_new:
             self.signup_time_start = timezone.now()
 
-        if self.is_complete and not self.signup_time:
+        is_complete_first_time = self.is_complete and not self.signup_time
+        if is_complete_first_time:
             self.signup_time = timezone.now()
 
         super().save(*args, **kwargs)
+
+        if is_complete_first_time or self.is_complete:
+            try_send_mail_updated_org(self.pk, self)
 
     panels = [
         FieldPanel("published"),
