@@ -4,6 +4,7 @@
     <organization-list
       :organizations="organizations"
       :sort-query="orgSortQuery"
+      :search-query="orgSearchQuery"
       @change="onOrgListChange"
     />
   </div>
@@ -20,10 +21,12 @@ export default {
   },
   async asyncData({ $axios, query }) {
     const orgSortQuery = query.sort || undefined;
+    const orgSearchQuery = query.q || undefined;
     const orgsResp = await $axios.$get('/api/organizations/');
     return {
       organizations: orgsResp.results,
       orgSortQuery,
+      orgSearchQuery,
     };
   },
   methods: {

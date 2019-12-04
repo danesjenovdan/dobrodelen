@@ -105,6 +105,10 @@ export default {
       type: String,
       default: '-stars',
     },
+    searchQuery: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     const [sortKey, sortAsc] =
@@ -113,7 +117,7 @@ export default {
       apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
-      searchText: '',
+      searchText: this.searchQuery,
     };
   },
   computed: {
