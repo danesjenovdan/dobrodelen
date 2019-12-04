@@ -130,8 +130,9 @@ export default {
       }
 
       return orgs.filter((org) => {
+        const allNames = `${org.name} ${org.additional_names}`;
         return filters.every((filter) => {
-          return org.name.toLowerCase().includes(filter);
+          return allNames.toLowerCase().includes(filter);
         });
       });
     },

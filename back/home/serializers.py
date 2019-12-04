@@ -52,7 +52,14 @@ class OrganizationListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Organization
-        fields = ("id", "name", "description", "cover_photo", "stars")
+        fields = (
+            "id",
+            "name",
+            "additional_names",
+            "description",
+            "cover_photo",
+            "stars",
+        )
 
 
 class OrganizationPublicSerializer(serializers.ModelSerializer):
