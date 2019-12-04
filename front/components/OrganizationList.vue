@@ -14,6 +14,169 @@
           <input class="form-control btn btn-warning" type="submit" value="Išči" />
         </div> -->
       </div>
+      <div class="form-row align-items-center justify-content-center">
+        <div class="col-12 col-md-6 col-md-auto text-right">
+          <button type="button" class="btn btn-sm btn-link" @click="showAdvanced = !showAdvanced">
+            Napredno iskanje
+          </button>
+        </div>
+      </div>
+      <div v-if="showAdvanced" class="form-row align-items-center justify-content-center">
+        <div class="col-12 col-md-10 col-md-auto">
+          <form-category title="Področja delovanja">
+            <div class="row">
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="1"
+                  label="Človekove pravice, demokracija in enakost"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="2"
+                  label="Izobraževanje, raziskave in razvoj"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="3"
+                  label="Kultura"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="4"
+                  label="Mladina, otroci"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="5"
+                  label="Razvojno sodelovanje"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="6"
+                  label="Sociala"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="7"
+                  label="Šport"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="8"
+                  label="Okolje, narava in prostor"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="9"
+                  label="Zdravje"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="10"
+                  label="Drugo"
+                />
+              </div>
+            </div>
+          </form-category>
+
+          <form-category title="Statusi">
+            <div class="row">
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.is_charity"
+                  type="checkbox"
+                  name="is_charity"
+                  label="Organizacija ima status humanitarne organizacije"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.has_public_interest"
+                  type="checkbox"
+                  name="has_public_interest"
+                  label="Organizacija ima status delovanja v javnem interesu"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.is_voluntary"
+                  type="checkbox"
+                  name="is_voluntary"
+                  label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.zero5"
+                  type="checkbox"
+                  name="zero5"
+                  label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
+                />
+              </div>
+            </div>
+          </form-category>
+
+          <div class="row">
+            <div class="col-md-6">
+              <form-category title="Število zaposlenih">
+                <select v-model="filters.employed" class="custom-select">
+                  <option v-for="employed in allEmployments" :key="employed" :value="employed">
+                    {{ employed }}
+                  </option>
+                </select>
+              </form-category>
+            </div>
+            <div class="col-md-6">
+              <form-category title="Proračun">
+                <select v-model="filters.budget" class="custom-select">
+                  <option v-for="budget in allBudgets" :key="budget" :value="budget">
+                    {{ budget }}
+                  </option>
+                </select>
+              </form-category>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
     <table class="table table-hover">
       <thead>
@@ -92,10 +255,16 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
+import { debounce, uniq } from 'lodash';
 import stableSort from 'stable';
+import FormCategory from '~/components/Form/FormCategory.vue';
+import SelectionOption from '~/components/Form/SelectionOption.vue';
 
 export default {
+  components: {
+    FormCategory,
+    SelectionOption,
+  },
   props: {
     organizations: {
       type: Array,
@@ -113,32 +282,102 @@ export default {
   data() {
     const [sortKey, sortAsc] =
       this.sortQuery[0] === '-' ? [this.sortQuery.slice(1), false] : [this.sortQuery, true];
+
+    const initialFilters = {
+      area: [],
+      is_charity: false,
+      has_public_interest: false,
+      is_voluntary: false,
+      zero5: false,
+      employed: 'Vsi',
+      budget: 'Vsi',
+    };
+
+    const initialShowAdvanced = false;
+
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
       searchText: this.searchQuery,
+      showAdvanced: initialShowAdvanced,
+      filters: initialFilters,
     };
   },
   computed: {
+    allEmployments() {
+      const all = stableSort(uniq(this.organizations.map((org) => org.employed)), (a, b) => a - b);
+      all.unshift('Vsi');
+      return all;
+    },
+    allBudgets() {
+      const all = stableSort(
+        uniq(this.organizations.map((org) => org.avg_revenue)),
+        (a, b) => a - b,
+      );
+      all.unshift('Vsi');
+      return all;
+    },
     filteredOrgs() {
-      const orgs = this.organizations || [];
-      const filters = this.searchText
+      let orgs = this.organizations || [];
+
+      const textFilters = this.searchText
         .toLowerCase()
         .split(/\s+/g)
         .map((s) => s.trim())
         .filter(Boolean);
 
-      if (!filters || !filters.length) {
-        return orgs;
+      if (textFilters && textFilters.length) {
+        orgs = orgs.filter((org) => {
+          const allNames = `${org.name} ${org.additional_names}`;
+          return textFilters.every((textFilter) => {
+            return allNames.toLowerCase().includes(textFilter);
+          });
+        });
       }
 
-      return orgs.filter((org) => {
-        const allNames = `${org.name} ${org.additional_names}`;
-        return filters.every((filter) => {
-          return allNames.toLowerCase().includes(filter);
+      if (this.filters.area.length) {
+        orgs = orgs.filter((org) => {
+          return this.filters.area.some((a) => {
+            return org.area.includes(a);
+          });
         });
-      });
+      }
+
+      if (this.filters.is_charity) {
+        orgs = orgs.filter((org) => {
+          return org.is_charity;
+        });
+      }
+      if (this.filters.has_public_interest) {
+        orgs = orgs.filter((org) => {
+          return org.has_public_interest;
+        });
+      }
+      if (this.filters.is_voluntary) {
+        orgs = orgs.filter((org) => {
+          return org.is_voluntary;
+        });
+      }
+      if (this.filters.zero5) {
+        orgs = orgs.filter((org) => {
+          return org.zero5;
+        });
+      }
+
+      if (this.filters.employed !== 'Vsi') {
+        orgs = orgs.filter((org) => {
+          return org.employed === this.filters.employed;
+        });
+      }
+
+      if (this.filters.budget !== 'Vsi') {
+        orgs = orgs.filter((org) => {
+          return org.avg_revenue === this.filters.budget;
+        });
+      }
+
+      return orgs;
     },
     sortedOrgs() {
       return stableSort(this.filteredOrgs, (a, b) => {
@@ -216,6 +455,29 @@ export default {
 
     @include media-breakpoint-down(md) {
       padding: 3rem 0;
+    }
+
+    fieldset /deep/ {
+      margin-top: 1rem;
+
+      legend {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+      }
+
+      .custom-control:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .custom-control-label {
+        font-size: 1rem;
+        margin: 0.25rem 0;
+      }
+
+      .custom-select {
+        border: none;
+        margin: 0.25rem 0;
+      }
     }
 
     .form-control {

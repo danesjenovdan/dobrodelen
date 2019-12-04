@@ -59,6 +59,13 @@ class OrganizationListSerializer(serializers.ModelSerializer):
             "description",
             "cover_photo",
             "stars",
+            "is_charity",
+            "has_public_interest",
+            "is_voluntary",
+            "area",
+            "avg_revenue",
+            "employed",
+            "zero5",
         )
 
 
