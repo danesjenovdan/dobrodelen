@@ -34,7 +34,7 @@ def try_send_mail_updated_org(id, inst):
             id=id, name=inst.name
         )
 
-        if (settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY):
+        if settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY:
             requests.post(
                 settings.MAILGUN_API,
                 auth=("api", settings.MAILGUN_ACCESS_KEY),
@@ -631,95 +631,135 @@ class Criteria(models.Model):
     control_of_business_1 = models.IntegerField(
         default=0,
         verbose_name="1.1 - Število sestankov nadzornega/upravnega odbora v zadnjem letu",
+        help_text="Število sestankov | 5+ = 𝟓 | 4 = 𝟒 | 3 = 𝟑 | 2 = 𝟐 | 1 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_2 = models.IntegerField(
         default=0,
         verbose_name="1.2 - Število neodvisnih članov nadzornega/upravnega odbora, ki ima glasovalno pravico",
+        help_text="Število članov | 5+ = 𝟑 | 3-5 = 𝟐 | 1-2 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_3 = models.IntegerField(
-        default=0, verbose_name="1.3 - Odstotek neodvisnih članov z glasovalno pravico"
+        default=0,
+        verbose_name="1.3 - Odstotek neodvisnih članov z glasovalno pravico",
+        help_text="Odstotek neodvisnih članov | 75+ = 𝟑 | 50-75 = 𝟐 | <50 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_4 = models.IntegerField(
-        default=0, verbose_name="1.4 - Organizacija vodi zapisnike sej"
+        default=0,
+        verbose_name="1.4 - Organizacija vodi zapisnike sej",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
 
     strategic_planning_2_1 = models.IntegerField(
-        default=0, verbose_name="2.1 - Organizacija ima strateški načrt"
+        default=0,
+        verbose_name="2.1 - Organizacija ima strateški načrt",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     strategic_planning_2_2 = models.IntegerField(
         default=0,
         verbose_name="2.2 - Organizacija spremlja doseganje strateškega načrta",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     strategic_planning_2_3 = models.IntegerField(
         default=0,
         verbose_name="2.3 - Organizacija pripravlja poročila o spremljanju napredka pri doseganju strateških ciljev",
+        help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
 
     financial_management_3_1 = models.IntegerField(
         default=0,
         verbose_name="3.1 - Odstotek sredstev, ki jih porabi za izvedbo programa",
+        help_text="Odstotek sredstev | 90+ = 𝟓 | 90-86 = 𝟒 | 85-76 = 𝟑 | 75-70 = 𝟐 | <70 = 𝟏 |",
     )
     financial_management_3_2 = models.IntegerField(
         default=0,
         verbose_name="3.2 - Odstotek sredstev, ki jh organizacija porabi za splošno delovanje",
+        help_text="Odstotek sredstev | <10 = 𝟓 | 10-14 = 𝟒 | 15-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
     )
     financial_management_3_3 = models.IntegerField(
         default=0,
         verbose_name="3.3 - Znesek, ki ga organizacija porabi na vsakih zbranih 100 €",
+        help_text="Znesek | 0-5 = 𝟓 | 6-15 = 𝟒 | 16-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
     )
     financial_management_3_4_1 = models.IntegerField(
-        default=0, verbose_name="3.4.1 - Viri sredstev"
+        default=0,
+        verbose_name="3.4.1 - Viri sredstev",
+        help_text="Število virov | 10+ = 𝟓 | 8- 9 = 𝟒 | 6-7 = 𝟑 | 3-5 = 𝟐 | <3 = 𝟏 |",
     )
     financial_management_3_4_2 = models.IntegerField(
-        default=0, verbose_name="3.4.2 - Delež prihodkov iz navečjega posameznega vira"
+        default=0,
+        verbose_name="3.4.2 - Delež prihodkov iz navečjega posameznega vira",
+        help_text="Odstotek prihodkov | <=20 = 𝟓 | 21-30 = 𝟒 | 31-40 = 𝟑 | 41-50 = 𝟐 | 50+ = 𝟏 |",
     )
     financial_management_3_5_1 = models.IntegerField(
-        default=0, verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam"
+        default=0,
+        verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam",
+        help_text="Organizacija daje posojila povezanim osebam | Da = 𝟎 | Ne = 𝟒 |",
     )
     financial_management_3_5_2 = models.IntegerField(
         default=0,
         verbose_name="3.5.2 - Organizacija prejema posojila od povezanih oseb",
+        help_text="Organizacija prejema posojila od povezanih oseb | Da = 𝟎 | Ne = 𝟐 |",
     )
     financial_management_3_6 = models.IntegerField(
         default=0,
         verbose_name="3.6 - Razmerje med najvišjo in povprečno plačo v organizaciji",
+        help_text="Razmerje | <1:2 = 𝟓 | 1:2,9-1:2 = 𝟒 | 1:3,9-1:3 = 𝟑 | 1:4-1:5 = 𝟐 | >1:5 = 𝟏 |",
     )
 
     transparency_of_organizations_4_1 = models.IntegerField(
         default=0,
         verbose_name="4.1.1 - Organizacija ima objavljena letna poročila o delu",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_2 = models.IntegerField(
-        default=0, verbose_name="4.1.2 - Letna poročila o delu so razumljiva"
+        default=0,
+        verbose_name="4.1.2 - Letna poročila o delu so razumljiva",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_2_1 = models.IntegerField(
         default=0,
         verbose_name="4.2.1 - Organizacija ima objavljena letna finančna poročila",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_2_2 = models.IntegerField(
-        default=0, verbose_name="4.2.2 - Finančna poročila so razumljiva"
+        default=0,
+        verbose_name="4.2.2 - Finančna poročila so razumljiva",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_2_3 = models.IntegerField(
         default=0,
         verbose_name="4.2.3 - Finančna poročila so razdeljena po programih in vrstah stroškov in prihodkov",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_3 = models.IntegerField(
-        default=0, verbose_name="4.3 - Objavljene so plače vodstva"
+        default=0,
+        verbose_name="4.3 - Objavljene so plače vodstva",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_4 = models.IntegerField(
-        default=0, verbose_name="4.4 - Objavljeno je razmerje med plačami"
+        default=0,
+        verbose_name="4.4 - Objavljeno je razmerje med plačami",
+        help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_5 = models.IntegerField(
-        default=0, verbose_name="4.5 - Objavljen je seznam ključnih zaposlenih"
+        default=0,
+        verbose_name="4.5 - Objavljen je seznam ključnih zaposlenih",
+        help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_6 = models.IntegerField(
-        default=0, verbose_name="4.6 - Obljavljeni so člani nadzornega/upravnega odbora"
+        default=0,
+        verbose_name="4.6 - Obljavljeni so člani nadzornega/upravnega odbora",
+        help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_7 = models.IntegerField(
-        default=0, verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto"
+        default=0,
+        verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto",
+        help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_8 = models.IntegerField(
-        default=0, verbose_name="4.8 - Informacije so dostopne"
+        default=0,
+        verbose_name="4.8 - Informacije so dostopne",
+        help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
 
     stars = models.IntegerField(default=-1, editable=False)
