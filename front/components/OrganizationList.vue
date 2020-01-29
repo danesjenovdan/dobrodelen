@@ -199,6 +199,119 @@
               </form-category>
             </div>
           </div>
+
+          <form-category title="Regije">
+            <div class="row">
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="1"
+                  label="Gorenjska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="2"
+                  label="Goriška"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="3"
+                  label="Jugovzhodna Slovenija"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="4"
+                  label="Koroška"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="5"
+                  label="Notranjskokraška"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="6"
+                  label="Obalnokraška"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="7"
+                  label="Osrednjeslovenska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="8"
+                  label="Podravska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="9"
+                  label="Pomurska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="10"
+                  label="Posavska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="11"
+                  label="Savinjska"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.region"
+                  type="checkbox"
+                  name="region"
+                  :value="12"
+                  label="Zasavska"
+                />
+              </div>
+            </div>
+          </form-category>
         </div>
       </div>
     </form>
@@ -315,6 +428,7 @@ export default {
 
     const initialFilters = {
       area: [],
+      region: [],
       is_charity: false,
       has_public_interest: false,
       is_voluntary: false,
@@ -408,6 +522,13 @@ export default {
           });
         });
       }
+      if (this.filters.region.length) {
+        orgs = orgs.filter((org) => {
+          return this.filters.region.some((r) => {
+            return org.region.includes(r);
+          });
+        });
+      }
 
       if (this.filters.is_charity) {
         orgs = orgs.filter((org) => {
@@ -429,6 +550,7 @@ export default {
           return org.zero5;
         });
       }
+
       orgs = orgs.filter(this.selectedEmploymentFilter.fn);
       orgs = orgs.filter(this.selectedBudgetFilter.fn);
 

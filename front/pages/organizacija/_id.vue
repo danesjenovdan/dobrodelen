@@ -63,6 +63,12 @@
                 {{ area }}
               </div>
             </dd>
+            <dt class="col-4">Regije</dt>
+            <dd class="col-8">
+              <div v-for="region in organization.region" :key="region">
+                {{ region }}
+              </div>
+            </dd>
           </dl>
         </div>
         <div class="org-info">

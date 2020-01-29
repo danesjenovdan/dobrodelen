@@ -126,6 +126,13 @@ class Organization(ClusterableModel):
     custom_area = models.CharField(
         verbose_name="Področje delovanja: Drugo", default="", blank=True, max_length=128
     )
+    region = models.ManyToManyField(
+        "Region",
+        blank=True,
+        related_name="organization",
+        verbose_name="Regije (lahko izberete več možnosti)",
+        default="",
+    )
     avg_revenue = models.IntegerField(
         verbose_name="Povprečni letni proračun v zadnjih treh letih",
         default=0,
@@ -439,6 +446,7 @@ class Organization(ClusterableModel):
         FieldPanel("description"),
         FieldPanel("area", widget=forms.CheckboxSelectMultiple),
         FieldPanel("custom_area"),
+        FieldPanel("region", widget=forms.CheckboxSelectMultiple),
         FieldPanel("avg_revenue"),
         FieldPanel("employed"),
         FieldPanel("is_charity"),
@@ -875,3 +883,11 @@ class Area(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
+

@@ -23,16 +23,20 @@
             </p>
             <p class="lead">
               <!-- eslint-disable prettier/prettier -->
-              Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno preberite
+              Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno
+              preberite
               <a
-                :href="`${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`"
+                :href="
+                  `${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`
+                "
                 target="_blank"
                 rel="noopener noreferrer"
-              >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih organizacij – Nabor
-                kriterijev s pojasnili in smernice za pripravo podatkov</a>,
-              kjer so predstavljeni kriteriji in pogoji za dodelitev točk, posebna pozornost pa
-              je namenjena predstavitvi finančnih podatkov, ki jih bomo od vas potrebovali in kako
-              morajo biti pripravljeni.
+                >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
+                organizacij – Nabor kriterijev s pojasnili in smernice za
+                pripravo podatkov</a
+              >, kjer so predstavljeni kriteriji in pogoji za dodelitev točk,
+              posebna pozornost pa je namenjena predstavitvi finančnih podatkov,
+              ki jih bomo od vas potrebovali in kako morajo biti pripravljeni.
               <!-- eslint-enable prettier/prettier -->
             </p>
           </template>
@@ -226,6 +230,93 @@
                 custom-input
                 :custom-input-value="data[activeStage].custom_area"
                 @custom-change="data[activeStage].custom_area = $event"
+              />
+            </form-category>
+
+            <form-category title="Regije" note="lahko izberete več možnosti">
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="1"
+                label="Gorenjska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="2"
+                label="Goriška"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="3"
+                label="Jugovzhodna Slovenija"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="4"
+                label="Koroška"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="5"
+                label="Notranjskokraška"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="6"
+                label="Obalnokraška"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="7"
+                label="Osrednjeslovenska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="8"
+                label="Podravska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="9"
+                label="Pomurska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="10"
+                label="Posavska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="11"
+                label="Savinjska"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
+                :value="12"
+                label="Zasavska"
               />
             </form-category>
 
@@ -1092,6 +1183,7 @@ export default {
         description: initialData.description || '',
         area: initialData.area ? initialData.area.slice() : [],
         custom_area: initialData.custom_area || '',
+        region: initialData.region ? initialData.region.slice() : [],
         avg_revenue: initialData.avg_revenue || 0,
         employed: initialData.employed || 0,
         is_charity: initialData.is_charity || false,

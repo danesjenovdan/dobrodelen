@@ -113,6 +113,35 @@ def _fill_areas():
     print("done _fill_areas")
 
 
+def _fill_regions():
+    regions = [
+        (1, "Gorenjska"),
+        (2, "Goriška"),
+        (3, "Jugovzhodna Slovenija"),
+        (4, "Koroška"),
+        (5, "Notranjskokraška"),
+        (6, "Obalnokraška"),
+        (7, "Osrednjeslovenska"),
+        (8, "Podravska"),
+        (9, "Pomurska"),
+        (10, "Posavska"),
+        (11, "Savinjska"),
+        (12, "Zasavska"),
+    ]
+    ids = list(range(1, len(regions) + 1))
+    models.Region.objects.exclude(id__in=ids).delete()
+
+    for id, name in regions:
+        region, created = models.Region.objects.get_or_create(
+            id=id, defaults={"name": name}
+        )
+        if not created:
+            region.name = name
+            region.save()
+    print("done _fill_regions")
+
+
 def fill():
     _fill_areas()
+    _fill_regions()
     return "done"

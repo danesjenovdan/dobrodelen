@@ -63,6 +63,7 @@ class OrganizationListSerializer(serializers.ModelSerializer):
             "has_public_interest",
             "is_voluntary",
             "area",
+            "region",
             "avg_revenue",
             "employed",
             "zero5",
@@ -72,6 +73,7 @@ class OrganizationListSerializer(serializers.ModelSerializer):
 class OrganizationPublicSerializer(serializers.ModelSerializer):
     cover_photo = ImageRenditionAndUploadField("original")
     area = serializers.SerializerMethodField(required=False)
+    region = serializers.SerializerMethodField(required=False)
     links = serializers.SerializerMethodField(required=False)
 
     class Meta:
@@ -90,6 +92,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "points",
             "links",
             "area",
+            "region",
             "mission",
             "avg_revenue",
             "employed",
@@ -109,6 +112,12 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             if has_other and obj.custom_area:
                 area_list.append(obj.custom_area)
             return area_list
+        return []
+
+    def get_region(self, obj):
+        regions = obj.region.all()
+        if regions:
+            return list(regions.values_list("name", flat=True))
         return []
 
     def get_links(self, obj):
@@ -144,6 +153,7 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "mission",
             "area",
             "custom_area",
+            "region",
             "avg_revenue",
             "employed",
             "is_charity",
