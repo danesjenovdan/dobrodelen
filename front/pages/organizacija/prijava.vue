@@ -214,6 +214,13 @@
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
+                :value="11"
+                label="Starejši"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
                 :value="10"
                 label="Drugo:"
                 custom-input

@@ -97,6 +97,7 @@ def _fill_areas():
         (7, "Šport"),
         (8, "Okolje, narava in prostor"),
         (9, "Zdravje"),
+        (11, "Starejši"),
         (10, "Drugo (navedite kaj):"),
     ]
     ids = list(range(1, len(areas) + 1))

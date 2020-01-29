@@ -118,6 +118,15 @@
                   v-model="filters.area"
                   type="checkbox"
                   name="area"
+                  :value="11"
+                  label="Starejši"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
                   :value="10"
                   label="Drugo"
                 />
