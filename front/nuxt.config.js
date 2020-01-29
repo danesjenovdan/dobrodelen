@@ -20,9 +20,23 @@ export default {
       },
     ],
     link: [
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon-16x16.png',
+      },
       // { rel: 'manifest', href: '/site.webmanifest' },
       {
         rel: 'stylesheet',
@@ -49,6 +63,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
   ],
   /*
    ** Nuxt.js build modules
@@ -58,17 +73,28 @@ export default {
     '@nuxtjs/eslint-module',
   ],
   /*
+   ** Nuxt Style Resources
+   ** See https://github.com/nuxt-community/style-resources-module
+   */
+  styleResources: {
+    scss: ['~/assets/scss/_variables.scss'],
+  },
+  /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: isProduction ? 'http://dobrotest.djnd.si' : 'http://localhost:8000',
+    baseURL: isProduction
+      ? 'http://dobrotest.djnd.si'
+      : 'http://localhost:8000',
   },
   /*
    ** Environment variables for webpack (via definePlugin)
    */
   env: {
-    API_BASE_URL: isProduction ? 'http://dobrotest.djnd.si' : 'http://localhost:8000',
+    API_BASE_URL: isProduction
+      ? 'http://dobrotest.djnd.si'
+      : 'http://localhost:8000',
   },
   /*
    ** Build configuration
@@ -79,20 +105,6 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {
-      // inject variables import to all scss modules
-      const scssRule = config.module.rules.find((e) => e.test.toString() === '/\\.scss$/i');
-      const scssUses = scssRule.oneOf ? scssRule.oneOf.map((r) => r.use) : [scssRule.use];
-      scssUses.forEach((use) => {
-        const sassLoader = use.find((e) => e.loader === 'sass-loader');
-        if (sassLoader) {
-          sassLoader.options = sassLoader.options || {};
-          sassLoader.options.data = `
-            @import '~/assets/scss/_variables.scss';
-          `;
-          // sassLoader.options.functions = scssCustomFunctions;
-        }
-      });
-
       config.module.rules.push({
         enforce: 'pre',
         test: /\.inc\.html$/,
