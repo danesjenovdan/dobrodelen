@@ -259,7 +259,7 @@ class Organization(ClusterableModel):
     )
     has_audited_report = models.BooleanField(
         default=False,
-        verbose_name="Ali je organizacija dolžna revidirati svoja finančna poročila?",
+        verbose_name="Ali ima organizacija revidirana finančna poročila?",
     )
     audited_report = models.FileField(
         upload_to=get_intance_path,
@@ -333,11 +333,11 @@ class Organization(ClusterableModel):
         null=True,
     )
     has_published_executive_salaries = models.BooleanField(
-        default=False, verbose_name="Objavljene so plače vodstva"
+        default=False, verbose_name="Objavljeni so prejemki vodstva"
     )
     published_executive_salaries_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenih plač vodstva",
+        verbose_name="URL do objavljenih prejemkov vodstva",
         blank=True,
         null=True,
     )
@@ -740,7 +740,7 @@ class Criteria(models.Model):
     )
     transparency_of_organizations_4_3 = models.IntegerField(
         default=0,
-        verbose_name="4.3 - Objavljene so plače vodstva",
+        verbose_name="4.3 - Objavljeni so prejemki vodstva",
         help_text="| Da = 𝟐 | Ne = 𝟎 |",
     )
     transparency_of_organizations_4_4 = models.IntegerField(

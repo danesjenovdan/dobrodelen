@@ -200,7 +200,7 @@
             </div>
           </div>
 
-          <form-category title="Regije">
+          <form-category title="Območja delovanja">
             <div class="row">
               <div class="col-md-6">
                 <selection-option

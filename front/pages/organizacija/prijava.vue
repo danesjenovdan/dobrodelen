@@ -233,7 +233,52 @@
               />
             </form-category>
 
-            <form-category title="Regije" note="lahko izberete več možnosti">
+            <form-category title="Proračun">
+              <text-input
+                v-model="data[activeStage].avg_revenue"
+                name="avg_revenue"
+                label="Povprečni letni proračun v zadnjih treh letih"
+                :has-error="dataErrors.avg_revenue"
+              />
+              <text-input
+                v-model="data[activeStage].employed"
+                name="employed"
+                label="Število zaposlenih v zadnjem zaključenem letu"
+                :has-error="dataErrors.employed"
+              />
+            </form-category>
+
+            <form-category title="Statusi">
+              <selection-option
+                v-model="data[activeStage].is_charity"
+                type="checkbox"
+                name="is_charity"
+                label="Organizacija ima status humanitarne organizacije"
+              />
+              <selection-option
+                v-model="data[activeStage].has_public_interest"
+                type="checkbox"
+                name="has_public_interest"
+                label="Organizacija ima status delovanja v javnem interesu"
+              />
+              <selection-option
+                v-model="data[activeStage].is_voluntary"
+                type="checkbox"
+                name="is_voluntary"
+                label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
+              />
+              <selection-option
+                v-model="data[activeStage].zero5"
+                type="checkbox"
+                name="zero5"
+                label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
+              />
+            </form-category>
+
+            <form-category
+              title="Območje delovanja"
+              note="lahko izberete več možnosti"
+            >
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
@@ -317,48 +362,6 @@
                 name="region"
                 :value="12"
                 label="Zasavska"
-              />
-            </form-category>
-
-            <form-category title="Proračun">
-              <text-input
-                v-model="data[activeStage].avg_revenue"
-                name="avg_revenue"
-                label="Povprečni letni proračun v zadnjih treh letih"
-                :has-error="dataErrors.avg_revenue"
-              />
-              <text-input
-                v-model="data[activeStage].employed"
-                name="employed"
-                label="Število zaposlenih v zadnjem zaključenem letu"
-                :has-error="dataErrors.employed"
-              />
-            </form-category>
-
-            <form-category title="Statusi">
-              <selection-option
-                v-model="data[activeStage].is_charity"
-                type="checkbox"
-                name="is_charity"
-                label="Organizacija ima status humanitarne organizacije"
-              />
-              <selection-option
-                v-model="data[activeStage].has_public_interest"
-                type="checkbox"
-                name="has_public_interest"
-                label="Organizacija ima status delovanja v javnem interesu"
-              />
-              <selection-option
-                v-model="data[activeStage].is_voluntary"
-                type="checkbox"
-                name="is_voluntary"
-                label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
-              />
-              <selection-option
-                v-model="data[activeStage].zero5"
-                type="checkbox"
-                name="zero5"
-                label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
               />
             </form-category>
           </template>
@@ -728,7 +731,7 @@
                 v-model="data[activeStage].has_other_board"
                 type="checkbox"
                 name="has_other_board"
-                label="Organizacija ima drug organ, ki se je v preteklem letu srečal"
+                label="Organizacija ima drug organ, ki opravlja funkcijo nadzora nad poslovodstvom in se je v preteklem letu srečal"
               />
               <text-input
                 v-if="data[activeStage].has_other_board"
@@ -942,7 +945,7 @@
                 v-model="data[activeStage].has_audited_report"
                 type="checkbox"
                 name="has_audited_report"
-                label="Organizacija je dolžna revidirati svoja finančna poročila"
+                label="Organizacija ima revidirana finančna poročila"
               />
               <file-input
                 v-if="data[activeStage].has_audited_report"
@@ -995,12 +998,12 @@
               />
             </form-category>
 
-            <form-category title="Plačilni razredi">
+            <form-category title="Plačni razredi">
               <selection-option
                 v-model="data[activeStage].has_payment_classes"
                 type="checkbox"
                 name="has_payment_classes"
-                label="Organizacija ima akt o sistematizaciji delovnih mest in plačnih razredov"
+                label="Organizacija ima seznam delovnih mest in plačnih razredov"
               />
               <file-input
                 v-if="data[activeStage].has_payment_classes"
@@ -1049,13 +1052,13 @@
               v-model="data[activeStage].has_published_executive_salaries"
               type="checkbox"
               name="has_published_executive_salaries"
-              label="Objavljene so plače vodstva"
+              label="Objavljeni so prejemki vodstva"
             />
             <text-input
               v-if="data[activeStage].has_published_executive_salaries"
               v-model="data[activeStage].published_executive_salaries_url"
               name="published_executive_salaries_url"
-              label="URL do objavljenih plač vodstva"
+              label="URL do objavljenih prejemkov vodstva"
               :has-error="dataErrors.published_executive_salaries_url"
             />
             <selection-option
