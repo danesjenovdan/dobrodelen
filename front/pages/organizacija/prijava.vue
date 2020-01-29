@@ -1085,7 +1085,7 @@ export default {
         description: initialData.description || '',
         area: initialData.area ? initialData.area.slice() : [],
         custom_area: initialData.custom_area || '',
-        avg_revenue: initialData.avg_revenue || '',
+        avg_revenue: initialData.avg_revenue || 0,
         employed: initialData.employed || 0,
         is_charity: initialData.is_charity || false,
         has_public_interest: initialData.has_public_interest || false,

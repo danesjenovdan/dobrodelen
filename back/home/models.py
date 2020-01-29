@@ -126,10 +126,9 @@ class Organization(ClusterableModel):
     custom_area = models.CharField(
         verbose_name="Področje delovanja: Drugo", default="", blank=True, max_length=128
     )
-    avg_revenue = models.CharField(
-        max_length=16,
+    avg_revenue = models.IntegerField(
         verbose_name="Povprečni letni proračun v zadnjih treh letih",
-        default="",
+        default=0,
         blank=True,
     )
     employed = models.IntegerField(

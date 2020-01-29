@@ -167,11 +167,11 @@
               <form-category title="Število zaposlenih">
                 <select v-model="filters.employed" class="custom-select">
                   <option
-                    v-for="employed in allEmployments"
-                    :key="employed"
-                    :value="employed"
+                    v-for="employed in employmentFilters"
+                    :key="employed.label"
+                    :value="employed.label"
                   >
-                    {{ employed }}
+                    {{ employed.label }}
                   </option>
                 </select>
               </form-category>
@@ -180,11 +180,11 @@
               <form-category title="Proračun">
                 <select v-model="filters.budget" class="custom-select">
                   <option
-                    v-for="budget in allBudgets"
-                    :key="budget"
-                    :value="budget"
+                    v-for="budget in budgetFilters"
+                    :key="budget.label"
+                    :value="budget.label"
                   >
-                    {{ budget }}
+                    {{ budget.label }}
                   </option>
                 </select>
               </form-category>
@@ -274,7 +274,7 @@
 </template>
 
 <script>
-import { debounce, uniq } from 'lodash';
+import { debounce } from 'lodash';
 import stableSort from 'stable';
 import FormCategory from '~/components/Form/FormCategory.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
@@ -314,33 +314,65 @@ export default {
       budget: 'Vsi',
     };
 
-    const initialShowAdvanced = false;
+    const employmentFilters = [
+      { label: 'Vsi', fn: (o) => true },
+      { label: '0', fn: (o) => o.employed === 0 },
+      { label: '1 – 5', fn: (o) => o.employed >= 1 && o.employed <= 5 },
+      { label: '6 – 10', fn: (o) => o.employed >= 6 && o.employed <= 10 },
+      { label: '11 – 50', fn: (o) => o.employed >= 11 && o.employed <= 50 },
+      { label: 'Več kot 50', fn: (o) => o.employed > 50 },
+    ];
+
+    const budgetFilters = [
+      {
+        label: 'Vsi',
+        fn: (o) => true,
+      },
+      {
+        label: '0 – 10.000 €',
+        fn: (o) => o.avg_revenue >= 0 && o.avg_revenue <= 10000,
+      },
+      {
+        label: '10.001 – 50.000 €',
+        fn: (o) => o.avg_revenue > 10000 && o.avg_revenue <= 50000,
+      },
+      {
+        label: '50.001 – 250.000 €',
+        fn: (o) => o.avg_revenue > 50000 && o.avg_revenue <= 250000,
+      },
+      {
+        label: '250.001 – 1.000.000 €',
+        fn: (o) => o.avg_revenue > 250000 && o.avg_revenue <= 1000000,
+      },
+      {
+        label: 'Več kot 1.000.000 €',
+        fn: (o) => o.avg_revenue > 1000000,
+      },
+    ];
 
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
       searchText: this.searchQuery,
-      showAdvanced: initialShowAdvanced,
+      showAdvanced: false,
       filters: initialFilters,
+      employmentFilters,
+      budgetFilters,
     };
   },
   computed: {
-    allEmployments() {
-      const all = stableSort(
-        uniq(this.organizations.map((org) => org.employed)),
-        (a, b) => a - b,
+    selectedEmploymentFilter() {
+      const filter = this.employmentFilters.find(
+        (f) => f.label === this.filters.employed,
       );
-      all.unshift('Vsi');
-      return all;
+      return filter || { label: '', fn: (o) => true };
     },
-    allBudgets() {
-      const all = stableSort(
-        uniq(this.organizations.map((org) => org.avg_revenue)),
-        (a, b) => a - b,
+    selectedBudgetFilter() {
+      const filter = this.budgetFilters.find(
+        (f) => f.label === this.filters.budget,
       );
-      all.unshift('Vsi');
-      return all;
+      return filter || { label: '', fn: (o) => true };
     },
     filteredOrgs() {
       let orgs = this.organizations || [];
@@ -388,18 +420,8 @@ export default {
           return org.zero5;
         });
       }
-
-      if (this.filters.employed !== 'Vsi') {
-        orgs = orgs.filter((org) => {
-          return org.employed === this.filters.employed;
-        });
-      }
-
-      if (this.filters.budget !== 'Vsi') {
-        orgs = orgs.filter((org) => {
-          return org.avg_revenue === this.filters.budget;
-        });
-      }
+      orgs = orgs.filter(this.selectedEmploymentFilter.fn);
+      orgs = orgs.filter(this.selectedBudgetFilter.fn);
 
       return orgs;
     },
