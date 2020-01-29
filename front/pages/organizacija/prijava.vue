@@ -283,6 +283,13 @@
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
+                :value="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+                label="Vsa"
+              />
+              <selection-option
+                v-model="data[activeStage].region"
+                type="checkbox"
+                name="region"
                 :value="1"
                 label="Gorenjska"
               />
