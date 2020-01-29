@@ -16,12 +16,19 @@
       </div>
       <div class="form-row align-items-center justify-content-center">
         <div class="col-12 col-md-6 col-md-auto text-right">
-          <button type="button" class="btn btn-sm btn-link" @click="showAdvanced = !showAdvanced">
+          <button
+            type="button"
+            class="btn btn-sm btn-link"
+            @click="showAdvanced = !showAdvanced"
+          >
             Napredno iskanje
           </button>
         </div>
       </div>
-      <div v-if="showAdvanced" class="form-row align-items-center justify-content-center">
+      <div
+        v-if="showAdvanced"
+        class="form-row align-items-center justify-content-center"
+      >
         <div class="col-12 col-md-10 col-md-auto">
           <form-category title="Področja delovanja">
             <div class="row">
@@ -159,7 +166,11 @@
             <div class="col-md-6">
               <form-category title="Število zaposlenih">
                 <select v-model="filters.employed" class="custom-select">
-                  <option v-for="employed in allEmployments" :key="employed" :value="employed">
+                  <option
+                    v-for="employed in allEmployments"
+                    :key="employed"
+                    :value="employed"
+                  >
                     {{ employed }}
                   </option>
                 </select>
@@ -168,7 +179,11 @@
             <div class="col-md-6">
               <form-category title="Proračun">
                 <select v-model="filters.budget" class="custom-select">
-                  <option v-for="budget in allBudgets" :key="budget" :value="budget">
+                  <option
+                    v-for="budget in allBudgets"
+                    :key="budget"
+                    :value="budget"
+                  >
                     {{ budget }}
                   </option>
                 </select>
@@ -244,7 +259,11 @@
               <i
                 v-for="i in 5"
                 :key="i"
-                :class="['icon', 'icon-star', { 'icon-star--full': org.stars >= i }]"
+                :class="[
+                  'icon',
+                  'icon-star',
+                  { 'icon-star--full': org.stars >= i },
+                ]"
               />
             </div>
           </td>
@@ -281,7 +300,9 @@ export default {
   },
   data() {
     const [sortKey, sortAsc] =
-      this.sortQuery[0] === '-' ? [this.sortQuery.slice(1), false] : [this.sortQuery, true];
+      this.sortQuery[0] === '-'
+        ? [this.sortQuery.slice(1), false]
+        : [this.sortQuery, true];
 
     const initialFilters = {
       area: [],
@@ -306,7 +327,10 @@ export default {
   },
   computed: {
     allEmployments() {
-      const all = stableSort(uniq(this.organizations.map((org) => org.employed)), (a, b) => a - b);
+      const all = stableSort(
+        uniq(this.organizations.map((org) => org.employed)),
+        (a, b) => a - b,
+      );
       all.unshift('Vsi');
       return all;
     },
@@ -648,7 +672,8 @@ export default {
 
           border: $sort-arrow-size/2 solid transparent;
           border-top-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
-          border-bottom-width: ($sort-arrow-diff - 1) * ($sort-arrow-size/$sort-arrow-diff);
+          border-bottom-width: ($sort-arrow-diff - 1) *
+            ($sort-arrow-size/$sort-arrow-diff);
           border-bottom-color: $body-color;
         }
 
@@ -658,7 +683,8 @@ export default {
 
           border: $sort-arrow-size/2 solid transparent;
           border-bottom-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
-          border-top-width: ($sort-arrow-diff - 1) * ($sort-arrow-size/$sort-arrow-diff);
+          border-top-width: ($sort-arrow-diff - 1) *
+            ($sort-arrow-size/$sort-arrow-diff);
           border-top-color: $body-color;
         }
 

@@ -11,10 +11,18 @@
           :key="`accordion-item-${i}`"
           class="card"
         >
-          <div :id="`accordion-item-heading-${i}`" class="card-header position-relative">
+          <div
+            :id="`accordion-item-heading-${i}`"
+            class="card-header position-relative"
+          >
             <h2 class="mb-0">
               <button
-                :class="['btn', 'stretched-link', 'text-left', { collapsed: item.collapsed }]"
+                :class="[
+                  'btn',
+                  'stretched-link',
+                  'text-left',
+                  { collapsed: item.collapsed },
+                ]"
                 type="button"
                 :aria-expanded="`${!item.collapsed}`"
                 :aria-controls="`accordion-item-content-${i}`"
@@ -29,7 +37,11 @@
           <div
             :id="`accordion-item-content-${i}`"
             ref="accordion-item-content"
-            :class="['accordion-item-content', 'collapse', { show: !item.collapsed }]"
+            :class="[
+              'accordion-item-content',
+              'collapse',
+              { show: !item.collapsed },
+            ]"
             :aria-labelledby="`accordion-item-heading-${i}`"
           >
             <!-- eslint-disable-next-line vue/no-v-html -->
@@ -54,27 +66,34 @@ export default {
         {
           collapsed: true,
           headerHTML: 'Kriterij 1: <strong>Nadzor nad poslovanjem</strong>',
-          contentHTML: require('../assets/metodologija/kriterij1.inc.html').default,
+          contentHTML: require('../assets/metodologija/kriterij1.inc.html')
+            .default,
         },
         {
           collapsed: true,
-          headerHTML: 'Kriterij 2: <strong>Strateško načrtovanje organizacij</strong>',
-          contentHTML: require('../assets/metodologija/kriterij2.inc.html').default,
+          headerHTML:
+            'Kriterij 2: <strong>Strateško načrtovanje organizacij</strong>',
+          contentHTML: require('../assets/metodologija/kriterij2.inc.html')
+            .default,
         },
         {
           collapsed: true,
           headerHTML: 'Kriterij 3: <strong>Finančno upravljanje</strong>',
-          contentHTML: require('../assets/metodologija/kriterij3.inc.html').default,
+          contentHTML: require('../assets/metodologija/kriterij3.inc.html')
+            .default,
         },
         {
           collapsed: true,
-          headerHTML: 'Kriterij 4: <strong>Transparentnost organizacij</strong>',
-          contentHTML: require('../assets/metodologija/kriterij4.inc.html').default,
+          headerHTML:
+            'Kriterij 4: <strong>Transparentnost organizacij</strong>',
+          contentHTML: require('../assets/metodologija/kriterij4.inc.html')
+            .default,
         },
         {
           collapsed: true,
           headerHTML: '<strong>Skupna ocena</strong>',
-          contentHTML: require('../assets/metodologija/skupnaocena.inc.html').default,
+          contentHTML: require('../assets/metodologija/skupnaocena.inc.html')
+            .default,
         },
       ],
     };
@@ -98,7 +117,10 @@ export default {
 
       const onTransitionEnd = () => {
         itemContentElement.style.height = '';
-        itemContentElement.removeEventListener('transitionend', onTransitionEnd);
+        itemContentElement.removeEventListener(
+          'transitionend',
+          onTransitionEnd,
+        );
 
         this.items = this.items.map((item, index) => ({
           ...item,

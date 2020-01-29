@@ -4,8 +4,16 @@
       <div class="content-title-container text-center">
         <div class="embed-responsive embed-responsive-1by1">
           <div class="embed-responsive-item">
-            <img v-if="image" :src="image" alt="title image" class="rounded-circle bg-dark" />
-            <div v-else-if="icon" class="rounded-circle icon-container bg-warning">
+            <img
+              v-if="image"
+              :src="image"
+              alt="title image"
+              class="rounded-circle bg-dark"
+            />
+            <div
+              v-else-if="icon"
+              class="rounded-circle icon-container bg-warning"
+            >
               <i :class="['icon', `icon-${icon}`]" />
             </div>
           </div>

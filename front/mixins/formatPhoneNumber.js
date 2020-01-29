@@ -1,7 +1,20 @@
 import { keys } from 'lodash';
 
 const AREA_CODES = {
-  mobile: ['030', '040', '068', '069', '031', '041', '051', '071', '065', '070', '064', '065'],
+  mobile: [
+    '030',
+    '040',
+    '068',
+    '069',
+    '031',
+    '041',
+    '051',
+    '071',
+    '065',
+    '070',
+    '064',
+    '065',
+  ],
   special: ['080', '089', '090'],
   voip: ['059', '081', '082', '083'],
   landline: ['01', '02', '03', '04', '05', '07'],
@@ -23,12 +36,18 @@ const AREA_CODE_FORMATTERS = {
   },
   voip(n) {
     if (n.length === 9) {
-      return `${n.slice(0, 3)} ${n.slice(3, 5)} ${n.slice(5, 7)} ${n.slice(7, 9)}`;
+      return `${n.slice(0, 3)} ${n.slice(3, 5)} ${n.slice(5, 7)} ${n.slice(
+        7,
+        9,
+      )}`;
     }
   },
   landline(n) {
     if (n.length === 9) {
-      return `${n.slice(0, 2)} ${n.slice(2, 5)} ${n.slice(5, 7)} ${n.slice(7, 9)}`;
+      return `${n.slice(0, 2)} ${n.slice(2, 5)} ${n.slice(5, 7)} ${n.slice(
+        7,
+        9,
+      )}`;
     }
   },
 };

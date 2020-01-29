@@ -65,7 +65,9 @@ export default {
   },
   computed: {
     errorMessage() {
-      return typeof this.hasError === 'string' ? this.hasError : 'napaka pri vnosu';
+      return typeof this.hasError === 'string'
+        ? this.hasError
+        : 'napaka pri vnosu';
     },
     rows() {
       return typeof this.multiline === 'number' ? this.multiline : 10;

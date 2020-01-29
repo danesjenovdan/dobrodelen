@@ -16,9 +16,10 @@
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
             <p class="lead">
-              Veseli nas, da ste se odločili vpisati vašo organizacijo na spletno stran
-              <em>dobrodelen.si</em> in širši javnosti pokazati, kako transparenti in odgovorni ste
-              pri svojem poslovanju.
+              Veseli nas, da ste se odločili vpisati vašo organizacijo na
+              spletno stran
+              <em>dobrodelen.si</em> in širši javnosti pokazati, kako
+              transparenti in odgovorni ste pri svojem poslovanju.
             </p>
             <p class="lead">
               <!-- eslint-disable prettier/prettier -->
@@ -142,7 +143,10 @@
               />
             </form-category>
 
-            <form-category title="Področja delovanja" note="lahko izberete več možnosti">
+            <form-category
+              title="Področja delovanja"
+              note="lahko izberete več možnosti"
+            >
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
@@ -281,7 +285,10 @@
               v-if="data[activeStage].has_supervisory_board"
               title="Člani nadzornega odbora"
             >
-              <template v-for="(member, i) in data[activeStage].supervisory_board_members">
+              <template
+                v-for="(member, i) in data[activeStage]
+                  .supervisory_board_members"
+              >
                 <div :key="`supervisory_board_members__${i}`">
                   <text-input
                     v-model="member.name"
@@ -398,14 +405,18 @@
               v-if="data[activeStage].has_management_board"
               title="Člani upravnega odbora"
             >
-              <template v-for="(member, i) in data[activeStage].management_board_members">
+              <template
+                v-for="(member, i) in data[activeStage]
+                  .management_board_members"
+              >
                 <div :key="`management_board_members__${i}`">
                   <text-input
                     v-model="member.name"
                     :name="`management_board_members__name__${i}`"
                     label="Ime in priimek"
                     :has-error="
-                      dataErrors.management_board_members && dataErrors.management_board_members[i]
+                      dataErrors.management_board_members &&
+                        dataErrors.management_board_members[i]
                     "
                   />
                   <div>
@@ -510,14 +521,22 @@
                 :has-error="dataErrors.council_dates"
               />
             </form-category>
-            <form-category v-if="data[activeStage].has_council" title="Člani sveta zavoda">
-              <template v-for="(member, i) in data[activeStage].council_members">
+            <form-category
+              v-if="data[activeStage].has_council"
+              title="Člani sveta zavoda"
+            >
+              <template
+                v-for="(member, i) in data[activeStage].council_members"
+              >
                 <div :key="`council_members__${i}`">
                   <text-input
                     v-model="member.name"
                     :name="`council_members__name__${i}`"
                     label="Ime in priimek"
-                    :has-error="dataErrors.council_members && dataErrors.council_members[i]"
+                    :has-error="
+                      dataErrors.council_members &&
+                        dataErrors.council_members[i]
+                    "
                   />
                   <div>
                     <h4>Povezava z organizacijo</h4>
@@ -628,14 +647,22 @@
                 :has-error="dataErrors.other_board_dates"
               />
             </form-category>
-            <form-category v-if="data[activeStage].has_other_board" title="Člani organa">
-              <template v-for="(member, i) in data[activeStage].other_board_members">
+            <form-category
+              v-if="data[activeStage].has_other_board"
+              title="Člani organa"
+            >
+              <template
+                v-for="(member, i) in data[activeStage].other_board_members"
+              >
                 <div :key="`other_board_members__${i}`">
                   <text-input
                     v-model="member.name"
                     :name="`other_board_members__name__${i}`"
                     label="Ime in priimek"
-                    :has-error="dataErrors.other_board_members && dataErrors.other_board_members[i]"
+                    :has-error="
+                      dataErrors.other_board_members &&
+                        dataErrors.other_board_members[i]
+                    "
                   />
                   <div>
                     <h4>Povezava z organizacijo</h4>
@@ -785,7 +812,9 @@
               <p>
                 Finančno poročilo pripravljeno po
                 <a
-                  :href="`${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`"
+                  :href="
+                    `${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`
+                  "
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -800,7 +829,9 @@
               />
             </form-category>
 
-            <form-category title="Finančno poročilo, ki je bilo oddano na AJPES">
+            <form-category
+              title="Finančno poročilo, ki je bilo oddano na AJPES"
+            >
               <file-input
                 v-model="data[activeStage].finance_report_ajpes"
                 name="finance_report_ajpes"
@@ -1023,37 +1054,15 @@ export default {
     FileInput,
     PrevNextButtons,
   },
-  data() {
-    return {
-      apiBaseUrl: process.env.API_BASE_URL,
-      stages: [
-        {
-          label: 'Osnovni podatki',
-        },
-        {
-          label: 'Poslanstvo',
-        },
-        {
-          label: 'Poslovanje',
-        },
-        {
-          label: 'Finance',
-        },
-        {
-          label: 'Transparentnost',
-        },
-      ],
-      activeStage: -1,
-      saving: false,
-    };
-  },
   async asyncData({ $axios, query, error }) {
     const editId = query.edit_id || null;
     const editKey = query.edit_key || null;
 
     let initialData = {};
     if (editId && editKey) {
-      initialData = await $axios.$get(`/api/organizations/${editId}/?edit_key=${editKey}`);
+      initialData = await $axios.$get(
+        `/api/organizations/${editId}/?edit_key=${editKey}`,
+      );
     }
 
     const data = [
@@ -1088,13 +1097,15 @@ export default {
         has_supervisory_board: initialData.has_supervisory_board || false,
         supervisory_board_dates: initialData.supervisory_board_dates || '',
         supervisory_board_members:
-          initialData.supervisory_board_members && initialData.supervisory_board_members.length
+          initialData.supervisory_board_members &&
+          initialData.supervisory_board_members.length
             ? cloneDeep(initialData.supervisory_board_members)
             : [{ name: '', role: '1', custom_role: '', is_paid: false }],
         has_management_board: initialData.has_management_board || false,
         management_board_dates: initialData.management_board_dates || '',
         management_board_members:
-          initialData.management_board_members && initialData.management_board_members.length
+          initialData.management_board_members &&
+          initialData.management_board_members.length
             ? cloneDeep(initialData.management_board_members)
             : [{ name: '', role: '1', custom_role: '', is_paid: false }],
         has_council: initialData.has_council || false,
@@ -1107,14 +1118,16 @@ export default {
         other_board_name: initialData.other_board_name || '',
         other_board_dates: initialData.other_board_dates || '',
         other_board_members:
-          initialData.other_board_members && initialData.other_board_members.length
+          initialData.other_board_members &&
+          initialData.other_board_members.length
             ? cloneDeep(initialData.other_board_members)
             : [{ name: '', role: '1', custom_role: '', is_paid: false }],
         //
         has_minutes_meeting: initialData.has_minutes_meeting || false,
         minutes_meeting: initialData.minutes_meeting || null,
         strategic_planning: initialData.strategic_planning || false,
-        has_milestiones_description: initialData.has_milestiones_description || false,
+        has_milestiones_description:
+          initialData.has_milestiones_description || false,
         milestiones_description: initialData.milestiones_description || '',
         has_strategic_goals: initialData.has_strategic_goals || false,
         strategic_goals: initialData.strategic_goals || null,
@@ -1135,20 +1148,34 @@ export default {
         wages_ratio: initialData.wages_ratio || '',
       },
       {
-        has_published_work_reports: initialData.has_published_work_reports || false,
-        published_work_reports_url: initialData.published_work_reports_url || null,
-        has_published_financial_reports: initialData.has_published_financial_reports || false,
-        published_financial_reports_url: initialData.published_financial_reports_url || null,
-        has_published_executive_salaries: initialData.has_published_executive_salaries || false,
-        published_executive_salaries_url: initialData.published_executive_salaries_url || null,
-        has_published_salary_ratio: initialData.has_published_salary_ratio || false,
-        published_salary_ratio_url: initialData.published_salary_ratio_url || null,
-        has_published_employee_list: initialData.has_published_employee_list || false,
-        published_employee_list_url: initialData.published_employee_list_url || null,
-        has_published_board_members: initialData.has_published_board_members || false,
-        published_board_members_url: initialData.published_board_members_url || null,
-        has_published_financial_plan: initialData.has_published_financial_plan || false,
-        published_financial_plan_url: initialData.published_financial_plan_url || null,
+        has_published_work_reports:
+          initialData.has_published_work_reports || false,
+        published_work_reports_url:
+          initialData.published_work_reports_url || null,
+        has_published_financial_reports:
+          initialData.has_published_financial_reports || false,
+        published_financial_reports_url:
+          initialData.published_financial_reports_url || null,
+        has_published_executive_salaries:
+          initialData.has_published_executive_salaries || false,
+        published_executive_salaries_url:
+          initialData.published_executive_salaries_url || null,
+        has_published_salary_ratio:
+          initialData.has_published_salary_ratio || false,
+        published_salary_ratio_url:
+          initialData.published_salary_ratio_url || null,
+        has_published_employee_list:
+          initialData.has_published_employee_list || false,
+        published_employee_list_url:
+          initialData.published_employee_list_url || null,
+        has_published_board_members:
+          initialData.has_published_board_members || false,
+        published_board_members_url:
+          initialData.published_board_members_url || null,
+        has_published_financial_plan:
+          initialData.has_published_financial_plan || false,
+        published_financial_plan_url:
+          initialData.published_financial_plan_url || null,
       },
     ];
 
@@ -1160,6 +1187,30 @@ export default {
       dataErrors: {},
     };
   },
+  data() {
+    return {
+      apiBaseUrl: process.env.API_BASE_URL,
+      stages: [
+        {
+          label: 'Osnovni podatki',
+        },
+        {
+          label: 'Poslanstvo',
+        },
+        {
+          label: 'Poslovanje',
+        },
+        {
+          label: 'Finance',
+        },
+        {
+          label: 'Transparentnost',
+        },
+      ],
+      activeStage: -1,
+      saving: false,
+    };
+  },
   methods: {
     async onChangeStage(save, activeStage) {
       if (save) {
@@ -1167,7 +1218,10 @@ export default {
         if (saved) {
           this.activeStage = activeStage;
 
-          const top = window.scrollY + this.$refs.formStages.$el.getBoundingClientRect().top - 48;
+          const top =
+            window.scrollY +
+            this.$refs.formStages.$el.getBoundingClientRect().top -
+            48;
           this.$nextTick(() => {
             window.scrollTo(window.scrollX, top);
             const firstElem = this.$refs.form.querySelector(
@@ -1222,7 +1276,9 @@ export default {
           // Add http:// to links if missing!
           if (key === 'web_page') {
             if (data[key]) {
-              const url = /^https?:\/\//.test(data[key]) ? data[key] : `http://${data[key]}`;
+              const url = /^https?:\/\//.test(data[key])
+                ? data[key]
+                : `http://${data[key]}`;
               data[key] = url;
             }
           }
@@ -1326,7 +1382,11 @@ export default {
             let focusedFirst = false;
             Object.keys(error.response.data).forEach((key) => {
               if (Array.isArray(error.response.data[key]) && key !== 'detail') {
-                this.$set(this.dataErrors, key, error.response.data[key].join(', '));
+                this.$set(
+                  this.dataErrors,
+                  key,
+                  error.response.data[key].join(', '),
+                );
                 if (!focusedFirst) {
                   const el = this.$refs.form.querySelector(`[name="${key}"]`);
                   if (el) {
@@ -1353,7 +1413,9 @@ export default {
     async createOrUpdateOrg(data) {
       const method = this.editId && this.editKey ? 'patch' : 'post';
       const query = `${this.editKey ? `?edit_key=${this.editKey}` : ''}`;
-      const url = `/api/organizations/${this.editId ? `${this.editId}/` : ''}${query}`;
+      const url = `/api/organizations/${
+        this.editId ? `${this.editId}/` : ''
+      }${query}`;
       const res = await this.$axios[`$${method}`](url, data);
       if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
         this.editId = res.id;

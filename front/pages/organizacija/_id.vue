@@ -18,23 +18,32 @@
             <dd class="col-8">{{ organization.additional_names }}</dd>
             <dt class="col-4">Kontakt</dt>
             <dd class="col-8">
-              <div v-if="organization.contact_name">{{ organization.contact_name }}</div>
+              <div v-if="organization.contact_name">
+                {{ organization.contact_name }}
+              </div>
               <div v-if="organization.contact_email">
-                <a :href="`mailto:${organization.contact_email}`" target="_blank">{{
-                  organization.contact_email
-                }}</a>
+                <a
+                  :href="`mailto:${organization.contact_email}`"
+                  target="_blank"
+                  >{{ organization.contact_email }}</a
+                >
               </div>
               <div v-if="organization.contact_phone">
-                <a :href="`tel:${organization.contact_phone}`" target="_blank">{{
-                  formatPhoneNumber(organization.contact_phone)
-                }}</a>
+                <a
+                  :href="`tel:${organization.contact_phone}`"
+                  target="_blank"
+                  >{{ formatPhoneNumber(organization.contact_phone) }}</a
+                >
               </div>
             </dd>
             <dt class="col-4">Spletno mesto</dt>
             <dd class="col-8">
-              <a :href="organization.web_page" target="_blank" rel="noopener noreferrer">{{
-                organization.web_page
-              }}</a>
+              <a
+                :href="organization.web_page"
+                target="_blank"
+                rel="noopener noreferrer"
+                >{{ organization.web_page }}</a
+              >
             </dd>
             <dt class="col-4">Družbena omrežja</dt>
             <dd class="col-8">
@@ -50,7 +59,9 @@
             </dd>
             <dt class="col-4">Področja delovanja</dt>
             <dd class="col-8">
-              <div v-for="area in organization.area" :key="area">{{ area }}</div>
+              <div v-for="area in organization.area" :key="area">
+                {{ area }}
+              </div>
             </dd>
           </dl>
         </div>
@@ -60,13 +71,23 @@
             <dd class="col-3">{{ organization.avg_revenue }}</dd>
             <dt class="col-9">Število zaposlenih v zadnjem zaključenem letu</dt>
             <dd class="col-3">{{ organization.employed }}</dd>
-            <dt class="col-9">Organizacija ima status humanitarne organizacije</dt>
+            <dt class="col-9">
+              Organizacija ima status humanitarne organizacije
+            </dt>
             <dd class="col-3">{{ organization.is_charity ? 'DA' : 'NE' }}</dd>
-            <dt class="col-9">Organizacija ima status delovanja v javnem interesu</dt>
-            <dd class="col-3">{{ organization.has_public_interest ? 'DA' : 'NE' }}</dd>
-            <dt class="col-9">Organizacija je vpisana v evidenco prostovoljskih organizacij</dt>
+            <dt class="col-9">
+              Organizacija ima status delovanja v javnem interesu
+            </dt>
+            <dd class="col-3">
+              {{ organization.has_public_interest ? 'DA' : 'NE' }}
+            </dd>
+            <dt class="col-9">
+              Organizacija je vpisana v evidenco prostovoljskih organizacij
+            </dt>
             <dd class="col-3">{{ organization.is_voluntary ? 'DA' : 'NE' }}</dd>
-            <dt class="col-9">Organizacija je na seznamu upravičencev do 0,5 % dohodnine</dt>
+            <dt class="col-9">
+              Organizacija je na seznamu upravičencev do 0,5 % dohodnine
+            </dt>
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>
           </dl>
         </div>
@@ -91,7 +112,10 @@
         role="dialog"
         style="display:block"
       >
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Skupna ocena</h5>
@@ -99,7 +123,11 @@
                 <i
                   v-for="i in 5"
                   :key="i"
-                  :class="['icon', 'icon-star', { 'icon-star--full': organization.stars >= i }]"
+                  :class="[
+                    'icon',
+                    'icon-star',
+                    { 'icon-star--full': organization.stars >= i },
+                  ]"
                 />
               </div>
               <button
@@ -114,15 +142,21 @@
             </div>
             <div class="modal-body">
               <p class="text-center">
-                Skupna ocena organizacije je seštevek točk, ki jih organizacija prejme po posameznih
-                kriterijih, ki so razvidni v spodnji tabeli. Več informacij o metodologiji lahko
-                dobite <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
+                Skupna ocena organizacije je seštevek točk, ki jih organizacija
+                prejme po posameznih kriterijih, ki so razvidni v spodnji
+                tabeli. Več informacij o metodologiji lahko dobite
+                <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
               </p>
               <table v-if="organization.points" class="table">
                 <tbody>
-                  <tr v-for="criterion in organization.points" :key="criterion.name">
+                  <tr
+                    v-for="criterion in organization.points"
+                    :key="criterion.name"
+                  >
                     <td v-text="criterion.verbose_name" />
-                    <td v-text="`${criterion.value} / ${criterion.max_value}`" />
+                    <td
+                      v-text="`${criterion.value} / ${criterion.max_value}`"
+                    />
                   </tr>
                 </tbody>
               </table>
@@ -150,17 +184,19 @@ export default {
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
+  async asyncData({ $axios, params, query }) {
+    const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
+    const orgResp = await $axios.$get(
+      `/api/organizations/${params.id}/${editKey}`,
+    );
+    return {
+      organization: orgResp,
+    };
+  },
   data() {
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
-    };
-  },
-  async asyncData({ $axios, params, query }) {
-    const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
-    const orgResp = await $axios.$get(`/api/organizations/${params.id}/${editKey}`);
-    return {
-      organization: orgResp,
     };
   },
   beforeDestroy() {
@@ -186,7 +222,11 @@ export default {
         vimeo: ['vimeo.com'],
       };
 
-      return keys(domains).find((key) => domains[key].some((d) => url.includes(d))) || 'link';
+      return (
+        keys(domains).find((key) =>
+          domains[key].some((d) => url.includes(d)),
+        ) || 'link'
+      );
     },
     paragraphise(text) {
       const paragraphs = _escape(text)
@@ -194,7 +234,9 @@ export default {
         .replace(/\r\n/g, '\n')
         .replace(/\r/g, '\n')
         .split(/\n\n+/g);
-      return paragraphs.map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+      return paragraphs
+        .map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+        .join('');
     },
   },
   head() {

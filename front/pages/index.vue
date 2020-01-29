@@ -10,13 +10,14 @@
         </div>
         <p class="lead mt-3">
           <strong>Doniraj pametno.</strong>
-          Pomagaj si z našim nepristranskim sistemom razvrščanja organizacij, poišči zaupanja vredne
-          organizacije in jih podpri.
+          Pomagaj si z našim nepristranskim sistemom razvrščanja organizacij,
+          poišči zaupanja vredne organizacije in jih podpri.
         </p>
         <p class="mt-4">
-          Metodologija razvrščanja in ocenjevanja slovenskih nevladnih organizacij temelji na 25
-          kriterijih, ki se nanašajo na 4 področja – nadzor nad poslovanjem; strateško načrtovanje;
-          finančno upravljanje in transparentnost.
+          Metodologija razvrščanja in ocenjevanja slovenskih nevladnih
+          organizacij temelji na 25 kriterijih, ki se nanašajo na 4 področja –
+          nadzor nad poslovanjem; strateško načrtovanje; finančno upravljanje in
+          transparentnost.
         </p>
         <nuxt-link :to="{ name: 'organizacije' }" class="btn btn-warning mt-5">
           <span>VSTOPI</span>

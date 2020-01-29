@@ -10,7 +10,10 @@
         @change="onFileChanged"
       />
       <label class="custom-file-label" :for="`${name}__id`">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10.2 1.025 79.9 97.975">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="10.2 1.025 79.9 97.975"
+        >
           <path
             d="M83.4 32.5H67.9c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2h15.5c1.2 0 2.2.9 2.2 2.1v53.5c0 1.1-1 2.1-2.2 2.1H16.9c-1.2 0-2.2-.9-2.2-2.1V39c0-1.1 1-2.1 2.2-2.1h15.5c1.2 0 2.2-1 2.2-2.2 0-1.2-1-2.2-2.2-2.2H16.9c-3.7 0-6.7 2.9-6.7 6.5v53.5c0 3.6 3 6.5 6.7 6.5h66.5c3.7 0 6.7-2.9 6.7-6.5V39c-.1-3.6-3-6.5-6.7-6.5zM36.2 18.6L47.9 6.8V73c0 1.2 1 2.2 2.2 2.2 1.2 0 2.2-1 2.2-2.2V6.7L64 18.5c.4.4 1 .7 1.6.7.6 0 1.1-.2 1.6-.6.9-.9.9-2.3 0-3.1L54.9 2.9C52.4.4 48 .4 45.4 2.9L33 15.4c-.9.9-.9 2.3 0 3.1.9.9 2.3.9 3.2.1z"
           />
@@ -68,14 +71,17 @@ export default {
       (this.value && this.value.name) ||
       (this.value && this.value.url) ||
       null;
-    const fileName = (filePath && decodeURIComponent(last(filePath.split('/')))) || null;
+    const fileName =
+      (filePath && decodeURIComponent(last(filePath.split('/')))) || null;
     return {
       fileName,
     };
   },
   computed: {
     errorMessage() {
-      return typeof this.hasError === 'string' ? this.hasError : 'napaka pri vnosu';
+      return typeof this.hasError === 'string'
+        ? this.hasError
+        : 'napaka pri vnosu';
     },
   },
   methods: {

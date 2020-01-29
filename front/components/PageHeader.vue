@@ -1,25 +1,40 @@
 <template>
   <header>
     <nav>
-      <nuxt-link :to="{ name: 'organizacija-prijava' }" class="nav-link text-primary">
+      <nuxt-link
+        :to="{ name: 'organizacija-prijava' }"
+        class="nav-link text-primary"
+      >
         <span>prijava organizacije</span>
       </nuxt-link>
       <h1>
         <hr />
-        <nuxt-link :to="{ name: 'organizacije' }" class="title-link text-warning">
+        <nuxt-link
+          :to="{ name: 'organizacije' }"
+          class="title-link text-warning"
+        >
           <span>DOBRODELEN.SI</span>
         </nuxt-link>
         <hr />
         <div v-click-outside="() => toggleMenu(null, false)">
-          <button class="menu-button btn icon icon-menu d-lg-none" @click="toggleMenu">
+          <button
+            class="menu-button btn icon icon-menu d-lg-none"
+            @click="toggleMenu"
+          >
             <span class="sr-only">menu</span>
           </button>
           <transition name="fade-menu">
             <div v-if="menuOpen" class="menu-content d-lg-none">
-              <nuxt-link :to="{ name: 'organizacija-prijava' }" class="nav-link text-primary">
+              <nuxt-link
+                :to="{ name: 'organizacija-prijava' }"
+                class="nav-link text-primary"
+              >
                 <span>prijava organizacije</span>
               </nuxt-link>
-              <nuxt-link :to="{ name: 'metodologija' }" class="nav-link text-primary">
+              <nuxt-link
+                :to="{ name: 'metodologija' }"
+                class="nav-link text-primary"
+              >
                 <span>metodologija</span>
               </nuxt-link>
             </div>
