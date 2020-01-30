@@ -41,7 +41,7 @@ export default {
       default: null,
     },
     value: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: null,
     },
     checked: {
