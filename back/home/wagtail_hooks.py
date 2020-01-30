@@ -27,6 +27,9 @@ class OrganizationAdminGroup(ModelAdminGroup):
     items = (OrganizationModelAdmin,)
 
 
+modeladmin_register(OrganizationAdminGroup)
+
+
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
     return format_html(
@@ -34,4 +37,28 @@ def global_admin_css():
     )
 
 
-modeladmin_register(OrganizationAdminGroup)
+@hooks.register("construct_main_menu")
+def hide_explorer_menu_item(request, menu_items):
+    menu_items[:] = [item for item in menu_items if item.name != "explorer"]
+
+
+class DummyPanel:
+    name = "dummy"
+    order = 50
+
+    def render(self):
+        return ""
+
+
+@hooks.register("construct_homepage_panels")
+def hide_homepage_panels(request, panels):
+    hidden = [
+        "site_summary",
+        "pages_for_moderation",
+        "recent_edits",
+        "upgrade_notification",
+    ]
+    panels[:] = [panel for panel in panels if panel.name not in hidden]
+    # if there are no panels some default text gets rendered, prevent that
+    panels.append(DummyPanel())
+    pass
