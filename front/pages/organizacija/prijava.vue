@@ -131,6 +131,7 @@
               <text-input
                 v-model="data[activeStage].mission"
                 name="mission"
+                rich
                 :multiline="9"
                 :maxlength="500"
                 :has-error="dataErrors.mission"
@@ -141,6 +142,7 @@
               <text-input
                 v-model="data[activeStage].description"
                 name="description"
+                rich
                 :multiline="27"
                 :maxlength="1500"
                 :has-error="dataErrors.description"

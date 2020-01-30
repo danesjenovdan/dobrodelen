@@ -56,7 +56,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~/plugins/vue-pell-editor.js', mode: 'client' }],
   /*
    ** Nuxt.js modules
    */

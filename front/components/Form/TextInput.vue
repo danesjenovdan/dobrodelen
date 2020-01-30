@@ -12,7 +12,7 @@
       @input="$emit('input', $event.target.value)"
     />
     <textarea
-      v-else
+      v-else-if="!rich"
       :id="`${name}__id`"
       :name="name"
       :class="['form-control', { 'is-invalid': hasError }]"
@@ -22,12 +22,25 @@
       :maxlength="maxlength"
       @input="$emit('input', $event.target.value)"
     />
+    <rich-text-editor
+      v-else
+      :id="`${name}__id`"
+      :name="name"
+      :class="[{ 'is-invalid': hasError }]"
+      :value="value"
+      @input="$emit('input', $event)"
+    />
     <label v-if="label" :for="`${name}__id`">{{ label }}</label>
   </div>
 </template>
 
 <script>
+import RichTextEditor from './RichTextEditor.vue';
+
 export default {
+  components: {
+    RichTextEditor,
+  },
   props: {
     name: {
       type: String,
@@ -53,6 +66,10 @@ export default {
         }
         return false;
       },
+    },
+    rich: {
+      type: Boolean,
+      default: false,
     },
     maxlength: {
       type: Number,

@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
 )
 from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 import requests
@@ -258,8 +259,7 @@ class Organization(ClusterableModel):
         null=True,
     )
     has_audited_report = models.BooleanField(
-        default=False,
-        verbose_name="Ali ima organizacija revidirana finančna poročila?",
+        default=False, verbose_name="Ali ima organizacija revidirana finančna poročila?"
     )
     audited_report = models.FileField(
         upload_to=get_intance_path,
@@ -890,4 +890,3 @@ class Region(models.Model):
 
     def __str__(self):
         return self.name
-
