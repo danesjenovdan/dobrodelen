@@ -74,7 +74,7 @@
         <div class="org-info">
           <dl class="row">
             <dt class="col-9">Povprečni letni proračun v zadnjih treh letih</dt>
-            <dd class="col-3">{{ organization.avg_revenue }}</dd>
+            <dd class="col-3">{{ formatEuro(organization.avg_revenue) }}</dd>
             <dt class="col-9">Število zaposlenih v zadnjem zaključenem letu</dt>
             <dd class="col-3">{{ organization.employed }}</dd>
             <dt class="col-9">
@@ -243,6 +243,18 @@ export default {
       return paragraphs
         .map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`)
         .join('');
+    },
+    formatEuro(value) {
+      if (
+        typeof Intl !== 'undefined' &&
+        typeof Intl.NumberFormat !== 'undefined'
+      ) {
+        return new Intl.NumberFormat('sl-SI', {
+          style: 'currency',
+          currency: 'EUR',
+        }).format(value);
+      }
+      return String(value);
     },
   },
   head() {
