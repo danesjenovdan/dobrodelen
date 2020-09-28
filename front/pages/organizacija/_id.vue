@@ -97,6 +97,9 @@
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>
           </dl>
         </div>
+        <div class="org-donate">
+          <donate-button text="Doniraj organizaciji" />
+        </div>
       </div>
       <div class="col-12 col-md-6">
         <div class="org-description">
@@ -180,11 +183,13 @@
 <script>
 import { keys, escape as _escape } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
+import DonateButton from '~/components/Form/DonateButton.vue';
 import formatPhoneNumberMixin from '~/mixins/formatPhoneNumber.js';
 
 export default {
   components: {
     ContentTitle,
+    DonateButton,
   },
   mixins: [formatPhoneNumberMixin],
   validate({ params }) {
@@ -314,6 +319,12 @@ export default {
         }
       }
     }
+  }
+
+  .org-donate {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
   }
 
   .org-description {
