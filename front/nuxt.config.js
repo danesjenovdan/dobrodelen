@@ -85,16 +85,16 @@ export default {
    */
   axios: {
     baseURL: isProduction
-      ? 'http://dobrotest.djnd.si'
-      : 'http://localhost:8000',
+      ? 'https://navigator.otcetnigo.mk'
+      : 'http://back:8000',
   },
   /*
    ** Environment variables for webpack (via definePlugin)
    */
   env: {
     API_BASE_URL: isProduction
-      ? 'http://dobrotest.djnd.si'
-      : 'http://localhost:8000',
+      ? 'https://navigator.otcetnigo.mk'
+      : 'http://back:8000',
   },
   /*
    ** Build configuration

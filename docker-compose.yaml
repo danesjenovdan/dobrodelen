@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  back:
+    build: ./back
+    # command: python manage.py runserver 0.0.0.0:8000
+    # command: gunicorn dobrodelen.wsgi --access-logfile - --error-logfile - --log-level debug --timeout 120
+    volumes:
+      - ./back:/app
+    environment:
+        DJANGO_SETTINGS_MODULE: dobrodelen.settings.dev
+        # DJANGO_DATABASE_HOST: db
+        # DJANGO_DATABASE_USER: postgres
+        # DJANGO_DATABASE_PASSWORD: postgres
+        #ER_API_KEY=bffa61a3-e09e-46de-bf9c-6966615bac71
+    ports:
+      - "8000:8000"
+
+  front:
+    build: ./front
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: dev
+    volumes:
+      - ./front:/app
