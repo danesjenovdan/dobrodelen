@@ -65,38 +65,38 @@ class HomePage(Page):
 
 class Organization(ClusterableModel):
     published = models.BooleanField(
-        default=False, verbose_name="Je organizacija objavljena?"
+        default=False, verbose_name="Published?"
     )
-    is_complete = models.BooleanField(default=False, verbose_name="Je prijava končana?")
+    is_complete = models.BooleanField(default=False, verbose_name="Signup complete?")
     signup_time_start = models.DateTimeField(
-        blank=True, null=True, verbose_name="Čas začetka prijave"
+        blank=True, null=True, verbose_name="Signup started time"
     )
     signup_time = models.DateTimeField(
-        blank=True, null=True, verbose_name="Čas končane prijave"
+        blank=True, null=True, verbose_name="Signup finished time"
     )
     #
     name = models.CharField(
         max_length=512,
         default="",
-        verbose_name="Uradno ime organizacije (iz AJPES)",
+        verbose_name="Legal organization name",
         blank=True,
     )
     additional_names = models.TextField(
-        verbose_name="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)",
+        verbose_name="Other organization names (short names, acronyms, etc.)",
         default="",
         blank=True,
     )
     contact_name = models.CharField(
-        verbose_name="Kontakt: ime in priimek", default="", blank=True, max_length=128
+        verbose_name="Contact person: name", default="", blank=True, max_length=128
     )
     contact_email = models.EmailField(
-        verbose_name="Kontakt: e-pošta", default="", blank=True, max_length=128
+        verbose_name="Contact person: email", default="", blank=True, max_length=128
     )
     contact_phone = models.CharField(
-        verbose_name="Kontakt: telefon", default="", blank=True, max_length=128
+        verbose_name="Contact person: phone", default="", blank=True, max_length=128
     )
     web_page = models.URLField(
-        max_length=512, verbose_name="Spletna stran", default="", blank=True
+        max_length=512, verbose_name="Website", default="", blank=True
     )
     cover_photo = models.ForeignKey(
         "wagtailimages.Image",
@@ -104,60 +104,61 @@ class Organization(ClusterableModel):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name="Slika",
+        verbose_name="Image",
     )
     tax_number = models.CharField(
-        max_length=32, verbose_name="Davčna številka", default="", blank=True
+        max_length=32, verbose_name="Tax number", default="", blank=True
     )
     #
     mission = models.TextField(
-        verbose_name="Poslanstvo organizacije (do 500 znakov)", default="", blank=True
+        verbose_name="Organization mission statement (max. 500 characters)", default="", blank=True
     )
     description = models.TextField(
-        verbose_name="Kratek opis organizacije (do 1500 znakov)", default="", blank=True
+        verbose_name="Short description of organization (max. 1500 characters)", default="", blank=True
     )
     area = models.ManyToManyField(
         "Area",
         blank=True,
         related_name="organization",
-        verbose_name="Področje delovanja (lahko izberete več možnosti)",
+        verbose_name="Area of operation (can select multiple)",
         default="",
     )
     custom_area = models.CharField(
-        verbose_name="Področje delovanja: Drugo", default="", blank=True, max_length=128
+        verbose_name="Area of operation: Other", default="", blank=True, max_length=128
     )
     region = models.ManyToManyField(
         "Region",
         blank=True,
         related_name="organization",
-        verbose_name="Regije (lahko izberete več možnosti)",
+        verbose_name="Region (can select multiple)",
         default="",
     )
     avg_revenue = models.IntegerField(
-        verbose_name="Povprečni letni proračun v zadnjih treh letih",
+        verbose_name="Average annual budget for the last three years",
         default=0,
         blank=True,
     )
     employed = models.IntegerField(
-        verbose_name="Število zaposlenih v zadnjem zaključenem letu",
+        verbose_name="Number of employees in the last completed year",
         default=0,
         blank=True,
     )
     is_charity = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima status humanitarne organizacije",
+        verbose_name="Organization has the status of a humanitarian organization",
         blank=True,
     )
     has_public_interest = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima status delovanja v javnem interesu",
+        verbose_name="Organization has the status of acting in the public interest",
         blank=True,
     )
     is_voluntary = models.BooleanField(
         default=False,
-        verbose_name="Organizacija je vpisana v evidenco prostovoljskih organizacij",
+        verbose_name="Organization is entered in the register of voluntary organizations",
         blank=True,
     )
+    # FIXME: Macedonia?
     zero5 = models.BooleanField(
         default=False,
         verbose_name="Organizacija je na seznamu upravičencev do 0,5 dohodnine",
@@ -166,214 +167,214 @@ class Organization(ClusterableModel):
     #
     has_supervisory_board = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal",
+        verbose_name="The organization has a supervisory board that met last year",
         blank=True,
     )
     supervisory_board_dates = models.CharField(
-        verbose_name="Datumi srečanj v preteklem letu (nadzorni odbor)",
+        verbose_name="Dates of meetings in the previous year (supervisory board)",
         default="",
         blank=True,
         max_length=512,
     )
     has_management_board = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima upravni odbor, ki se je v preteklem letu srečal",
+        verbose_name="The organization has a management board that met last year",
         blank=True,
     )
     management_board_dates = models.CharField(
-        verbose_name="Datumi srečanj v preteklem letu (upravni odbor)",
+        verbose_name="Dates of meetings in the previous year (management board)",
         default="",
         blank=True,
         max_length=512,
     )
     has_council = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima svet zavoda, ki se je v preteklem letu srečal",
+        verbose_name="Organization has a council that met last year",
         blank=True,
     )
     council_dates = models.CharField(
-        verbose_name="Datumi srečanj v preteklem letu (svet zavoda)",
+        verbose_name="Dates of meetings in the previous year (council)",
         default="",
         blank=True,
         max_length=512,
     )
     has_other_board = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima drug organ, ki se je v preteklem letu srečal",
+        verbose_name="The organization has another body that has met in the past year",
         blank=True,
     )
     other_board_name = models.CharField(
-        verbose_name="Ime organa", default="", blank=True, max_length=128
+        verbose_name="Name of other body", default="", blank=True, max_length=128
     )
     other_board_dates = models.CharField(
-        verbose_name="Datumi srečanj v preteklem letu (drug organ)",
+        verbose_name="Dates of meetings in the previous year (other body)",
         default="",
         blank=True,
         max_length=512,
     )
     #
     has_minutes_meeting = models.BooleanField(
-        default=False, verbose_name="Ali organizacija vodi zapisnike sej?"
+        default=False, verbose_name="Does the organization keep minutes of meetings?"
     )
     minutes_meeting = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Zapisnik zadnje seje",
+        verbose_name="Attachment: Minutes of last meetings",
         blank=True,
         null=True,
     )
     #
     strategic_planning = models.BooleanField(
-        default=False, verbose_name="Ali organizacija strateško načrtuje?"
+        default=False, verbose_name="Does the organization do strategic planning?"
     )
     has_milestiones_description = models.BooleanField(
         default=False,
-        verbose_name="Ali organizacija spremlja doseganje strateških ciljev?",
+        verbose_name="Does the organization monitor the achievement of strategic objectives?",
     )
     milestiones_description = models.TextField(
-        verbose_name="Kratek opis kako organizacija spremlja doseganje strateških ciljev (do 500 znakov)",
+        verbose_name="Brief description of how the organization monitors the achievement of strategic objectives (max. 500 characters)",
         default="",
         blank=True,
     )
     has_strategic_goals = models.BooleanField(
         default=False,
-        verbose_name="Ali organizacija vodi pisna poročila o spremljanju stateških ciljev?",
+        verbose_name="Does the organization keep written reports on the monitoring of strategic objectives?",
     )
     strategic_goals = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Pisna poročila o spremljanju stateških ciljev",
+        verbose_name="Attachment: Written reports on the monitoring of strategic objectives",
         blank=True,
         null=True,
     )
     #
     finance_report = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Finančno poročilo",
+        verbose_name="Attachment: Financial report",
         blank=True,
         null=True,
     )
     finance_report_ajpes = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Finančno poročilo, ki je bilo oddano na AJPES",
+        verbose_name="Attachment: Financial report, submitted to public legal record agency",
         blank=True,
         null=True,
     )
     has_audited_report = models.BooleanField(
         default=False,
-        verbose_name="Ali ima organizacija revidirana finančna poročila?",
+        verbose_name="Does the organization have audited financial reports?",
     )
     audited_report = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Revidirano poročilo",
+        verbose_name="Attachment: Audited financial report",
         blank=True,
         null=True,
     )
     has_finance_plan = models.BooleanField(
         default=False,
-        verbose_name="Ali ima organizacija finančni načrt za tekoče leto?",
+        verbose_name="Does the organization have a financial plan for the current year?",
     )
     finance_plan = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Finančni načrt za tekoče leto",
+        verbose_name="Attachment: Financial plan for the current year",
         blank=True,
         null=True,
     )
     has_given_loans = models.BooleanField(
-        default=False, verbose_name="Ali organizacija daje posojila povezanim osebam?"
+        default=False, verbose_name="Does the organization provide loans to related parties?"
     )
     given_loan = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Seznam danih posojil",
+        verbose_name="Attachment: List of provided loans",
         blank=True,
         null=True,
     )
     has_received_loans = models.BooleanField(
         default=False,
-        verbose_name="Ali organizacija prejema posojila od povezanih oseb?",
+        verbose_name="Does the organization receive loans from related parties?",
     )
     received_loans = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Seznam prejetih posojil",
+        verbose_name="Attachment: List of received loans",
         blank=True,
         null=True,
     )
     has_payment_classes = models.BooleanField(
         default=False,
-        verbose_name="Ali ima organizacija akt o sistematizaciji delovnih mest in plačnih razredov?",
+        verbose_name="Does the organization have an act on the systematization of jobs and pay grades?",
     )
     payment_classes = models.FileField(
         upload_to=get_intance_path,
-        verbose_name="Priloga: Akt o sistematizaciji delovnih mest in plačnih razredov",
+        verbose_name="Attachment: Act on the systematization of jobs and pay grades",
         blank=True,
         null=True,
     )
     wages_ratio = models.CharField(
-        verbose_name="Kakšno je razmerje med najvišjo in povprečno plačo v organizaciji?",
+        verbose_name="What is the ratio between the highest and average wage in an organization?",
         default="",
         blank=True,
         max_length=256,
     )
     #
     has_published_work_reports = models.BooleanField(
-        default=False, verbose_name="Organizacija ima objavljena letna poročila o delu"
+        default=False, verbose_name="Organization has published annual activity reports"
     )
     published_work_reports_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenih letnih poročil o delu",
+        verbose_name="URL to published annual activity reports",
         blank=True,
         null=True,
     )
     has_published_financial_reports = models.BooleanField(
         default=False,
-        verbose_name="Organizacija ima objavljena letna finančna poročila",
+        verbose_name="Organization has published annual financial reports",
     )
     published_financial_reports_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenih finančnih poročil",
+        verbose_name="URL to published annual financial reports",
         blank=True,
         null=True,
     )
     has_published_executive_salaries = models.BooleanField(
-        default=False, verbose_name="Objavljeni so prejemki vodstva"
+        default=False, verbose_name="Organization has published management remuneration"
     )
     published_executive_salaries_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenih prejemkov vodstva",
+        verbose_name="URL to published management remuneration",
         blank=True,
         null=True,
     )
     has_published_salary_ratio = models.BooleanField(
-        default=False, verbose_name="Objavljeno je razmerje med plačami"
+        default=False, verbose_name="Organization has published wage ratios"
     )
     published_salary_ratio_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenih razmerij med plačami",
+        verbose_name="URL to published wage ratios",
         blank=True,
         null=True,
     )
     has_published_employee_list = models.BooleanField(
-        default=False, verbose_name="Objavljen je seznam ključnih zaposlenih"
+        default=False, verbose_name="Organization has published a list of key employees"
     )
     published_employee_list_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenega seznama ključnih zaposlenih",
+        verbose_name="URL to the published list of key employees",
         blank=True,
         null=True,
     )
     has_published_board_members = models.BooleanField(
-        default=False, verbose_name="Obljavljeni so člani nadzornega/upravnega odbora"
+        default=False, verbose_name="Organization has published a list of board members"
     )
     published_board_members_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenega seznama članov odbora",
+        verbose_name="URL to the published list of board members",
         blank=True,
         null=True,
     )
     has_published_financial_plan = models.BooleanField(
-        default=False, verbose_name="Objavljen je finančni načrt za tekoče leto"
+        default=False, verbose_name="Organization has published the financial plan for the current year"
     )
     published_financial_plan_url = models.URLField(
         max_length=512,
-        verbose_name="URL do objavljenega finančnega načrta za tekoče leto",
+        verbose_name="URL to the published financial plan for the current year",
         blank=True,
         null=True,
     )
@@ -515,8 +516,8 @@ class Organization(ClusterableModel):
         return str(self.name)
 
     class Meta:
-        verbose_name = "Organizacija"
-        verbose_name_plural = "Organizacije"
+        verbose_name = "Organization"
+        verbose_name_plural = "Organizations"
 
 
 ROLE_CHOICES = [
@@ -536,21 +537,21 @@ class SupervisoryBoardMember(models.Model):
         on_delete=models.CASCADE,
         related_name="supervisory_board_members",
     )
-    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    name = models.CharField(max_length=512, default="", verbose_name="Full name")
     role = models.CharField(
         max_length=2,
         choices=ROLE_CHOICES,
         default="1",
-        verbose_name="Povezava z organizacijo",
+        verbose_name="Role in organization",
     )
     custom_role = models.CharField(
-        verbose_name="Povezava z organizacijo: Drugo",
+        verbose_name="Role in organization: Other",
         default="",
         blank=True,
         max_length=128,
     )
     is_paid = models.BooleanField(
-        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+        default=False, verbose_name="Receives compensation for his work on the board"
     )
 
 
@@ -560,21 +561,21 @@ class ManagementBoardMember(models.Model):
         on_delete=models.CASCADE,
         related_name="management_board_members",
     )
-    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    name = models.CharField(max_length=512, default="", verbose_name="Full name")
     role = models.CharField(
         max_length=2,
         choices=ROLE_CHOICES,
         default="1",
-        verbose_name="Povezava z organizacijo",
+        verbose_name="Role in organization",
     )
     custom_role = models.CharField(
-        verbose_name="Povezava z organizacijo: Drugo",
+        verbose_name="Role in organization: Other",
         default="",
         blank=True,
         max_length=128,
     )
     is_paid = models.BooleanField(
-        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+        default=False, verbose_name="Receives compensation for his work on the board"
     )
 
 
@@ -582,21 +583,21 @@ class CouncilBoardMember(models.Model):
     organization = ParentalKey(
         "Organization", on_delete=models.CASCADE, related_name="council_members"
     )
-    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    name = models.CharField(max_length=512, default="", verbose_name="Full name")
     role = models.CharField(
         max_length=2,
         choices=ROLE_CHOICES,
         default="1",
-        verbose_name="Povezava z organizacijo",
+        verbose_name="Role in organization",
     )
     custom_role = models.CharField(
-        verbose_name="Povezava z organizacijo: Drugo",
+        verbose_name="Role in organization: Other",
         default="",
         blank=True,
         max_length=128,
     )
     is_paid = models.BooleanField(
-        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+        default=False, verbose_name="Receives compensation for his work on the board"
     )
 
 
@@ -604,21 +605,21 @@ class OtherBoardMember(models.Model):
     organization = ParentalKey(
         "Organization", on_delete=models.CASCADE, related_name="other_board_members"
     )
-    name = models.CharField(max_length=512, default="", verbose_name="Ime in priimek")
+    name = models.CharField(max_length=512, default="", verbose_name="Full name")
     role = models.CharField(
         max_length=2,
         choices=ROLE_CHOICES,
         default="1",
-        verbose_name="Povezava z organizacijo",
+        verbose_name="Role in organization",
     )
     custom_role = models.CharField(
-        verbose_name="Povezava z organizacijo: Drugo",
+        verbose_name="Role in organization: Other",
         default="",
         blank=True,
         max_length=128,
     )
     is_paid = models.BooleanField(
-        default=False, verbose_name="Ali za svoje delo v odboru prejema nadomestilo"
+        default=False, verbose_name="Receives compensation for his work on the board"
     )
 
 
@@ -627,7 +628,7 @@ class Link(models.Model):
         "Organization", on_delete=models.CASCADE, related_name="links"
     )
 
-    url = models.URLField(verbose_name="Povezava", default="", blank=True)
+    url = models.URLField(verbose_name="Link", default="", blank=True)
 
 
 class Criteria(models.Model):
