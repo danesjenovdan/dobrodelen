@@ -507,7 +507,7 @@ class Organization(ClusterableModel):
         #
         #
         InlinePanel(
-            "criteria", label="Točkovnik", classname="criteria_panel", max_num=1
+            "criteria", label="Критериуми", classname="criteria_panel", max_num=1
         ),
     ]
 
@@ -637,131 +637,135 @@ class Criteria(models.Model):
 
     control_of_business_1 = models.IntegerField(
         default=0,
-        verbose_name="1.1 - Število sestankov nadzornega/upravnega odbora v zadnjem letu",
-        help_text="Število sestankov | 5+ = 𝟓 | 4 = 𝟒 | 3 = 𝟑 | 2 = 𝟐 | 1 = 𝟏 | 0 = 𝟎 |",
+        verbose_name="1.1 - Број на состаноци на не-извршниот орган",
+        help_text="Број на состаноци | 5+ = 𝟓 | 4 = 𝟒 | 3 = 𝟑 | 2 = 𝟐 | 1 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_2 = models.IntegerField(
         default=0,
-        verbose_name="1.2 - Število neodvisnih članov nadzornega/upravnega odbora, ki ima glasovalno pravico",
-        help_text="Število članov | 5+ = 𝟑 | 3-5 = 𝟐 | 1-2 = 𝟏 | 0 = 𝟎 |",
+        verbose_name="1.2 - Број на независни членови со право на глас во не-извршниот орган",
+        help_text="Број на членови | 5+ = 𝟑 | 3-5 = 𝟐 | 1-2 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_3 = models.IntegerField(
         default=0,
-        verbose_name="1.3 - Odstotek neodvisnih članov z glasovalno pravico",
-        help_text="Odstotek neodvisnih članov | 75+ = 𝟑 | 50-75 = 𝟐 | <50 = 𝟏 | 0 = 𝟎 |",
+        verbose_name="1.3 - Процент на независни членови со право на глас",
+        help_text="Процент на независни членови | 75+ = 𝟑 | 50-75 = 𝟐 | <50 = 𝟏 | 0 = 𝟎 |",
     )
     control_of_business_4 = models.IntegerField(
         default=0,
-        verbose_name="1.4 - Organizacija vodi zapisnike sej",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="1.4 - Организацијата води записници од одржаните состаноци",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
 
     strategic_planning_2_1 = models.IntegerField(
         default=0,
-        verbose_name="2.1 - Organizacija ima strateški načrt",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="2.1 - Организацијата има стратешки (или годишен) план",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     strategic_planning_2_2 = models.IntegerField(
         default=0,
-        verbose_name="2.2 - Organizacija spremlja doseganje strateškega načrta",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="2.2 - Организацијата го мониторира (има рамка за мониторирање и презентира внатрешно прогрес) исполнувањето на стратешкиот план",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     strategic_planning_2_3 = models.IntegerField(
         default=0,
-        verbose_name="2.3 - Organizacija pripravlja poročila o spremljanju napredka pri doseganju strateških ciljev",
-        help_text="| Da = 𝟏 | Ne = 𝟎 |",
+        verbose_name="2.3 - Организацијата подготвува извештаи од мониторирање на исполнувањето стратешките цели",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
 
     financial_management_3_1 = models.IntegerField(
         default=0,
-        verbose_name="3.1 - Odstotek sredstev, ki jih porabi za izvedbo programa",
-        help_text="Odstotek sredstev | 90+ = 𝟓 | 90-86 = 𝟒 | 85-76 = 𝟑 | 75-70 = 𝟐 | <70 = 𝟏 |",
+        verbose_name="3.1 - Процент од средствата употребени за спроведување на директни проектни активности",
+        help_text="Процент на средства | 90+ = 𝟓 | 90-86 = 𝟒 | 85-76 = 𝟑 | 75-70 = 𝟐 | <70 = 𝟏 |",
     )
     financial_management_3_2 = models.IntegerField(
         default=0,
-        verbose_name="3.2 - Odstotek sredstev, ki jh organizacija porabi za splošno delovanje",
-        help_text="Odstotek sredstev | <10 = 𝟓 | 10-14 = 𝟒 | 15-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
+        verbose_name="3.2 - Процент на средства за тековно/оперативно работење",
+        help_text="Процент од средствата | <10 = 𝟓 | 10-14 = 𝟒 | 15-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
     )
+    # FIXME: MACEDONIA MISSING
     financial_management_3_3 = models.IntegerField(
         default=0,
         verbose_name="3.3 - Znesek, ki ga organizacija porabi na vsakih zbranih 100 €",
         help_text="Znesek | 0-5 = 𝟓 | 6-15 = 𝟒 | 16-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
     )
+    # FIXME: MACEDONIA MISSING END
     financial_management_3_4_1 = models.IntegerField(
         default=0,
-        verbose_name="3.4.1 - Viri sredstev",
-        help_text="Število virov | 10+ = 𝟓 | 8- 9 = 𝟒 | 6-7 = 𝟑 | 3-5 = 𝟐 | <3 = 𝟏 |",
+        verbose_name="3.4.1 - Извори на финансирање",
+        help_text="Број на извори | 10+ = 𝟓 | 8-9 = 𝟒 | 6-7 = 𝟑 | 3-5 = 𝟐 | <3 = 𝟏 |",
     )
     financial_management_3_4_2 = models.IntegerField(
         default=0,
-        verbose_name="3.4.2 - Delež prihodkov iz navečjega posameznega vira",
-        help_text="Odstotek prihodkov | <=20 = 𝟓 | 21-30 = 𝟒 | 31-40 = 𝟑 | 41-50 = 𝟐 | 50+ = 𝟏 |",
+        verbose_name="3.4.2 - Удел на приходите од најголемиот извор",
+        help_text="Процент од приходи | <=20 = 𝟓 | 21-30 = 𝟒 | 31-40 = 𝟑 | 41-50 = 𝟐 | 50+ = 𝟏 |",
     )
+    # FIXME: MACEDONIA MISSING
     financial_management_3_5_1 = models.IntegerField(
         default=0,
         verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam",
-        help_text="Organizacija daje posojila povezanim osebam | Da = 𝟎 | Ne = 𝟒 |",
+        help_text="Organizacija daje posojila povezanim osebam | Да = 𝟎 | не = 𝟒 |",
     )
     financial_management_3_5_2 = models.IntegerField(
         default=0,
         verbose_name="3.5.2 - Organizacija prejema posojila od povezanih oseb",
-        help_text="Organizacija prejema posojila od povezanih oseb | Da = 𝟎 | Ne = 𝟐 |",
+        help_text="Organizacija prejema posojila od povezanih oseb | Да = 𝟎 | не = 𝟐 |",
     )
+    # FIXME: MACEDONIA MISSING END
     financial_management_3_6 = models.IntegerField(
         default=0,
-        verbose_name="3.6 - Razmerje med najvišjo in povprečno plačo v organizaciji",
-        help_text="Razmerje | <1:2 = 𝟓 | 1:2,9-1:2 = 𝟒 | 1:3,9-1:3 = 𝟑 | 1:4-1:5 = 𝟐 | >1:5 = 𝟏 |",
+        verbose_name="3.6 - Соодносот помеѓу највисоката и просечната плата во организацијата",
+        help_text="Сооднос | <1:2 = 𝟓 | 1:2,9-1:2 = 𝟒 | 1:3,9-1:3 = 𝟑 | 1:4-1:5 = 𝟐 | >1:5 = 𝟏 |",
     )
 
     transparency_of_organizations_4_1 = models.IntegerField(
         default=0,
-        verbose_name="4.1.1 - Organizacija ima objavljena letna poročila o delu",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.1.1 - Организацијата има објавени наративни годишни извештаи",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_2 = models.IntegerField(
         default=0,
-        verbose_name="4.1.2 - Letna poročila o delu so razumljiva",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.1.2 - Наративните годишни извештаи се разбирливи",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_2_1 = models.IntegerField(
         default=0,
-        verbose_name="4.2.1 - Organizacija ima objavljena letna finančna poročila",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.2.1 - Организацијата има објавени годишни финансиски извештаи",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_2_2 = models.IntegerField(
         default=0,
-        verbose_name="4.2.2 - Finančna poročila so razumljiva",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.2.2 - Финансиските документи се разбирливи",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_2_3 = models.IntegerField(
         default=0,
-        verbose_name="4.2.3 - Finančna poročila so razdeljena po programih in vrstah stroškov in prihodkov",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.2.3 - Финансиските документи се поделени по програми и видови на трошоци и приходи",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_3 = models.IntegerField(
         default=0,
-        verbose_name="4.3 - Objavljeni so prejemki vodstva",
-        help_text="| Da = 𝟐 | Ne = 𝟎 |",
+        verbose_name="4.3 - Објавен е надоместокот кој го добива раководството",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_4 = models.IntegerField(
         default=0,
-        verbose_name="4.4 - Objavljeno je razmerje med plačami",
-        help_text="| Da = 𝟏 | Ne = 𝟎 |",
+        verbose_name="4.4 - Објавен е соодносот на платите",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
     transparency_of_organizations_4_5 = models.IntegerField(
         default=0,
-        verbose_name="4.5 - Objavljen je seznam ključnih zaposlenih",
-        help_text="| Da = 𝟏 | Ne = 𝟎 |",
+        verbose_name="4.5 - Објавена е листа со клучните вработени лица",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
     transparency_of_organizations_4_6 = models.IntegerField(
         default=0,
-        verbose_name="4.6 - Obljavljeni so člani nadzornega/upravnega odbora",
-        help_text="| Da = 𝟏 | Ne = 𝟎 |",
+        verbose_name="4.6 - Објавени се членовите на не-извршните органи",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
     transparency_of_organizations_4_7 = models.IntegerField(
         default=0,
-        verbose_name="4.7 - Objavljen je finančni načrt za tekoče leto",
-        help_text="| Da = 𝟏 | Ne = 𝟎 |",
+        verbose_name="4.7 - Објавен е финансискиот план за тековната година",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
 
     stars = models.IntegerField(default=-1, editable=False)
@@ -825,7 +829,7 @@ class Criteria(models.Model):
                 FieldPanel("control_of_business_3"),
                 FieldPanel("control_of_business_4"),
             ],
-            heading="Kriterij 1: Nadzor nad poslovanjem",
+            heading="Критериум 1. Контрола врз работата на организацијата",
         ),
         MultiFieldPanel(
             [
@@ -833,7 +837,7 @@ class Criteria(models.Model):
                 FieldPanel("strategic_planning_2_2"),
                 FieldPanel("strategic_planning_2_3"),
             ],
-            heading="Kriterij 2: Strateško načrtovanje",
+            heading="Критериум 2: Стратешко планирање на организациите",
         ),
         MultiFieldPanel(
             [
@@ -842,11 +846,11 @@ class Criteria(models.Model):
                 FieldPanel("financial_management_3_3"),
                 FieldPanel("financial_management_3_4_1"),
                 FieldPanel("financial_management_3_4_2"),
-                FieldPanel("financial_management_3_5_1"),
-                FieldPanel("financial_management_3_5_2"),
+                # FieldPanel("financial_management_3_5_1"),
+                # FieldPanel("financial_management_3_5_2"),
                 FieldPanel("financial_management_3_6"),
             ],
-            heading="Kriterij 3: Finančno upravljanje",
+            heading="Критериум 3: финансиски менаџмент",
         ),
         MultiFieldPanel(
             [
@@ -861,7 +865,7 @@ class Criteria(models.Model):
                 FieldPanel("transparency_of_organizations_4_6"),
                 FieldPanel("transparency_of_organizations_4_7"),
             ],
-            heading="Kriterij 4: Transparentnost organizacij",
+            heading="Критериум 4: транспарентност на организацијата",
         ),
     ]
 
@@ -883,4 +887,3 @@ class Region(models.Model):
 
     def __str__(self):
         return self.name
-
