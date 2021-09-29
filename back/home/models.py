@@ -656,22 +656,36 @@ class Criteria(models.Model):
         verbose_name="1.4 - Организацијата води записници од одржаните состаноци",
         help_text="| Да = 𝟐 | не = 𝟎 |",
     )
+    # MACEDONIA ADDED
+    control_of_business_5 = models.IntegerField(
+        default=0,
+        verbose_name="1.5 - Организацијата има родова еднаквост во управниот орган",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
+    )
+    # MACEDONIA ADDED END
 
     strategic_planning_2_1 = models.IntegerField(
         default=0,
         verbose_name="2.1 - Организацијата има стратешки (или годишен) план",
-        help_text="| Да = 𝟐 | не = 𝟎 |",
+        help_text="| Да = 𝟑 | не = 𝟎 |",
     )
     strategic_planning_2_2 = models.IntegerField(
         default=0,
         verbose_name="2.2 - Организацијата го мониторира (има рамка за мониторирање и презентира внатрешно прогрес) исполнувањето на стратешкиот план",
-        help_text="| Да = 𝟐 | не = 𝟎 |",
+        help_text="| Да = 𝟑 | не = 𝟎 |",
     )
     strategic_planning_2_3 = models.IntegerField(
         default=0,
         verbose_name="2.3 - Организацијата подготвува извештаи од мониторирање на исполнувањето стратешките цели",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
+    # MACEDONIA ADDED
+    strategic_planning_2_4 = models.IntegerField(
+        default=0,
+        verbose_name="2.4 - Организацијата подготвува годишен план",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
+    )
+    # MACEDONIA ADDED END
 
     financial_management_3_1 = models.IntegerField(
         default=0,
@@ -700,18 +714,18 @@ class Criteria(models.Model):
         verbose_name="3.4.2 - Удел на приходите од најголемиот извор",
         help_text="Процент од приходи | <=20 = 𝟓 | 21-30 = 𝟒 | 31-40 = 𝟑 | 41-50 = 𝟐 | 50+ = 𝟏 |",
     )
-    # FIXME: MACEDONIA MISSING
-    financial_management_3_5_1 = models.IntegerField(
-        default=0,
-        verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam",
-        help_text="Organizacija daje posojila povezanim osebam | Да = 𝟎 | не = 𝟒 |",
-    )
-    financial_management_3_5_2 = models.IntegerField(
-        default=0,
-        verbose_name="3.5.2 - Organizacija prejema posojila od povezanih oseb",
-        help_text="Organizacija prejema posojila od povezanih oseb | Да = 𝟎 | не = 𝟐 |",
-    )
-    # FIXME: MACEDONIA MISSING END
+    # MACEDONIA REMOVED
+    # financial_management_3_5_1 = models.IntegerField(
+    #     default=0,
+    #     verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam",
+    #     help_text="Organizacija daje posojila povezanim osebam | Да = 𝟎 | не = 𝟒 |",
+    # )
+    # financial_management_3_5_2 = models.IntegerField(
+    #     default=0,
+    #     verbose_name="3.5.2 - Organizacija prejema posojila od povezanih oseb",
+    #     help_text="Organizacija prejema posojila od povezanih oseb | Да = 𝟎 | не = 𝟐 |",
+    # )
+    # MACEDONIA REMOVED END
     financial_management_3_6 = models.IntegerField(
         default=0,
         verbose_name="3.6 - Соодносот помеѓу највисоката и просечната плата во организацијата",
@@ -746,7 +760,7 @@ class Criteria(models.Model):
     transparency_of_organizations_4_3 = models.IntegerField(
         default=0,
         verbose_name="4.3 - Објавен е надоместокот кој го добива раководството",
-        help_text="| Да = 𝟐 | не = 𝟎 |",
+        help_text="| Да = 𝟏 | не = 𝟎 |",
     )
     transparency_of_organizations_4_4 = models.IntegerField(
         default=0,
@@ -799,23 +813,25 @@ class Criteria(models.Model):
         "1.2": 3,
         "1.3": 3,
         "1.4": 2,
-        "2.1": 2,
-        "2.2": 2,
-        "2.3": 1,
+        "1.5": 2,
+        "2.1": 3,
+        "2.2": 3,
+        "2.3": 2,
+        "2.4": 2,
         "3.1": 5,
         "3.2": 5,
         "3.3": 5,
         "3.4.1": 5,
         "3.4.2": 5,
-        "3.5.1": 4,
-        "3.5.2": 2,
+        # "3.5.1": 4,
+        # "3.5.2": 2,
         "3.6": 5,
         "4.1.1": 2,
         "4.1.2": 2,
         "4.2.1": 2,
         "4.2.2": 2,
         "4.2.3": 2,
-        "4.3": 2,
+        "4.3": 1,
         "4.4": 1,
         "4.5": 1,
         "4.6": 1,
@@ -829,6 +845,7 @@ class Criteria(models.Model):
                 FieldPanel("control_of_business_2"),
                 FieldPanel("control_of_business_3"),
                 FieldPanel("control_of_business_4"),
+                FieldPanel("control_of_business_5"),
             ],
             heading="Критериум 1. Контрола врз работата на организацијата",
         ),
@@ -837,6 +854,7 @@ class Criteria(models.Model):
                 FieldPanel("strategic_planning_2_1"),
                 FieldPanel("strategic_planning_2_2"),
                 FieldPanel("strategic_planning_2_3"),
+                FieldPanel("strategic_planning_2_4"),
             ],
             heading="Критериум 2: Стратешко планирање на организациите",
         ),
