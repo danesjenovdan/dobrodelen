@@ -65,37 +65,44 @@ export default {
       items: [
         {
           collapsed: true,
-          headerHTML: 'Kriterij 1: <strong>Nadzor nad poslovanjem</strong>',
+          headerHTML:
+            'Критериум 1: <strong>Контрола врз работата на организацијата</strong>',
           contentHTML: require('../assets/metodologija/kriterij1.inc.html')
             .default,
         },
         {
           collapsed: true,
           headerHTML:
-            'Kriterij 2: <strong>Strateško načrtovanje organizacij</strong>',
+            'Критериум 2: <strong>Стратешко планирање на организациите</strong>',
           contentHTML: require('../assets/metodologija/kriterij2.inc.html')
             .default,
         },
         {
           collapsed: true,
-          headerHTML: 'Kriterij 3: <strong>Finančno upravljanje</strong>',
+          headerHTML: 'Критериум 3: <strong>финансиски менаџмент</strong>',
           contentHTML: require('../assets/metodologija/kriterij3.inc.html')
             .default,
         },
         {
           collapsed: true,
           headerHTML:
-            'Kriterij 4: <strong>Transparentnost organizacij</strong>',
+            'Критериум 4: <strong>транспарентност на организацијата</strong>',
           contentHTML: require('../assets/metodologija/kriterij4.inc.html')
             .default,
         },
         {
           collapsed: true,
-          headerHTML: '<strong>Skupna ocena</strong>',
+          headerHTML:
+            '<strong>Сумирање на поентите и доделување на ѕвезди</strong>',
           contentHTML: require('../assets/metodologija/skupnaocena.inc.html')
             .default,
         },
       ],
+    };
+  },
+  head() {
+    return {
+      title: 'Metodologija',
     };
   },
   methods: {
@@ -129,11 +136,6 @@ export default {
       };
       itemContentElement.addEventListener('transitionend', onTransitionEnd);
     },
-  },
-  head() {
-    return {
-      title: 'Metodologija',
-    };
   },
 };
 </script>
@@ -172,7 +174,7 @@ export default {
               font-size: 1.25rem;
             }
 
-            /deep/ span {
+            ::v-deep span {
               font-weight: 300;
               letter-spacing: 0.2em;
 
@@ -202,7 +204,7 @@ export default {
           height: 0;
         }
 
-        /deep/ .card-body {
+        ::v-deep .card-body {
           padding-top: 4rem;
           padding-bottom: 4rem;
           font-size: 1.5rem;

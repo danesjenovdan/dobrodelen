@@ -634,7 +634,7 @@ export default {
       padding: 3rem 0;
     }
 
-    fieldset /deep/ {
+    fieldset ::v-deep {
       margin-top: 1rem;
 
       legend {

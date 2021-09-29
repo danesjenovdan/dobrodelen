@@ -119,7 +119,7 @@
         class="modal show"
         tabindex="-1"
         role="dialog"
-        style="display:block"
+        style="display: block"
       >
         <div
           class="modal-dialog modal-lg modal-dialog-centered"
@@ -210,6 +210,11 @@ export default {
       showStarsModal: false,
     };
   },
+  head() {
+    return {
+      title: this.organization.name,
+    };
+  },
   beforeDestroy() {
     this.toggleModal(false);
   },
@@ -261,11 +266,6 @@ export default {
       }
       return String(value);
     },
-  },
-  head() {
-    return {
-      title: this.organization.name,
-    };
   },
 };
 </script>
@@ -342,7 +342,7 @@ export default {
       }
     }
 
-    /deep/ div {
+    ::v-deep div {
       p {
         font-size: 1.5rem;
         font-weight: 300;

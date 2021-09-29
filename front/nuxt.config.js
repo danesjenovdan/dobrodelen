@@ -1,7 +1,6 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
-  mode: 'universal',
   /*
    ** Headers of the page
    */
@@ -63,7 +62,6 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/style-resources',
   ],
   /*
    ** Nuxt.js build modules
@@ -71,6 +69,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources',
   ],
   /*
    ** Nuxt Style Resources
@@ -86,7 +85,7 @@ export default {
   axios: {
     baseURL: isProduction
       ? 'https://navigator.otcetnigo.mk'
-      : 'http://back:8000',
+      : 'http://localhost:8000',
   },
   /*
    ** Environment variables for webpack (via definePlugin)
@@ -94,7 +93,7 @@ export default {
   env: {
     API_BASE_URL: isProduction
       ? 'https://navigator.otcetnigo.mk'
-      : 'http://back:8000',
+      : 'http://localhost:8000',
   },
   /*
    ** Build configuration
@@ -111,6 +110,13 @@ export default {
         loader: 'raw-loader',
         exclude: /(node_modules)/,
       });
+    },
+    loaders: {
+      scss: {
+        sassOptions: {
+          quietDeps: true,
+        },
+      },
     },
   },
 };
