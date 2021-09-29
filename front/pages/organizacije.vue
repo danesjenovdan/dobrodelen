@@ -29,6 +29,11 @@ export default {
       orgSearchQuery,
     };
   },
+  head() {
+    return {
+      title: 'Organizacije',
+    };
+  },
   methods: {
     onOrgListChange(changes) {
       const query = {};
@@ -42,11 +47,6 @@ export default {
         query,
       });
     },
-  },
-  head() {
-    return {
-      title: 'Organizacije',
-    };
   },
 };
 </script>

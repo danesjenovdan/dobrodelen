@@ -26,9 +26,7 @@
               Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno
               preberite
               <a
-                :href="
-                  `${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`
-                "
+                :href="`${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`"
                 target="_blank"
                 rel="noopener noreferrer"
                 >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
@@ -404,7 +402,7 @@
                     label="Ime in priimek"
                     :has-error="
                       dataErrors.supervisory_board_members &&
-                        dataErrors.supervisory_board_members[i]
+                      dataErrors.supervisory_board_members[i]
                     "
                   />
                   <div>
@@ -524,7 +522,7 @@
                     label="Ime in priimek"
                     :has-error="
                       dataErrors.management_board_members &&
-                        dataErrors.management_board_members[i]
+                      dataErrors.management_board_members[i]
                     "
                   />
                   <div>
@@ -643,7 +641,7 @@
                     label="Ime in priimek"
                     :has-error="
                       dataErrors.council_members &&
-                        dataErrors.council_members[i]
+                      dataErrors.council_members[i]
                     "
                   />
                   <div>
@@ -769,7 +767,7 @@
                     label="Ime in priimek"
                     :has-error="
                       dataErrors.other_board_members &&
-                        dataErrors.other_board_members[i]
+                      dataErrors.other_board_members[i]
                     "
                   />
                   <div>
@@ -920,9 +918,7 @@
               <p>
                 Finančno poročilo pripravljeno po
                 <a
-                  :href="
-                    `${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`
-                  "
+                  :href="`${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -1320,6 +1316,11 @@ export default {
       saving: false,
     };
   },
+  head() {
+    return {
+      title: 'Prijava organizacije',
+    };
+  },
   methods: {
     async onChangeStage(save, activeStage) {
       if (save) {
@@ -1542,11 +1543,6 @@ export default {
     getWindowLocation() {
       return typeof window !== 'undefined' ? window.location.href : '';
     },
-  },
-  head() {
-    return {
-      title: 'Prijava organizacije',
-    };
   },
 };
 </script>

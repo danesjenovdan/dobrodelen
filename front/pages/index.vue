@@ -34,10 +34,10 @@
 import StripedTextShadow from '~/components/StripedTextShadow.vue';
 
 export default {
-  layout: 'landing',
   components: {
     StripedTextShadow,
   },
+  layout: 'landing',
 };
 </script>
 
