@@ -8,45 +8,29 @@
     </div>
     <footer class="footer">
       <div class="row">
-        <div class="col-12 col-sm-auto text-center">
-          <a
-            href="https://www.cnvos.si/"
-            target="_blank"
-            rel="noopener"
-            class="mr-4"
-          >
-            <img
-              src="/img/cnvos-logo-hires-text.png"
-              alt="cvnos logo"
-              class="cnvos-logo"
-            />
-          </a>
+        <div class="col-12 d-flex flex-wrap">
+          <figure>
+            <img src="/img/flag_yellow_low.jpg" alt="" />
+            <figcaption>Проектот е финансиран од Европската Унија.</figcaption>
+          </figure>
+          <figure>
+            <img src="/img/Logo_EU_so_TEBE_MK.png" alt="" />
+          </figure>
+          <figure>
+            <img src="/img/MCMS_Dolgo.jpg" alt="" class="blend-logo" />
+          </figure>
+          <figure>
+            <img src="/img/LOGOTIP_ANG_1.jpg" alt="" class="blend-logo" />
+          </figure>
+          <figure>
+            <img src="/img/bcsdn-horizontal-FINAL.png" alt="" />
+          </figure>
         </div>
-        <div class="col d-flex align-items-center">
-          <div class="my-3 my-md-0">
-            K nastanku spletnega mesta Dobrodelen.si sta pripomogla Ministrstvo
-            za javno upravo Republike Slovenije ter U.S. Embassy Ljubljana
-          </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-auto text-center mt-3 mt-lg-0">
-          <a
-            href="https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-javno-upravo/"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="/img/Ministrstvo_za_javno_upravo_.png"
-              alt="mju logo"
-              class="mju-logo"
-            />
-          </a>
-          <a href="https://si.usembassy.gov/" target="_blank" rel="noopener">
-            <img
-              src="/img/usembassy.png"
-              alt="us embassy logo"
-              class="use-logo"
-            />
-          </a>
+        <div class="col-12 text-center">
+          Оваа веб страна е подготвена со помош на Европската Унија. Самата
+          содржина на веб страна е единствена одговорност на имплементаторите и
+          во никој случај не може да се смета дека ги одразува ставовите на
+          Европската Унија.
         </div>
       </div>
     </footer>
@@ -87,25 +71,28 @@ export default {
     padding: 1rem 1rem;
   }
 
-  .cnvos-logo {
-    height: 70px;
-  }
+  figure {
+    flex: 1;
+    text-align: center;
+    max-width: 100%;
 
-  .mju-logo {
-    mix-blend-mode: multiply;
-    margin-right: 0.5rem;
-    width: 300px;
-
-    @include media-breakpoint-down(xs) {
-      width: 200px;
+    @include media-breakpoint-down(sm) {
+      flex-basis: 100%;
+      margin: 1rem 0;
     }
-  }
 
-  .use-logo {
-    height: 70px;
+    img {
+      display: block;
+      margin: 0 auto;
+      height: 80px;
 
-    @include media-breakpoint-down(xs) {
-      height: 50px;
+      @include media-breakpoint-down(sm) {
+        height: 60px;
+      }
+
+      &.blend-logo {
+        mix-blend-mode: multiply;
+      }
     }
   }
 }
