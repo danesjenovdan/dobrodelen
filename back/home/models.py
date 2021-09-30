@@ -697,38 +697,19 @@ class Criteria(models.Model):
         verbose_name="3.2 - Процент на средства за тековно/оперативно работење",
         help_text="Процент од средствата | <10 = 𝟓 | 10-14 = 𝟒 | 15-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
     )
-    # FIXME: MACEDONIA MISSING
-    financial_management_3_3 = models.IntegerField(
-        default=0,
-        verbose_name="3.3 - Znesek, ki ga organizacija porabi na vsakih zbranih 100 €",
-        help_text="Znesek | 0-5 = 𝟓 | 6-15 = 𝟒 | 16-24 = 𝟑 | 25-30 = 𝟐 | 30+ = 𝟏 |",
-    )
-    # FIXME: MACEDONIA MISSING END
     financial_management_3_4_1 = models.IntegerField(
         default=0,
-        verbose_name="3.4.1 - Извори на финансирање",
+        verbose_name="3.3.1 - Извори на финансирање",
         help_text="Број на извори | 10+ = 𝟓 | 8-9 = 𝟒 | 6-7 = 𝟑 | 3-5 = 𝟐 | <3 = 𝟏 |",
     )
     financial_management_3_4_2 = models.IntegerField(
         default=0,
-        verbose_name="3.4.2 - Удел на приходите од најголемиот извор",
+        verbose_name="3.3.2 - Удел на приходите од најголемиот извор",
         help_text="Процент од приходи | <=20 = 𝟓 | 21-30 = 𝟒 | 31-40 = 𝟑 | 41-50 = 𝟐 | 50+ = 𝟏 |",
     )
-    # MACEDONIA REMOVED
-    # financial_management_3_5_1 = models.IntegerField(
-    #     default=0,
-    #     verbose_name="3.5.1 - Organizacija daje posojila povezanim osebam",
-    #     help_text="Organizacija daje posojila povezanim osebam | Да = 𝟎 | не = 𝟒 |",
-    # )
-    # financial_management_3_5_2 = models.IntegerField(
-    #     default=0,
-    #     verbose_name="3.5.2 - Organizacija prejema posojila od povezanih oseb",
-    #     help_text="Organizacija prejema posojila od povezanih oseb | Да = 𝟎 | не = 𝟐 |",
-    # )
-    # MACEDONIA REMOVED END
     financial_management_3_6 = models.IntegerField(
         default=0,
-        verbose_name="3.6 - Соодносот помеѓу највисоката и просечната плата во организацијата",
+        verbose_name="3.4 - Соодносот помеѓу највисоката и просечната плата во организацијата",
         help_text="Сооднос | <1:2 = 𝟓 | 1:2,9-1:2 = 𝟒 | 1:3,9-1:3 = 𝟑 | 1:4-1:5 = 𝟐 | >1:5 = 𝟏 |",
     )
 
@@ -760,27 +741,27 @@ class Criteria(models.Model):
     transparency_of_organizations_4_3 = models.IntegerField(
         default=0,
         verbose_name="4.3 - Објавен е надоместокот кој го добива раководството",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_4 = models.IntegerField(
         default=0,
         verbose_name="4.4 - Објавен е соодносот на платите",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_5 = models.IntegerField(
         default=0,
         verbose_name="4.5 - Објавена е листа со клучните вработени лица",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_6 = models.IntegerField(
         default=0,
         verbose_name="4.6 - Објавени се членовите на не-извршните органи",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
     transparency_of_organizations_4_7 = models.IntegerField(
         default=0,
         verbose_name="4.7 - Објавен е финансискиот план за тековната година",
-        help_text="| Да = 𝟏 | не = 𝟎 |",
+        help_text="| Да = 𝟐 | не = 𝟎 |",
     )
 
     stars = models.IntegerField(default=-1, editable=False)
@@ -820,22 +801,19 @@ class Criteria(models.Model):
         "2.4": 2,
         "3.1": 5,
         "3.2": 5,
-        "3.3": 5,
-        "3.4.1": 5,
-        "3.4.2": 5,
-        # "3.5.1": 4,
-        # "3.5.2": 2,
-        "3.6": 5,
+        "3.3.1": 5,
+        "3.3.2": 5,
+        "3.4": 5,
         "4.1.1": 2,
         "4.1.2": 2,
         "4.2.1": 2,
         "4.2.2": 2,
         "4.2.3": 2,
-        "4.3": 1,
-        "4.4": 1,
-        "4.5": 1,
-        "4.6": 1,
-        "4.7": 1,
+        "4.3": 2,
+        "4.4": 2,
+        "4.5": 2,
+        "4.6": 2,
+        "4.7": 2,
     }
 
     panels = [

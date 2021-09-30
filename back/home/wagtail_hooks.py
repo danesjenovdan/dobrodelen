@@ -21,7 +21,7 @@ class OrganizationModelAdmin(ModelAdmin):
 
 
 class OrganizationAdminGroup(ModelAdminGroup):
-    menu_label = "Organizacije"
+    menu_label = "Organizations"
     menu_icon = "folder-open-inverse"
     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
     items = (OrganizationModelAdmin,)
