@@ -5,7 +5,7 @@
         :to="{ name: 'organizacija-prijava' }"
         class="nav-link text-primary"
       >
-        <span>prijava organizacije</span>
+        <span>Пријава</span>
       </nuxt-link>
       <h1>
         <hr />
@@ -13,7 +13,7 @@
           :to="{ name: 'organizacije' }"
           class="title-link text-warning"
         >
-          <span>DOBRODELEN.SI</span>
+          <span>Навигатор за граѓански организации</span>
         </nuxt-link>
         <hr />
         <div v-click-outside="() => toggleMenu(null, false)">
@@ -29,7 +29,7 @@
                 :to="{ name: 'organizacija-prijava' }"
                 class="nav-link text-primary"
               >
-                <span>prijava organizacije</span>
+                <span>Пријава</span>
               </nuxt-link>
               <nuxt-link
                 :to="{ name: 'metodologija' }"

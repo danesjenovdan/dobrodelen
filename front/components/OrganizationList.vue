@@ -208,7 +208,7 @@
                   type="checkbox"
                   name="region"
                   :value="1"
-                  label="Gorenjska"
+                  label="Вардарски"
                 />
               </div>
               <div class="col-md-6">
@@ -217,7 +217,7 @@
                   type="checkbox"
                   name="region"
                   :value="2"
-                  label="Goriška"
+                  label="Источен"
                 />
               </div>
               <div class="col-md-6">
@@ -226,7 +226,7 @@
                   type="checkbox"
                   name="region"
                   :value="3"
-                  label="Jugovzhodna Slovenija"
+                  label="Југозападен"
                 />
               </div>
               <div class="col-md-6">
@@ -235,7 +235,7 @@
                   type="checkbox"
                   name="region"
                   :value="4"
-                  label="Koroška"
+                  label="Југоисточен"
                 />
               </div>
               <div class="col-md-6">
@@ -244,7 +244,7 @@
                   type="checkbox"
                   name="region"
                   :value="5"
-                  label="Notranjskokraška"
+                  label="Пелагониски"
                 />
               </div>
               <div class="col-md-6">
@@ -253,7 +253,7 @@
                   type="checkbox"
                   name="region"
                   :value="6"
-                  label="Obalnokraška"
+                  label="Полошки"
                 />
               </div>
               <div class="col-md-6">
@@ -262,7 +262,7 @@
                   type="checkbox"
                   name="region"
                   :value="7"
-                  label="Osrednjeslovenska"
+                  label="Североисточен"
                 />
               </div>
               <div class="col-md-6">
@@ -271,43 +271,7 @@
                   type="checkbox"
                   name="region"
                   :value="8"
-                  label="Podravska"
-                />
-              </div>
-              <div class="col-md-6">
-                <selection-option
-                  v-model="filters.region"
-                  type="checkbox"
-                  name="region"
-                  :value="9"
-                  label="Pomurska"
-                />
-              </div>
-              <div class="col-md-6">
-                <selection-option
-                  v-model="filters.region"
-                  type="checkbox"
-                  name="region"
-                  :value="10"
-                  label="Posavska"
-                />
-              </div>
-              <div class="col-md-6">
-                <selection-option
-                  v-model="filters.region"
-                  type="checkbox"
-                  name="region"
-                  :value="11"
-                  label="Savinjska"
-                />
-              </div>
-              <div class="col-md-6">
-                <selection-option
-                  v-model="filters.region"
-                  type="checkbox"
-                  name="region"
-                  :value="12"
-                  label="Zasavska"
+                  label="Скопски"
                 />
               </div>
             </div>

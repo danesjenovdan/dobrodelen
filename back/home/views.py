@@ -115,18 +115,14 @@ def _fill_areas():
 
 def _fill_regions():
     regions = [
-        (1, "Gorenjska"),
-        (2, "Goriška"),
-        (3, "Jugovzhodna Slovenija"),
-        (4, "Koroška"),
-        (5, "Notranjskokraška"),
-        (6, "Obalnokraška"),
-        (7, "Osrednjeslovenska"),
-        (8, "Podravska"),
-        (9, "Pomurska"),
-        (10, "Posavska"),
-        (11, "Savinjska"),
-        (12, "Zasavska"),
+        (1, "Вардарски"),
+        (2, "Источен"),
+        (3, "Југозападен"),
+        (4, "Југоисточен"),
+        (5, "Пелагониски"),
+        (6, "Полошки"),
+        (7, "Североисточен"),
+        (8, "Скопски"),
     ]
     ids = list(range(1, len(regions) + 1))
     models.Region.objects.exclude(id__in=ids).delete()

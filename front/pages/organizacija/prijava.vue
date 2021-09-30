@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <content-title icon="signup-form" title="Prijava organizacije" />
+    <content-title icon="signup-form" title="Пријава" />
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 col-xxl-5">
         <form-stages
@@ -16,70 +16,61 @@
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
             <p class="lead">
-              Veseli nas, da ste se odločili vpisati vašo organizacijo na
-              spletno stran
-              <em>dobrodelen.si</em> in širši javnosti pokazati, kako
-              transparenti in odgovorni ste pri svojem poslovanju.
+              Драго ни е што одлучивте да ја регистрирате вашата организација на
+              Навигаторот за граѓански органиации и да и покажете на пошироката
+              јавност колку сте транспарентни и одговорни во вашата работа.
             </p>
             <p class="lead">
-              <!-- eslint-disable prettier/prettier -->
-              Preden začnete z vpisovanjem podatkov o vaši organizaciji podrobno
-              preberite
-              <a
-                :href="`${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
-                organizacij – Nabor kriterijev s pojasnili in smernice za
-                pripravo podatkov</a
-              >, kjer so predstavljeni kriteriji in pogoji za dodelitev točk,
-              posebna pozornost pa je namenjena predstavitvi finančnih podatkov,
-              ki jih bomo od vas potrebovali in kako morajo biti pripravljeni.
-              <!-- eslint-enable prettier/prettier -->
+              Пред да започнете со внесување податоци за вашата организација,
+              детално прочитајте ја методологијата. Оваа методологија е збир на
+              критериуми со објаснувања и упатства за подготовка на податоците,
+              во кои се претставени критериумите и условите за доделување поени,
+              а посебно внимание се посветува на презентирање финансиски
+              податоци, кои се бараат од вас да ги пополните.
             </p>
           </template>
           <template v-if="activeStage === 0">
-            <form-category title="Ime">
+            <form-category title="Име">
               <text-input
                 v-model="data[activeStage].name"
                 name="name"
-                label="Uradno ime organizacije (iz AJPES)"
+                label="Официјално име на организацијата (од Централен регистар на Северна Македонија)"
                 :has-error="dataErrors.name"
               />
               <text-input
                 v-model="data[activeStage].additional_names"
                 name="additional_names"
-                label="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)"
+                label="Други имиња под кои е позната организацијата (кратенки, акроними)"
                 :has-error="dataErrors.additional_names"
               />
             </form-category>
 
-            <form-category title="Kontakt">
+            <form-category title="Контакт">
               <text-input
                 v-model="data[activeStage].contact_name"
                 name="contact_name"
-                label="Ime in priimek"
+                label="Име и презиме"
                 :has-error="dataErrors.contact_name"
               />
               <text-input
                 v-model="data[activeStage].contact_email"
                 name="contact_email"
-                label="E-naslov"
+                label="Е-мејл"
                 :has-error="dataErrors.contact_email"
               />
               <text-input
                 v-model="data[activeStage].contact_phone"
                 name="contact_phone"
-                label="Telefon"
+                label="Телефон"
                 :has-error="dataErrors.contact_phone"
               />
             </form-category>
 
-            <form-category title="Spletna prisotnost">
+            <form-category title="Интернет (веб-страница, социјални мрежи)">
               <text-input
                 v-model="data[activeStage].web_page"
                 name="web_page"
-                label="URL spletne strani"
+                label="URL на веб -страница"
                 :has-error="dataErrors.web_page"
               />
               <template v-for="(link, i) in data[activeStage].links">
@@ -87,7 +78,7 @@
                   :key="`link-${i}`"
                   v-model="link.url"
                   :name="`links__${i}`"
-                  label="URL profila na družbenem mediju"
+                  label="URL на профилот на социјалните медиуми"
                   :has-error="dataErrors.links && dataErrors.links[i]"
                 />
               </template>
@@ -100,32 +91,32 @@
                 <span>&times;</span> Odstrani družbeni profil
               </button>
               <add-button
-                text="Dodajte družbeni profil"
+                text="Додадете социјален профил"
                 @click.native="data[activeStage].links.push({ url: null })"
               />
             </form-category>
 
-            <form-category title="Slika">
+            <form-category title="Слика">
               <file-input
                 v-model="data[activeStage].cover_photo"
                 name="cover_photo"
-                label="Naložite sliko"
+                label="Поставете слика"
                 :has-error="dataErrors.cover_photo"
               />
             </form-category>
 
-            <form-category title="Davčna številka">
+            <form-category title="Даночен број">
               <text-input
                 v-model="data[activeStage].tax_number"
                 name="tax_number"
-                label="Davčna številka"
+                label="Даночен број"
                 :has-error="dataErrors.tax_number"
               />
             </form-category>
           </template>
 
           <template v-else-if="activeStage === 1">
-            <form-category title="Poslanstvo" note="največ 500 znakov">
+            <form-category title="Мисија" note="максимум 500 карактери">
               <text-input
                 v-model="data[activeStage].mission"
                 name="mission"
@@ -135,7 +126,7 @@
               />
             </form-category>
 
-            <form-category title="Kratek opis" note="največ 1500 znakov">
+            <form-category title="Краток опис" note="максимум 1500 карактери">
               <text-input
                 v-model="data[activeStage].description"
                 name="description"
@@ -146,7 +137,7 @@
             </form-category>
 
             <form-category
-              title="Področja delovanja"
+              title="Области на делување"
               note="lahko izberete več možnosti"
             >
               <selection-option
@@ -224,29 +215,29 @@
                 type="checkbox"
                 name="area"
                 :value="10"
-                label="Drugo:"
+                label="Друго:"
                 custom-input
                 :custom-input-value="data[activeStage].custom_area"
                 @custom-change="data[activeStage].custom_area = $event"
               />
             </form-category>
 
-            <form-category title="Proračun">
+            <form-category title="Сметка">
               <text-input
                 v-model="data[activeStage].avg_revenue"
                 name="avg_revenue"
-                label="Povprečni letni proračun v zadnjih treh letih"
+                label="Просечен годишен буџет за последните три години"
                 :has-error="dataErrors.avg_revenue"
               />
               <text-input
                 v-model="data[activeStage].employed"
                 name="employed"
-                label="Število zaposlenih v zadnjem zaključenem letu"
+                label="Број на вработени во последната завршена година"
                 :has-error="dataErrors.employed"
               />
             </form-category>
 
-            <form-category title="Statusi">
+            <form-category title="Статус">
               <selection-option
                 v-model="data[activeStage].is_charity"
                 type="checkbox"
@@ -273,123 +264,92 @@
               />
             </form-category>
 
-            <form-category
-              title="Območje delovanja"
-              note="lahko izberete več možnosti"
-            >
+            <form-category title="Региони" note="lahko izberete več možnosti">
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
-                :value="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
-                label="Vsa"
+                :value="[1, 2, 3, 4, 5, 6, 7, 8]"
+                label="Сите"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="1"
-                label="Gorenjska"
+                label="Вардарски"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="2"
-                label="Goriška"
+                label="Источен"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="3"
-                label="Jugovzhodna Slovenija"
+                label="Југозападен"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="4"
-                label="Koroška"
+                label="Југоисточен"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="5"
-                label="Notranjskokraška"
+                label="Пелагониски"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="6"
-                label="Obalnokraška"
+                label="Полошки"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="7"
-                label="Osrednjeslovenska"
+                label="Североисточен"
               />
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
                 name="region"
                 :value="8"
-                label="Podravska"
-              />
-              <selection-option
-                v-model="data[activeStage].region"
-                type="checkbox"
-                name="region"
-                :value="9"
-                label="Pomurska"
-              />
-              <selection-option
-                v-model="data[activeStage].region"
-                type="checkbox"
-                name="region"
-                :value="10"
-                label="Posavska"
-              />
-              <selection-option
-                v-model="data[activeStage].region"
-                type="checkbox"
-                name="region"
-                :value="11"
-                label="Savinjska"
-              />
-              <selection-option
-                v-model="data[activeStage].region"
-                type="checkbox"
-                name="region"
-                :value="12"
-                label="Zasavska"
+                label="Скопски"
               />
             </form-category>
           </template>
 
           <template v-else-if="activeStage === 2">
-            <form-category title="Nadzorni odbor">
+            <form-category title="Надзорен одбор">
               <selection-option
                 v-model="data[activeStage].has_supervisory_board"
                 type="checkbox"
                 name="has_supervisory_board"
-                label="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal"
+                label="Организацијата има надзорен одбор, кој се состана минатата година"
               />
               <text-input
                 v-if="data[activeStage].has_supervisory_board"
                 v-model="data[activeStage].supervisory_board_dates"
                 name="supervisory_board_dates"
-                label="Datumi srečanj v preteklem letu"
+                label="Датуми на состаноци во претходната година"
                 :has-error="dataErrors.supervisory_board_dates"
               />
             </form-category>
             <form-category
               v-if="data[activeStage].has_supervisory_board"
-              title="Člani nadzornega odbora"
+              title="Членови на Надзорниот одбор"
             >
               <template
                 v-for="(member, i) in data[activeStage]
@@ -399,7 +359,7 @@
                   <text-input
                     v-model="member.name"
                     :name="`supervisory_board_members__name__${i}`"
-                    label="Ime in priimek"
+                    label="Име и презиме"
                     :has-error="
                       dataErrors.supervisory_board_members &&
                       dataErrors.supervisory_board_members[i]
@@ -412,49 +372,49 @@
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="1"
-                      label="Član"
+                      label="Член"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="2"
-                      label="Predstavnik uporabnikov"
+                      label="Претставник на корисниците"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="3"
-                      label="Predstavnik zaposlenih"
+                      label="Претставник на вработените"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="4"
-                      label="Predstavnik ustanoviteljev"
+                      label="Претставник на основачите"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                      label="Именуван врз основа на роднински/пријателски врски"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="6"
-                      label="Neodvisni predstavnik"
+                      label="Независен претставник"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`supervisory_board_members__role__${i}`"
                       value="7"
-                      label="Drugo:"
+                      label="Друго:"
                       custom-input
                       :custom-input-value="member.custom_role"
                       @custom-change="member.custom_role = $event"
@@ -465,7 +425,7 @@
                     v-model="member.is_paid"
                     type="checkbox"
                     :name="`supervisory_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
+                    label="Тој добива награда за неговата работа во одборот"
                   />
                   <hr />
                   <br />
@@ -480,7 +440,7 @@
                 <span>&times;</span> Odstrani člana
               </button>
               <add-button
-                text="Dodajte člana"
+                text="Додадете член"
                 @click.native="
                   data[activeStage].supervisory_board_members.push({
                     name: '',
@@ -492,24 +452,24 @@
               />
             </form-category>
 
-            <form-category title="Upravni odbor">
+            <form-category title="Управен одбор">
               <selection-option
                 v-model="data[activeStage].has_management_board"
                 type="checkbox"
                 name="has_management_board"
-                label="Organizacija ima upravni odbor, ki se je v preteklem letu srečal"
+                label="Организацијата има управен одбор, кој се состана минатата година"
               />
               <text-input
                 v-if="data[activeStage].has_management_board"
                 v-model="data[activeStage].management_board_dates"
                 name="management_board_dates"
-                label="Datumi srečanj v preteklem letu"
+                label="Датуми на состаноци во претходната година"
                 :has-error="dataErrors.management_board_dates"
               />
             </form-category>
             <form-category
               v-if="data[activeStage].has_management_board"
-              title="Člani upravnega odbora"
+              title="Членови на управниот одбор"
             >
               <template
                 v-for="(member, i) in data[activeStage]
@@ -519,7 +479,7 @@
                   <text-input
                     v-model="member.name"
                     :name="`management_board_members__name__${i}`"
-                    label="Ime in priimek"
+                    label="Име и презиме"
                     :has-error="
                       dataErrors.management_board_members &&
                       dataErrors.management_board_members[i]
@@ -532,49 +492,49 @@
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="1"
-                      label="Član"
+                      label="Член"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="2"
-                      label="Predstavnik uporabnikov"
+                      label="Претставник на корисниците"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="3"
-                      label="Predstavnik zaposlenih"
+                      label="Претставник на вработените"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="4"
-                      label="Predstavnik ustanoviteljev"
+                      label="Претставник на основачите"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                      label="Именуван врз основа на роднински/пријателски врски"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="6"
-                      label="Neodvisni predstavnik"
+                      label="Независен претставник"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`management_board_members__role__${i}`"
                       value="7"
-                      label="Drugo:"
+                      label="Друго:"
                       custom-input
                       :custom-input-value="member.custom_role"
                       @custom-change="member.custom_role = $event"
@@ -585,7 +545,7 @@
                     v-model="member.is_paid"
                     type="checkbox"
                     :name="`management_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
+                    label="Тој добива награда за неговата работа во управниот одбор"
                   />
                   <hr />
                   <br />
@@ -600,7 +560,7 @@
                 <span>&times;</span> Odstrani člana
               </button>
               <add-button
-                text="Dodajte člana"
+                text="Додадете член"
                 @click.native="
                   data[activeStage].management_board_members.push({
                     name: '',
@@ -612,24 +572,24 @@
               />
             </form-category>
 
-            <form-category title="Svet zavoda">
+            <form-category title="Совет">
               <selection-option
                 v-model="data[activeStage].has_council"
                 type="checkbox"
                 name="has_council"
-                label="Organizacija ima svet zavoda, ki se je v preteklem letu srečal"
+                label="Организацијата има совет што се состана минатата година"
               />
               <text-input
                 v-if="data[activeStage].has_council"
                 v-model="data[activeStage].council_dates"
                 name="council_dates"
-                label="Datumi srečanj v preteklem letu"
+                label="Датуми на состаноци во претходната година"
                 :has-error="dataErrors.council_dates"
               />
             </form-category>
             <form-category
               v-if="data[activeStage].has_council"
-              title="Člani sveta zavoda"
+              title="Членови на советот"
             >
               <template
                 v-for="(member, i) in data[activeStage].council_members"
@@ -638,7 +598,7 @@
                   <text-input
                     v-model="member.name"
                     :name="`council_members__name__${i}`"
-                    label="Ime in priimek"
+                    label="Име и презиме"
                     :has-error="
                       dataErrors.council_members &&
                       dataErrors.council_members[i]
@@ -651,49 +611,49 @@
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="1"
-                      label="Član"
+                      label="Член"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="2"
-                      label="Predstavnik uporabnikov"
+                      label="Претставник на корисниците"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="3"
-                      label="Predstavnik zaposlenih"
+                      label="Претставник на вработените"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="4"
-                      label="Predstavnik ustanoviteljev"
+                      label="Претставник на основачите"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                      label="Именуван врз основа на роднински/пријателски врски"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="6"
-                      label="Neodvisni predstavnik"
+                      label="Независен претставник"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`council_members__role__${i}`"
                       value="7"
-                      label="Drugo:"
+                      label="Друго:"
                       custom-input
                       :custom-input-value="member.custom_role"
                       @custom-change="member.custom_role = $event"
@@ -704,7 +664,7 @@
                     v-model="member.is_paid"
                     type="checkbox"
                     :name="`council_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
+                    label="Тој добива награда за неговата работа во советот"
                   />
                   <hr />
                   <br />
@@ -719,7 +679,7 @@
                 <span>&times;</span> Odstrani člana
               </button>
               <add-button
-                text="Dodajte člana"
+                text="Додадете член"
                 @click.native="
                   data[activeStage].council_members.push({
                     name: '',
@@ -731,31 +691,31 @@
               />
             </form-category>
 
-            <form-category title="Drugo">
+            <form-category title="Друго">
               <selection-option
                 v-model="data[activeStage].has_other_board"
                 type="checkbox"
                 name="has_other_board"
-                label="Organizacija ima drug organ, ki opravlja funkcijo nadzora nad poslovodstvom in se je v preteklem letu srečal"
+                label="Организацијата има друг орган кој ја извршува функцијата на надзор врз извршната канцеларија и се состана минатата година"
               />
               <text-input
                 v-if="data[activeStage].has_other_board"
                 v-model="data[activeStage].other_board_name"
                 name="other_board_name"
-                label="Ime organa"
+                label="Име на органот"
                 :has-error="dataErrors.other_board_dates"
               />
               <text-input
                 v-if="data[activeStage].has_other_board"
                 v-model="data[activeStage].other_board_dates"
                 name="other_board_dates"
-                label="Datumi srečanj v preteklem letu"
+                label="Датуми на состаноци во претходната година"
                 :has-error="dataErrors.other_board_dates"
               />
             </form-category>
             <form-category
               v-if="data[activeStage].has_other_board"
-              title="Člani organa"
+              title="Членови на телото"
             >
               <template
                 v-for="(member, i) in data[activeStage].other_board_members"
@@ -764,7 +724,7 @@
                   <text-input
                     v-model="member.name"
                     :name="`other_board_members__name__${i}`"
-                    label="Ime in priimek"
+                    label="Име и презиме"
                     :has-error="
                       dataErrors.other_board_members &&
                       dataErrors.other_board_members[i]
@@ -777,49 +737,49 @@
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="1"
-                      label="Član"
+                      label="Член"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="2"
-                      label="Predstavnik uporabnikov"
+                      label="Претставник на корисниците"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="3"
-                      label="Predstavnik zaposlenih"
+                      label="Претставник на вработените"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="4"
-                      label="Predstavnik ustanoviteljev"
+                      label="Претставник на основачите"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
+                      label="Именуван врз основа на роднински/пријателски врски"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="6"
-                      label="Neodvisni predstavnik"
+                      label="Независен претставник"
                     />
                     <selection-option
                       v-model="member.role"
                       type="radio"
                       :name="`other_board_members__role__${i}`"
                       value="7"
-                      label="Drugo:"
+                      label="Друго:"
                       custom-input
                       :custom-input-value="member.custom_role"
                       @custom-change="member.custom_role = $event"
@@ -830,7 +790,7 @@
                     v-model="member.is_paid"
                     type="checkbox"
                     :name="`other_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
+                    label="Тој добива награда за неговата работа во органот"
                   />
                   <hr />
                   <br />
@@ -845,7 +805,7 @@
                 <span>&times;</span> Odstrani člana
               </button>
               <add-button
-                text="Dodajte člana"
+                text="Додадете член"
                 @click.native="
                   data[activeStage].other_board_members.push({
                     name: '',
@@ -857,40 +817,40 @@
               />
             </form-category>
 
-            <form-category title="Zapisniki seje">
+            <form-category title="Записник од состанокот">
               <selection-option
                 v-model="data[activeStage].has_minutes_meeting"
                 type="checkbox"
                 name="has_minutes_meeting"
-                label="Organizacija vodi zapisnike sej"
+                label="Организацијата води записници од состаноците на не-извршните органи"
               />
               <file-input
                 v-if="data[activeStage].has_minutes_meeting"
                 v-model="data[activeStage].minutes_meeting"
                 name="minutes_meeting"
-                label="Priložite zapisnik zadnje seje"
+                label="Прикачете го записникот од последниот состанок"
               />
             </form-category>
 
-            <form-category title="Strateško načrtovanje">
+            <form-category title="Стратешко планирање">
               <selection-option
                 v-model="data[activeStage].strategic_planning"
                 type="checkbox"
                 name="strategic_planning"
-                label="Organizacija strateško načrtuje"
+                label="Организацијата спроведува стратешко планирање"
               />
               <div v-if="data[activeStage].strategic_planning">
                 <selection-option
                   v-model="data[activeStage].has_milestiones_description"
                   type="checkbox"
                   name="has_milestiones_description"
-                  label="Organizacija spremlja doseganje strateških ciljev"
+                  label="Организацијата го следи постигнувањето на стратешкиот план / цели"
                 />
                 <text-input
                   v-if="data[activeStage].has_milestiones_description"
                   v-model="data[activeStage].milestiones_description"
                   name="milestiones_description"
-                  label="Kratek opis kako (največ 500 znakov)"
+                  label="Краток опис за тоа (максимум 500 карактери)"
                   :multiline="9"
                   :maxlength="500"
                   :has-error="dataErrors.milestiones_description"
@@ -900,13 +860,13 @@
                   v-model="data[activeStage].has_strategic_goals"
                   type="checkbox"
                   name="has_strategic_goals"
-                  label="Organizacija vodi pisna poročila o spremljanju stateških ciljev"
+                  label="Организацијата подготвува извештаи за следење на стратешкиот план / цели"
                 />
                 <file-input
                   v-if="data[activeStage].has_strategic_goals"
                   v-model="data[activeStage].strategic_goals"
                   name="strategic_goals"
-                  label="Priložite poročilo"
+                  label="Прикачи извештај"
                   :has-error="dataErrors.strategic_goals"
                 />
               </div>
@@ -914,7 +874,7 @@
           </template>
 
           <template v-else-if="activeStage === 3">
-            <form-category title="Finančno poročilo">
+            <form-category title="Финансиски извештај">
               <p>
                 Finančno poročilo pripravljeno po
                 <a
@@ -929,17 +889,17 @@
               <file-input
                 v-model="data[activeStage].finance_report"
                 name="finance_report"
-                label="Priložite finančno poročilo"
+                label="Прикачете финансиски извештај"
               />
             </form-category>
 
             <form-category
-              title="Finančno poročilo, ki je bilo oddano na AJPES"
+              title="Финансиски извештај (завршна сметка) доставен до Централен регистар на Северна Македонија"
             >
               <file-input
                 v-model="data[activeStage].finance_report_ajpes"
                 name="finance_report_ajpes"
-                label="Priložite finančno poročilo"
+                label="Прикачете го тој извештај"
               />
             </form-category>
 
@@ -958,22 +918,22 @@
               />
             </form-category>
 
-            <form-category title="Finančni načrt">
+            <form-category title="Финансиски план">
               <selection-option
                 v-model="data[activeStage].has_finance_plan"
                 type="checkbox"
                 name="has_finance_plan"
-                label="Organizacija ima finančni načrt za tekoče leto"
+                label="Организацијата има финансиски план за тековната година"
               />
               <file-input
                 v-if="data[activeStage].has_finance_plan"
                 v-model="data[activeStage].finance_plan"
                 name="finance_plan"
-                label="Priložite finančni načrt"
+                label="Прикачете финансиски план"
               />
             </form-category>
 
-            <form-category title="Posojila">
+            <!-- <form-category title="Posojila">
               <selection-option
                 v-model="data[activeStage].has_given_loans"
                 type="checkbox"
@@ -999,26 +959,26 @@
                 name="received_loans"
                 label="Priložite seznam prejetih posojil"
               />
-            </form-category>
+            </form-category> -->
 
-            <form-category title="Plačni razredi">
+            <form-category title="Плата">
               <selection-option
                 v-model="data[activeStage].has_payment_classes"
                 type="checkbox"
                 name="has_payment_classes"
-                label="Organizacija ima seznam delovnih mest in plačnih razredov"
+                label="Организацијата има листа на работни места и плати"
               />
               <file-input
                 v-if="data[activeStage].has_payment_classes"
                 v-model="data[activeStage].payment_classes"
                 name="payment_classes"
-                label="Priložite akt"
+                label="Прикачете го документот"
               />
 
               <text-input
                 v-model="data[activeStage].wages_ratio"
                 name="wages_ratio"
-                label="Razmerje med najvišjo in povprečno plačo v organizaciji"
+                label="Односот помеѓу највисоката и просечната плата во организацијата"
                 :has-error="dataErrors.wages_ratio"
               />
             </form-category>
@@ -1029,91 +989,91 @@
               v-model="data[activeStage].has_published_work_reports"
               type="checkbox"
               name="has_published_work_reports"
-              label="Organizacija ima objavljena letna poročila o delu"
+              label="Организацијата објавува годишни организациски извештаи за работата"
             />
             <text-input
               v-if="data[activeStage].has_published_work_reports"
               v-model="data[activeStage].published_work_reports_url"
               name="published_work_reports_url"
-              label="URL do objavljenih letnih poročil o delu"
+              label="URL до објавените годишни извештаи за работата"
               :has-error="dataErrors.published_work_reports_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_financial_reports"
               type="checkbox"
               name="has_published_financial_reports"
-              label="Organizacija ima objavljena letna finančna poročila"
+              label="Организацијата објавува годишни финансиски извештаи"
             />
             <text-input
               v-if="data[activeStage].has_published_financial_reports"
               v-model="data[activeStage].published_financial_reports_url"
               name="published_financial_reports_url"
-              label="URL do objavljenih finančnih poročil"
+              label="URL до објавените финансиски извештаи"
               :has-error="dataErrors.published_financial_reports_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_executive_salaries"
               type="checkbox"
               name="has_published_executive_salaries"
-              label="Objavljeni so prejemki vodstva"
+              label="Објавен е надоместокот на раководството"
             />
             <text-input
               v-if="data[activeStage].has_published_executive_salaries"
               v-model="data[activeStage].published_executive_salaries_url"
               name="published_executive_salaries_url"
-              label="URL do objavljenih prejemkov vodstva"
+              label="URL до објавениот надоместок за раковдоството"
               :has-error="dataErrors.published_executive_salaries_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_salary_ratio"
               type="checkbox"
               name="has_published_salary_ratio"
-              label="Objavljeno je razmerje med plačami"
+              label="Објавен е односот помеѓу платите"
             />
             <text-input
               v-if="data[activeStage].has_published_salary_ratio"
               v-model="data[activeStage].published_salary_ratio_url"
               name="published_salary_ratio_url"
-              label="URL do objavljenih razmerij med plačami"
+              label="URL до објавата за однос на платите"
               :has-error="dataErrors.published_salary_ratio_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_employee_list"
               type="checkbox"
               name="has_published_employee_list"
-              label="Objavljen je seznam ključnih zaposlenih"
+              label="Објавена е листа на клучни вработени"
             />
             <text-input
               v-if="data[activeStage].has_published_employee_list"
               v-model="data[activeStage].published_employee_list_url"
               name="published_employee_list_url"
-              label="URL do objavljenega seznama ključnih zaposlenih"
+              label="URL до објавената листа на клучни вработени"
               :has-error="dataErrors.published_employee_list_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_board_members"
               type="checkbox"
               name="has_published_board_members"
-              label="Obljavljeni so člani nadzornega/upravnega odbora"
+              label="Објавени се членовите на Управниот одбор / Надзорниот одбор"
             />
             <text-input
               v-if="data[activeStage].has_published_board_members"
               v-model="data[activeStage].published_board_members_url"
               name="published_board_members_url"
-              label="URL do objavljenega seznama članov odbora"
+              label="URL до објавената листа на членови на Управниот / Надзорниот одбор"
               :has-error="dataErrors.published_board_members_url"
             />
             <selection-option
               v-model="data[activeStage].has_published_financial_plan"
               type="checkbox"
               name="has_published_financial_plan"
-              label="Objavljen je finančni načrt za tekoče leto"
+              label="Објавен е финансискиот план за тековната година"
             />
             <text-input
               v-if="data[activeStage].has_published_financial_plan"
               v-model="data[activeStage].published_financial_plan_url"
               name="published_financial_plan_url"
-              label="URL do objavljenega finančnega načrta za tekoče leto"
+              label="URL до објавениот финансиски план за тековната година"
               :has-error="dataErrors.published_financial_plan_url"
             />
           </template>
@@ -1318,7 +1278,7 @@ export default {
   },
   head() {
     return {
-      title: 'Prijava organizacije',
+      title: 'Пријава',
     };
   },
   methods: {

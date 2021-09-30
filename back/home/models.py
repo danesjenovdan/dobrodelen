@@ -439,7 +439,7 @@ class Organization(ClusterableModel):
         FieldPanel("contact_email"),
         FieldPanel("contact_phone"),
         FieldPanel("web_page"),
-        InlinePanel("links", label="Družbeni mediji"),
+        InlinePanel("links", label="Social media"),
         ImageChooserPanel("cover_photo"),
         FieldPanel("tax_number"),
         #
@@ -457,17 +457,17 @@ class Organization(ClusterableModel):
         #
         FieldPanel("has_supervisory_board"),
         FieldPanel("supervisory_board_dates"),
-        InlinePanel("supervisory_board_members", label="Člani nadzornega odbora"),
+        InlinePanel("supervisory_board_members", label="Supervisory board members"),
         FieldPanel("has_management_board"),
         FieldPanel("management_board_dates"),
-        InlinePanel("management_board_members", label="Člani upravnega odbora"),
+        InlinePanel("management_board_members", label="Management board members"),
         FieldPanel("has_council"),
         FieldPanel("council_dates"),
-        InlinePanel("council_members", label="Člani sveta zavoda"),
+        InlinePanel("council_members", label="Council members"),
         FieldPanel("has_other_board"),
         FieldPanel("other_board_name"),
         FieldPanel("other_board_dates"),
-        InlinePanel("other_board_members", label="Člani organa"),
+        InlinePanel("other_board_members", label="Other body members"),
         FieldPanel("has_minutes_meeting"),
         FieldPanel("minutes_meeting"),
         #
@@ -521,13 +521,13 @@ class Organization(ClusterableModel):
 
 
 ROLE_CHOICES = [
-    ("1", "Član"),
-    ("2", "Predstavnik uporabnikov"),
-    ("3", "Predstavnik zaposlenih"),
-    ("4", "Predstavnik ustanoviteljev"),
-    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
-    ("6", "Neodvisni predstavnik"),
-    ("7", "Drugo:"),
+    ("1", "Член"),
+    ("2", "Претставник на корисниците"),
+    ("3", "Претставник на вработените"),
+    ("4", "Претставник на основачите"),
+    ("5", "Именуван врз основа на роднински/пријателски врски"),
+    ("6", "Независен претставник"),
+    ("7", "Друго:"),
 ]
 
 
