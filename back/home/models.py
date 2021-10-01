@@ -17,39 +17,40 @@ import requests
 
 
 def try_send_mail_updated_org(id, inst):
-    try:
-        to_mail = "dobrodelen@cnvos.si"
-        subject = '[dobrodelen.si] Organizacija "{name}" je posodobila podatke'.format(
-            name=inst.name
-        )
-        content = """
-            Hej, to je avtomatsko sporočilo da je nekdo spremenil podatke organizaciji!
+    pass
+    # try:
+    #     to_mail = "dobrodelen@cnvos.si"
+    #     subject = '[dobrodelen.si] Organizacija "{name}" je posodobila podatke'.format(
+    #         name=inst.name
+    #     )
+    #     content = """
+    #         Hej, to je avtomatsko sporočilo da je nekdo spremenil podatke organizaciji!
 
-            Ime organizacije: {name}
-            Povezava do profila: http://dobrotest.djnd.si/organizacija/{id}
-            Povezava do admin strani: http://dobrotest.djnd.si/admin/home/organization/edit/{id}/
+    #         Ime organizacije: {name}
+    #         Povezava do profila: http://dobrotest.djnd.si/organizacija/{id}
+    #         Povezava do admin strani: http://dobrotest.djnd.si/admin/home/organization/edit/{id}/
 
-            LP
-        """.format(
-            id=id, name=inst.name
-        )
+    #         LP
+    #     """.format(
+    #         id=id, name=inst.name
+    #     )
 
-        if settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY:
-            requests.post(
-                settings.MAILGUN_API,
-                auth=("api", settings.MAILGUN_ACCESS_KEY),
-                data={
-                    "from": settings.FROM_MAIL,
-                    "to": to_mail,
-                    "subject": subject,
-                    "text": content,
-                },
-            )
-            print("Sent mail - organization updated:", id)
+    #     if settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY:
+    #         requests.post(
+    #             settings.MAILGUN_API,
+    #             auth=("api", settings.MAILGUN_ACCESS_KEY),
+    #             data={
+    #                 "from": settings.FROM_MAIL,
+    #                 "to": to_mail,
+    #                 "subject": subject,
+    #                 "text": content,
+    #             },
+    #         )
+    #         print("Sent mail - organization updated:", id)
 
-    except Exception as e:
-        print("Failed to send mail - organization updated:", id)
-        print(e)
+    # except Exception as e:
+    #     print("Failed to send mail - organization updated:", id)
+    #     print(e)
 
 
 def get_intance_path(instance, file_name):
@@ -840,7 +841,7 @@ class Criteria(models.Model):
             [
                 FieldPanel("financial_management_3_1"),
                 FieldPanel("financial_management_3_2"),
-                FieldPanel("financial_management_3_3"),
+                # FieldPanel("financial_management_3_3"),
                 FieldPanel("financial_management_3_4_1"),
                 FieldPanel("financial_management_3_4_2"),
                 # FieldPanel("financial_management_3_5_1"),
