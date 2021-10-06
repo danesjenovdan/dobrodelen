@@ -38,7 +38,7 @@
                   type="checkbox"
                   name="area"
                   :value="1"
-                  label="Človekove pravice, demokracija in enakost"
+                  label="Развој на граѓанското општество"
                 />
               </div>
               <div class="col-md-6">
@@ -47,7 +47,7 @@
                   type="checkbox"
                   name="area"
                   :value="2"
-                  label="Izobraževanje, raziskave in razvoj"
+                  label="Демократија и владеење на правото"
                 />
               </div>
               <div class="col-md-6">
@@ -56,7 +56,7 @@
                   type="checkbox"
                   name="area"
                   :value="3"
-                  label="Kultura"
+                  label="Човекови права и антидискриминација"
                 />
               </div>
               <div class="col-md-6">
@@ -65,7 +65,7 @@
                   type="checkbox"
                   name="area"
                   :value="4"
-                  label="Mladina, otroci"
+                  label="Заштита на маргинализираните лица"
                 />
               </div>
               <div class="col-md-6">
@@ -74,7 +74,7 @@
                   type="checkbox"
                   name="area"
                   :value="5"
-                  label="Razvojno sodelovanje"
+                  label="Родова еднаквост"
                 />
               </div>
               <div class="col-md-6">
@@ -83,7 +83,7 @@
                   type="checkbox"
                   name="area"
                   :value="6"
-                  label="Sociala"
+                  label="Земјоделство и рурален развој"
                 />
               </div>
               <div class="col-md-6">
@@ -92,7 +92,7 @@
                   type="checkbox"
                   name="area"
                   :value="7"
-                  label="Šport"
+                  label="Медиуми и информатичко општество"
                 />
               </div>
               <div class="col-md-6">
@@ -101,7 +101,7 @@
                   type="checkbox"
                   name="area"
                   :value="8"
-                  label="Okolje, narava in prostor"
+                  label="Спорт, хоби и рекреација"
                 />
               </div>
               <div class="col-md-6">
@@ -110,16 +110,7 @@
                   type="checkbox"
                   name="area"
                   :value="9"
-                  label="Zdravje"
-                />
-              </div>
-              <div class="col-md-6">
-                <selection-option
-                  v-model="filters.area"
-                  type="checkbox"
-                  name="area"
-                  :value="11"
-                  label="Starejši"
+                  label="Ненасилство и толеранција"
                 />
               </div>
               <div class="col-md-6">
@@ -128,7 +119,88 @@
                   type="checkbox"
                   name="area"
                   :value="10"
-                  label="Drugo"
+                  label="Економски и одржлив развој"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="11"
+                  label="Наука, образование и доживотно учење"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="12"
+                  label="Млади"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="13"
+                  label="Социјална заштита и заштита на децата"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="14"
+                  label="Заштита на здравјето"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="15"
+                  label="Заштита на животната средина"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="16"
+                  label="Култура"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="17"
+                  label="Интеграции во ЕУ и политики"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="18"
+                  label="Струкови (професионални) здруженија"
+                />
+              </div>
+              <div class="col-md-6">
+                <selection-option
+                  v-model="filters.area"
+                  type="checkbox"
+                  name="area"
+                  :value="19"
+                  label="Друго"
                 />
               </div>
             </div>

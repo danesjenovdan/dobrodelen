@@ -106,9 +106,9 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
     def get_area(self, obj):
         areas = obj.area.all()
         if areas:
-            # 10 is the id of other
-            has_other = len(areas.filter(id=10)) > 0
-            area_list = list(areas.exclude(id=10).values_list("name", flat=True))
+            # 19 is the id of other
+            has_other = len(areas.filter(id=19)) > 0
+            area_list = list(areas.exclude(id=19).values_list("name", flat=True))
             if has_other and obj.custom_area:
                 area_list.append(obj.custom_area)
             return area_list

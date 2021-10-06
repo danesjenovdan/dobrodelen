@@ -151,76 +151,132 @@
                 type="checkbox"
                 name="area"
                 :value="1"
-                label="Človekove pravice, demokracija in enakost"
+                label="Развој на граѓанското општество"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="2"
-                label="Izobraževanje, raziskave in razvoj"
+                label="Демократија и владеење на правото"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="3"
-                label="Kultura"
+                label="Човекови права и антидискриминација"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="4"
-                label="Mladina, otroci"
+                label="Заштита на маргинализираните лица"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="5"
-                label="Razvojno sodelovanje"
+                label="Родова еднаквост"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="6"
-                label="Sociala"
+                label="Земјоделство и рурален развој"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="7"
-                label="Šport"
+                label="Медиуми и информатичко општество"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="8"
-                label="Okolje, narava in prostor"
+                label="Спорт, хоби и рекреација"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="9"
-                label="Zdravje"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="11"
-                label="Starejši"
+                label="Ненасилство и толеранција"
               />
               <selection-option
                 v-model="data[activeStage].area"
                 type="checkbox"
                 name="area"
                 :value="10"
+                label="Економски и одржлив развој"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="11"
+                label="Наука, образование и доживотно учење"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="12"
+                label="Млади"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="13"
+                label="Социјална заштита и заштита на децата"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="14"
+                label="Заштита на здравјето"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="15"
+                label="Заштита на животната средина"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="16"
+                label="Култура"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="17"
+                label="Интеграции во ЕУ и политики"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="18"
+                label="Струкови (професионални) здруженија"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="19"
                 label="Друго:"
                 custom-input
                 :custom-input-value="data[activeStage].custom_area"
@@ -1321,7 +1377,8 @@ export default {
       const data = this.data[stage];
       if (data) {
         // Delete custom area if not selected
-        if (data.area && data.area.filter((e) => e === 10).length === 0) {
+        // 19 is the id of other
+        if (data.area && data.area.filter((e) => e === 19).length === 0) {
           data.custom_area = '';
         }
         // Delete member placeholders if not selected
