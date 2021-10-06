@@ -7,7 +7,7 @@
             v-model="searchText"
             class="form-control"
             type="text"
-            placeholder="Poišči organizacijo"
+            placeholder="Најдете организација"
           />
         </div>
         <!-- <div class="col-3 col-md-auto">
@@ -21,7 +21,7 @@
             class="btn btn-sm btn-link"
             @click="showAdvanced = !showAdvanced"
           >
-            Napredno iskanje
+            Напредно барање
           </button>
         </div>
       </div>
@@ -30,7 +30,7 @@
         class="form-row align-items-center justify-content-center"
       >
         <div class="col-12 col-md-10 col-md-auto">
-          <form-category title="Področja delovanja">
+          <form-category title="Области на делување">
             <div class="row">
               <div class="col-md-6">
                 <selection-option
@@ -173,7 +173,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <form-category title="Število zaposlenih">
+              <form-category title="Број на вработени">
                 <select v-model="filters.employed" class="custom-select">
                   <option
                     v-for="employed in employmentFilters"
@@ -186,7 +186,7 @@
               </form-category>
             </div>
             <div class="col-md-6">
-              <form-category title="Proračun">
+              <form-category title="Буџет">
                 <select v-model="filters.budget" class="custom-select">
                   <option
                     v-for="budget in budgetFilters"
@@ -290,10 +290,10 @@
             ]"
             @click="changeSort('name')"
           >
-            <span>Ime</span>
+            <span>Име</span>
           </th>
           <th>
-            <span>Opis</span>
+            <span>Опис</span>
           </th>
           <th
             :class="[
@@ -303,7 +303,7 @@
             ]"
             @click="changeSort('stars')"
           >
-            <span>Ocena</span>
+            <span>Оценка</span>
           </th>
         </tr>
       </thead>
@@ -397,22 +397,22 @@ export default {
       has_public_interest: false,
       is_voluntary: false,
       zero5: false,
-      employed: 'Vsi',
-      budget: 'Vsi',
+      employed: 'Сите',
+      budget: 'Сите',
     };
 
     const employmentFilters = [
-      { label: 'Vsi', fn: (o) => true },
+      { label: 'Сите', fn: (o) => true },
       { label: '0', fn: (o) => o.employed === 0 },
       { label: '1 – 5', fn: (o) => o.employed >= 1 && o.employed <= 5 },
       { label: '6 – 10', fn: (o) => o.employed >= 6 && o.employed <= 10 },
       { label: '11 – 50', fn: (o) => o.employed >= 11 && o.employed <= 50 },
-      { label: 'Več kot 50', fn: (o) => o.employed > 50 },
+      { label: 'Повеќе од 50', fn: (o) => o.employed > 50 },
     ];
 
     const budgetFilters = [
       {
-        label: 'Vsi',
+        label: 'Сите',
         fn: (o) => true,
       },
       {
@@ -432,7 +432,7 @@ export default {
         fn: (o) => o.avg_revenue > 250000 && o.avg_revenue <= 1000000,
       },
       {
-        label: 'Več kot 1.000.000 €',
+        label: 'Повеќе од 1.000.000 €',
         fn: (o) => o.avg_revenue > 1000000,
       },
     ];

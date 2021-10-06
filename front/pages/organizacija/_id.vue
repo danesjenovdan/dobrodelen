@@ -57,7 +57,7 @@
                 <i :class="['icon', `icon-${getIconForUrl(link)}`]" />
               </a>
             </dd>
-            <dt class="col-4">Področja delovanja</dt>
+            <dt class="col-4">Области на делување</dt>
             <dd class="col-8">
               <div v-for="area in organization.area" :key="area">
                 {{ area }}
@@ -106,7 +106,7 @@
           <h4>Poslanstvo</h4>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="paragraphise(organization.mission)" />
-          <h4>Opis</h4>
+          <h4>Опис</h4>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="paragraphise(organization.description)" />
         </div>
@@ -127,7 +127,7 @@
         >
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Skupna ocena</h5>
+              <h5 class="modal-title">Вкупен резултат</h5>
               <div class="stars">
                 <i
                   v-for="i in 5"
@@ -151,10 +151,11 @@
             </div>
             <div class="modal-body">
               <p class="text-center">
-                Skupna ocena organizacije je seštevek točk, ki jih organizacija
-                prejme po posameznih kriterijih, ki so razvidni v spodnji
-                tabeli. Več informacij o metodologiji lahko dobite
-                <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
+                Вкупниот резултат на организацијата е збир од поените што ги
+                добива организацијата според индивидуалните критериуми, кои се
+                прикажани во табелата подолу. Повеќе информации за
+                методологијата можете да најдете
+                <nuxt-link :to="{ name: 'metodologija' }">овде</nuxt-link>.
               </p>
               <table v-if="organization.points" class="table">
                 <tbody>

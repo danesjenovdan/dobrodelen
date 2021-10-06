@@ -31,7 +31,7 @@ export default {
   },
   head() {
     return {
-      title: 'Organizacije',
+      title: 'Организации',
     };
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <intro-text
-      lead="Metodologija za ocenjevanje in razvrščanje slovenskih nevladnih organizacij"
+      lead="Методологија за оценка на транспарентноста на македонските граѓански организации"
     />
     <div class="faq">
       <div class="accordion">
@@ -102,7 +102,7 @@ export default {
   },
   head() {
     return {
-      title: 'Metodologija',
+      title: 'Методологија',
     };
   },
   methods: {

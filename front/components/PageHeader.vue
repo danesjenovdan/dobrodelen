@@ -35,14 +35,14 @@
                 :to="{ name: 'metodologija' }"
                 class="nav-link text-primary"
               >
-                <span>metodologija</span>
+                <span>Методологија</span>
               </nuxt-link>
             </div>
           </transition>
         </div>
       </h1>
       <nuxt-link :to="{ name: 'metodologija' }" class="nav-link text-primary">
-        <span>metodologija</span>
+        <span>Методологија</span>
       </nuxt-link>
     </nav>
   </header>

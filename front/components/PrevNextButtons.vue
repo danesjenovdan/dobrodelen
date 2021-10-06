@@ -7,7 +7,7 @@
           :disabled="disabled"
           @click="$emit('change', false, page - 1)"
         >
-          Nazaj
+          назад
         </button>
       </div>
     </div>
@@ -18,8 +18,8 @@
           :disabled="disabled"
           @click="$emit('change', true, page + 1)"
         >
-          <template v-if="page < pages - 1">Naprej</template>
-          <template v-else>Oddaj</template>
+          <template v-if="page < pages - 1">напред</template>
+          <template v-else>поднеси</template>
         </button>
       </div>
     </div>

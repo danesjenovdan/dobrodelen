@@ -88,7 +88,7 @@
                 class="btn btn-link remove-member"
                 @click="data[activeStage].links.pop()"
               >
-                <span>&times;</span> Odstrani družbeni profil
+                <span>&times;</span> Отстранете го социјалниот профил
               </button>
               <add-button
                 text="Додадете социјален профил"
@@ -116,7 +116,10 @@
           </template>
 
           <template v-else-if="activeStage === 1">
-            <form-category title="Мисија" note="максимум 500 карактери">
+            <form-category
+              title="Мисија на организацијата"
+              note="максимум 500 карактери"
+            >
               <text-input
                 v-model="data[activeStage].mission"
                 name="mission"
@@ -126,7 +129,10 @@
               />
             </form-category>
 
-            <form-category title="Краток опис" note="максимум 1500 карактери">
+            <form-category
+              title="Краток опис на организацијата"
+              note="максимум 1500 карактери"
+            >
               <text-input
                 v-model="data[activeStage].description"
                 name="description"
@@ -138,7 +144,7 @@
 
             <form-category
               title="Области на делување"
-              note="lahko izberete več možnosti"
+              note="Можете да изберете повеќе опции"
             >
               <selection-option
                 v-model="data[activeStage].area"
@@ -264,7 +270,10 @@
               />
             </form-category>
 
-            <form-category title="Региони" note="lahko izberete več možnosti">
+            <form-category
+              title="Региони"
+              note="Можете да изберете повеќе опции"
+            >
               <selection-option
                 v-model="data[activeStage].region"
                 type="checkbox"
@@ -366,7 +375,7 @@
                     "
                   />
                   <div>
-                    <h4>Povezava z organizacijo</h4>
+                    <h4>Поврзување со организацијата</h4>
                     <selection-option
                       v-model="member.role"
                       type="radio"
@@ -420,7 +429,7 @@
                       @custom-change="member.custom_role = $event"
                     />
                   </div>
-                  <h4>Nadomestilo</h4>
+                  <h4>Надомест</h4>
                   <selection-option
                     v-model="member.is_paid"
                     type="checkbox"
@@ -437,7 +446,7 @@
                 class="btn btn-link remove-member"
                 @click="data[activeStage].supervisory_board_members.pop()"
               >
-                <span>&times;</span> Odstrani člana
+                <span>&times;</span> Отстрани член
               </button>
               <add-button
                 text="Додадете член"
@@ -486,7 +495,7 @@
                     "
                   />
                   <div>
-                    <h4>Povezava z organizacijo</h4>
+                    <h4>Поврзување со организацијата</h4>
                     <selection-option
                       v-model="member.role"
                       type="radio"
@@ -540,7 +549,7 @@
                       @custom-change="member.custom_role = $event"
                     />
                   </div>
-                  <h4>Nadomestilo</h4>
+                  <h4>Надомест</h4>
                   <selection-option
                     v-model="member.is_paid"
                     type="checkbox"
@@ -557,7 +566,7 @@
                 class="btn btn-link remove-member"
                 @click="data[activeStage].management_board_members.pop()"
               >
-                <span>&times;</span> Odstrani člana
+                <span>&times;</span> Отстрани член
               </button>
               <add-button
                 text="Додадете член"
@@ -605,7 +614,7 @@
                     "
                   />
                   <div>
-                    <h4>Povezava z organizacijo</h4>
+                    <h4>Поврзување со организацијата</h4>
                     <selection-option
                       v-model="member.role"
                       type="radio"
@@ -659,7 +668,7 @@
                       @custom-change="member.custom_role = $event"
                     />
                   </div>
-                  <h4>Nadomestilo</h4>
+                  <h4>Надомест</h4>
                   <selection-option
                     v-model="member.is_paid"
                     type="checkbox"
@@ -676,7 +685,7 @@
                 class="btn btn-link remove-member"
                 @click="data[activeStage].council_members.pop()"
               >
-                <span>&times;</span> Odstrani člana
+                <span>&times;</span> Отстрани член
               </button>
               <add-button
                 text="Додадете член"
@@ -731,7 +740,7 @@
                     "
                   />
                   <div>
-                    <h4>Povezava z organizacijo</h4>
+                    <h4>Поврзување со организацијата</h4>
                     <selection-option
                       v-model="member.role"
                       type="radio"
@@ -785,7 +794,7 @@
                       @custom-change="member.custom_role = $event"
                     />
                   </div>
-                  <h4>Nadomestilo</h4>
+                  <h4>Надомест</h4>
                   <selection-option
                     v-model="member.is_paid"
                     type="checkbox"
@@ -802,7 +811,7 @@
                 class="btn btn-link remove-member"
                 @click="data[activeStage].other_board_members.pop()"
               >
-                <span>&times;</span> Odstrani člana
+                <span>&times;</span> Отстрани член
               </button>
               <add-button
                 text="Додадете член"
@@ -876,13 +885,13 @@
           <template v-else-if="activeStage === 3">
             <form-category title="Финансиски извештај">
               <p>
-                Finančno poročilo pripravljeno po
+                Финансиски извештај подготвен според
                 <a
                   :href="`${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>vzorcu finančnega poročila</span>
+                  <span>примерокот за финансискиот извештај</span>
                 </a>
                 .
               </p>
@@ -1079,8 +1088,8 @@
           </template>
 
           <template v-else-if="activeStage === stages.length">
-            <h4>Prijava je bila uspešna!</h4>
-            <p>Za ponovno urejanje podatkov, si shranite ta url:</p>
+            <h4>Успешно пријавување!</h4>
+            <p>За повторно уредување на податоците, зачувајте го овој URL:</p>
             <code>{{ getWindowLocation() }}</code>
           </template>
 
@@ -1257,19 +1266,19 @@ export default {
       apiBaseUrl: process.env.API_BASE_URL,
       stages: [
         {
-          label: 'Osnovni podatki',
+          label: 'Основни податоци',
         },
         {
-          label: 'Poslanstvo',
+          label: 'Мисија',
         },
         {
-          label: 'Poslovanje',
+          label: 'Управување',
         },
         {
-          label: 'Finance',
+          label: 'Финансии',
         },
         {
-          label: 'Transparentnost',
+          label: 'Транспарентност',
         },
       ],
       activeStage: -1,

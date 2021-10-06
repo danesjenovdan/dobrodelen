@@ -31,7 +31,7 @@
         class="btn btn-link remove-file"
         @click="onFileChanged(null)"
       >
-        <span>&times;</span> Odstrani
+        <span>&times;</span> Отстрани
       </button>
     </div>
     <div v-if="hasError" class="invalid-feedback">* {{ errorMessage }}</div>

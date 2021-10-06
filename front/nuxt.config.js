@@ -7,7 +7,9 @@ export default {
   head: {
     title: '',
     titleTemplate: (titleChunk) => {
-      return `${titleChunk ? `${titleChunk} - ` : ''}Dobrodelen.si`;
+      return `${
+        titleChunk ? `${titleChunk} - ` : ''
+      }Навигатор за граѓански организации`;
     },
     meta: [
       { charset: 'utf-8' },

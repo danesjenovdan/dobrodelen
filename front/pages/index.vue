@@ -3,24 +3,29 @@
     <div class="row">
       <div class="col-12 col-lg-8">
         <h1 class="text-warning">
-          <striped-text-shadow text="DOBRODELEN.SI" />
+          <striped-text-shadow text="Навигатор за граѓански организации" />
         </h1>
         <div class="icon-container-sm d-lg-none">
           <div class="icon icon-heart" />
         </div>
-        <p class="lead mt-3">
-          <strong>Doniraj pametno.</strong>
-          Pomagaj si z našim nepristranskim sistemom razvrščanja organizacij,
-          poišči zaupanja vredne organizacije in jih podpri.
+        <!-- <p class="lead mt-3">
+          <strong>Донирајте мудро.</strong>
+          Помогнете си со нашиот непристрасен систем за рангирање на
+          организации, пронајдете доверливи организации и поддржете ги.
+        </p> -->
+        <p class="mt-3">
+          <strong>
+            Добре дојдовте на страницата на Навигатор за граѓански организации.
+          </strong>
         </p>
-        <p class="mt-4">
-          Metodologija razvrščanja in ocenjevanja slovenskih nevladnih
-          organizacij temelji na 25 kriterijih, ki se nanašajo na 4 področja –
-          nadzor nad poslovanjem; strateško načrtovanje; finančno upravljanje in
-          transparentnost.
+        <p class="mt-3">
+          Навигаторот преставува алатка за оценка на транспарентноста на
+          македонските граѓански организации и се базира на 24 критериуми кои се
+          однесуваат на 4 области – контрола врз работата; стратешко планирање;
+          финансиско управување и транспарентност.
         </p>
         <nuxt-link :to="{ name: 'organizacije' }" class="btn btn-warning mt-5">
-          <span>VSTOPI</span>
+          <span>ПРИСТАПИ</span>
         </nuxt-link>
       </div>
       <div class="col-12 col-lg-4 d-none d-lg-block">
@@ -46,7 +51,7 @@ export default {
   width: 100%;
 
   h1 {
-    font-size: 6rem;
+    font-size: 4.5rem;
     font-weight: 900;
     letter-spacing: 0.2em;
 
