@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <intro-text lead="Doniraj pametno." icon="heart" />
+    <intro-text icon="heart" />
     <organization-list
       :organizations="organizations"
       :sort-query="orgSortQuery"

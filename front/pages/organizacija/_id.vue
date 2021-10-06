@@ -14,9 +14,9 @@
       <div class="col-12 col-md-6">
         <div class="org-info">
           <dl class="row">
-            <dt class="col-4">Druga imena</dt>
+            <dt class="col-4">Други имиња</dt>
             <dd class="col-8">{{ organization.additional_names }}</dd>
-            <dt class="col-4">Kontakt</dt>
+            <dt class="col-4">Контакт</dt>
             <dd class="col-8">
               <div v-if="organization.contact_name">
                 {{ organization.contact_name }}
@@ -36,7 +36,7 @@
                 >
               </div>
             </dd>
-            <dt class="col-4">Spletno mesto</dt>
+            <dt class="col-4">Веб -страница</dt>
             <dd class="col-8">
               <a
                 :href="organization.web_page"
@@ -45,7 +45,7 @@
                 >{{ organization.web_page }}</a
               >
             </dd>
-            <dt class="col-4">Družbena omrežja</dt>
+            <dt class="col-4">Социјални медиуми</dt>
             <dd class="col-8">
               <a
                 v-for="link in organization.links"
@@ -63,7 +63,7 @@
                 {{ area }}
               </div>
             </dd>
-            <dt class="col-4">Regije</dt>
+            <dt class="col-4">Региони</dt>
             <dd class="col-8">
               <div v-for="region in organization.region" :key="region">
                 {{ region }}
@@ -97,13 +97,13 @@
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>
           </dl>
         </div>
-        <div class="org-donate">
+        <!-- <div class="org-donate">
           <donate-button text="Doniraj organizaciji" />
-        </div>
+        </div> -->
       </div>
       <div class="col-12 col-md-6">
         <div class="org-description">
-          <h4>Poslanstvo</h4>
+          <h4>Мисија</h4>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="paragraphise(organization.mission)" />
           <h4>Опис</h4>
@@ -184,13 +184,13 @@
 <script>
 import { keys, escape as _escape } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
-import DonateButton from '~/components/Form/DonateButton.vue';
+// import DonateButton from '~/components/Form/DonateButton.vue';
 import formatPhoneNumberMixin from '~/mixins/formatPhoneNumber.js';
 
 export default {
   components: {
     ContentTitle,
-    DonateButton,
+    // DonateButton,
   },
   mixins: [formatPhoneNumberMixin],
   validate({ params }) {
