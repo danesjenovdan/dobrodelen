@@ -86,6 +86,9 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
     )
+    address = models.CharField(
+        max_length=512, default="", verbose_name="Naslov organizacije", blank=True
+    )
     contact_name = models.CharField(
         verbose_name="Kontakt: ime in priimek", default="", blank=True, max_length=128
     )
@@ -108,6 +111,15 @@ class Organization(ClusterableModel):
     )
     tax_number = models.CharField(
         max_length=32, verbose_name="Davčna številka", default="", blank=True
+    )
+    account_number = models.CharField(
+        max_length=64, default="", verbose_name="Številka tekočega računa", blank=True
+    )
+    donation_url = models.URLField(
+        max_length=512,
+        verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
+        default="",
+        blank=True,
     )
     #
     mission = models.TextField(
@@ -433,6 +445,7 @@ class Organization(ClusterableModel):
         #
         FieldPanel("name"),
         FieldPanel("additional_names"),
+        FieldPanel("address"),
         FieldPanel("contact_name"),
         FieldPanel("contact_email"),
         FieldPanel("contact_phone"),
@@ -440,6 +453,8 @@ class Organization(ClusterableModel):
         InlinePanel("links", label="Družbeni mediji"),
         ImageChooserPanel("cover_photo"),
         FieldPanel("tax_number"),
+        FieldPanel("account_number"),
+        FieldPanel("donation_url"),
         #
         FieldPanel("mission"),
         FieldPanel("description"),

@@ -56,6 +56,15 @@
               />
             </form-category>
 
+            <form-category title="Naslov">
+              <text-input
+                v-model="data[activeStage].address"
+                name="address"
+                label="Naslov organizacije"
+                :has-error="dataErrors.address"
+              />
+            </form-category>
+
             <form-category title="Kontakt">
               <text-input
                 v-model="data[activeStage].contact_name"
@@ -122,6 +131,21 @@
                 name="tax_number"
                 label="Davčna številka"
                 :has-error="dataErrors.tax_number"
+              />
+            </form-category>
+
+            <form-category title="Donacije">
+              <text-input
+                v-model="data[activeStage].account_number"
+                name="account_number"
+                label="Številka tekočega računa"
+                :has-error="dataErrors.account_number"
+              />
+              <text-input
+                v-model="data[activeStage].donation_url"
+                name="donation_url"
+                label="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)"
+                :has-error="dataErrors.donation_url"
               />
             </form-category>
           </template>
@@ -1177,6 +1201,7 @@ export default {
       {
         name: initialData.name || '',
         additional_names: initialData.additional_names || '',
+        address: initialData.address || '',
         contact_name: initialData.contact_name || '',
         contact_email: initialData.contact_email || '',
         contact_phone: initialData.contact_phone || '',
@@ -1187,6 +1212,8 @@ export default {
             : [{ url: '' }],
         cover_photo: initialData.cover_photo || null,
         tax_number: initialData.tax_number || '',
+        account_number: initialData.account_number || '',
+        donation_url: initialData.donation_url || '',
       },
       {
         mission: initialData.mission || '',
