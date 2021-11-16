@@ -160,7 +160,7 @@ class Organization(ClusterableModel):
     )
     zero5 = models.BooleanField(
         default=False,
-        verbose_name="Organizacija je na seznamu upravičencev do 0,5 dohodnine",
+        verbose_name="Organizacija je na seznamu upravičencev do 1 dohodnine",
         blank=True,
     )
     #

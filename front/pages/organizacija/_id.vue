@@ -92,7 +92,7 @@
             </dt>
             <dd class="col-3">{{ organization.is_voluntary ? 'DA' : 'NE' }}</dd>
             <dt class="col-9">
-              Organizacija je na seznamu upravičencev do 0,5 % dohodnine
+              Organizacija je na seznamu upravičencev do 1 % dohodnine
             </dt>
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>
           </dl>

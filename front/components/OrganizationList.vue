@@ -165,7 +165,7 @@
                   v-model="filters.zero5"
                   type="checkbox"
                   name="zero5"
-                  label="Organizacija je na seznamu upravičencev do 0,5 % dohodnine"
+                  label="Organizacija je na seznamu upravičencev do 1 % dohodnine"
                 />
               </div>
             </div>
