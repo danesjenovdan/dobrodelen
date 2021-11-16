@@ -18,7 +18,7 @@ import requests
 
 def try_send_mail_updated_org(id, inst):
     try:
-        to_mail = "dobrodelen@cnvos.si"
+        to_mail = "lena.pensek@cnvos.si"
         subject = '[dobrodelen.si] Organizacija "{name}" je posodobila podatke'.format(
             name=inst.name
         )
@@ -258,8 +258,7 @@ class Organization(ClusterableModel):
         null=True,
     )
     has_audited_report = models.BooleanField(
-        default=False,
-        verbose_name="Ali ima organizacija revidirana finančna poročila?",
+        default=False, verbose_name="Ali ima organizacija revidirana finančna poročila?"
     )
     audited_report = models.FileField(
         upload_to=get_intance_path,
@@ -883,4 +882,3 @@ class Region(models.Model):
 
     def __str__(self):
         return self.name
-
