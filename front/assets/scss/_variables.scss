@@ -21,7 +21,8 @@ $grid-breakpoints: (
   lg: 992px,
   xl: 1200px,
   // non-defaults:
-  xxl: 1500px
+  xxl: 1500px,
+  xxxl: 1850px,
 );
 
 $container-max-widths: (
@@ -31,7 +32,8 @@ $container-max-widths: (
   lg: 960px,
   xl: 1140px,
   // non-defaults:
-  xxl: 1440px
+  xxl: 1440px,
+  xxxl: 1790px,
 );
 
 $modal-lg: 955px;

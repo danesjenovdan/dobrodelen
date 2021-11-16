@@ -112,7 +112,7 @@ export default {
     height: 100%;
     background-position: top 2rem center;
 
-    @include media-breakpoint-down(xl) {
+    @include media-breakpoint-down(xxl) {
       margin-top: 7rem;
     }
   }
