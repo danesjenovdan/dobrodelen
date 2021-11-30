@@ -1,5 +1,6 @@
 from django.utils.html import format_html
 from django.templatetags.static import static
+from wagtail.admin.edit_handlers import HelpPanel
 from wagtail.core import hooks
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
@@ -18,6 +19,13 @@ class OrganizationModelAdmin(ModelAdmin):
     list_display = ("name", "published", "is_complete")
     list_filter = ("published", "is_complete")
     search_fields = ("name", "description")
+
+    panels = [
+        HelpPanel(
+            heading="Povezava za urejanje",
+            template="wagtailadmin/edit_handlers/edit_key_panel.html",
+        )
+    ] + models.Organization.panels
 
 
 class OrganizationAdminGroup(ModelAdminGroup):

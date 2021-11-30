@@ -103,7 +103,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "has_public_interest",
             "is_voluntary",
             "zero5",
-            "edit_key",  # TODO: remove when on production
+            # "edit_key",  # dont include this on production
         )
 
     def get_area(self, obj):
@@ -192,7 +192,7 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "signup_time_start",
             "signup_time",
             "is_complete",
-            "edit_key",
+            # "edit_key",  # dont include this on production
             "has_published_work_reports",
             "published_work_reports_url",
             "has_published_financial_reports",
