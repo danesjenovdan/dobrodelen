@@ -84,16 +84,14 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: isProduction
-      ? 'http://dobrotest.djnd.si'
-      : 'http://localhost:8000',
+    baseURL: isProduction ? 'https://dobrodelen.si' : 'http://localhost:8000',
   },
   /*
    ** Environment variables for webpack (via definePlugin)
    */
   env: {
     API_BASE_URL: isProduction
-      ? 'http://dobrotest.djnd.si'
+      ? 'https://dobrodelen.si'
       : 'http://localhost:8000',
   },
   /*

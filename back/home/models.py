@@ -26,8 +26,8 @@ def try_send_mail_updated_org(id, inst):
             Hej, to je avtomatsko sporočilo da je nekdo spremenil podatke organizaciji!
 
             Ime organizacije: {name}
-            Povezava do profila: http://dobrotest.djnd.si/organizacija/{id}
-            Povezava do admin strani: http://dobrotest.djnd.si/admin/home/organization/edit/{id}/
+            Povezava do profila: https://dobrodelen.si/organizacija/{id}
+            Povezava do admin strani: https://dobrodelen.si/admin/home/organization/edit/{id}/
 
             LP
         """.format(
