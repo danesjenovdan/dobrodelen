@@ -164,6 +164,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
 }
 
-ALLOWED_HOSTS = ["https://dobrodelen.si"]
+ALLOWED_HOSTS = ["dobrodelen.si"]
 
 CORS_ORIGIN_WHITELIST = ["https://dobrodelen.si"]
