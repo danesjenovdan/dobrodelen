@@ -8,8 +8,8 @@ from home import serializers, models
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.OrderingFilter,)
-    ordering_fields = ("criteria__stars",)
-    ordering = ("-criteria__stars",)
+    ordering_fields = ("criteria__points",)
+    ordering = ("-criteria__points",)
 
     def get_permissions(self):
         if self.action in ["list", "create"]:
