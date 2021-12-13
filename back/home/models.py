@@ -402,23 +402,33 @@ class Organization(ClusterableModel):
             return self.criteria.first().points
         return -1
 
+    def compute_filtered_points(self, filter_keys):
+        if criteria := self.criteria.first():
+            fields = [
+                field
+                for field in Criteria._meta.fields
+                if field.name not in ["id", "organization", "stars", "points"]
+                and field.verbose_name.split(" - ")[0] in filter_keys
+            ]
+            return sum(list(map(lambda field: getattr(criteria, field.name, 0), fields)))
+        return -1
+
     @property
     def points_details(self):
         criteria = self.criteria.first()
         fields = [
-            f.name
-            for f in criteria.__class__._meta.fields
-            if f.name not in ["id", "organization", "stars", "points"]
+            field
+            for field in Criteria._meta.fields
+            if field.name not in ["id", "organization", "stars", "points"]
         ]
 
-        def field_to_object(f):
-            verbose_name = criteria.__class__._meta.get_field(f).verbose_name
+        def field_to_object(field):
             return {
-                "name": f,
-                "verbose_name": verbose_name,
-                "value": getattr(criteria, f, 0),
-                "max_value": criteria.__class__.max_values.get(
-                    verbose_name.split(" - ")[0], 0
+                "name": field.name,
+                "verbose_name": field.verbose_name,
+                "value": getattr(criteria, field.name, 0),
+                "max_value": Criteria.max_values.get(
+                    field.verbose_name.split(" - ")[0], 0
                 ),
             }
 

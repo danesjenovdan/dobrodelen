@@ -1,6 +1,5 @@
-from rest_framework import viewsets, filters, permissions
+from rest_framework import views, viewsets, filters, permissions
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from django.core import signing
 
 from home import serializers, models
@@ -81,6 +80,34 @@ class OrganizationChildAuth(viewsets.ModelViewSet):
 class LinkViewSet(OrganizationChildAuth):
     serializer_class = serializers.LinkSerializer
     queryset = models.Link.objects.all()
+
+
+class OrganizationFilteredCriteria(views.APIView):
+    def get_queryset(self):
+        order_by = '-criteria__points'
+        if ordering := self.request.query_params.get('ordering'):
+            if ordering == 'criteria__points':
+                order_by = 'criteria__points'
+
+        return models.Organization.objects.filter(published=True).order_by(order_by)
+
+    def get(self, request, format=None):
+        all_keys = set(models.Criteria.max_values.keys())
+        query_keys = self.request.query_params.get('filter_keys', '').split(',')
+        filter_keys = list(all_keys.intersection(query_keys))
+
+        points = {org.id: org.compute_filtered_points(filter_keys) for org in self.get_queryset()}
+
+        serializer = serializers.OrganizationListSerializer(
+            self.get_queryset(), many=True
+        )
+        data = serializer.data
+
+        for entry in data:
+            entry['stars'] = -1
+            entry['points'] = points[entry['id']]
+
+        return Response(data)
 
 
 # __ FILLDATA __

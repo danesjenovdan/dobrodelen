@@ -10,4 +10,9 @@ router.register(r"organizations", views.OrganizationViewSet, basename="organizat
 router.register(r"links", views.LinkViewSet, basename="links")
 
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path(
+        "organizations-filtered-criteria/", views.OrganizationFilteredCriteria.as_view()
+    ),
+    path("", include(router.urls)),
+]
