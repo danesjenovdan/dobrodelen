@@ -107,7 +107,9 @@ class OrganizationFilteredCriteria(views.APIView):
             entry['stars'] = -1
             entry['points'] = points[entry['id']]
 
-        return Response(data)
+        return Response({
+            'results': data,
+        })
 
 
 # __ FILLDATA __

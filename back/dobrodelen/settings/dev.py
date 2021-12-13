@@ -9,6 +9,8 @@ SECRET_KEY = "rfpq)*hg@&&^y$kz4d8s0tl9mr58%%fm%*auv_*zx$w02gbsr4"
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
 
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 try:
