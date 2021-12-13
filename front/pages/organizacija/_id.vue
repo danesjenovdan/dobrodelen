@@ -8,7 +8,8 @@
       "
       :title="organization.name"
       :stars="organization.stars"
-      @stars-click="toggleModal(true)"
+      @stars-click="toggleStarsModal(true)"
+      @donate-click="toggleDonateModal(true)"
     />
     <div class="row">
       <div class="col-12 col-md-6">
@@ -98,7 +99,10 @@
           </dl>
         </div>
         <div class="org-donate">
-          <donate-button text="Doniraj organizaciji" />
+          <donate-button
+            text="Doniraj organizaciji"
+            @click="toggleDonateModal"
+          />
         </div>
       </div>
       <div class="col-12 col-md-6">
@@ -144,7 +148,7 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="toggleModal(false)"
+                @click="toggleStarsModal(false)"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -156,10 +160,10 @@
                 tabeli. Več informacij o metodologiji lahko dobite
                 <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
               </p>
-              <table v-if="organization.points" class="table">
+              <table v-if="organization.points_details" class="table">
                 <tbody>
                   <tr
-                    v-for="criterion in organization.points"
+                    v-for="criterion in organization.points_details"
                     :key="criterion.name"
                   >
                     <td v-text="criterion.verbose_name" />
@@ -174,8 +178,62 @@
         </div>
       </div>
     </transition>
+
+    <transition name="fade-modal">
+      <div
+        v-if="showDonateModal"
+        class="modal show"
+        tabindex="-1"
+        role="dialog"
+        style="display:block"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Doniraj organizaciji</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                @click="toggleDonateModal(false)"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- <p class="text-center">
+                Skupna ocena organizacije je seštevek točk, ki jih organizacija
+                prejme po posameznih kriterijih, ki so razvidni v spodnji
+                tabeli. Več informacij o metodologiji lahko dobite
+                <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
+              </p>
+              <table v-if="organization.points_details" class="table">
+                <tbody>
+                  <tr
+                    v-for="criterion in organization.points_details"
+                    :key="criterion.name"
+                  >
+                    <td v-text="criterion.verbose_name" />
+                    <td
+                      v-text="`${criterion.value} / ${criterion.max_value}`"
+                    />
+                  </tr>
+                </tbody>
+              </table> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
     <transition name="fade-backdrop">
-      <div v-if="showStarsModal" class="modal-backdrop show" />
+      <div
+        v-if="showStarsModal || showDonateModal"
+        class="modal-backdrop show"
+      />
     </transition>
   </div>
 </template>
@@ -208,13 +266,14 @@ export default {
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
+      showDonateModal: false,
     };
   },
   beforeDestroy() {
-    this.toggleModal(false);
+    this.toggleStarsModal(false);
   },
   methods: {
-    toggleModal(show = !this.showStarsModal) {
+    toggleStarsModal(show = !this.showStarsModal) {
       if (typeof window !== 'undefined' && document.body.classList) {
         if (show) {
           document.body.classList.add('modal-open');
@@ -223,6 +282,16 @@ export default {
         }
       }
       this.showStarsModal = show;
+    },
+    toggleDonateModal(show = !this.showDonateModal) {
+      if (typeof window !== 'undefined' && document.body.classList) {
+        if (show) {
+          document.body.classList.add('modal-open');
+        } else {
+          document.body.classList.remove('modal-open');
+        }
+      }
+      this.showDonateModal = show;
     },
     getIconForUrl(url) {
       const domains = {

@@ -2,7 +2,7 @@
   <div class="form-group">
     <button
       :class="['btn', 'btn-outline-warning', 'btn-form']"
-      @click="onClick"
+      @click="$emit('click')"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="8.13 4.1 83.72 91.79">
         <path
@@ -13,16 +13,6 @@
         <span>{{ text }}</span>
       </div>
     </button>
-    <!-- <div class="small text-right mr-2">
-      Donacije omogočata
-      <a href="https://example.com/" target="_blank" rel="noopener noreferrer"
-        >XX</a
-      >
-      in
-      <a href="https://example.com/" target="_blank" rel="noopener noreferrer"
-        >YY</a
-      >
-    </div> -->
   </div>
 </template>
 
@@ -32,11 +22,6 @@ export default {
     text: {
       type: String,
       required: true,
-    },
-  },
-  methods: {
-    onClick() {
-      alert('Direktne donacije so še zaenkrat onemogočene!');
     },
   },
 };

@@ -27,13 +27,24 @@
             :class="['icon', 'icon-star', { 'icon-star--full': stars >= i }]"
           />
         </div>
+        <div class="org-donate">
+          <donate-button
+            text="Doniraj organizaciji"
+            @click="$emit('donate-click')"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import DonateButton from '~/components/Form/DonateButton.vue';
+
 export default {
+  components: {
+    DonateButton,
+  },
   props: {
     image: {
       type: String,
@@ -130,6 +141,16 @@ export default {
         width: 1.5rem;
         height: 1.5rem;
       }
+    }
+  }
+
+  .org-donate {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+
+    .form-group {
+      margin-bottom: 0;
     }
   }
 }
