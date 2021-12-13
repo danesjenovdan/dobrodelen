@@ -398,11 +398,17 @@ class Organization(ClusterableModel):
 
     @property
     def points(self):
+        if self.criteria and self.criteria.count() > 0:
+            return self.criteria.first().points
+        return -1
+
+    @property
+    def points_details(self):
         criteria = self.criteria.first()
         fields = [
             f.name
             for f in criteria.__class__._meta.fields
-            if f.name not in ["id", "organization", "stars"]
+            if f.name not in ["id", "organization", "stars", "points"]
         ]
 
         def field_to_object(f):
@@ -778,15 +784,19 @@ class Criteria(models.Model):
         help_text="| Da = 𝟏 | Ne = 𝟎 |",
     )
 
+    points = models.IntegerField(default=-1, editable=False)
     stars = models.IntegerField(default=-1, editable=False)
 
-    def compute_stars(self):
+    def compute_points(self):
         fields = [
             f.name
             for f in self.__class__._meta.fields
-            if f.name not in ["id", "organization"]
+            if f.name not in ["id", "organization", "stars", "points"]
         ]
-        points = sum(list(map(lambda f: getattr(self, f, 0), fields)))
+        return sum(list(map(lambda f: getattr(self, f, 0), fields)))
+
+    def compute_stars(self):
+        points = self.compute_points()
         if points < 30:
             return 0
         if points < 35:
@@ -800,6 +810,7 @@ class Criteria(models.Model):
         return 5
 
     def save(self, *args, **kwargs):
+        self.points = self.compute_points()
         self.stars = self.compute_stars()
         super().save(*args, **kwargs)
 
