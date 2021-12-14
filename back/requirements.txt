@@ -17,7 +17,7 @@ html5lib==1.0.1
 idna==2.8
 Pillow==6.2.2
 pytz==2019.2
-qrcodegen==1.7.0
+qrcodegen==1.6.0
 requests==2.22.0
 six==1.12.0
 sqlparse==0.3.0

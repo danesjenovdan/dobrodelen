@@ -205,7 +205,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="qr-code-container">
+              <div v-if="organization.account_number" class="qr-code-container">
                 <amount-selector @change="onAmountChange" />
                 <div ref="qrCode" class="qr-code"></div>
               </div>
@@ -231,6 +231,9 @@
                     organization.account_number
                   }}</span></template
                 >.
+              </p>
+              <p v-else>
+                Podatkov kako lahko donirate organizaciji nimamo.
               </p>
             </div>
           </div>
