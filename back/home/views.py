@@ -144,7 +144,8 @@ class OrganizationDonationQrCode(View):
         address1 = address_parts[0]
         address2 = address_parts[1] if len(address_parts) > 1 else ""
 
-        iban = re.sub(r"[^0-9]", "", org.account_number)
+        iban = re.sub(r"^SI56", "", org.account_number.strip())
+        iban = re.sub(r"[^0-9]", "", iban)
         if not iban:
             return HttpResponse(
                 "organization is missing account_number",
