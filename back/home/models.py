@@ -403,14 +403,17 @@ class Organization(ClusterableModel):
         return -1
 
     def compute_filtered_points(self, filter_keys):
-        if criteria := self.criteria.first():
+        criteria = self.criteria.first()
+        if criteria:
             fields = [
                 field
                 for field in Criteria._meta.fields
                 if field.name not in ["id", "organization", "stars", "points"]
                 and field.verbose_name.split(" - ")[0] in filter_keys
             ]
-            return sum(list(map(lambda field: getattr(criteria, field.name, 0), fields)))
+            return sum(
+                list(map(lambda field: getattr(criteria, field.name, 0), fields))
+            )
         return -1
 
     @property
