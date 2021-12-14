@@ -1,8 +1,13 @@
-from rest_framework import views, viewsets, filters, permissions
-from rest_framework.response import Response
-from django.core import signing
+import re
 
-from home import serializers, models
+from django.core import signing
+from django.http import HttpResponse
+from django.views import View
+from rest_framework import filters, permissions, status, views, viewsets
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+
+from home import models, qrcode, serializers
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -110,6 +115,49 @@ class OrganizationFilteredCriteria(views.APIView):
         return Response({
             'results': data,
         })
+
+
+class OrganizationDonationQrCode(View):
+    def get_queryset(self):
+        return models.Organization.objects.filter(published=True)
+
+    def get_object(self, pk):
+        return get_object_or_404(self.get_queryset(), pk=pk)
+
+    def get(self, request, pk, *args, **kwargs):
+        amount_string = request.GET.get('amount')
+        try:
+            amount = int(amount_string)
+            if amount < 1:
+                return HttpResponse('amount needs to be positive', status=status.HTTP_400_BAD_REQUEST)
+        except (TypeError, ValueError):
+            return HttpResponse('amount needs to be an integer', status=status.HTTP_400_BAD_REQUEST)
+
+        org = self.get_object(pk)
+
+        address_parts = org.address.rsplit(',', maxsplit=1)
+        address1 = address_parts[0]
+        address2 = address_parts[1] if len(address_parts) > 1 else ''
+
+        iban = re.sub(r"[^0-9]", "", org.account_number)
+        if not iban:
+            return HttpResponse('organization is missing account_number', status=status.HTTP_400_BAD_REQUEST)
+        if not iban.startswith('SI56'):
+            iban = 'SI56' + iban
+        if len(iban) != 19:
+            return HttpResponse('organization has an invalid account_number', status=status.HTTP_400_BAD_REQUEST)
+
+        qr_svg = qrcode.generate_upn_qr(
+            org.name,
+            address1,
+            address2,
+            iban,
+            'SI99',
+            'Donacija preko dobrodelen.si',
+            amount,
+        )
+
+        return HttpResponse(qr_svg, content_type='image/svg+xml')
 
 
 # __ FILLDATA __

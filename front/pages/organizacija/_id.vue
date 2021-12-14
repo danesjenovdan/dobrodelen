@@ -205,25 +205,33 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- <p class="text-center">
-                Skupna ocena organizacije je seštevek točk, ki jih organizacija
-                prejme po posameznih kriterijih, ki so razvidni v spodnji
-                tabeli. Več informacij o metodologiji lahko dobite
-                <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
-              </p>
-              <table v-if="organization.points_details" class="table">
-                <tbody>
-                  <tr
-                    v-for="criterion in organization.points_details"
-                    :key="criterion.name"
+              <div class="qr-code-container">
+                <amount-selector @change="onAmountChange" />
+                <div ref="qrCode" class="qr-code"></div>
+              </div>
+              <p
+                v-if="organization.donation_url || organization.account_number"
+              >
+                Organizaciji lahko doniraš tudi
+                <template v-if="organization.donation_url">
+                  na povezavi:
+                  <a
+                    :href="organization.donation_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-weight-normal"
+                    style="word-break: break-all;"
+                    >{{ organization.donation_url }}</a
                   >
-                    <td v-text="criterion.verbose_name" />
-                    <td
-                      v-text="`${criterion.value} / ${criterion.max_value}`"
-                    />
-                  </tr>
-                </tbody>
-              </table> -->
+                  <template v-if="organization.account_number"> ali </template>
+                </template>
+                <template v-if="organization.account_number">
+                  z nakazilom na TRR:
+                  <span class="font-weight-normal">{{
+                    organization.account_number
+                  }}</span></template
+                >.
+              </p>
             </div>
           </div>
         </div>
@@ -242,12 +250,14 @@
 import { keys, escape as _escape } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import DonateButton from '~/components/Form/DonateButton.vue';
+import AmountSelector from '~/components/AmountSelector.vue';
 import formatPhoneNumberMixin from '~/mixins/formatPhoneNumber.js';
 
 export default {
   components: {
     ContentTitle,
     DonateButton,
+    AmountSelector,
   },
   mixins: [formatPhoneNumberMixin],
   validate({ params }) {
@@ -267,6 +277,7 @@ export default {
       apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
       showDonateModal: false,
+      qrCodeLoading: false,
     };
   },
   beforeDestroy() {
@@ -329,6 +340,19 @@ export default {
         }).format(value);
       }
       return String(value);
+    },
+    onAmountChange(newAmount) {
+      this.qrCodeLoading = true;
+      this.$refs.qrCode.textContent = '';
+      const image = document.createElement('img');
+      image.onload = () => {
+        this.$refs.qrCode.appendChild(image);
+      };
+      image.onerror = () => {
+        this.$refs.qrCode.textContent = 'napaka';
+      };
+      image.src = `${this.apiBaseUrl}/api/organizations-donation-qr-code/${this.organization.id}/?amount=${newAmount}`;
+      this.qrCodeLoading = false;
     },
   },
   head() {
@@ -479,6 +503,19 @@ export default {
             min-width: 4rem;
           }
         }
+      }
+    }
+
+    .qr-code-container {
+      margin-bottom: 2rem;
+
+      .qr-code {
+        margin: 0 auto;
+        width: 280px;
+        height: 280px;
+        background: #fff;
+        border: 2px solid $blue;
+        text-align: center;
       }
     }
   }

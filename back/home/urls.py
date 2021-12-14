@@ -14,5 +14,9 @@ urlpatterns = [
     path(
         "organizations-filtered-criteria/", views.OrganizationFilteredCriteria.as_view()
     ),
+    path(
+        "organizations-donation-qr-code/<int:pk>/",
+        views.OrganizationDonationQrCode.as_view(),
+    ),
     path("", include(router.urls)),
 ]
