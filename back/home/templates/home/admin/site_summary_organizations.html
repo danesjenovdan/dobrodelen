@@ -1,0 +1,12 @@
+{% load i18n wagtailadmin_tags %}
+
+<li>
+    {% icon name="form" %}
+    <a href="{{ index_url }}">
+        <span>{{ count }}</span>
+        {% if count == 1 %} Organizacija
+        {% elif count == 2 %} Organizaciji
+        {% elif count == 3 or count == 4 %} Organizacije
+        {% else %} Organizacij {% endif %}
+    </a>
+</li>

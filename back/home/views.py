@@ -12,8 +12,9 @@ from home import models, qrcode, serializers
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.OrderingFilter,)
-    ordering_fields = ("criteria__points",)
-    ordering = ("-criteria__points",)
+    # TODO: fix
+    # ordering_fields = ("criteria__points",)
+    # ordering = ("-criteria__points",)
 
     def get_permissions(self):
         if self.action in ["list", "create"]:
@@ -89,31 +90,33 @@ class LinkViewSet(OrganizationChildAuth):
 
 class OrganizationFilteredCriteria(views.APIView):
     def get_queryset(self):
-        order_by = "-criteria__points"
-        ordering = self.request.query_params.get("ordering")
-        if ordering and ordering == "criteria__points":
-            order_by = "criteria__points"
+        # TODO: fix
+        # order_by = "-criteria__points"
+        # ordering = self.request.query_params.get("ordering")
+        # if ordering and ordering == "criteria__points":
+        #     order_by = "criteria__points"
 
-        return models.Organization.objects.filter(published=True).order_by(order_by)
+        return models.Organization.objects.filter(published=True) # .order_by(order_by)
 
     def get(self, request, format=None):
-        all_keys = set(models.Criteria.max_values.keys())
-        query_keys = self.request.query_params.get("filter_keys", "").split(",")
-        filter_keys = list(all_keys.intersection(query_keys))
+        # TODO: fix
+        # all_keys = set(models.Criteria.max_values.keys())
+        # query_keys = self.request.query_params.get("filter_keys", "").split(",")
+        # filter_keys = list(all_keys.intersection(query_keys))
 
-        points = {
-            org.id: org.compute_filtered_points(filter_keys)
-            for org in self.get_queryset()
-        }
+        # points = {
+        #     org.id: org.compute_filtered_points(filter_keys)
+        #     for org in self.get_queryset()
+        # }
 
         serializer = serializers.OrganizationListSerializer(
             self.get_queryset(), many=True
         )
         data = serializer.data
 
-        for entry in data:
-            entry["stars"] = -1
-            entry["points"] = points[entry["id"]]
+        # for entry in data:
+        #     entry["stars"] = -1
+        #     entry["points"] = points[entry["id"]]
 
         return Response({"results": data})
 

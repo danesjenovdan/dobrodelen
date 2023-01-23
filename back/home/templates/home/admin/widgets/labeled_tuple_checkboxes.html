@@ -1,0 +1,13 @@
+{% spaceless %}
+{% with id=widget.attrs.id %}<div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>
+{% for widget in widget.subwidgets %}
+  <div class="w-field--checkbox_select_multiple">
+    <label for="{{ widget.attrs.id }}">
+      {% include widget.template_name %}
+      {{ widget.attrs.label }}
+    </label>
+  </div>
+{% endfor %}
+</div>
+{% endwith %}
+{% endspaceless %}

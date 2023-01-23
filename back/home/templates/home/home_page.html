@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}
+dobrodelen.si
+{% endblock title %}
+
 {% block content %}
-dobrodelen.si home page
-
-{% for organization in organizations %}
-    <li>{{ organization.name }} ({{ organization.stars }} stars)</li>
-{% endfor %}
-
+<h1>dobrodelen.si</h1>
 {% endblock content %}

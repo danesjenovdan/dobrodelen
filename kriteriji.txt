@@ -1,0 +1,142 @@
+Sklop 1: Osnovne informacije o organizaciji
+Sklop 2: Dostopnost vsebinskih poročil
+Sklop 3: Finančna transparentnost
+Sklop 4: Zbiranje donacijskih sredstev
+Sklop 5: Dostop objavljenih informacij
+
+SKLOP 1
+
+Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)
+Kriterij 2: Organizacija ima objavljeno poslanstvo
+Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih
+Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov
+Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo
+Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe
+Kriterij 7: Objavljen je celoten pritožbeni postopek
+
+SKLOP 2
+
+Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto
+Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja
+Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti
+Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto
+Kriterij 5: Organizacija ima objavljene glavne strateške cilje
+
+SKLOP 3
+
+Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto
+Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)
+Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)
+Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)
+Kriterij 5: Objavljeni so prihodki vodstva
+Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo
+
+SKLOP 4
+
+Kriterij 1: Objavljena so poročila o zbranih sredstvih
+Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)
+
+SKLOP 5
+
+Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1
+Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %
+Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami
+
+
+
+
+1-1
+1-2
+1-3
+1-4
+1-5
+1-6
+1-7
+
+2-1
+2-2
+2-3
+2-4
+2-5
+
+3-1
+3-2
+3-3
+3-4
+3-5
+3-6
+
+4-1
+4-2
+
+5-1
+5-2
+5-3
+
+
+
+name
+additional_names
+description
+address
+contact_name
+contact_email
+contact_phone
+web_page
+cover_photo
+tax_number
+account_number
+donation_url
+area
+avg_revenue
+employed
+is_charity
+has_public_interest
+is_voluntary
+zero5
+zero5_amount
+region
+
+has_published_key_documents
+key_documents_url
+has_published_mission
+mission_url
+has_published_key_employee_list
+key_employee_list_url
+has_published_board_member_list
+board_member_list_url
+has_published_contact_info
+contact_info_url
+has_published_complaints_contact
+complaints_contact_url
+has_published_complaints_process
+complaints_process_url
+has_published_substantive_report
+substantive_report_url
+has_published_report_about_work
+report_about_work_url
+has_published_report_with_results
+report_with_results_url
+has_published_work_plan
+work_plan_url
+has_published_strategic_objectives
+strategic_objectives_url
+has_published_financial_report
+financial_report_url
+has_published_understandable_financial_report
+understandable_financial_report_url
+has_published_operating_expenses
+operating_expenses_url
+has_published_main_sources_of_financing
+main_sources_of_financing_url
+has_published_management_revenues
+management_revenues_url
+has_published_salary_ratio
+salary_ratio_url
+has_published_fundraising_reports
+fundraising_reports_url
+has_published_fundraising_report_with_purposes
+fundraising_report_with_purposes_url
+website_accessibility_contrast
+website_accessibility_zoom
+website_accessibility_disabilities

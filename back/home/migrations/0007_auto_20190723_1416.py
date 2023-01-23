@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='audited_report',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='revidirano poročilo'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='revidirano poročilo'),
         ),
         migrations.AddField(
             model_name='organization',
@@ -70,22 +70,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='finance_plan',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='finančni načrt za tekoče leto'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='finančni načrt za tekoče leto'),
         ),
         migrations.AddField(
             model_name='organization',
             name='finance_report',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Finančno poročilo'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Finančno poročilo'),
         ),
         migrations.AddField(
             model_name='organization',
             name='finance_report_ajpes',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='finančno poročilo, ki je bilo oddano na AJPES'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='finančno poročilo, ki je bilo oddano na AJPES'),
         ),
         migrations.AddField(
             model_name='organization',
             name='given_loan',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='seznam danih posojil'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='seznam danih posojil'),
         ),
         migrations.AddField(
             model_name='organization',
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='minutes_meeteng',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='priloga zapisnik zadnje seje'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='priloga zapisnik zadnje seje'),
         ),
         migrations.AddField(
             model_name='organization',
@@ -120,17 +120,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='payment_classes',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='akt o sistematizaciji delovnih mest in plačnih razredov'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='akt o sistematizaciji delovnih mest in plačnih razredov'),
         ),
         migrations.AddField(
             model_name='organization',
             name='received_loans',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='seznam prejetih posojil'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='seznam prejetih posojil'),
         ),
         migrations.AddField(
             model_name='organization',
             name='strategic_goals',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='pisna poročila o spremljanju stateških ciljev'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='pisna poročila o spremljanju stateških ciljev'),
         ),
         migrations.AddField(
             model_name='organization',

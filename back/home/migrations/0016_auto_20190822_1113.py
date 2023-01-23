@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organization',
             name='audited_report',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Revidirano poročilo'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Revidirano poročilo'),
         ),
         migrations.AlterField(
             model_name='organization',
@@ -55,22 +55,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organization',
             name='finance_plan',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Finančni načrt za tekoče leto'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Finančni načrt za tekoče leto'),
         ),
         migrations.AlterField(
             model_name='organization',
             name='finance_report',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Finančno poročilo'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Finančno poročilo'),
         ),
         migrations.AlterField(
             model_name='organization',
             name='finance_report_ajpes',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Finančno poročilo, ki je bilo oddano na AJPES'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Finančno poročilo, ki je bilo oddano na AJPES'),
         ),
         migrations.AlterField(
             model_name='organization',
             name='given_loan',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Seznam danih posojil'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Seznam danih posojil'),
         ),
         migrations.AlterField(
             model_name='organization',
@@ -120,12 +120,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organization',
             name='minutes_meeting',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Zapisnik zadnje seje'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Zapisnik zadnje seje'),
         ),
         migrations.AlterField(
             model_name='organization',
             name='payment_classes',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Akt o sistematizaciji delovnih mest in plačnih razredov'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Akt o sistematizaciji delovnih mest in plačnih razredov'),
         ),
         migrations.AlterField(
             model_name='organization',
@@ -135,7 +135,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organization',
             name='received_loans',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Seznam prejetih posojil'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Seznam prejetih posojil'),
         ),
         migrations.AlterField(
             model_name='organization',
@@ -145,7 +145,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organization',
             name='strategic_goals',
-            field=models.FileField(blank=True, null=True, upload_to=home.models.get_intance_path, verbose_name='Priloga: Pisna poročila o spremljanju stateških ciljev'),
+            field=models.FileField(blank=True, null=True, upload_to='', verbose_name='Priloga: Pisna poročila o spremljanju stateških ciljev'),
         ),
         migrations.AlterField(
             model_name='organization',

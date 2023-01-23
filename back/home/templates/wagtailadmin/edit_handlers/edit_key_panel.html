@@ -1,9 +1,3 @@
-<fieldset>
-  {% if self.heading %}
-      <legend>{{ self.heading }}</legend>
-  {% endif %}
-  <div class="{{ self.classname }}">
-    {{ self.content|safe }}
-    <a href="https://dobrodelen.si/organizacija/prijava?edit_id={{ self.instance.id }}&amp;edit_key={{ self.instance.edit_key }}" target="_blank">https://dobrodelen.si/organizacija/prijava?edit_id={{ self.instance.id }}&amp;edit_key={{ self.instance.edit_key }}</a>
-  </div>
-</fieldset>
+<div class="w-field__wrapper ">
+  <a href="https://dobrodelen.si/organizacija/prijava?edit_id={{ self.instance.id }}&amp;edit_key={{ self.instance.edit_key }}" target="_blank">https://dobrodelen.si/organizacija/prijava?edit_id={{ self.instance.id }}&amp;edit_key={{ self.instance.edit_key }}</a>
+</div>

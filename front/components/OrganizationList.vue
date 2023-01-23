@@ -10,9 +10,6 @@
             placeholder="Poišči organizacijo"
           />
         </div>
-        <!-- <div class="col-3 col-md-auto">
-          <input class="form-control btn btn-warning" type="submit" value="Išči" />
-        </div> -->
       </div>
       <div class="form-row align-items-center justify-content-center">
         <div class="col-12 col-md-6 col-md-auto text-right">
@@ -37,15 +34,15 @@
         class="form-row align-items-center justify-content-center"
       >
         <div class="col-12 col-md-10 col-md-auto">
-          <form-category title="Kriterij 1: Nadzor nad poslovanjem">
+          <form-category title="Sklop 1: Osnovne informacije o organizaciji">
             <div class="row">
               <div class="col-md-12">
                 <selection-option
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="1.1"
-                  label="1.1 - Število sestankov nadzornega/upravnega odbora v zadnjem letu"
+                  value="1-1"
+                  label="Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)"
                 />
               </div>
               <div class="col-md-12">
@@ -53,8 +50,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="1.2"
-                  label="1.2 - Število neodvisnih članov nadzornega/upravnega odbora, ki ima glasovalno pravico"
+                  value="1-2"
+                  label="Kriterij 2: Organizacija ima objavljeno poslanstvo"
                 />
               </div>
               <div class="col-md-12">
@@ -62,8 +59,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="1.3"
-                  label="1.3 - Odstotek neodvisnih članov z glasovalno pravico"
+                  value="1-3"
+                  label="Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih"
                 />
               </div>
               <div class="col-md-12">
@@ -71,21 +68,48 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="1.4"
-                  label="1.4 - Organizacija vodi zapisnike sej"
+                  value="1-4"
+                  label="Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov"
+                />
+              </div>
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="1-5"
+                  label="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
+                />
+              </div>
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="1-6"
+                  label="Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe"
+                />
+              </div>
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="1-7"
+                  label="Kriterij 7: Objavljen je celoten pritožbeni postopek"
                 />
               </div>
             </div>
           </form-category>
-          <form-category title="Kriterij 2: Strateško načrtovanje organizacij">
+          <form-category title="Sklop 2: Dostopnost vsebinskih poročil">
             <div class="row">
               <div class="col-md-12">
                 <selection-option
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="2.1"
-                  label="2.1 - Organizacija ima strateški načrt"
+                  value="2-1"
+                  label="Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto"
                 />
               </div>
               <div class="col-md-12">
@@ -93,8 +117,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="2.2"
-                  label="2.2 - Organizacija spremlja doseganje strateškega načrta"
+                  value="2-2"
+                  label="Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja"
                 />
               </div>
               <div class="col-md-12">
@@ -102,21 +126,39 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="2.3"
-                  label="2.3 - Organizacija pripravlja poročila o spremljanju napredka pri doseganju strateških ciljev"
+                  value="2-3"
+                  label="Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti"
+                />
+              </div>
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="2-4"
+                  label="Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto"
+                />
+              </div>
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="2-5"
+                  label="Kriterij 5: Organizacija ima objavljene glavne strateške cilje"
                 />
               </div>
             </div>
           </form-category>
-          <form-category title="Kriterij 3: Finančno upravljanje">
+          <form-category title="Sklop 3: Finančna transparentnost">
             <div class="row">
               <div class="col-md-12">
                 <selection-option
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="3.1"
-                  label="3.1 - Odstotek sredstev, ki jih porabi za izvedbo programa"
+                  value="3-1"
+                  label="Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto"
                 />
               </div>
               <div class="col-md-12">
@@ -124,8 +166,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="3.2"
-                  label="3.2 - Odstotek sredstev, ki jh organizacija porabi za splošno delovanje"
+                  value="3-2"
+                  label="Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)"
                 />
               </div>
               <div class="col-md-12">
@@ -133,8 +175,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="3.3"
-                  label="3.3 - Znesek, ki ga organizacija porabi na vsakih zbranih 100 €"
+                  value="3-3"
+                  label="Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)"
                 />
               </div>
               <div class="col-md-12">
@@ -142,8 +184,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="3.4.1"
-                  label="3.4.1 - Viri sredstev"
+                  value="3-4"
+                  label="Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)"
                 />
               </div>
               <div class="col-md-12">
@@ -151,48 +193,21 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="3.4.2"
-                  label="3.4.2 - Delež prihodkov iz navečjega posameznega vira"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="3.5.1"
-                  label="3.5.1 - Organizacija daje posojila povezanim osebam"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="3.5.2"
-                  label="3.5.2 - Organizacija prejema posojila od povezanih oseb"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="3.6"
-                  label="3.6 - Razmerje med najvišjo in povprečno plačo v organizaciji"
+                  value="3-5"
+                  label="Kriterij 5: Objavljeni so prihodki vodstva"
                 />
               </div>
             </div>
           </form-category>
-          <form-category title="Kriterij 4: Transparentnost organizacij">
+          <form-category title="Sklop 4: Zbiranje donacijskih sredstev">
             <div class="row">
               <div class="col-md-12">
                 <selection-option
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="4.1.1"
-                  label="4.1.1 - Organizacija ima objavljena letna poročila o delu"
+                  value="4-1"
+                  label="Kriterij 1: Objavljena so poročila o zbranih sredstvih"
                 />
               </div>
               <div class="col-md-12">
@@ -200,8 +215,21 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="4.1.2"
-                  label="4.1.2 - Letna poročila o delu so razumljiva"
+                  value="4-2"
+                  label="Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)"
+                />
+              </div>
+            </div>
+          </form-category>
+          <form-category title="Sklop 5: Dostop objavljenih informacij">
+            <div class="row">
+              <div class="col-md-12">
+                <selection-option
+                  v-model="filters.criteria"
+                  type="checkbox"
+                  name="criteria"
+                  value="5-1"
+                  label="Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1"
                 />
               </div>
               <div class="col-md-12">
@@ -209,8 +237,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="4.2.1"
-                  label="4.2.1 - Organizacija ima objavljena letna finančna poročila"
+                  value="5-2"
+                  label="Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %"
                 />
               </div>
               <div class="col-md-12">
@@ -218,62 +246,8 @@
                   v-model="filters.criteria"
                   type="checkbox"
                   name="criteria"
-                  value="4.2.2"
-                  label="4.2.2 - Finančna poročila so razumljiva"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.2.3"
-                  label="4.2.3 - Finančna poročila so razdeljena po programih in vrstah stroškov in prihodkov"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.3"
-                  label="4.3 - Objavljeni so prejemki vodstva"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.4"
-                  label="4.4 - Objavljeno je razmerje med plačami"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.5"
-                  label="4.5 - Objavljen je seznam ključnih zaposlenih"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.6"
-                  label="4.6 - Obljavljeni so člani nadzornega/upravnega odbora"
-                />
-              </div>
-              <div class="col-md-12">
-                <selection-option
-                  v-model="filters.criteria"
-                  type="checkbox"
-                  name="criteria"
-                  value="4.7"
-                  label="4.7 - Objavljen je finančni načrt za tekoče leto"
+                  value="5-3"
+                  label="Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami"
                 />
               </div>
             </div>
@@ -426,8 +400,8 @@
             </div>
           </form-category>
 
-          <div class="row">
-            <div class="col-md-6">
+          <div class="row align-items-end">
+            <div class="col-md-4">
               <form-category title="Število zaposlenih">
                 <select v-model="filters.employed" class="custom-select">
                   <option
@@ -440,7 +414,7 @@
                 </select>
               </form-category>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <form-category title="Proračun">
                 <select v-model="filters.budget" class="custom-select">
                   <option
@@ -449,6 +423,19 @@
                     :value="budget.label"
                   >
                     {{ budget.label }}
+                  </option>
+                </select>
+              </form-category>
+            </div>
+            <div class="col-md-4">
+              <form-category title="Višina zbranih sredstev prek 1% dohodnine">
+                <select v-model="filters.zero5Amount" class="custom-select">
+                  <option
+                    v-for="zero5Amount in zero5AmountFilters"
+                    :key="zero5Amount.label"
+                    :value="zero5Amount.label"
+                  >
+                    {{ zero5Amount.label }}
                   </option>
                 </select>
               </form-category>
@@ -689,31 +676,29 @@ export default {
         : [this.sortQuery, true];
 
     let criteria = [
-      '1.1',
-      '1.2',
-      '1.3',
-      '1.4',
-      '2.1',
-      '2.2',
-      '2.3',
-      '3.1',
-      '3.2',
-      '3.3',
-      '3.4.1',
-      '3.4.2',
-      '3.5.1',
-      '3.5.2',
-      '3.6',
-      '4.1.1',
-      '4.1.2',
-      '4.2.1',
-      '4.2.2',
-      '4.2.3',
-      '4.3',
-      '4.4',
-      '4.5',
-      '4.6',
-      '4.7',
+      '1-1',
+      '1-2',
+      '1-3',
+      '1-4',
+      '1-5',
+      '1-6',
+      '1-7',
+      '2-1',
+      '2-2',
+      '2-3',
+      '2-4',
+      '2-5',
+      '3-1',
+      '3-2',
+      '3-3',
+      '3-4',
+      '3-5',
+      '3-6',
+      '4-1',
+      '4-2',
+      '5-1',
+      '5-2',
+      '5-3',
     ];
     let criteriaChanged = false;
 
@@ -732,6 +717,7 @@ export default {
       zero5: false,
       employed: 'Vsi',
       budget: 'Vsi',
+      zero5Amount: 'Vsi',
     };
 
     const employmentFilters = [
@@ -770,6 +756,33 @@ export default {
       },
     ];
 
+    const zero5AmountFilters = [
+      {
+        label: 'Vsi',
+        fn: (o) => true,
+      },
+      {
+        label: '0 – 1.000 €',
+        fn: (o) => o.avg_revenue >= 0 && o.avg_revenue <= 1000,
+      },
+      {
+        label: '1.001 – 10.000 €',
+        fn: (o) => o.avg_revenue > 1000 && o.avg_revenue <= 10000,
+      },
+      {
+        label: '10.001 – 50.000 €',
+        fn: (o) => o.avg_revenue > 10000 && o.avg_revenue <= 50000,
+      },
+      {
+        label: '50.001 – 100.000 €',
+        fn: (o) => o.avg_revenue > 50000 && o.avg_revenue <= 100000,
+      },
+      {
+        label: 'Več kot 100.000 €',
+        fn: (o) => o.avg_revenue > 100000,
+      },
+    ];
+
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
@@ -781,6 +794,7 @@ export default {
       criteriaChanged,
       employmentFilters,
       budgetFilters,
+      zero5AmountFilters,
     };
   },
   computed: {

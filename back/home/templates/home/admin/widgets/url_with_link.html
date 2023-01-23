@@ -1,0 +1,6 @@
+{% include 'django/forms/widgets/input.html' %}
+{% if widget.value != None %}
+<div>
+  <a href="{{ widget.value|stringformat:'s' }}" target="_blank" class="w-custom__url-with-link-button button button-small button-secondary chooser__choose-button">{{ widget.value|stringformat:'s' }}</a>
+</div>
+{% endif %}

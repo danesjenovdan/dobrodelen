@@ -2,7 +2,7 @@
   <div class="content">
     <content-title icon="signup-form" title="Prijava organizacije" />
     <div class="row justify-content-center">
-      <div class="col-12 col-md-7 col-xxl-5">
+      <div class="col-12 col-md-9 col-xxl-7">
         <form-stages
           ref="formStages"
           :stages="stages"
@@ -12,34 +12,47 @@
       </div>
     </div>
     <div class="row justify-content-center form-row">
-      <div class="col-12 col-md-7 col-xxl-5">
+      <div class="col-12 col-md-8 col-xxl-6">
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
-            <p class="lead">
+            <p class="lead text-justify">
               Veseli nas, da ste se odločili vpisati vašo organizacijo na
-              spletno stran
-              <em>dobrodelen.si</em> in širši javnosti pokazati, kako
-              transparenti in odgovorni ste pri svojem poslovanju.
+              spletno stran <em>dobrodelen.si</em> in širši javnosti pokazati,
+              kako transparenti in odgovorni ste pri svojem poslovanju.
             </p>
-            <p class="lead">
-              <!-- eslint-disable prettier/prettier -->
+            <p class="lead text-justify">
               Preden začnete z vpisovanjem podatkov o svoji organizaciji
               podrobno preberite
               <a
-                :href="
-                  `${apiBaseUrl}/documents/2/Smernice_dobrodelen.si_FINAL.pdf`
-                "
+                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
                 target="_blank"
                 rel="noopener noreferrer"
-                >Metodologijo za ocenjevanje in razvrščanje slovenskih nevladnih
-                organizacij – Nabor kriterijev s pojasnili in smernice za
-                pripravo podatkov</a
-              >. Tu so predstavljeni kriteriji in pogoji za dodelitev točk,
-              posebna pozornost pa je namenjena predstavitvi finančnih podatkov,
-              ki jih bomo od vas potrebovali in kako morajo biti pripravljeni.
-              <!-- eslint-enable prettier/prettier -->
+                >METODOLOGIJA ZA PREGLED TRANSPARENTOSTI SLOVENSKIH NEVLADNIH
+                ORGANIZACIJ</a
+              >.
+            </p>
+            <p class="lead text-justify">
+              V njej so predstavljeni sklopi pregleda s kriteriji in pogoji
+              njihovega izpolnjevanja. Glede na število izpolnjenih kriterijev
+              bodo organizaciji dodeljene zvezdice, ki bodo odražale njeno
+              transparentnost. Več zvezdic organizacija doseže, bolj
+              transparentna je v svojem delovanju.
             </p>
           </template>
+
+          <template v-if="activeStage >= 0 && activeStage < stages.length">
+            <p class="lead text-justify above-form-info-text">
+              Navodila za pregled doseganja kriterijev so dostopna v Prilogi 1
+              <a
+                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Metodologije za pregled transparentnosti slovenskih nevladnih
+                organizacij</a
+              >
+            </p>
+          </template>
+
           <template v-if="activeStage === 0">
             <form-category title="Ime">
               <text-input
@@ -53,6 +66,16 @@
                 name="additional_names"
                 label="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)"
                 :has-error="dataErrors.additional_names"
+              />
+            </form-category>
+
+            <form-category title="Kratek opis" note="največ 500 znakov">
+              <text-input
+                v-model="data[activeStage].description"
+                name="description"
+                :multiline="7"
+                :maxlength="500"
+                :has-error="dataErrors.description"
               />
             </form-category>
 
@@ -148,28 +171,6 @@
                 :has-error="dataErrors.donation_url"
               />
             </form-category>
-          </template>
-
-          <template v-else-if="activeStage === 1">
-            <form-category title="Poslanstvo" note="največ 500 znakov">
-              <text-input
-                v-model="data[activeStage].mission"
-                name="mission"
-                :multiline="9"
-                :maxlength="500"
-                :has-error="dataErrors.mission"
-              />
-            </form-category>
-
-            <form-category title="Kratek opis" note="največ 1500 znakov">
-              <text-input
-                v-model="data[activeStage].description"
-                name="description"
-                :multiline="27"
-                :maxlength="1500"
-                :has-error="dataErrors.description"
-              />
-            </form-category>
 
             <form-category
               title="Področja delovanja"
@@ -261,7 +262,7 @@
               <text-input
                 v-model="data[activeStage].avg_revenue"
                 name="avg_revenue"
-                label="Povprečni letni proračun v zadnjih treh letih"
+                label="Povprečni letni proračun v zadnjem letu"
                 :has-error="dataErrors.avg_revenue"
               />
               <text-input
@@ -296,6 +297,13 @@
                 type="checkbox"
                 name="zero5"
                 label="Organizacija je na seznamu upravičencev do 1 % dohodnine"
+              />
+              <text-input
+                v-if="data[activeStage].zero5"
+                v-model="data[activeStage].zero5_amount"
+                name="zero5_amount"
+                label="Višina zbranih sredstev prek 1 % dohodnine"
+                :has-error="dataErrors.zero5_amount"
               />
             </form-category>
 
@@ -397,753 +405,342 @@
             </form-category>
           </template>
 
+          <template v-else-if="activeStage === 1">
+            <!-- SKLOP 1 Kriteriji -->
+            <form-category title="Sklop 1: Kriteriji">
+              <selection-option
+                v-model="data[activeStage].has_published_key_documents"
+                type="checkbox"
+                name="has_published_key_documents"
+                label="Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_key_documents"
+                v-model="data[activeStage].key_documents_url"
+                name="key_documents_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.key_documents_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_mission"
+                type="checkbox"
+                name="has_published_mission"
+                label="Kriterij 2: Organizacija ima objavljeno poslanstvo"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_mission"
+                v-model="data[activeStage].mission_url"
+                name="mission_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.mission_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_key_employee_list"
+                type="checkbox"
+                name="has_published_key_employee_list"
+                label="Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_key_employee_list"
+                v-model="data[activeStage].key_employee_list_url"
+                name="key_employee_list_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.key_employee_list_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_board_member_list"
+                type="checkbox"
+                name="has_published_board_member_list"
+                label="Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_board_member_list"
+                v-model="data[activeStage].board_member_list_url"
+                name="board_member_list_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.board_member_list_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_contact_info"
+                type="checkbox"
+                name="has_published_contact_info"
+                label="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_contact_info"
+                v-model="data[activeStage].contact_info_url"
+                name="contact_info_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.contact_info_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_complaints_contact"
+                type="checkbox"
+                name="has_published_complaints_contact"
+                label="Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_complaints_contact"
+                v-model="data[activeStage].complaints_contact_url"
+                name="complaints_contact_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.complaints_contact_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_complaints_process"
+                type="checkbox"
+                name="has_published_complaints_process"
+                label="Kriterij 7: Objavljen je celoten pritožbeni postopek"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_complaints_process"
+                v-model="data[activeStage].complaints_process_url"
+                name="complaints_process_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.complaints_process_url"
+              />
+            </form-category>
+          </template>
+
           <template v-else-if="activeStage === 2">
-            <form-category title="Nadzorni odbor">
+            <!-- SKLOP 2 Kriteriji -->
+            <form-category title="Sklop 2: Kriteriji">
               <selection-option
-                v-model="data[activeStage].has_supervisory_board"
+                v-model="data[activeStage].has_published_substantive_report"
                 type="checkbox"
-                name="has_supervisory_board"
-                label="Organizacija ima nadzorni odbor, ki se je v preteklem letu srečal"
+                name="has_published_substantive_report"
+                label="Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto"
               />
               <text-input
-                v-if="data[activeStage].has_supervisory_board"
-                v-model="data[activeStage].supervisory_board_dates"
-                name="supervisory_board_dates"
-                label="Datumi srečanj v preteklem letu"
-                :has-error="dataErrors.supervisory_board_dates"
+                v-if="data[activeStage].has_published_substantive_report"
+                v-model="data[activeStage].substantive_report_url"
+                name="substantive_report_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.substantive_report_url"
               />
-            </form-category>
-            <form-category
-              v-if="data[activeStage].has_supervisory_board"
-              title="Člani nadzornega odbora"
-            >
-              <template
-                v-for="(member, i) in data[activeStage]
-                  .supervisory_board_members"
-              >
-                <div :key="`supervisory_board_members__${i}`">
-                  <text-input
-                    v-model="member.name"
-                    :name="`supervisory_board_members__name__${i}`"
-                    label="Ime in priimek"
-                    :has-error="
-                      dataErrors.supervisory_board_members &&
-                        dataErrors.supervisory_board_members[i]
-                    "
-                  />
-                  <div>
-                    <h4>Povezava z organizacijo</h4>
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="1"
-                      label="Član"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="2"
-                      label="Predstavnik uporabnikov"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="3"
-                      label="Predstavnik zaposlenih"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="4"
-                      label="Predstavnik ustanoviteljev"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="6"
-                      label="Neodvisni predstavnik"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`supervisory_board_members__role__${i}`"
-                      value="7"
-                      label="Drugo:"
-                      custom-input
-                      :custom-input-value="member.custom_role"
-                      @custom-change="member.custom_role = $event"
-                    />
-                  </div>
-                  <h4>Nadomestilo</h4>
-                  <selection-option
-                    v-model="member.is_paid"
-                    type="checkbox"
-                    :name="`supervisory_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
-                  />
-                  <hr />
-                  <br />
-                </div>
-              </template>
-              <button
-                v-if="data[activeStage].supervisory_board_members.length"
-                type="button"
-                class="btn btn-link remove-member"
-                @click="data[activeStage].supervisory_board_members.pop()"
-              >
-                <span>&times;</span> Odstrani člana
-              </button>
-              <add-button
-                text="Dodajte člana"
-                @click.native="
-                  data[activeStage].supervisory_board_members.push({
-                    name: '',
-                    role: '1',
-                    custom_role: '',
-                    is_paid: false,
-                  })
-                "
-              />
-            </form-category>
 
-            <form-category title="Upravni odbor">
               <selection-option
-                v-model="data[activeStage].has_management_board"
+                v-model="data[activeStage].has_published_report_about_work"
                 type="checkbox"
-                name="has_management_board"
-                label="Organizacija ima upravni odbor, ki se je v preteklem letu srečal"
+                name="has_published_report_about_work"
+                label="Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja"
               />
               <text-input
-                v-if="data[activeStage].has_management_board"
-                v-model="data[activeStage].management_board_dates"
-                name="management_board_dates"
-                label="Datumi srečanj v preteklem letu"
-                :has-error="dataErrors.management_board_dates"
+                v-if="data[activeStage].has_published_report_about_work"
+                v-model="data[activeStage].report_about_work_url"
+                name="report_about_work_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.report_about_work_url"
               />
-            </form-category>
-            <form-category
-              v-if="data[activeStage].has_management_board"
-              title="Člani upravnega odbora"
-            >
-              <template
-                v-for="(member, i) in data[activeStage]
-                  .management_board_members"
-              >
-                <div :key="`management_board_members__${i}`">
-                  <text-input
-                    v-model="member.name"
-                    :name="`management_board_members__name__${i}`"
-                    label="Ime in priimek"
-                    :has-error="
-                      dataErrors.management_board_members &&
-                        dataErrors.management_board_members[i]
-                    "
-                  />
-                  <div>
-                    <h4>Povezava z organizacijo</h4>
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="1"
-                      label="Član"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="2"
-                      label="Predstavnik uporabnikov"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="3"
-                      label="Predstavnik zaposlenih"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="4"
-                      label="Predstavnik ustanoviteljev"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="6"
-                      label="Neodvisni predstavnik"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`management_board_members__role__${i}`"
-                      value="7"
-                      label="Drugo:"
-                      custom-input
-                      :custom-input-value="member.custom_role"
-                      @custom-change="member.custom_role = $event"
-                    />
-                  </div>
-                  <h4>Nadomestilo</h4>
-                  <selection-option
-                    v-model="member.is_paid"
-                    type="checkbox"
-                    :name="`management_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
-                  />
-                  <hr />
-                  <br />
-                </div>
-              </template>
-              <button
-                v-if="data[activeStage].management_board_members.length"
-                type="button"
-                class="btn btn-link remove-member"
-                @click="data[activeStage].management_board_members.pop()"
-              >
-                <span>&times;</span> Odstrani člana
-              </button>
-              <add-button
-                text="Dodajte člana"
-                @click.native="
-                  data[activeStage].management_board_members.push({
-                    name: '',
-                    role: '1',
-                    custom_role: '',
-                    is_paid: false,
-                  })
-                "
-              />
-            </form-category>
 
-            <form-category title="Svet zavoda">
               <selection-option
-                v-model="data[activeStage].has_council"
+                v-model="data[activeStage].has_published_report_with_results"
                 type="checkbox"
-                name="has_council"
-                label="Organizacija ima svet zavoda, ki se je v preteklem letu srečal"
+                name="has_published_report_with_results"
+                label="Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti"
               />
               <text-input
-                v-if="data[activeStage].has_council"
-                v-model="data[activeStage].council_dates"
-                name="council_dates"
-                label="Datumi srečanj v preteklem letu"
-                :has-error="dataErrors.council_dates"
+                v-if="data[activeStage].has_published_report_with_results"
+                v-model="data[activeStage].report_with_results_url"
+                name="report_with_results_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.report_with_results_url"
               />
-            </form-category>
-            <form-category
-              v-if="data[activeStage].has_council"
-              title="Člani sveta zavoda"
-            >
-              <template
-                v-for="(member, i) in data[activeStage].council_members"
-              >
-                <div :key="`council_members__${i}`">
-                  <text-input
-                    v-model="member.name"
-                    :name="`council_members__name__${i}`"
-                    label="Ime in priimek"
-                    :has-error="
-                      dataErrors.council_members &&
-                        dataErrors.council_members[i]
-                    "
-                  />
-                  <div>
-                    <h4>Povezava z organizacijo</h4>
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="1"
-                      label="Član"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="2"
-                      label="Predstavnik uporabnikov"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="3"
-                      label="Predstavnik zaposlenih"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="4"
-                      label="Predstavnik ustanoviteljev"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="6"
-                      label="Neodvisni predstavnik"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`council_members__role__${i}`"
-                      value="7"
-                      label="Drugo:"
-                      custom-input
-                      :custom-input-value="member.custom_role"
-                      @custom-change="member.custom_role = $event"
-                    />
-                  </div>
-                  <h4>Nadomestilo</h4>
-                  <selection-option
-                    v-model="member.is_paid"
-                    type="checkbox"
-                    :name="`council_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
-                  />
-                  <hr />
-                  <br />
-                </div>
-              </template>
-              <button
-                v-if="data[activeStage].council_members.length"
-                type="button"
-                class="btn btn-link remove-member"
-                @click="data[activeStage].council_members.pop()"
-              >
-                <span>&times;</span> Odstrani člana
-              </button>
-              <add-button
-                text="Dodajte člana"
-                @click.native="
-                  data[activeStage].council_members.push({
-                    name: '',
-                    role: '1',
-                    custom_role: '',
-                    is_paid: false,
-                  })
-                "
-              />
-            </form-category>
 
-            <form-category title="Drugo">
               <selection-option
-                v-model="data[activeStage].has_other_board"
+                v-model="data[activeStage].has_published_work_plan"
                 type="checkbox"
-                name="has_other_board"
-                label="Organizacija ima drug organ, ki opravlja funkcijo nadzora nad poslovodstvom in se je v preteklem letu srečal"
+                name="has_published_work_plan"
+                label="Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto"
               />
               <text-input
-                v-if="data[activeStage].has_other_board"
-                v-model="data[activeStage].other_board_name"
-                name="other_board_name"
-                label="Ime organa"
-                :has-error="dataErrors.other_board_dates"
+                v-if="data[activeStage].has_published_work_plan"
+                v-model="data[activeStage].work_plan_url"
+                name="work_plan_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.work_plan_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_strategic_objectives"
+                type="checkbox"
+                name="has_published_strategic_objectives"
+                label="Kriterij 5: Organizacija ima objavljene glavne strateške cilje"
               />
               <text-input
-                v-if="data[activeStage].has_other_board"
-                v-model="data[activeStage].other_board_dates"
-                name="other_board_dates"
-                label="Datumi srečanj v preteklem letu"
-                :has-error="dataErrors.other_board_dates"
+                v-if="data[activeStage].has_published_strategic_objectives"
+                v-model="data[activeStage].strategic_objectives_url"
+                name="strategic_objectives_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.strategic_objectives_url"
               />
-            </form-category>
-            <form-category
-              v-if="data[activeStage].has_other_board"
-              title="Člani organa"
-            >
-              <template
-                v-for="(member, i) in data[activeStage].other_board_members"
-              >
-                <div :key="`other_board_members__${i}`">
-                  <text-input
-                    v-model="member.name"
-                    :name="`other_board_members__name__${i}`"
-                    label="Ime in priimek"
-                    :has-error="
-                      dataErrors.other_board_members &&
-                        dataErrors.other_board_members[i]
-                    "
-                  />
-                  <div>
-                    <h4>Povezava z organizacijo</h4>
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="1"
-                      label="Član"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="2"
-                      label="Predstavnik uporabnikov"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="3"
-                      label="Predstavnik zaposlenih"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="4"
-                      label="Predstavnik ustanoviteljev"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="5"
-                      label="Imenovan na podlagi sorodstvenih/prijateljskih vezi"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="6"
-                      label="Neodvisni predstavnik"
-                    />
-                    <selection-option
-                      v-model="member.role"
-                      type="radio"
-                      :name="`other_board_members__role__${i}`"
-                      value="7"
-                      label="Drugo:"
-                      custom-input
-                      :custom-input-value="member.custom_role"
-                      @custom-change="member.custom_role = $event"
-                    />
-                  </div>
-                  <h4>Nadomestilo</h4>
-                  <selection-option
-                    v-model="member.is_paid"
-                    type="checkbox"
-                    :name="`other_board_members__is_paid__${i}`"
-                    label="Za svoje delo v odboru prejema nadomestilo"
-                  />
-                  <hr />
-                  <br />
-                </div>
-              </template>
-              <button
-                v-if="data[activeStage].other_board_members.length"
-                type="button"
-                class="btn btn-link remove-member"
-                @click="data[activeStage].other_board_members.pop()"
-              >
-                <span>&times;</span> Odstrani člana
-              </button>
-              <add-button
-                text="Dodajte člana"
-                @click.native="
-                  data[activeStage].other_board_members.push({
-                    name: '',
-                    role: '1',
-                    custom_role: '',
-                    is_paid: false,
-                  })
-                "
-              />
-            </form-category>
-
-            <form-category title="Zapisniki seje">
-              <selection-option
-                v-model="data[activeStage].has_minutes_meeting"
-                type="checkbox"
-                name="has_minutes_meeting"
-                label="Organizacija vodi zapisnike sej"
-              />
-              <file-input
-                v-if="data[activeStage].has_minutes_meeting"
-                v-model="data[activeStage].minutes_meeting"
-                name="minutes_meeting"
-                label="Priložite zapisnik zadnje seje"
-              />
-            </form-category>
-
-            <form-category title="Strateško načrtovanje">
-              <selection-option
-                v-model="data[activeStage].strategic_planning"
-                type="checkbox"
-                name="strategic_planning"
-                label="Organizacija strateško načrtuje"
-              />
-              <div v-if="data[activeStage].strategic_planning">
-                <selection-option
-                  v-model="data[activeStage].has_milestiones_description"
-                  type="checkbox"
-                  name="has_milestiones_description"
-                  label="Organizacija spremlja doseganje strateških ciljev"
-                />
-                <text-input
-                  v-if="data[activeStage].has_milestiones_description"
-                  v-model="data[activeStage].milestiones_description"
-                  name="milestiones_description"
-                  label="Kratek opis kako (največ 500 znakov)"
-                  :multiline="9"
-                  :maxlength="500"
-                  :has-error="dataErrors.milestiones_description"
-                />
-
-                <selection-option
-                  v-model="data[activeStage].has_strategic_goals"
-                  type="checkbox"
-                  name="has_strategic_goals"
-                  label="Organizacija vodi pisna poročila o spremljanju stateških ciljev"
-                />
-                <file-input
-                  v-if="data[activeStage].has_strategic_goals"
-                  v-model="data[activeStage].strategic_goals"
-                  name="strategic_goals"
-                  label="Priložite poročilo"
-                  :has-error="dataErrors.strategic_goals"
-                />
-              </div>
             </form-category>
           </template>
 
           <template v-else-if="activeStage === 3">
-            <form-category title="Finančno poročilo">
-              <p>
-                Finančno poročilo pripravljeno po
-                <a
-                  :href="
-                    `${apiBaseUrl}/documents/1/vzorec_finan%C4%8Dnega_poro%C4%8Dila.xlsx`
-                  "
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>vzorcu finančnega poročila</span>
-                </a>
-                .
-              </p>
-              <file-input
-                v-model="data[activeStage].finance_report"
-                name="finance_report"
-                label="Priložite finančno poročilo"
-              />
-            </form-category>
-
-            <form-category
-              title="Finančno poročilo, ki je bilo oddano na AJPES"
-            >
-              <file-input
-                v-model="data[activeStage].finance_report_ajpes"
-                name="finance_report_ajpes"
-                label="Priložite finančno poročilo"
-              />
-            </form-category>
-
-            <form-category title="Revidiranje finančnega poročila">
+            <!-- SKLOP 3 Kriteriji -->
+            <form-category title="Sklop 3: Kriteriji">
               <selection-option
-                v-model="data[activeStage].has_audited_report"
+                v-model="data[activeStage].has_published_financial_report"
                 type="checkbox"
-                name="has_audited_report"
-                label="Organizacija ima revidirana finančna poročila"
+                name="has_published_financial_report"
+                label="Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto"
               />
-              <file-input
-                v-if="data[activeStage].has_audited_report"
-                v-model="data[activeStage].audited_report"
-                name="audited_report"
-                label="Priložite revidirano poročilo"
-              />
-            </form-category>
-
-            <form-category title="Finančni načrt">
-              <selection-option
-                v-model="data[activeStage].has_finance_plan"
-                type="checkbox"
-                name="has_finance_plan"
-                label="Organizacija ima finančni načrt za tekoče leto"
-              />
-              <file-input
-                v-if="data[activeStage].has_finance_plan"
-                v-model="data[activeStage].finance_plan"
-                name="finance_plan"
-                label="Priložite finančni načrt"
-              />
-            </form-category>
-
-            <form-category title="Posojila">
-              <selection-option
-                v-model="data[activeStage].has_given_loans"
-                type="checkbox"
-                name="has_given_loans"
-                label="Organizacija daje posojila povezanim osebam (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
-              />
-              <file-input
-                v-if="data[activeStage].has_given_loans"
-                v-model="data[activeStage].given_loan"
-                name="given_loan"
-                label="Priložite seznam danih posojil"
-              />
-
-              <selection-option
-                v-model="data[activeStage].has_received_loans"
-                type="checkbox"
-                name="has_received_loans"
-                label="Organizacija prejema posojila od povezanih oseb (zaposleni, člani upravnega/nadzornega odbora in njihovi družinski člani, ...)"
-              />
-              <file-input
-                v-if="data[activeStage].has_received_loans"
-                v-model="data[activeStage].received_loans"
-                name="received_loans"
-                label="Priložite seznam prejetih posojil"
-              />
-            </form-category>
-
-            <form-category title="Plačni razredi">
-              <selection-option
-                v-model="data[activeStage].has_payment_classes"
-                type="checkbox"
-                name="has_payment_classes"
-                label="Organizacija ima seznam delovnih mest in plačnih razredov"
-              />
-              <file-input
-                v-if="data[activeStage].has_payment_classes"
-                v-model="data[activeStage].payment_classes"
-                name="payment_classes"
-                label="Priložite akt"
-              />
-
               <text-input
-                v-model="data[activeStage].wages_ratio"
-                name="wages_ratio"
-                label="Razmerje med najvišjo in povprečno plačo v organizaciji"
-                :has-error="dataErrors.wages_ratio"
+                v-if="data[activeStage].has_published_financial_report"
+                v-model="data[activeStage].financial_report_url"
+                name="financial_report_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.financial_report_url"
+              />
+
+              <selection-option
+                v-model="
+                  data[activeStage]
+                    .has_published_understandable_financial_report
+                "
+                type="checkbox"
+                name="has_published_understandable_financial_report"
+                label="Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)"
+              />
+              <text-input
+                v-if="
+                  data[activeStage]
+                    .has_published_understandable_financial_report
+                "
+                v-model="data[activeStage].understandable_financial_report_url"
+                name="understandable_financial_report_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.understandable_financial_report_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_operating_expenses"
+                type="checkbox"
+                name="has_published_operating_expenses"
+                label="Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_operating_expenses"
+                v-model="data[activeStage].operating_expenses_url"
+                name="operating_expenses_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.operating_expenses_url"
+              />
+
+              <selection-option
+                v-model="
+                  data[activeStage].has_published_main_sources_of_financing
+                "
+                type="checkbox"
+                name="has_published_main_sources_of_financing"
+                label="Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_main_sources_of_financing"
+                v-model="data[activeStage].main_sources_of_financing_url"
+                name="main_sources_of_financing_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.main_sources_of_financing_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_management_revenues"
+                type="checkbox"
+                name="has_published_management_revenues"
+                label="Kriterij 5: Objavljeni so prihodki vodstva"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_management_revenues"
+                v-model="data[activeStage].management_revenues_url"
+                name="management_revenues_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.management_revenues_url"
+              />
+
+              <selection-option
+                v-model="data[activeStage].has_published_salary_ratio"
+                type="checkbox"
+                name="has_published_salary_ratio"
+                label="Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_salary_ratio"
+                v-model="data[activeStage].salary_ratio_url"
+                name="salary_ratio_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.salary_ratio_url"
               />
             </form-category>
           </template>
 
           <template v-else-if="activeStage === 4">
-            <selection-option
-              v-model="data[activeStage].has_published_work_reports"
-              type="checkbox"
-              name="has_published_work_reports"
-              label="Organizacija ima objavljena letna poročila o delu"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_work_reports"
-              v-model="data[activeStage].published_work_reports_url"
-              name="published_work_reports_url"
-              label="URL do objavljenih letnih poročil o delu"
-              :has-error="dataErrors.published_work_reports_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_financial_reports"
-              type="checkbox"
-              name="has_published_financial_reports"
-              label="Organizacija ima objavljena letna finančna poročila"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_financial_reports"
-              v-model="data[activeStage].published_financial_reports_url"
-              name="published_financial_reports_url"
-              label="URL do objavljenih finančnih poročil"
-              :has-error="dataErrors.published_financial_reports_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_executive_salaries"
-              type="checkbox"
-              name="has_published_executive_salaries"
-              label="Objavljeni so prejemki vodstva"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_executive_salaries"
-              v-model="data[activeStage].published_executive_salaries_url"
-              name="published_executive_salaries_url"
-              label="URL do objavljenih prejemkov vodstva"
-              :has-error="dataErrors.published_executive_salaries_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_salary_ratio"
-              type="checkbox"
-              name="has_published_salary_ratio"
-              label="Objavljeno je razmerje med plačami"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_salary_ratio"
-              v-model="data[activeStage].published_salary_ratio_url"
-              name="published_salary_ratio_url"
-              label="URL do objavljenih razmerij med plačami"
-              :has-error="dataErrors.published_salary_ratio_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_employee_list"
-              type="checkbox"
-              name="has_published_employee_list"
-              label="Objavljen je seznam ključnih zaposlenih"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_employee_list"
-              v-model="data[activeStage].published_employee_list_url"
-              name="published_employee_list_url"
-              label="URL do objavljenega seznama ključnih zaposlenih"
-              :has-error="dataErrors.published_employee_list_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_board_members"
-              type="checkbox"
-              name="has_published_board_members"
-              label="Obljavljeni so člani nadzornega/upravnega odbora"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_board_members"
-              v-model="data[activeStage].published_board_members_url"
-              name="published_board_members_url"
-              label="URL do objavljenega seznama članov odbora"
-              :has-error="dataErrors.published_board_members_url"
-            />
-            <selection-option
-              v-model="data[activeStage].has_published_financial_plan"
-              type="checkbox"
-              name="has_published_financial_plan"
-              label="Objavljen je finančni načrt za tekoče leto"
-            />
-            <text-input
-              v-if="data[activeStage].has_published_financial_plan"
-              v-model="data[activeStage].published_financial_plan_url"
-              name="published_financial_plan_url"
-              label="URL do objavljenega finančnega načrta za tekoče leto"
-              :has-error="dataErrors.published_financial_plan_url"
-            />
+            <!-- SKLOP 4 Kriteriji -->
+            <form-category title="Sklop 4: Kriteriji">
+              <selection-option
+                v-model="data[activeStage].has_published_fundraising_reports"
+                type="checkbox"
+                name="has_published_fundraising_reports"
+                label="Kriterij 1: Objavljena so poročila o zbranih sredstvih"
+              />
+              <text-input
+                v-if="data[activeStage].has_published_fundraising_reports"
+                v-model="data[activeStage].fundraising_reports_url"
+                name="fundraising_reports_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.fundraising_reports_url"
+              />
+
+              <selection-option
+                v-model="
+                  data[activeStage]
+                    .has_published_fundraising_report_with_purposes
+                "
+                type="checkbox"
+                name="has_published_fundraising_report_with_purposes"
+                label="Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)"
+              />
+              <text-input
+                v-if="
+                  data[activeStage]
+                    .has_published_fundraising_report_with_purposes
+                "
+                v-model="data[activeStage].fundraising_report_with_purposes_url"
+                name="fundraising_report_with_purposes_url"
+                label="URL do objavljenega dokumenta/podatkov"
+                :has-error="dataErrors.fundraising_report_with_purposes_url"
+              />
+            </form-category>
+          </template>
+
+          <template v-else-if="activeStage === 5">
+            <!-- SKLOP 5 Kriteriji -->
+            <form-category title="Sklop 5: Kriteriji">
+              <selection-option
+                v-model="data[activeStage].website_accessibility_contrast"
+                type="checkbox"
+                name="website_accessibility_contrast"
+                label="Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1"
+              />
+              <selection-option
+                v-model="data[activeStage].website_accessibility_zoom"
+                type="checkbox"
+                name="website_accessibility_zoom"
+                label="Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %"
+              />
+              <selection-option
+                v-model="data[activeStage].website_accessibility_disabilities"
+                type="checkbox"
+                name="website_accessibility_disabilities"
+                label="Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami"
+              />
+            </form-category>
           </template>
 
           <template v-else-if="activeStage === stages.length">
@@ -1214,10 +811,6 @@ export default {
         tax_number: initialData.tax_number || '',
         account_number: initialData.account_number || '',
         donation_url: initialData.donation_url || '',
-      },
-      {
-        mission: initialData.mission || '',
-        description: initialData.description || '',
         area: initialData.area ? initialData.area.slice() : [],
         custom_area: initialData.custom_area || '',
         region: initialData.region ? initialData.region.slice() : [],
@@ -1227,91 +820,22 @@ export default {
         has_public_interest: initialData.has_public_interest || false,
         is_voluntary: initialData.is_voluntary || false,
         zero5: initialData.zero5 || false,
+        zero5_amount: initialData.zero5_amount || 0,
       },
       {
         //
-        has_supervisory_board: initialData.has_supervisory_board || false,
-        supervisory_board_dates: initialData.supervisory_board_dates || '',
-        supervisory_board_members:
-          initialData.supervisory_board_members &&
-          initialData.supervisory_board_members.length
-            ? cloneDeep(initialData.supervisory_board_members)
-            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
-        has_management_board: initialData.has_management_board || false,
-        management_board_dates: initialData.management_board_dates || '',
-        management_board_members:
-          initialData.management_board_members &&
-          initialData.management_board_members.length
-            ? cloneDeep(initialData.management_board_members)
-            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
-        has_council: initialData.has_council || false,
-        council_dates: initialData.council_dates || '',
-        council_members:
-          initialData.council_members && initialData.council_members.length
-            ? cloneDeep(initialData.council_members)
-            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
-        has_other_board: initialData.has_other_board || false,
-        other_board_name: initialData.other_board_name || '',
-        other_board_dates: initialData.other_board_dates || '',
-        other_board_members:
-          initialData.other_board_members &&
-          initialData.other_board_members.length
-            ? cloneDeep(initialData.other_board_members)
-            : [{ name: '', role: '1', custom_role: '', is_paid: false }],
+      },
+      {
         //
-        has_minutes_meeting: initialData.has_minutes_meeting || false,
-        minutes_meeting: initialData.minutes_meeting || null,
-        strategic_planning: initialData.strategic_planning || false,
-        has_milestiones_description:
-          initialData.has_milestiones_description || false,
-        milestiones_description: initialData.milestiones_description || '',
-        has_strategic_goals: initialData.has_strategic_goals || false,
-        strategic_goals: initialData.strategic_goals || null,
       },
       {
-        finance_report: initialData.finance_report || null,
-        finance_report_ajpes: initialData.finance_report_ajpes || null,
-        has_audited_report: initialData.has_audited_report || false,
-        audited_report: initialData.audited_report || null,
-        has_finance_plan: initialData.has_finance_plan || false,
-        finance_plan: initialData.finance_plan || null,
-        has_given_loans: initialData.has_given_loans || false,
-        given_loan: initialData.given_loan || null,
-        has_received_loans: initialData.has_received_loans || false,
-        received_loans: initialData.received_loans || null,
-        has_payment_classes: initialData.has_payment_classes || false,
-        payment_classes: initialData.payment_classes || null,
-        wages_ratio: initialData.wages_ratio || '',
+        //
       },
       {
-        has_published_work_reports:
-          initialData.has_published_work_reports || false,
-        published_work_reports_url:
-          initialData.published_work_reports_url || null,
-        has_published_financial_reports:
-          initialData.has_published_financial_reports || false,
-        published_financial_reports_url:
-          initialData.published_financial_reports_url || null,
-        has_published_executive_salaries:
-          initialData.has_published_executive_salaries || false,
-        published_executive_salaries_url:
-          initialData.published_executive_salaries_url || null,
-        has_published_salary_ratio:
-          initialData.has_published_salary_ratio || false,
-        published_salary_ratio_url:
-          initialData.published_salary_ratio_url || null,
-        has_published_employee_list:
-          initialData.has_published_employee_list || false,
-        published_employee_list_url:
-          initialData.published_employee_list_url || null,
-        has_published_board_members:
-          initialData.has_published_board_members || false,
-        published_board_members_url:
-          initialData.published_board_members_url || null,
-        has_published_financial_plan:
-          initialData.has_published_financial_plan || false,
-        published_financial_plan_url:
-          initialData.published_financial_plan_url || null,
+        //
+      },
+      {
+        //
       },
     ];
 
@@ -1327,21 +851,12 @@ export default {
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       stages: [
-        {
-          label: 'Osnovni podatki',
-        },
-        {
-          label: 'Poslanstvo',
-        },
-        {
-          label: 'Poslovanje',
-        },
-        {
-          label: 'Finance',
-        },
-        {
-          label: 'Transparentnost',
-        },
+        { label: 'Osnovni podatki' },
+        { label: 'Osnovne informacije o organizaciji' },
+        { label: 'Dostopnost vsebinskih poročil' },
+        { label: 'Finančna transparentnost' },
+        { label: 'Zbiranje donacijskih sredstev' },
+        { label: 'Dostop objavljenih informacij' },
       ],
       activeStage: -1,
       saving: false,
@@ -1381,23 +896,6 @@ export default {
         if (data.area && data.area.filter((e) => e === 10).length === 0) {
           data.custom_area = '';
         }
-        // Delete member placeholders if not selected
-        if (data.has_supervisory_board === false) {
-          data.supervisory_board_dates = '';
-          data.supervisory_board_members = [];
-        }
-        if (data.has_management_board === false) {
-          data.management_board_dates = '';
-          data.management_board_members = [];
-        }
-        if (data.has_council === false) {
-          data.council_dates = '';
-          data.council_members = [];
-        }
-        if (data.has_other_board === false) {
-          data.other_board_dates = '';
-          data.other_board_members = [];
-        }
 
         const keys = Object.keys(data).filter((key) => {
           return !isEqual(data[key], this.initialData[key]);
@@ -1426,68 +924,6 @@ export default {
               }));
             data[key] = urls;
           }
-          // Delete files if option not selected
-          if (key === 'has_minutes_meeting') {
-            if (data[key] === false) {
-              data.minutes_meeting = null;
-              jsonData.minutes_meeting = null;
-            }
-          }
-          if (key === 'strategic_planning') {
-            if (data[key] === false) {
-              data.has_milestiones_description = false;
-              jsonData.has_milestiones_description = false;
-              data.milestiones_description = '';
-              jsonData.milestiones_description = '';
-              data.has_strategic_goals = false;
-              jsonData.has_strategic_goals = false;
-              data.strategic_goals = null;
-              jsonData.strategic_goals = null;
-            }
-          }
-          if (key === 'has_milestiones_description') {
-            if (data[key] === false) {
-              data.milestiones_description = '';
-              jsonData.milestiones_description = '';
-            }
-          }
-          if (key === 'has_strategic_goals') {
-            if (data[key] === false) {
-              data.strategic_goals = null;
-              jsonData.strategic_goals = null;
-            }
-          }
-          if (key === 'has_audited_report') {
-            if (data[key] === false) {
-              data.audited_report = null;
-              jsonData.audited_report = null;
-            }
-          }
-          if (key === 'has_finance_plan') {
-            if (data[key] === false) {
-              data.finance_plan = null;
-              jsonData.finance_plan = null;
-            }
-          }
-          if (key === 'has_given_loans') {
-            if (data[key] === false) {
-              data.given_loan = null;
-              jsonData.given_loan = null;
-            }
-          }
-          if (key === 'has_received_loans') {
-            if (data[key] === false) {
-              data.received_loans = null;
-              jsonData.received_loans = null;
-            }
-          }
-          if (key === 'has_payment_classes') {
-            if (data[key] === false) {
-              data.payment_classes = null;
-              jsonData.payment_classes = null;
-            }
-          }
-          //
           const value = data[key];
 
           if (value && value.file && value.file.name) {
@@ -1587,10 +1023,18 @@ export default {
   }
 
   .form-row {
-    margin-top: 6rem;
+    margin-top: 4rem;
 
     @include media-breakpoint-down(sm) {
       margin-top: 2rem;
+    }
+
+    p.above-form-info-text {
+      margin-bottom: 4rem;
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 2rem;
+      }
     }
 
     legend + p {

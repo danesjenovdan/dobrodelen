@@ -74,7 +74,7 @@
         </div>
         <div class="org-info">
           <dl class="row">
-            <dt class="col-9">Povprečni letni proračun v zadnjih treh letih</dt>
+            <dt class="col-9">Povprečni letni proračun v zadnjem letu</dt>
             <dd class="col-3">{{ formatEuro(organization.avg_revenue) }}</dd>
             <dt class="col-9">Število zaposlenih v zadnjem zaključenem letu</dt>
             <dd class="col-3">{{ organization.employed }}</dd>
@@ -96,23 +96,28 @@
               Organizacija je na seznamu upravičencev do 1 % dohodnine
             </dt>
             <dd class="col-3">{{ organization.zero5 ? 'DA' : 'NE' }}</dd>
+            <dt class="col-9">
+              Višina zbranih sredstev prek 1% dohodnine
+            </dt>
+            <dd class="col-3">{{ formatEuro(organization.zero5_amount) }}</dd>
           </dl>
         </div>
-        <div class="org-donate">
+        <div class="org-review-date">
+          Datum pregleda: {{ formatDate(organization.review_date) }}
+        </div>
+        <!-- <div class="org-donate">
           <donate-button
             text="Doniraj organizaciji"
             @click="toggleDonateModal"
           />
-        </div>
+        </div> -->
       </div>
       <div class="col-12 col-md-6">
-        <div class="org-description">
-          <h4>Poslanstvo</h4>
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <div v-html="paragraphise(organization.mission)" />
-          <h4>Opis</h4>
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <div v-html="paragraphise(organization.description)" />
+        <div class="org-criteria">
+          <!-- TODO: add new criteria display table here -->
+        </div>
+        <div class="org-enprocent">
+          <!-- TODO: embed 1% widget here -->
         </div>
       </div>
     </div>
@@ -344,6 +349,15 @@ export default {
       }
       return String(value);
     },
+    formatDate(value) {
+      if (
+        typeof Intl !== 'undefined' &&
+        typeof Intl.DateTimeFormat !== 'undefined'
+      ) {
+        return new Intl.DateTimeFormat('sl-SI', {}).format(value);
+      }
+      return String(value);
+    },
     onAmountChange(newAmount) {
       this.qrCodeLoading = true;
       this.$refs.qrCode.textContent = '';
@@ -415,6 +429,12 @@ export default {
         }
       }
     }
+  }
+
+  .org-review-date {
+    padding: 2rem 0;
+    font-size: 1.25rem;
+    font-weight: 300;
   }
 
   .org-donate {

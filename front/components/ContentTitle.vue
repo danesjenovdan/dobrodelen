@@ -27,12 +27,12 @@
             :class="['icon', 'icon-star', { 'icon-star--full': stars >= i }]"
           />
         </div>
-        <div class="org-donate">
+        <!-- <div class="org-donate">
           <donate-button
             text="Doniraj organizaciji"
             @click="$emit('donate-click')"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
