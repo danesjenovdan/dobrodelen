@@ -8,6 +8,7 @@
       "
       :title="organization.name"
       :stars="organization.stars"
+      :donation="true"
       @stars-click="toggleStarsModal(true)"
       @donate-click="toggleDonateModal(true)"
     />
@@ -105,12 +106,12 @@
         <div class="org-review-date">
           Datum pregleda: {{ formatDate(organization.review_date) }}
         </div>
-        <!-- <div class="org-donate">
+        <div class="org-donate">
           <donate-button
             text="Doniraj organizaciji"
             @click="toggleDonateModal"
           />
-        </div> -->
+        </div>
       </div>
       <div class="col-12 col-md-6">
         <div class="org-criteria">
@@ -165,19 +166,6 @@
                 tabeli. Več informacij o metodologiji lahko dobite
                 <nuxt-link :to="{ name: 'metodologija' }">tukaj</nuxt-link>.
               </p>
-              <table v-if="organization.points_details" class="table">
-                <tbody>
-                  <tr
-                    v-for="criterion in organization.points_details"
-                    :key="criterion.name"
-                  >
-                    <td v-text="criterion.verbose_name" />
-                    <td
-                      v-text="`${criterion.value} / ${criterion.max_value}`"
-                    />
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
@@ -237,7 +225,7 @@
                   }}</span></template
                 >.
               </p>
-              <p v-else>
+              <p v-else class="text-center">
                 Podatkov kako lahko donirate organizaciji nimamo.
               </p>
             </div>

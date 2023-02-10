@@ -5,13 +5,13 @@
         :to="{ name: 'organizacija-prijava' }"
         class="nav-link text-primary"
       >
-        <span>prijava organizacije</span>
+        <span>Prijava organizacije</span>
       </nuxt-link>
       <h1>
         <hr />
         <nuxt-link
           :to="{ name: 'organizacije' }"
-          class="title-link text-warning"
+          class="title-link"
         >
           <span>DOBRODELEN.SI</span>
         </nuxt-link>
@@ -29,20 +29,20 @@
                 :to="{ name: 'organizacija-prijava' }"
                 class="nav-link text-primary"
               >
-                <span>prijava organizacije</span>
+                <span>Prijava organizacije</span>
               </nuxt-link>
               <nuxt-link
                 :to="{ name: 'metodologija' }"
                 class="nav-link text-primary"
               >
-                <span>metodologija</span>
+                <span>Metodologija</span>
               </nuxt-link>
             </div>
           </transition>
         </div>
       </h1>
       <nuxt-link :to="{ name: 'metodologija' }" class="nav-link text-primary">
-        <span>metodologija</span>
+        <span>Metodologija</span>
       </nuxt-link>
     </nav>
   </header>
@@ -130,6 +130,7 @@ header {
       font-weight: 700;
       line-height: 1;
       letter-spacing: 0.2em;
+      color: #5b71b5;
       flex: 2;
 
       @include media-breakpoint-down(md) {
@@ -141,10 +142,11 @@ header {
         margin: 0;
         border: none;
         flex: 1 1 0%;
-        max-width: 3.4em;
+        max-width: 2.5em;
         display: block;
         height: 0.2em;
-        background: linear-gradient(to right, $blue 20%, $yellow);
+        background: linear-gradient(to right, $yellow 30%, $blue);
+        opacity: 0.35;
         // transformed elements are antialiased differently
         // used for consistency with the opposite one that is rotated 180deg
         transform: rotate(360deg);

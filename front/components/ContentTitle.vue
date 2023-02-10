@@ -4,12 +4,9 @@
       <div class="content-title-container text-center">
         <div class="embed-responsive embed-responsive-1by1">
           <div class="embed-responsive-item">
-            <img
-              v-if="image"
-              :src="image"
-              alt="title image"
-              class="rounded-circle bg-dark"
-            />
+            <div class="img-container" v-if="image">
+              <img :src="image" alt="title image" />
+            </div>
             <div
               v-else-if="icon"
               class="rounded-circle icon-container bg-warning"
@@ -27,12 +24,12 @@
             :class="['icon', 'icon-star', { 'icon-star--full': stars >= i }]"
           />
         </div>
-        <!-- <div class="org-donate">
+        <div v-if="donation" class="org-donate">
           <donate-button
             text="Doniraj organizaciji"
             @click="$emit('donate-click')"
           />
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -62,6 +59,10 @@ export default {
       type: Number,
       default: -1,
     },
+    donation: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -78,7 +79,8 @@ export default {
   }
 
   .embed-responsive {
-    max-width: 10rem;
+    max-width: 179px;
+    height: 179px; // Chrome bug fix
     display: inline-block;
     margin-bottom: 1.5rem;
 
@@ -87,12 +89,19 @@ export default {
       margin-bottom: 1rem;
     }
 
-    img {
-      display: block;
+    .img-container {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      object-position: center;
+      background: white;
+      padding: 16px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
     }
 
     .icon-container {

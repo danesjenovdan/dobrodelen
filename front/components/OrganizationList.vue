@@ -602,7 +602,6 @@
                           : '/img/placeholder.png'
                       "
                       alt="organization image"
-                      class="rounded-circle bg-dark"
                     />
                   </div>
                 </div>
@@ -612,11 +611,11 @@
               :to="{ name: 'organizacija-id', params: { id: org.id } }"
               class="org-title-link"
             >
-              <strong class="lead">{{ org.name }}</strong>
+              <strong class="lead clamp-lines">{{ org.name }}</strong>
             </nuxt-link>
           </td>
           <td>
-            <p class="lead clamp-lines">{{ shorten(org.description) }}</p>
+            <div class="lead clamp-lines">{{ shorten(org.description) }}</div>
           </td>
           <td>
             <div v-if="org.stars >= 0" class="stars">
@@ -1117,7 +1116,7 @@ export default {
       position: relative;
       cursor: default;
       border-top: 0;
-      border-bottom: 1px solid $blue;
+      border-bottom: 1px solid #383838;
 
       @include media-breakpoint-down(md) {
         font-size: 1rem;
@@ -1140,47 +1139,57 @@ export default {
       }
 
       &.can-sort {
-        padding-left: 2.5rem;
+        padding-left: 3rem;
         cursor: pointer;
 
-        $sort-arrow-size: 0.9rem;
-        $sort-arrow-diff: 3;
+        // $sort-arrow-size: 0.9rem;
+        // $sort-arrow-diff: 3;
 
         &::before,
         &::after {
           content: '';
           display: block;
           position: absolute;
-          left: 0.95rem;
+          left: 1.15rem;
           bottom: 53%;
-          width: $sort-arrow-size;
-          height: $sort-arrow-size;
+          width: 20px;
+          height: 14px;
           cursor: pointer;
 
-          border: $sort-arrow-size/2 solid transparent;
-          border-top-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
-          border-bottom-width: ($sort-arrow-diff - 1) *
-            ($sort-arrow-size/$sort-arrow-diff);
-          border-bottom-color: $body-color;
+          // border: $sort-arrow-size/2 solid transparent;
+          // border-top-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
+          // border-bottom-width: ($sort-arrow-diff - 1) *
+          //   ($sort-arrow-size/$sort-arrow-diff);
+          // border-bottom-color: $body-color;
+
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.44 14.53"><path fill="%23383838" stroke="%23383838" stroke-miterlimit="20" stroke-width="3" d="m10.72 2.53 7.75 10.5H2.97Z"/></svg>');
+          background-repeat: no-repeat;
+          background-position: center;
         }
 
         &::after {
           top: 53%;
           bottom: auto;
 
-          border: $sort-arrow-size/2 solid transparent;
-          border-bottom-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
-          border-top-width: ($sort-arrow-diff - 1) *
-            ($sort-arrow-size/$sort-arrow-diff);
-          border-top-color: $body-color;
+          // border: $sort-arrow-size/2 solid transparent;
+          // border-bottom-width: 1 * ($sort-arrow-size/$sort-arrow-diff);
+          // border-top-width: ($sort-arrow-diff - 1) *
+          //   ($sort-arrow-size/$sort-arrow-diff);
+          // border-top-color: $body-color;
+
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.44 14.53"><path fill="%23383838" stroke="%23383838" stroke-width="3" d="M10.72 12 2.97 1.5h15.5Z"/></svg>');
         }
 
         &.asc::before {
-          border-bottom-color: $blue;
+          // border-bottom-color: $blue;
+
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.44 14.53"><path fill="none" stroke="%23383838" stroke-miterlimit="20" stroke-width="3" d="m10.72 2.53 7.75 10.5H2.97Z"/></svg>');
         }
 
         &.desc::after {
-          border-top-color: $blue;
+          // border-top-color: $blue;
+
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.44 14.53"><path fill="none" stroke="%23383838" stroke-width="3" d="M10.72 12 2.97 1.5h15.5Z"/></svg>');
         }
       }
     }
@@ -1188,15 +1197,15 @@ export default {
     td {
       padding-top: 1.25rem;
       padding-bottom: 1.25rem;
-      border-bottom: 1px solid $blue;
+      border-bottom: 1px solid #383838;
 
       a {
         color: inherit;
       }
 
       .embed-responsive {
-        max-width: 4rem;
-        height: 4rem; // Chrome bug fix
+        max-width: 95px;
+        height: 95px; // Chrome bug fix
         float: left;
         margin-top: 0.25rem;
         margin-right: 2rem;
@@ -1204,6 +1213,8 @@ export default {
         .img-container {
           width: 100%;
           height: 100%;
+          background: white;
+          padding: 8px;
 
           img {
             display: block;
@@ -1217,7 +1228,7 @@ export default {
 
       .org-title-link {
         float: left;
-        width: calc(100% - 6rem);
+        width: calc(100% - 2rem - 95px);
 
         @include media-breakpoint-down(md) {
           width: 100%;
@@ -1226,6 +1237,7 @@ export default {
 
       .lead {
         line-height: 1.4;
+        color: #000;
       }
 
       strong.lead {
@@ -1248,6 +1260,10 @@ export default {
 
     tbody tr {
       cursor: pointer;
+
+      &:hover {
+        background-color: #f2e9d2;
+      }
     }
   }
 }
