@@ -256,14 +256,17 @@ export default {
     AmountSelector,
   },
   mixins: [formatPhoneNumberMixin],
+  // TODO: migrate?
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
+  // TODO: migrate
   async asyncData({ $axios, params, query }) {
     const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
-    const orgResp = await $axios.$get(
-      `/api/organizations/${params.id}/${editKey}`,
-    );
+    // const orgResp = await $axios.$get(
+    //   `/api/organizations/${params.id}/${editKey}`,
+    // );
+    const orgResp = {}
     return {
       organization: orgResp,
     };
@@ -446,7 +449,7 @@ export default {
       }
     }
 
-    /deep/ div {
+    :deep(div) {
       p {
         font-size: 1.5rem;
         font-weight: 300;

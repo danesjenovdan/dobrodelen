@@ -641,7 +641,6 @@
 
 <script>
 import { debounce } from 'lodash';
-import stableSort from 'stable';
 import FormCategory from '~/components/Form/FormCategory.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
 
@@ -869,7 +868,7 @@ export default {
       return orgs;
     },
     sortedOrgs() {
-      return stableSort(this.filteredOrgs, (a, b) => {
+      return this.filteredOrgs.slice().sort((a, b) => {
         if (!this.sortAsc) {
           [a, b] = [b, a];
         }
@@ -967,24 +966,24 @@ export default {
       padding: 3rem 0;
     }
 
-    fieldset /deep/ {
+    fieldset {
       margin-top: 1rem;
 
-      legend {
+      :deep(legend) {
         font-size: 1.25rem;
         margin-bottom: 0;
       }
 
-      .custom-control:last-of-type {
+      :deep(.custom-control:last-of-type) {
         margin-bottom: 0;
       }
 
-      .custom-control-label {
+      :deep(.custom-control-label) {
         font-size: 1rem;
         margin: 0.25rem 0;
       }
 
-      .custom-select {
+      :deep(.custom-select) {
         border: none;
         margin: 0.25rem 0;
       }

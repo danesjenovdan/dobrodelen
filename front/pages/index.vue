@@ -34,8 +34,9 @@
 <script>
 import StripedTextShadow from '~/components/StripedTextShadow.vue';
 
+definePageMeta({ layout: 'landing' })
+
 export default {
-  layout: 'landing',
   components: {
     StripedTextShadow,
   },

@@ -172,7 +172,7 @@ export default {
               font-size: 1.25rem;
             }
 
-            /deep/ span {
+            :deep(span) {
               font-weight: 300;
               letter-spacing: 0.2em;
 
@@ -202,7 +202,7 @@ export default {
           height: 0;
         }
 
-        /deep/ .card-body {
+        :deep(.card-body) {
           padding-top: 4rem;
           padding-bottom: 4rem;
           font-size: 1.5rem;

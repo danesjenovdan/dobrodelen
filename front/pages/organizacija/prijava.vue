@@ -116,9 +116,8 @@
                 label="URL spletne strani"
                 :has-error="dataErrors.web_page"
               />
-              <template v-for="(link, i) in data[activeStage].links">
+              <template v-for="(link, i) in data[activeStage].links" :key="`link-${i}`">
                 <text-input
-                  :key="`link-${i}`"
                   v-model="link.url"
                   :name="`links__${i}`"
                   label="URL profila na družbenem mediju"
@@ -783,15 +782,16 @@ export default {
     FileInput,
     PrevNextButtons,
   },
+  // TODO: migrate
   async asyncData({ $axios, query, error }) {
     const editId = query.edit_id || null;
     const editKey = query.edit_key || null;
 
     let initialData = {};
     if (editId && editKey) {
-      initialData = await $axios.$get(
-        `/api/organizations/${editId}/?edit_key=${editKey}`,
-      );
+      // initialData = await $axios.$get(
+      //   `/api/organizations/${editId}/?edit_key=${editKey}`,
+      // );
     }
 
     const data = [
@@ -988,7 +988,8 @@ export default {
       const url = `/api/organizations/${
         this.editId ? `${this.editId}/` : ''
       }${query}`;
-      const res = await this.$axios[`$${method}`](url, data);
+      // const res = await this.$axios[`$${method}`](url, data);
+      const res = {}
       if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
         this.editId = res.id;
         this.editKey = res.edit_key;

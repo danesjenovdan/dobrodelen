@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="page">
         <page-header />
-        <nuxt />
+        <slot />
       </div>
     </div>
     <footer class="footer">

@@ -1,11 +1,10 @@
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
 
-export default {
-  mode: 'universal',
+export default defineNuxtConfig({
   /*
    ** Headers of the page
    */
-  head: {
+  meta: {
     title: '',
     titleTemplate: (titleChunk) => {
       return `${titleChunk ? `${titleChunk} - ` : ''}Dobrodelen.si`;
@@ -40,75 +39,43 @@ export default {
       // { rel: 'manifest', href: '/site.webmanifest' },
       {
         rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900&display=swap&subset=latin-ext',
+        href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900&display=swap&subset=latin-ext',
       },
     ],
   },
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: '#fff' },
-  /*
-   ** Global CSS
-   */
-  css: ['~/assets/scss/main.scss'],
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: [],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/style-resources',
-  ],
-  /*
-   ** Nuxt.js build modules
-   */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    // '@nuxtjs/eslint-module',
-  ],
-  /*
-   ** Nuxt Style Resources
-   ** See https://github.com/nuxt-community/style-resources-module
-   */
-  styleResources: {
-    scss: ['~/assets/scss/_variables.scss'],
-  },
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {
-    baseURL: isProduction ? 'https://dobrodelen.si' : 'http://localhost:8000',
-  },
-  /*
-   ** Environment variables for webpack (via definePlugin)
-   */
-  env: {
-    API_BASE_URL: isProduction
-      ? 'https://dobrodelen.si'
-      : 'http://localhost:8000',
-  },
-  /*
-   ** Build configuration
-   */
-  build: {
-    // extractCSS: true,
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {
-      config.module.rules.push({
-        enforce: 'pre',
-        test: /\.inc\.html$/,
-        loader: 'raw-loader',
-        exclude: /(node_modules)/,
-      });
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "~/assets/scss/_variables.scss";',
+        },
+      },
     },
   },
-};
+  // baseURL: isProduction ? 'https://dobrodelen.si' : 'http://localhost:8000',
+  // /*
+  //  ** Environment variables for webpack (via definePlugin)
+  //  */
+  // env: {
+  //   API_BASE_URL: isProduction
+  //     ? 'https://dobrodelen.si'
+  //     : 'http://localhost:8000',
+  // },
+  // /*
+  //  ** Build configuration
+  //  */
+  // build: {
+  //   // extractCSS: true,
+  //   /*
+  //    ** You can extend webpack config here
+  //    */
+  //   extend(config, ctx) {
+  //     config.module.rules.push({
+  //       enforce: 'pre',
+  //       test: /\.inc\.html$/,
+  //       loader: 'raw-loader',
+  //       exclude: /(node_modules)/,
+  //     });
+  //   },
+  // },
+});

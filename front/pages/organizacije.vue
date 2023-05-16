@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import IntroText from '~/components/IntroText.vue';
 import OrganizationList from '~/components/OrganizationList.vue';
 
@@ -21,6 +20,7 @@ export default {
     IntroText,
     OrganizationList,
   },
+  // TODO: migrate
   async asyncData({ $axios, query }) {
     const orgSortQuery = query.sort || undefined;
     const orgSearchQuery = query.q || undefined;
@@ -28,7 +28,8 @@ export default {
     const url = orgSearchCriteria
       ? `/api/organizations-filtered-criteria/?filter_keys=${orgSearchCriteria}`
       : '/api/organizations/';
-    const orgsResp = await $axios.$get(url);
+    // const orgsResp = await $axios.$get(url);
+    const orgsResp = {}
     return {
       apiBaseUrl: process.env.API_BASE_URL,
       organizations: orgsResp.results,
@@ -57,9 +58,10 @@ export default {
     async fetchOrganizationsFilteredCriteria(criteria) {
       try {
         this.loading = true;
-        const response = await axios.get(
-          `${this.apiBaseUrl}/api/organizations-filtered-criteria/?filter_keys=${criteria}`,
-        );
+        // const response = await axios.get(
+        //   `${this.apiBaseUrl}/api/organizations-filtered-criteria/?filter_keys=${criteria}`,
+        // );
+        const response = {data:{}}
         this.organizations = response.data.results || [];
       } catch (error) {
         // eslint-disable-next-line no-console
