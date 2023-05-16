@@ -37,3 +37,22 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# garbage
+*.log
+README.md
+
+# docker
+.dockerignore
+Dockerfile
+*.Dockerfile
+
+# git
+.git
+.gitignore
+.gitmodules
+
+# dev only stuff
+.idea
+.vscode
+**/settings/local.py

@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dobrodelen-back
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.dobrodelen.lb.djnd.si
+      secretName: dobrodelen-back-tls
+  rules:
+    - host: api.dobrodelen.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dobrodelen-back
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dobrodelen-back-nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://api.dobrodelen.lb.djnd.si"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - files.dobrodelen.lb.djnd.si
+      secretName: dobrodelen-back-nginx-tls
+  rules:
+    - host: files.dobrodelen.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dobrodelen-back-nginx
+                port:
+                  number: 80

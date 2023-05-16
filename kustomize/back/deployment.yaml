@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dobrodelen-back
+  labels:
+    app: dobrodelen-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dobrodelen-back
+  template:
+    metadata:
+      labels:
+        app: dobrodelen-back
+    spec:
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: dobrodelen-back-persistent-storage
+          emptyDir: {}
+      initContainers:
+        - name: collectstatic
+          image: dobrodelen-back
+          volumeMounts:
+            - name: dobrodelen-back-persistent-storage
+              mountPath: /pvc
+          command:
+            - python
+            - manage.py
+            - collectstatic
+            - --no-input
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: dobrodelen.settings.k8s
+          envFrom:
+            - secretRef:
+                name: dobrodelen-back-secrets
+          resources:
+            requests:
+              memory: 400Mi
+              cpu: 100m
+            limits:
+              memory: 400Mi
+              cpu: 100m
+        - name: migrate
+          image: dobrodelen-back
+          volumeMounts:
+            - name: dobrodelen-back-persistent-storage
+              mountPath: /pvc
+          command:
+            - python
+            - manage.py
+            - migrate
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: dobrodelen.settings.k8s
+          envFrom:
+            - secretRef:
+                name: dobrodelen-back-secrets
+          resources:
+            requests:
+              memory: 400Mi
+              cpu: 100m
+            limits:
+              memory: 400Mi
+              cpu: 100m
+      containers:
+        - name: dobrodelen-back
+          image: dobrodelen-back
+          volumeMounts:
+            - name: dobrodelen-back-persistent-storage
+              mountPath: /pvc
+          command:
+            - gunicorn
+            - dobrodelen.wsgi:application
+            - -b
+            - 0.0.0.0:8000
+            - --log-level
+            - DEBUG
+            - --workers
+            - "1"
+            - --threads
+            - "3"
+            - --timeout
+            - "90"
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: dobrodelen.settings.k8s
+          envFrom:
+            - secretRef:
+                name: dobrodelen-back-secrets
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: 400Mi
+              cpu: 100m
+            limits:
+              memory: 400Mi
+              cpu: 100m
+        - name: dobrodelen-back-nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: dobrodelen-back-persistent-storage
+              mountPath: /usr/share/nginx/html
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 50Mi
+              cpu: 50m

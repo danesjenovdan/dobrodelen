@@ -3,7 +3,7 @@
 .idea
 
 # kustomize secrets
-/kustomize/secrets.yaml
+/kustomize/**/secrets.yaml
 
 .DS_Store
 /tmpdlold
