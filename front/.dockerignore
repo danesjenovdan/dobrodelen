@@ -6,6 +6,7 @@ README.md
 # docker
 .dockerignore
 Dockerfile
+*.Dockerfile
 
 # git
 .git

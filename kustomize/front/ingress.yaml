@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dobrodelen-front
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - dobrodelen.lb.djnd.si
+      secretName: dobrodelen-front-tls
+  rules:
+    - host: dobrodelen.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dobrodelen-front
+                port:
+                  number: 3000

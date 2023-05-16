@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dobrodelen-front
+  labels:
+    app: dobrodelen-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dobrodelen-front
+  template:
+    metadata:
+      labels:
+        app: dobrodelen-front
+    spec:
+      containers:
+        - name: dobrodelen-front
+          image: dobrodelen-front
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 50Mi
+              cpu: 50m
