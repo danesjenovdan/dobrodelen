@@ -21,14 +21,25 @@ jobs:
           username: nologin
           password: ${{ secrets.SCW_SECRET_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push back
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./back
+          file: k8s.Dockerfile
           push: true
           tags: |
-            rg.fr-par.scw.cloud/djnd/dobrodelen:${{ github.sha }}
-            rg.fr-par.scw.cloud/djnd/dobrodelen:latest
+            rg.fr-par.scw.cloud/djnd/dobrodelen-back:${{ github.sha }}
+            rg.fr-par.scw.cloud/djnd/dobrodelen-back:latest
+
+      - name: Build and push front
+        uses: docker/build-push-action@v3
+        with:
+          context: ./front
+          file: k8s.Dockerfile
+          push: true
+          tags: |
+            rg.fr-par.scw.cloud/djnd/dobrodelen-front:${{ github.sha }}
+            rg.fr-par.scw.cloud/djnd/dobrodelen-front:latest
 
       - name: Update image versions in kustomize/kustomization.yaml
         run: |
