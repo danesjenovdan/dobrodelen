@@ -667,6 +667,12 @@ export default {
       default: '',
     },
   },
+  setup() {
+    const config = useRuntimeConfig();
+    return {
+      apiBaseUrl: config.public.apiBase,
+    };
+  },
   data() {
     const [sortKey, sortAsc] =
       this.sortQuery[0] === '-'
@@ -782,7 +788,6 @@ export default {
     ];
 
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
       searchText: this.searchQuery,

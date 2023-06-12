@@ -59,10 +59,10 @@ export default {
     };
   },
   mounted() {
-    this.$nuxt.$on('toggle-menu', (value) => this.toggleMenu(null, value));
+    // TODO: this.$nuxt.$on('toggle-menu', (value) => this.toggleMenu(null, value));
   },
   beforeDestroy() {
-    this.$nuxt.$off('toggle-menu', (value) => this.toggleMenu(null, value));
+    // TODO: this.$nuxt.$off('toggle-menu', (value) => this.toggleMenu(null, value));
   },
   methods: {
     toggleMenu(event, value = !this.menuOpen) {

@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <intro-text
-      lead="Metodologija za ocenjevanje in razvrščanje slovenskih nevladnih organizacij"
+      lead="Metodologija za pregled transparentnosti slovenskih nevladnih organizacij "
     />
     <div class="faq">
       <div class="accordion">
@@ -55,6 +55,13 @@
 
 <script>
 import IntroText from '~/components/IntroText.vue';
+import uvod from '~/assets/metodologija/0_uvod.inc.html?raw';
+import postopek from '~/assets/metodologija/1_postopek.inc.html?raw';
+import sklop1 from '~/assets/metodologija/sklop1.inc.html?raw';
+import sklop2 from '~/assets/metodologija/sklop2.inc.html?raw';
+import sklop3 from '~/assets/metodologija/sklop3.inc.html?raw';
+import sklop4 from '~/assets/metodologija/sklop4.inc.html?raw';
+import sklop5 from '~/assets/metodologija/sklop5.inc.html?raw';
 
 export default {
   components: {
@@ -65,35 +72,41 @@ export default {
       items: [
         {
           collapsed: true,
-          headerHTML: 'Kriterij 1: <strong>Nadzor nad poslovanjem</strong>',
-          contentHTML: require('../assets/metodologija/kriterij1.inc.html')
-            .default,
+          headerHTML: '<strong>UVOD V METODOLOGIJO</strong>',
+          contentHTML: uvod,
         },
         {
           collapsed: true,
           headerHTML:
-            'Kriterij 2: <strong>Strateško načrtovanje organizacij</strong>',
-          contentHTML: require('../assets/metodologija/kriterij2.inc.html')
-            .default,
-        },
-        {
-          collapsed: true,
-          headerHTML: 'Kriterij 3: <strong>Finančno upravljanje</strong>',
-          contentHTML: require('../assets/metodologija/kriterij3.inc.html')
-            .default,
+            '<strong>POSTOPEK PREGLEDA IN SISTEM OCENJEVANJA</strong>',
+          contentHTML: postopek,
         },
         {
           collapsed: true,
           headerHTML:
-            'Kriterij 4: <strong>Transparentnost organizacij</strong>',
-          contentHTML: require('../assets/metodologija/kriterij4.inc.html')
-            .default,
+            'SKLOP 1: <strong>DOSTOPNOST OSNOVNIH INFORMACIJ</strong>',
+          contentHTML: sklop1,
         },
         {
           collapsed: true,
-          headerHTML: '<strong>Skupna ocena</strong>',
-          contentHTML: require('../assets/metodologija/skupnaocena.inc.html')
-            .default,
+          headerHTML: 'SKLOP 2: <strong>DOSTOPNOST VSEBINSKIH POROČIL</strong>',
+          contentHTML: sklop2,
+        },
+        {
+          collapsed: true,
+          headerHTML: 'SKLOP 3: <strong>FINANČNA TRANSPARENTNOST</strong>',
+          contentHTML: sklop3,
+        },
+        {
+          collapsed: true,
+          headerHTML: 'SKLOP 4: <strong>ZBIRANJE DONACIJSKIH SREDSTEV</strong>',
+          contentHTML: sklop4,
+        },
+        {
+          collapsed: true,
+          headerHTML:
+            'SKLOP 5: <strong>DOSTOPNOST OBJAVLJENIH INFORMACIJ</strong>',
+          contentHTML: sklop5,
         },
       ],
     };
@@ -221,7 +234,7 @@ export default {
           }
 
           em {
-            font-weight: 600;
+            font-weight: 400;
             font-style: italic;
           }
 
@@ -258,7 +271,7 @@ export default {
 
             li {
               padding-left: 1.4em;
-              background-image: url('~assets/svg/arrow-list.svg');
+              background-image: url('~/assets/svg/arrow-list.svg');
               background-repeat: no-repeat;
               background-position: top 0.3em left;
               background-size: 1em 1em;

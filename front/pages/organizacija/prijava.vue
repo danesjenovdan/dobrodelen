@@ -116,7 +116,10 @@
                 label="URL spletne strani"
                 :has-error="dataErrors.web_page"
               />
-              <template v-for="(link, i) in data[activeStage].links" :key="`link-${i}`">
+              <template
+                v-for="(link, i) in data[activeStage].links"
+                :key="`link-${i}`"
+              >
                 <text-input
                   v-model="link.url"
                   :name="`links__${i}`"
@@ -847,9 +850,14 @@ export default {
       dataErrors: {},
     };
   },
+  setup() {
+    const config = useRuntimeConfig();
+    return {
+      apiBaseUrl: config.public.apiBase,
+    };
+  },
   data() {
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
       stages: [
         { label: 'Osnovni podatki' },
         { label: 'Osnovne informacije o organizaciji' },
@@ -989,7 +997,7 @@ export default {
         this.editId ? `${this.editId}/` : ''
       }${query}`;
       // const res = await this.$axios[`$${method}`](url, data);
-      const res = {}
+      const res = {};
       if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
         this.editId = res.id;
         this.editKey = res.edit_key;

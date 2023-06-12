@@ -51,31 +51,12 @@ export default defineNuxtConfig({
         },
       },
     },
+    assetsInclude: ['**/*.inc.html'],
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+    },
   },
   // baseURL: isProduction ? 'https://dobrodelen.si' : 'http://localhost:8000',
-  // /*
-  //  ** Environment variables for webpack (via definePlugin)
-  //  */
-  // env: {
-  //   API_BASE_URL: isProduction
-  //     ? 'https://dobrodelen.si'
-  //     : 'http://localhost:8000',
-  // },
-  // /*
-  //  ** Build configuration
-  //  */
-  // build: {
-  //   // extractCSS: true,
-  //   /*
-  //    ** You can extend webpack config here
-  //    */
-  //   extend(config, ctx) {
-  //     config.module.rules.push({
-  //       enforce: 'pre',
-  //       test: /\.inc\.html$/,
-  //       loader: 'raw-loader',
-  //       exclude: /(node_modules)/,
-  //     });
-  //   },
-  // },
 });

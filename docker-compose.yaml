@@ -6,7 +6,9 @@ volumes:
 
 services:
   wagtail:
-    build: ./back
+    build:
+      context: ./back
+      dockerfile: dev.Dockerfile
     working_dir: /app
     command: ./manage.py runserver 0.0.0.0:8000
     volumes:
@@ -24,13 +26,18 @@ services:
       - db
 
   nuxt:
-    build: ./front
+    build:
+      context: ./front
+      dockerfile: dev.Dockerfile
     working_dir: /nuxt_app
     command: yarn dev
     volumes:
       - ./front:/nuxt_app:delegated,rw
     ports:
       - "3000:3000"
+      - "24678:24678" # dev server hot reload
+    environment:
+      - NUXT_PUBLIC_API_BASE=http://localhost:8000
     depends_on:
       - db
 
