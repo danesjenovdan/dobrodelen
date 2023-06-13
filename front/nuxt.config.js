@@ -55,6 +55,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      apiBaseServer: '', // can be overridden by NUXT_PUBLIC_API_BASE_SERVER environment variable
       apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
     },
   },

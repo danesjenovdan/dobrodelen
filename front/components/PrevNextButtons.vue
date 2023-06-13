@@ -62,7 +62,7 @@ export default {
       padding: 0 2.5rem;
       font-weight: 700;
       font-size: 1.5rem;
-      color: #383838;
+      color: #fff;
       letter-spacing: 0.2em;
       border-radius: 0.41em;
 

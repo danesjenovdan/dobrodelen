@@ -257,23 +257,30 @@ export default {
   },
   mixins: [formatPhoneNumberMixin],
   // TODO: migrate?
-  validate({ params }) {
-    return /^\d+$/.test(params.id);
-  },
-  // TODO: migrate
-  async asyncData({ $axios, params, query }) {
-    const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
-    // const orgResp = await $axios.$get(
-    //   `/api/organizations/${params.id}/${editKey}`,
-    // );
-    const orgResp = {}
+  // validate({ params }) {
+  //   return /^\d+$/.test(params.id);
+  // },
+  async setup() {
+    const config = useRuntimeConfig();
+    const route = useRoute();
+
+    const orgId = route.params.id;
+    const editKey = route.query.edit_key ? `?edit_key=${query.edit_key}` : '';
+
+    const { data: organization } = await useAsyncData('organization', () => {
+      const apiBase = process.server
+        ? config.public.apiBaseServer
+        : config.public.apiBase;
+      return $fetch(`${apiBase}/api/organizations/${orgId}/${editKey}`);
+    });
+
     return {
-      organization: orgResp,
+      apiBaseUrl: config.public.apiBase,
+      organization,
     };
   },
   data() {
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
       showDonateModal: false,
       qrCodeLoading: false,

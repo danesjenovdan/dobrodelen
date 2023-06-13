@@ -944,7 +944,7 @@ export default {
       this.$router.push({ name: 'organizacija-id', params: { id: org.id } });
     },
     shorten(text, max = 320) {
-      if (text.length > max) {
+      if (text && text.length > max) {
         return `${text.slice(0, text.lastIndexOf(' ', max))} ...`;
       }
       return text;

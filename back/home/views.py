@@ -33,6 +33,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "create":
             return serializers.OrganizationDetailSerializer
+        if self.action == "update" and self.is_valid_edit_key():
+            return serializers.OrganizationDetailSerializer
         if self.action == "partial_update" and self.is_valid_edit_key():
             return serializers.OrganizationDetailSerializer
         if self.action == "retrieve" and self.is_valid_edit_key():

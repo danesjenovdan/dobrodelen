@@ -20,7 +20,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ["localhost", "dobrodelen.lb.djnd.si", "dobrodelen.si"]
+ALLOWED_HOSTS = ["wagtail", "localhost", "dobrodelen.lb.djnd.si", "dobrodelen.si"]
 CSRF_TRUSTED_ORIGINS = ["https://dobrodelen.lb.djnd.si", "https://dobrodelen.si"]
 
 # DJANGO STORAGE SETTINGS

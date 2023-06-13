@@ -782,15 +782,17 @@ export default {
     const editId = route.query.edit_id;
     const editKey = route.query.edit_key;
 
-    const { data: initialData, refresh } = await useAsyncData(
-      'initialData',
-      () => {
-        if (editId && editId) {
-          return $fetch(`/api/organizations/${editId}/?edit_key=${editKey}`);
-        }
-        return {};
-      },
-    );
+    const { data: initialData } = await useAsyncData('initialData', () => {
+      if (editId && editKey) {
+        const apiBase = process.server
+          ? config.public.apiBaseServer
+          : config.public.apiBase;
+        return $fetch(
+          `${apiBase}/api/organizations/${editId}/?edit_key=${editKey}`,
+        );
+      }
+      return {};
+    });
 
     return {
       apiBaseUrl: config.public.apiBase,
@@ -963,7 +965,7 @@ export default {
 
         keys.forEach((key) => {
           // Add http:// to links if missing!
-          if (key === 'web_page') {
+          if (key === 'web_page' || key.endsWith('_url')) {
             if (data[key]) {
               const url = /^https?:\/\//.test(data[key])
                 ? data[key]
@@ -1038,13 +1040,12 @@ export default {
       return true;
     },
     async createOrUpdateOrg(data) {
-      const method = this.editId && this.editKey ? 'patch' : 'post';
+      const method = this.editId && this.editKey ? 'PATCH' : 'POST';
       const query = `${this.editKey ? `?edit_key=${this.editKey}` : ''}`;
-      const url = `/api/organizations/${
+      const url = `${this.apiBaseUrl}/api/organizations/${
         this.editId ? `${this.editId}/` : ''
       }${query}`;
-      // const res = await this.$axios[`$${method}`](url, data);
-      const res = {};
+      const res = await $fetch(url, { method, body: data });
       if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
         this.editId = res.id;
         this.editKey = res.edit_key;
