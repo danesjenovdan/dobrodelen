@@ -754,7 +754,7 @@
 </template>
 
 <script>
-import { isEqual, cloneDeep } from 'lodash';
+import _ from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import FormStages from '~/components/FormStages.vue';
 import FormCategory from '~/components/Form/FormCategory.vue';
@@ -818,7 +818,7 @@ export default {
         web_page: init.web_page || '',
         links:
           init.links && init.links.length
-            ? cloneDeep(init.links)
+            ? _.cloneDeep(init.links)
             : [{ url: '' }],
         region: init.region ? init.region.slice() : [],
         area: init.area ? init.area.slice() : [],
@@ -955,7 +955,7 @@ export default {
         }
 
         const keys = Object.keys(data).filter((key) => {
-          return !isEqual(data[key], this.initialData[key]);
+          return !_.isEqual(data[key], this.initialData[key]);
         });
 
         const jsonData = {};

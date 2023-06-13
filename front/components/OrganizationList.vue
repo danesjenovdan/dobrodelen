@@ -640,7 +640,7 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
+import _ from 'lodash';
 import FormCategory from '~/components/Form/FormCategory.vue';
 import SelectionOption from '~/components/Form/SelectionOption.vue';
 
@@ -933,7 +933,7 @@ export default {
       }
       this.emitChange();
     },
-    emitChange: debounce(function emitChange() {
+    emitChange: _.debounce(function emitChange() {
       this.$emit('change', {
         sort: `${this.sortAsc ? '' : '-'}${this.sortKey}`,
         search: this.searchText,

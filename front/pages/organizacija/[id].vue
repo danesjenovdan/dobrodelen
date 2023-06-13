@@ -280,7 +280,7 @@
 </template>
 
 <script>
-import { keys, escape as _escape, groupBy } from 'lodash';
+import _ from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import DonateButton from '~/components/Form/DonateButton.vue';
 import AmountSelector from '~/components/AmountSelector.vue';
@@ -338,7 +338,7 @@ export default {
   },
   computed: {
     groupedPointsDetails() {
-      return groupBy(this.organization.points_details, 'section');
+      return _.groupBy(this.organization.points_details, 'section');
     },
     taxDonationWidgetUrl() {
       const qs = new URLSearchParams({
@@ -406,13 +406,13 @@ export default {
       };
 
       return (
-        keys(domains).find((key) =>
+        _.keys(domains).find((key) =>
           domains[key].some((d) => url.includes(d)),
         ) || 'link'
       );
     },
     paragraphise(text) {
-      const paragraphs = _escape(text)
+      const paragraphs = _.escape(text)
         .trim()
         .replace(/\r\n/g, '\n')
         .replace(/\r/g, '\n')
