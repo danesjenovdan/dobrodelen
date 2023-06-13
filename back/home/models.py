@@ -496,53 +496,85 @@ class Organization(ClusterableModel):
 
     # test_tuple_field = TupleField()
 
+    def get_point_fields(self):
+        return [
+            field
+            for field in self.__class__._meta.fields
+            if isinstance(field, models.BooleanField)
+            and (
+                field.name.startswith("has_published_")
+                or field.name.startswith("website_accessibility_")
+            )
+        ]
+
+    def get_panel_tree(self):
+        def panel_to_object(panel):
+            if isinstance(panel, FieldPanel):
+                return panel.field_name
+            if isinstance(panel, InlinePanel):
+                return panel.relation_name
+            if isinstance(panel, MultiFieldPanel):
+                return {
+                    "name": panel.heading,
+                    "children": [
+                        panel_to_object(child_panel) for child_panel in panel.children
+                    ],
+                }
+            return None
+
+        return [
+            panel_to_object(panel)
+            for panel in self.__class__.panels
+            if isinstance(panel, MultiFieldPanel)
+        ]
+
     @property
     def stars(self):
-        # TODO: fix
-        return -1
+        max_points = len(self.get_point_fields())
+        points = self.points
+        if points >= max_points * 0.9:
+            return 5
+        elif points >= max_points * 0.8:
+            return 4
+        elif points >= max_points * 0.7:
+            return 3
+        elif points >= max_points * 0.6:
+            return 2
+        elif points >= max_points * 0.5:
+            return 1
+        return 0
 
     @property
     def points(self):
-        # TODO: fix
-        return -1
+        point_field_names = [field.name for field in self.get_point_fields()]
+        return sum(list(map(lambda name: getattr(self, name, 0), point_field_names)))
 
     def compute_filtered_points(self, filter_keys):
         # TODO: fix
-        # criteria = self.criteria.first()
-        # if criteria:
-        #     fields = [
-        #         field
-        #         for field in Criteria._meta.fields
-        #         if field.name not in ["id", "organization", "stars", "points"]
-        #         and field.verbose_name.split(" - ")[0] in filter_keys
-        #     ]
-        #     return sum(
-        #         list(map(lambda field: getattr(criteria, field.name, 0), fields))
-        #     )
         return -1
 
     @property
     def points_details(self):
-        # TODO: fix
-        # criteria = self.criteria.first()
-        fields = [
-            # field
-            # for field in Criteria._meta.fields
-            # if field.name not in ["id", "organization", "stars", "points"]
-        ]
+        point_fields = self.get_point_fields()
+        panel_tree = self.get_panel_tree()
+
+        def find_parent_panel(field_name):
+            for panel in panel_tree:
+                if isinstance(panel, dict):
+                    for child in panel["children"]:
+                        if isinstance(child, str) and child == field_name:
+                            return panel["name"]
+            return None
 
         def field_to_object(field):
             return {
-                # "name": field.name,
-                # "verbose_name": field.verbose_name,
-                # "value": getattr(criteria, field.name, 0),
-                # "max_value": Criteria.max_values.get(
-                #     field.verbose_name.split(" - ")[0], 0
-                # ),
+                "section": find_parent_panel(field.name),
+                "name": field.name,
+                "verbose_name": field.verbose_name,
+                "value": getattr(self, field.name, False),
             }
 
-        values = list(map(field_to_object, fields))
-        return values
+        return list(map(field_to_object, point_fields))
 
     @property
     def edit_key(self):
@@ -613,7 +645,7 @@ class Organization(ClusterableModel):
                 FieldPanel("has_published_complaints_process"),
                 FieldPanel("complaints_process_url"),
             ],
-            heading="Dostopnost osnovnih informacij",
+            heading="Sklop 1: Dostopnost osnovnih informacij",
         ),
         # DOSTOPNOST VSEBINSKIH POROČIL
         MultiFieldPanel(
@@ -629,7 +661,7 @@ class Organization(ClusterableModel):
                 FieldPanel("has_published_strategic_objectives"),
                 FieldPanel("strategic_objectives_url"),
             ],
-            heading="Dostopnost vsebinskih poročil",
+            heading="Sklop 2: Dostopnost vsebinskih poročil",
         ),
         # FINANČNA TRANSPARENTNOST
         MultiFieldPanel(
@@ -647,7 +679,7 @@ class Organization(ClusterableModel):
                 FieldPanel("has_published_salary_ratio"),
                 FieldPanel("salary_ratio_url"),
             ],
-            heading="Finančna transparentnost",
+            heading="Sklop 3: Finančna transparentnost",
         ),
         # ZBIRANJE DONACIJSKIH SREDSTEV
         MultiFieldPanel(
@@ -657,7 +689,7 @@ class Organization(ClusterableModel):
                 FieldPanel("has_published_fundraising_report_with_purposes"),
                 FieldPanel("fundraising_report_with_purposes_url"),
             ],
-            heading="Zbiranje donacijskih sredstev",
+            heading="Sklop 4: Zbiranje donacijskih sredstev",
         ),
         # DOSTOP OBJAVLJENIH INFORMACIJ
         MultiFieldPanel(
@@ -666,7 +698,7 @@ class Organization(ClusterableModel):
                 FieldPanel("website_accessibility_zoom"),
                 FieldPanel("website_accessibility_disabilities"),
             ],
-            heading="Dostop objavljenih informacij",
+            heading="Sklop 5: Dostop objavljenih informacij",
         ),
         # REVIEW INFO
         MultiFieldPanel(

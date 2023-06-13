@@ -47,9 +47,9 @@ class OrganizationListSerializer(serializers.ModelSerializer):
             "region",
             "area",
             "custom_area",
-            # TODO: fix this
-            # "stars",
-            # "points",
+            # SCORE
+            "stars",
+            "points",
         )
 
 
@@ -81,10 +81,10 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "region",
             "area",
             "custom_area",
-            # TODO: fix this
-            # "stars",
-            # "points",
-            # "points_details",
+            # SCORE
+            "stars",
+            "points",
+            "points_details",
         )
 
     def get_area(self, obj):
@@ -194,8 +194,8 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "review_date",
             "review_notes",
             "published",
-            # TODO: fix this
-            # "stars",
-            # "points",
-            # "points_details",
+            # SCORE
+            "stars",
+            "points",
+            "points_details",
         )

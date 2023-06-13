@@ -457,17 +457,17 @@
               />
 
               <selection-option
-                v-model="data[activeStage].has_published_contact_info"
+                v-model="data[activeStage].has_published_contact_information"
                 type="checkbox"
-                name="has_published_contact_info"
+                name="has_published_contact_information"
                 label="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
               />
               <text-input
-                v-if="data[activeStage].has_published_contact_info"
-                v-model="data[activeStage].contact_info_url"
-                name="contact_info_url"
+                v-if="data[activeStage].has_published_contact_information"
+                v-model="data[activeStage].contact_information_url"
+                name="contact_information_url"
                 label="URL do objavljenega dokumenta/podatkov"
-                :has-error="dataErrors.contact_info_url"
+                :has-error="dataErrors.contact_information_url"
               />
 
               <selection-option

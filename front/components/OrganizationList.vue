@@ -363,7 +363,7 @@
             </div>
           </form-category>
 
-          <form-category title="Statusi">
+          <!-- <form-category title="Statusi">
             <div class="row">
               <div class="col-md-6">
                 <selection-option
@@ -398,9 +398,9 @@
                 />
               </div>
             </div>
-          </form-category>
+          </form-category> -->
 
-          <div class="row align-items-end">
+          <!-- <div class="row align-items-end">
             <div class="col-md-4">
               <form-category title="Število zaposlenih">
                 <select v-model="filters.employed" class="custom-select">
@@ -440,7 +440,7 @@
                 </select>
               </form-category>
             </div>
-          </div>
+          </div> -->
 
           <form-category title="Območja delovanja">
             <div class="row">
