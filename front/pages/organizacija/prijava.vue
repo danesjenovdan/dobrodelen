@@ -149,21 +149,6 @@
               />
             </form-category>
 
-            <!-- <form-category title="Donacije">
-              <text-input
-                v-model="data[activeStage].account_number"
-                name="account_number"
-                label="Številka tekočega računa"
-                :has-error="dataErrors.account_number"
-              />
-              <text-input
-                v-model="data[activeStage].donation_url"
-                name="donation_url"
-                label="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)"
-                :has-error="dataErrors.donation_url"
-              />
-            </form-category> -->
-
             <form-category
               title="Regija delovanja organizacije"
               note="lahko izberete več možnosti"
@@ -346,6 +331,21 @@
                 @custom-change="data[activeStage].custom_area = $event"
               />
             </form-category>
+
+            <!-- <form-category title="Donacije">
+              <text-input
+                v-model="data[activeStage].account_number"
+                name="account_number"
+                label="Številka tekočega računa"
+                :has-error="dataErrors.account_number"
+              />
+              <text-input
+                v-model="data[activeStage].donation_url"
+                name="donation_url"
+                label="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)"
+                :has-error="dataErrors.donation_url"
+              />
+            </form-category> -->
 
             <!-- <form-category title="Proračun">
               <text-input

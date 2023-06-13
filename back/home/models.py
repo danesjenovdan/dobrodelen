@@ -114,7 +114,7 @@ class HomePage(Page):
 
 
 class Organization(ClusterableModel):
-    # info
+    # META INFO
     is_complete = models.BooleanField(
         default=False,
         verbose_name="Je prijava končana?",
@@ -129,7 +129,24 @@ class Organization(ClusterableModel):
         null=True,
         verbose_name="Čas končane prijave",
     )
-    # org info
+
+    # REVIEW INFO
+    review_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datum pregleda",
+    )
+    review_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Opombe ocenjevalca (ni javno)",
+    )
+    published = models.BooleanField(
+        default=False,
+        verbose_name="Je organizacija objavljena?",
+    )
+
+    # OSEBNA IZKAZNICA ORGANIZACIJE
     name = models.CharField(
         max_length=512,
         default="",
@@ -141,10 +158,13 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Druga imena, pod katerimi je organizacija poznana (kratice, okrajšave)",
     )
-    description = models.TextField(
-        default="",
+    cover_photo = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
         blank=True,
-        verbose_name="Kratek opis organizacije (do 500 znakov)",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Slika",
     )
     address = models.CharField(
         max_length=512,
@@ -170,37 +190,25 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kontakt: telefon",
     )
-    web_page = models.URLField(
-        max_length=512,
-        default="",
-        blank=True,
-        verbose_name="Spletna stran",
-    )
-    cover_photo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name="Slika",
-    )
     tax_number = models.CharField(
         max_length=32,
         default="",
         blank=True,
         verbose_name="Davčna številka",
     )
-    account_number = models.CharField(
-        max_length=64,
-        default="",
-        blank=True,
-        verbose_name="Številka tekočega računa",
-    )
-    donation_url = models.URLField(
+    web_page = models.URLField(
         max_length=512,
         default="",
         blank=True,
-        verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
+        verbose_name="Spletna stran",
+    )
+    # links = related model
+    region = models.ManyToManyField(
+        "Region",
+        default="",
+        blank=True,
+        related_name="organization",
+        verbose_name="Regije (lahko izberete več možnosti)",
     )
     area = models.ManyToManyField(
         "Area",
@@ -215,65 +223,278 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Področje delovanja: Drugo",
     )
-    avg_revenue = models.IntegerField(
-        default=0,
-        blank=True,
-        verbose_name="Povprečni letni proračun v zadnjih treh letih",
-    )
-    employed = models.IntegerField(
-        default=0,
-        blank=True,
-        verbose_name="Število zaposlenih v zadnjem zaključenem letu",
-    )
-    is_charity = models.BooleanField(
+
+    # account_number = models.CharField(
+    #     max_length=64,
+    #     default="",
+    #     blank=True,
+    #     verbose_name="Številka tekočega računa",
+    # )
+    # donation_url = models.URLField(
+    #     max_length=512,
+    #     default="",
+    #     blank=True,
+    #     verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
+    # )
+
+    # avg_revenue = models.IntegerField(
+    #     default=0,
+    #     blank=True,
+    #     verbose_name="Povprečni letni proračun v zadnjih treh letih",
+    # )
+    # employed = models.IntegerField(
+    #     default=0,
+    #     blank=True,
+    #     verbose_name="Število zaposlenih v zadnjem zaključenem letu",
+    # )
+
+    # is_charity = models.BooleanField(
+    #     default=False,
+    #     blank=True,
+    #     verbose_name="Organizacija ima status humanitarne organizacije",
+    # )
+    # has_public_interest = models.BooleanField(
+    #     default=False,
+    #     blank=True,
+    #     verbose_name="Organizacija ima status delovanja v javnem interesu",
+    # )
+    # is_voluntary = models.BooleanField(
+    #     default=False,
+    #     blank=True,
+    #     verbose_name="Organizacija je vpisana v evidenco prostovoljskih organizacij",
+    # )
+    # zero5 = models.BooleanField(
+    #     default=False,
+    #     blank=True,
+    #     verbose_name="Organizacija je na seznamu upravičencev do 1 % dohodnine",
+    # )
+    # zero5_amount = models.IntegerField(
+    #     default=0,
+    #     blank=True,
+    #     verbose_name="Višina zbranih sredstev prek 1 % dohodnine",
+    # )
+
+    # DOSTOPNOST OSNOVNIH INFORMACIJ
+    has_published_key_documents = models.BooleanField(
         default=False,
-        blank=True,
-        verbose_name="Organizacija ima status humanitarne organizacije",
+        verbose_name="Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)",
     )
-    has_public_interest = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name="Organizacija ima status delovanja v javnem interesu",
-    )
-    is_voluntary = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name="Organizacija je vpisana v evidenco prostovoljskih organizacij",
-    )
-    zero5 = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name="Organizacija je na seznamu upravičencev do 1 % dohodnine",
-    )
-    zero5_amount = models.IntegerField(
-        default=0,
-        blank=True,
-        verbose_name="Višina zbranih sredstev prek 1 % dohodnine",
-    )
-    region = models.ManyToManyField(
-        "Region",
+    key_documents_url = models.URLField(
+        max_length=512,
         default="",
         blank=True,
-        related_name="organization",
-        verbose_name="Regije (lahko izberete več možnosti)",
+        verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
     )
-    # criteria
-    # - test_tuple_field = TupleField()
-    # review
-    review_date = models.DateField(
-        blank=True,
-        null=True,
-        verbose_name="Datum pregleda",
+    has_published_mission = models.BooleanField(
+        default=False, verbose_name="Kriterij 2: Organizacija ima objavljeno poslanstvo"
     )
-    review_notes = models.TextField(
+    mission_url = models.URLField(
+        max_length=512,
         default="",
         blank=True,
-        verbose_name="Opombe ocenjevalca (ni javno)",
+        verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
     )
-    published = models.BooleanField(
+    has_published_key_employee_list = models.BooleanField(
         default=False,
-        verbose_name="Je organizacija objavljena?",
+        verbose_name="Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih",
     )
+    key_employee_list_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_board_member_list = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov",
+    )
+    board_member_list_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_contact_information = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo",
+    )
+    contact_information_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_complaints_contact = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe",
+    )
+    complaints_contact_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 6: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_complaints_process = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 7: Objavljen je celoten pritožbeni postopek",
+    )
+    complaints_process_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 7: URL do objavljenega dokumenta/podatkov",
+    )
+
+    # DOSTOPNOST VSEBINSKIH POROČIL
+    has_published_substantive_report = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto",
+    )
+    substantive_report_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_report_about_work = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja",
+    )
+    report_about_work_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_report_with_results = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti",
+    )
+    report_with_results_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_work_plan = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto",
+    )
+    work_plan_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_strategic_objectives = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 5: Organizacija ima objavljene glavne strateške cilje",
+    )
+    strategic_objectives_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
+    )
+
+    # FINANČNA TRANSPARENTNOST
+    has_published_financial_report = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto",
+    )
+    financial_report_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_understandable_financial_report = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)",
+    )
+    understandable_financial_report_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_operating_expenses = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)",
+    )
+    operating_expenses_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_main_sources_of_financing = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)",
+    )
+    main_sources_of_financing_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_management_revenues = models.BooleanField(
+        default=False, verbose_name="Kriterij 5: Objavljeni so prihodki vodstva"
+    )
+    management_revenues_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_salary_ratio = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo",
+    )
+    salary_ratio_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 6: URL do objavljenega dokumenta/podatkov",
+    )
+
+    # ZBIRANJE DONACIJSKIH SREDSTEV
+    has_published_fundraising_reports = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 1: Objavljena so poročila o zbranih sredstvih",
+    )
+    fundraising_reports_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
+    )
+    has_published_fundraising_report_with_purposes = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)",
+    )
+    fundraising_report_with_purposes_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+
+    # DOSTOP OBJAVLJENIH INFORMACIJ
+    website_accessibility_contrast = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1",
+    )
+    website_accessibility_zoom = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %",
+    )
+    website_accessibility_disabilities = models.BooleanField(
+        default=False,
+        verbose_name="Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami",
+    )
+
+    # test_tuple_field = TupleField()
 
     @property
     def stars(self):
@@ -342,7 +563,7 @@ class Organization(ClusterableModel):
             try_send_mail_updated_org(self.pk, self)
 
     panels = [
-        # info
+        # META INFO
         MultiFieldPanel(
             [
                 HelpPanel(
@@ -355,33 +576,99 @@ class Organization(ClusterableModel):
             ],
             heading="Podatki o prijavi",
         ),
-        # org info
-        FieldPanel("name"),
-        FieldPanel("additional_names"),
-        FieldPanel("description"),
-        FieldPanel("address"),
-        FieldPanel("contact_name"),
-        FieldPanel("contact_email"),
-        FieldPanel("contact_phone"),
-        FieldPanel("web_page", widget=URLInputWithLink),
-        InlinePanel("links", label="Družbeni mediji"),
-        FieldPanel("cover_photo"),
-        FieldPanel("tax_number"),
-        FieldPanel("account_number"),
-        FieldPanel("donation_url", widget=URLInputWithLink),
-        FieldPanel("area", widget=CheckboxSelectMultiple),
-        FieldPanel("custom_area"),
-        FieldPanel("avg_revenue"),
-        FieldPanel("employed"),
-        FieldPanel("is_charity"),
-        FieldPanel("has_public_interest"),
-        FieldPanel("is_voluntary"),
-        FieldPanel("zero5"),
-        FieldPanel("zero5_amount"),
-        FieldPanel("region", widget=CheckboxSelectMultiple),
-        # criteria
-        # FieldPanel("test_tuple_field", widget=LabeledTupleCheckboxes),
-        # review
+        # OSEBNA IZKAZNICA ORGANIZACIJE
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("additional_names"),
+                FieldPanel("cover_photo"),
+                FieldPanel("address"),
+                FieldPanel("contact_name"),
+                FieldPanel("contact_email"),
+                FieldPanel("contact_phone"),
+                FieldPanel("tax_number"),
+                FieldPanel("web_page", widget=URLInputWithLink),
+                InlinePanel("links", label="Družbeni mediji"),
+                FieldPanel("region", widget=CheckboxSelectMultiple),
+                FieldPanel("area", widget=CheckboxSelectMultiple),
+                FieldPanel("custom_area"),
+            ],
+            heading="Osebna izkaznica organizacije",
+        ),
+        # DOSTOPNOST OSNOVNIH INFORMACIJ
+        MultiFieldPanel(
+            [
+                FieldPanel("has_published_key_documents"),
+                FieldPanel("key_documents_url"),
+                FieldPanel("has_published_mission"),
+                FieldPanel("mission_url"),
+                FieldPanel("has_published_key_employee_list"),
+                FieldPanel("key_employee_list_url"),
+                FieldPanel("has_published_board_member_list"),
+                FieldPanel("board_member_list_url"),
+                FieldPanel("has_published_contact_information"),
+                FieldPanel("contact_information_url"),
+                FieldPanel("has_published_complaints_contact"),
+                FieldPanel("complaints_contact_url"),
+                FieldPanel("has_published_complaints_process"),
+                FieldPanel("complaints_process_url"),
+            ],
+            heading="Dostopnost osnovnih informacij",
+        ),
+        # DOSTOPNOST VSEBINSKIH POROČIL
+        MultiFieldPanel(
+            [
+                FieldPanel("has_published_substantive_report"),
+                FieldPanel("substantive_report_url"),
+                FieldPanel("has_published_report_about_work"),
+                FieldPanel("report_about_work_url"),
+                FieldPanel("has_published_report_with_results"),
+                FieldPanel("report_with_results_url"),
+                FieldPanel("has_published_work_plan"),
+                FieldPanel("work_plan_url"),
+                FieldPanel("has_published_strategic_objectives"),
+                FieldPanel("strategic_objectives_url"),
+            ],
+            heading="Dostopnost vsebinskih poročil",
+        ),
+        # FINANČNA TRANSPARENTNOST
+        MultiFieldPanel(
+            [
+                FieldPanel("has_published_financial_report"),
+                FieldPanel("financial_report_url"),
+                FieldPanel("has_published_understandable_financial_report"),
+                FieldPanel("understandable_financial_report_url"),
+                FieldPanel("has_published_operating_expenses"),
+                FieldPanel("operating_expenses_url"),
+                FieldPanel("has_published_main_sources_of_financing"),
+                FieldPanel("main_sources_of_financing_url"),
+                FieldPanel("has_published_management_revenues"),
+                FieldPanel("management_revenues_url"),
+                FieldPanel("has_published_salary_ratio"),
+                FieldPanel("salary_ratio_url"),
+            ],
+            heading="Finančna transparentnost",
+        ),
+        # ZBIRANJE DONACIJSKIH SREDSTEV
+        MultiFieldPanel(
+            [
+                FieldPanel("has_published_fundraising_reports"),
+                FieldPanel("fundraising_reports_url"),
+                FieldPanel("has_published_fundraising_report_with_purposes"),
+                FieldPanel("fundraising_report_with_purposes_url"),
+            ],
+            heading="Zbiranje donacijskih sredstev",
+        ),
+        # DOSTOP OBJAVLJENIH INFORMACIJ
+        MultiFieldPanel(
+            [
+                FieldPanel("website_accessibility_contrast"),
+                FieldPanel("website_accessibility_zoom"),
+                FieldPanel("website_accessibility_disabilities"),
+            ],
+            heading="Dostop objavljenih informacij",
+        ),
+        # REVIEW INFO
         MultiFieldPanel(
             [
                 FieldPanel("review_date"),
@@ -390,6 +677,7 @@ class Organization(ClusterableModel):
             ],
             heading="Podatki o pregledu",
         ),
+        # FieldPanel("test_tuple_field", widget=LabeledTupleCheckboxes),
     ]
 
     def __str__(self):
