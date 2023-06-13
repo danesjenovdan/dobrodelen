@@ -3,7 +3,7 @@
     <content-title
       :image="
         organization.cover_photo
-          ? `${apiBaseUrl}${organization.cover_photo.url}`
+          ? `${organization.cover_photo.full_url}`
           : '/img/placeholder.png'
       "
       :title="organization.name"
