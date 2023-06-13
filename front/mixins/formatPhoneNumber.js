@@ -1,4 +1,4 @@
-import { keys } from 'lodash';
+import _ from 'lodash';
 
 const AREA_CODES = {
   mobile: [
@@ -61,7 +61,7 @@ function getPlainNumber(phoneNumber) {
 }
 
 function tryFormat(phoneNumber) {
-  const type = keys(AREA_CODES).find((key) =>
+  const type = _.keys(AREA_CODES).find((key) =>
     AREA_CODES[key].some((code) => phoneNumber.indexOf(code) === 0),
   );
 

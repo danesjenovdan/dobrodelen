@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { last } from 'lodash';
+import _ from 'lodash';
 
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
       (this.modelValue && this.modelValue.url) ||
       null;
     const fileName =
-      (filePath && decodeURIComponent(last(filePath.split('/')))) || null;
+      (filePath && decodeURIComponent(_.last(filePath.split('/')))) || null;
     return {
       fileName,
     };
