@@ -20,8 +20,8 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ["wagtail", "localhost", "dobrodelen.lb.djnd.si", "dobrodelen.si"]
-CSRF_TRUSTED_ORIGINS = ["https://dobrodelen.lb.djnd.si", "https://dobrodelen.si"]
+ALLOWED_HOSTS = ["wagtail", "localhost", "api.dobrodelen.si"]
+CSRF_TRUSTED_ORIGINS = ["https://api.dobrodelen.si", "https://dobrodelen.si"]
 
 # DJANGO STORAGE SETTINGS
 if os.getenv("DJANGO_ENABLE_S3", False):
