@@ -598,7 +598,7 @@
                     <img
                       :src="
                         org.cover_photo
-                          ? `${apiBaseUrl}${org.cover_photo.url}`
+                          ? `${org.cover_photo.full_url}`
                           : '/img/placeholder.png'
                       "
                       alt="organization image"
