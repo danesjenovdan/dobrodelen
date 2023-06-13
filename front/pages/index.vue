@@ -15,10 +15,10 @@
         </p>
         <p class="mt-4">
           Metodologija za pregled transparentnosti slovenskih nevladnih
-          organizacij temelji na 23-ih kriterijih, ki se nanašajo na 5 sklopov –
-          Osnovne informacije o organizaciji; Dostopnost vsebinskih poročil;
-          Finančna transparentnost; Zbiranje donacijskih sredstev in Dostopnost
-          objavljenih informacij.
+          organizacij temelji na 23-ih kriterijih, ki se nanašajo na 5 sklopov
+          &ndash; Osnovne informacije o organizaciji; Dostopnost vsebinskih
+          poročil; Finančna transparentnost; Zbiranje donacijskih sredstev in
+          Dostopnost objavljenih informacij.
         </p>
         <nuxt-link :to="{ name: 'organizacije' }" class="btn btn-warning mt-5">
           <span>VSTOPI</span>
@@ -34,7 +34,7 @@
 <script>
 import StripedTextShadow from '~/components/StripedTextShadow.vue';
 
-definePageMeta({ layout: 'landing' })
+definePageMeta({ layout: 'landing' });
 
 export default {
   components: {

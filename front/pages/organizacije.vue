@@ -20,22 +20,35 @@ export default {
     IntroText,
     OrganizationList,
   },
-  // TODO: migrate
-  async asyncData({ $axios, query }) {
-    const orgSortQuery = query.sort || undefined;
-    const orgSearchQuery = query.q || undefined;
-    const orgSearchCriteria = query.criteria || undefined;
-    const url = orgSearchCriteria
-      ? `/api/organizations-filtered-criteria/?filter_keys=${orgSearchCriteria}`
-      : '/api/organizations/';
-    // const orgsResp = await $axios.$get(url);
-    const orgsResp = {}
+  async setup() {
+    const config = useRuntimeConfig();
+    const route = useRoute();
+
+    const orgSortQuery = route.query.sort;
+    const orgSearchQuery = route.query.q;
+    const orgSearchCriteria = route.query.criteria;
+
+    const { data: orgData } = await useAsyncData('organizations', () => {
+      const apiBase = process.server
+        ? config.public.apiBaseServer
+        : config.public.apiBase;
+      const url = orgSearchCriteria
+        ? `/api/organizations-filtered-criteria/?filter_keys=${orgSearchCriteria}`
+        : '/api/organizations/';
+      return $fetch(`${apiBase}${url}`);
+    });
+
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
-      organizations: orgsResp.results,
+      apiBaseUrl: config.public.apiBase,
+      orgData,
       orgSortQuery,
       orgSearchQuery,
       orgSearchCriteria,
+    };
+  },
+  data() {
+    return {
+      organizations: this.orgData.results || [],
     };
   },
   methods: {
@@ -58,11 +71,10 @@ export default {
     async fetchOrganizationsFilteredCriteria(criteria) {
       try {
         this.loading = true;
-        // const response = await axios.get(
-        //   `${this.apiBaseUrl}/api/organizations-filtered-criteria/?filter_keys=${criteria}`,
-        // );
-        const response = {data:{}}
-        this.organizations = response.data.results || [];
+        const response = await $fetch(
+          `${this.apiBaseUrl}/api/organizations-filtered-criteria/?filter_keys=${criteria}`,
+        );
+        this.organizations = response.results || [];
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);

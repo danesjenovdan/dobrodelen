@@ -8,8 +8,8 @@
       type="text"
       :class="['form-control', { 'is-invalid': hasError }]"
       :placeholder="label"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
     <textarea
       v-else
@@ -17,10 +17,10 @@
       :name="name"
       :class="['form-control', { 'is-invalid': hasError }]"
       :placeholder="label"
-      :value="value"
+      :value="modelValue"
       :rows="rows"
       :maxlength="maxlength"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
     <label v-if="label" :for="`${name}__id`">{{ label }}</label>
   </div>
@@ -37,7 +37,7 @@ export default {
       type: String,
       default: null,
     },
-    value: {
+    modelValue: {
       type: [String, Number],
       default: '',
     },

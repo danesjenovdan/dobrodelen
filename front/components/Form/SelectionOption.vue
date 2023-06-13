@@ -27,10 +27,6 @@
 
 <script>
 export default {
-  model: {
-    prop: 'checked',
-    event: 'change',
-  },
   props: {
     name: {
       type: String,
@@ -44,7 +40,7 @@ export default {
       type: [String, Number, Array],
       default: null,
     },
-    checked: {
+    modelValue: {
       type: [Boolean, Array, String],
       default: false,
     },
@@ -69,17 +65,17 @@ export default {
   },
   computed: {
     isChecked() {
-      if (Array.isArray(this.checked)) {
+      if (Array.isArray(this.modelValue)) {
         if (Array.isArray(this.value)) {
-          return this.value.every((e) => this.checked.includes(e));
+          return this.value.every((e) => this.modelValue.includes(e));
         } else {
-          return this.checked.filter((e) => e === this.value).length > 0;
+          return this.modelValue.filter((e) => e === this.value).length > 0;
         }
       }
       if (this.type === 'radio') {
-        return this.checked === this.value;
+        return this.modelValue === this.value;
       }
-      return this.checked;
+      return this.modelValue;
     },
   },
   methods: {
@@ -88,16 +84,16 @@ export default {
       if (val && this.customInput) {
         this.$refs.customInput.focus();
       }
-      if (Array.isArray(this.checked)) {
+      if (Array.isArray(this.modelValue)) {
         if (val) {
-          val = this.checked.slice();
+          val = this.modelValue.slice();
           if (Array.isArray(this.value)) {
             val.push(...this.value);
           } else {
             val.push(this.value);
           }
         } else {
-          val = this.checked.slice();
+          val = this.modelValue.slice();
           if (Array.isArray(this.value)) {
             val = val.filter((e) => !this.value.includes(e));
           } else {
@@ -107,7 +103,7 @@ export default {
       } else if (this.type === 'radio') {
         val = this.value;
       }
-      this.$emit('change', val);
+      this.$emit('update:modelValue', val);
     },
     onCustomChange(event) {
       if (event.target.value && !this.isChecked) {

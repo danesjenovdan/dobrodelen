@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     $route() {
-      this.$nuxt.$emit('toggle-menu', false);
+      // TODO: this.$nuxt.$emit('toggle-menu', false);
     },
   },
 };

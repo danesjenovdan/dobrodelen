@@ -45,7 +45,7 @@
         top: 0;
         right: 0;
         margin: 0;
-        background-image: url('~assets/svg/cross-close.svg');
+        background-image: url('~/assets/svg/cross-close.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-size: 1.5rem 1.5rem;
@@ -98,60 +98,60 @@
 }
 
 .icon-star {
-  background-image: url('~assets/svg/star.svg');
+  background-image: url('~/assets/svg/star.svg');
 
   &.icon-star--full {
-    background-image: url('~assets/svg/star_full.svg');
+    background-image: url('~/assets/svg/star_full.svg');
   }
 }
 
 .icon-heart {
-  background-image: url('~assets/svg/heart.svg');
+  background-image: url('~/assets/svg/heart.svg');
 }
 
 .icon-arrow,
 .icon-arrow--right {
-  background-image: url('~assets/svg/arrow-right.svg');
+  background-image: url('~/assets/svg/arrow-right.svg');
 }
 
 .icon-signup-form {
-  background-image: url('~assets/svg/signup-form.svg');
+  background-image: url('~/assets/svg/signup-form.svg');
 }
 
 .icon-add {
-  background-image: url('~assets/svg/add.svg');
+  background-image: url('~/assets/svg/add.svg');
 }
 
 .icon-upload {
-  background-image: url('~assets/svg/upload.svg');
+  background-image: url('~/assets/svg/upload.svg');
 }
 
 .icon-menu {
-  background-image: url('~assets/svg/menu.svg');
+  background-image: url('~/assets/svg/menu.svg');
 }
 
 .icon-link {
-  background-image: url('~assets/svg/link.svg');
+  background-image: url('~/assets/svg/link.svg');
 }
 
 // SOCIAL ICONS
 
 .icon-facebook {
-  background-image: url('~assets/svg/social/facebook.svg');
+  background-image: url('~/assets/svg/social/facebook.svg');
 }
 
 .icon-instagram {
-  background-image: url('~assets/svg/social/instagram.svg');
+  background-image: url('~/assets/svg/social/instagram.svg');
 }
 
 .icon-twitter {
-  background-image: url('~assets/svg/social/twitter.svg');
+  background-image: url('~/assets/svg/social/twitter.svg');
 }
 
 .icon-youtube {
-  background-image: url('~assets/svg/social/youtube.svg');
+  background-image: url('~/assets/svg/social/youtube.svg');
 }
 
 .icon-vimeo {
-  background-image: url('~assets/svg/social/vimeo.svg');
+  background-image: url('~/assets/svg/social/vimeo.svg');
 }

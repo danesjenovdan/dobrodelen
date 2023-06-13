@@ -13,7 +13,7 @@
       @donate-click="toggleDonateModal(true)"
     />
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-5">
         <div class="org-info">
           <dl class="row">
             <dt class="col-4">Druga imena</dt>
@@ -73,7 +73,7 @@
             </dd>
           </dl>
         </div>
-        <div class="org-info">
+        <!-- <div class="org-info">
           <dl class="row">
             <dt class="col-9">Povprečni letni proračun v zadnjem letu</dt>
             <dd class="col-3">{{ formatEuro(organization.avg_revenue) }}</dd>
@@ -102,7 +102,7 @@
             </dt>
             <dd class="col-3">{{ formatEuro(organization.zero5_amount) }}</dd>
           </dl>
-        </div>
+        </div> -->
         <div class="org-review-date">
           Datum pregleda: {{ formatDate(organization.review_date) }}
         </div>
@@ -113,12 +113,49 @@
           />
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-7">
         <div class="org-criteria">
-          <!-- TODO: add new criteria display table here -->
+          <h4>Kriteriji</h4>
+          <div class="row">
+            <div
+              v-for="(points, section) in groupedPointsDetails"
+              :key="section"
+              class="col-xl-4"
+            >
+              <h5 class="org-criteria-section-name">
+                <div>
+                  <em>{{ splitNameAtColon(section)[0] }}</em>
+                </div>
+                <div>{{ splitNameAtColon(section)[1] }}</div>
+              </h5>
+              <div v-for="point in points" :key="point.name">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :id="`point-${point.name}`"
+                    :checked="point.value"
+                    disabled
+                  />
+                  <label class="form-check-label" :for="`point-${point.name}`">
+                    <em>{{ splitNameAtColon(point.verbose_name)[0] }}: </em>
+                    {{ splitNameAtColon(point.verbose_name)[1] }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="org-enprocent">
-          <!-- TODO: embed 1% widget here -->
+        <div v-if="hasTaxDonationWidget" class="org-enprocent">
+          <h4>Donacija prek 1% dohodnine</h4>
+          <iframe
+            id="enprocent_iframe"
+            frameborder="0"
+            width="800"
+            height="600"
+            style="max-width: 100%"
+            :src="taxDonationWidgetUrl"
+          ></iframe>
         </div>
       </div>
     </div>
@@ -129,7 +166,7 @@
         class="modal show"
         tabindex="-1"
         role="dialog"
-        style="display:block"
+        style="display: block"
       >
         <div
           class="modal-dialog modal-lg modal-dialog-centered"
@@ -178,7 +215,7 @@
         class="modal show"
         tabindex="-1"
         role="dialog"
-        style="display:block"
+        style="display: block"
       >
         <div
           class="modal-dialog modal-lg modal-dialog-centered"
@@ -213,7 +250,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="font-weight-normal"
-                    style="word-break: break-all;"
+                    style="word-break: break-all"
                     >{{ organization.donation_url }}</a
                   >
                   <template v-if="organization.account_number"> ali </template>
@@ -243,7 +280,7 @@
 </template>
 
 <script>
-import { keys, escape as _escape } from 'lodash';
+import { keys, escape as _escape, groupBy } from 'lodash';
 import ContentTitle from '~/components/ContentTitle.vue';
 import DonateButton from '~/components/Form/DonateButton.vue';
 import AmountSelector from '~/components/AmountSelector.vue';
@@ -257,32 +294,88 @@ export default {
   },
   mixins: [formatPhoneNumberMixin],
   // TODO: migrate?
-  validate({ params }) {
-    return /^\d+$/.test(params.id);
-  },
-  // TODO: migrate
-  async asyncData({ $axios, params, query }) {
-    const editKey = query.edit_key ? `?edit_key=${query.edit_key}` : '';
-    // const orgResp = await $axios.$get(
-    //   `/api/organizations/${params.id}/${editKey}`,
-    // );
-    const orgResp = {}
+  // validate({ params }) {
+  //   return /^\d+$/.test(params.id);
+  // },
+  async setup() {
+    const config = useRuntimeConfig();
+    const route = useRoute();
+
+    const orgId = route.params.id;
+    const editKey = route.query.edit_key ? `?edit_key=${query.edit_key}` : '';
+
+    const { data: organization } = await useAsyncData('organization', () => {
+      const apiBase = process.server
+        ? config.public.apiBaseServer
+        : config.public.apiBase;
+      return $fetch(`${apiBase}/api/organizations/${orgId}/${editKey}`);
+    });
+
     return {
-      organization: orgResp,
+      apiBaseUrl: config.public.apiBase,
+      organization,
     };
   },
   data() {
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
       showStarsModal: false,
       showDonateModal: false,
       qrCodeLoading: false,
+      hasTaxDonationWidget: false,
+      taxDonationWidgetData: null,
     };
+  },
+  async mounted() {
+    const res = await $fetch(
+      `${this.apiBaseUrl}/api/organization-has-tax-donation/${this.organization.id}/`,
+    );
+    if (res.found) {
+      this.enableTaxDonationWidget(res.ngo);
+    }
   },
   beforeDestroy() {
     this.toggleStarsModal(false);
   },
+  computed: {
+    groupedPointsDetails() {
+      return groupBy(this.organization.points_details, 'section');
+    },
+    taxDonationWidgetUrl() {
+      const qs = new URLSearchParams({
+        address: this.taxDonationWidgetData.address,
+        city: this.taxDonationWidgetData.city,
+        name: this.taxDonationWidgetData.name,
+        percent: 1.0,
+        postalCode: this.taxDonationWidgetData.postal_code,
+        taxNumber: this.taxDonationWidgetData.tax_number,
+      });
+      return `https://www.cnvos.si/enprocent/embed/v2/?${qs.toString()}`;
+    },
+  },
   methods: {
+    enableTaxDonationWidget(ngo) {
+      this.taxDonationWidgetData = ngo;
+      this.hasTaxDonationWidget = true;
+
+      this.$nextTick(() => {
+        if (typeof window !== 'undefined') {
+          if (window.iFrameResize) {
+            iFrameResize({ checkOrigin: false }, '#enprocent_iframe');
+          } else {
+            const script = document.createElement('script');
+            script.onload = () => {
+              iFrameResize({ checkOrigin: false }, '#enprocent_iframe');
+            };
+            script.src =
+              'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js';
+            document.head.appendChild(script);
+          }
+        }
+      });
+    },
+    splitNameAtColon(section) {
+      return section.split(': ');
+    },
     toggleStarsModal(show = !this.showStarsModal) {
       if (typeof window !== 'undefined' && document.body.classList) {
         if (show) {
@@ -469,6 +562,60 @@ export default {
       @include media-breakpoint-down(sm) {
         margin-top: 2rem;
       }
+    }
+  }
+
+  .org-criteria {
+    margin-bottom: 2rem;
+
+    .org-criteria-section-name {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border-top: 0.5rem solid $yellow;
+      padding-top: 1rem;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      em {
+        font-style: italic;
+        font-weight: 400;
+      }
+    }
+
+    .form-check {
+      margin-bottom: 0.5rem;
+      padding-left: 2.75rem;
+      min-height: 2.5rem;
+    }
+
+    .form-check-input {
+      appearance: none;
+      width: 2rem;
+      height: 2rem;
+      margin-top: 0;
+      margin-left: -2.75rem;
+      background-image: url('~/assets/svg/ne.svg');
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:checked {
+        background-image: url('~/assets/svg/da.svg');
+      }
+    }
+
+    .form-check-label {
+      color: $body-color;
+      line-height: 1.2;
+    }
+  }
+
+  .org-enprocent {
+    h4 {
+      margin-bottom: 1rem;
+    }
+
+    iframe {
     }
   }
 

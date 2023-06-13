@@ -5,8 +5,8 @@
   "author": "danesjenovdan",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build"
+    "dev": "nuxt dev --no-clear",
+    "build": "nuxt build --no-clear"
   },
   "dependencies": {
     "nuxt": "^3.4.3"

@@ -54,7 +54,7 @@
           </template>
 
           <template v-if="activeStage === 0">
-            <form-category title="Ime">
+            <form-category title="Naziv organizacije">
               <text-input
                 v-model="data[activeStage].name"
                 name="name"
@@ -69,13 +69,12 @@
               />
             </form-category>
 
-            <form-category title="Kratek opis" note="največ 500 znakov">
-              <text-input
-                v-model="data[activeStage].description"
-                name="description"
-                :multiline="7"
-                :maxlength="500"
-                :has-error="dataErrors.description"
+            <form-category title="Slika">
+              <file-input
+                v-model="data[activeStage].cover_photo"
+                name="cover_photo"
+                label="Naložite sliko"
+                :has-error="dataErrors.cover_photo"
               />
             </form-category>
 
@@ -109,6 +108,15 @@
               />
             </form-category>
 
+            <form-category title="Davčna številka">
+              <text-input
+                v-model="data[activeStage].tax_number"
+                name="tax_number"
+                label="Davčna številka"
+                :has-error="dataErrors.tax_number"
+              />
+            </form-category>
+
             <form-category title="Spletna prisotnost">
               <text-input
                 v-model="data[activeStage].web_page"
@@ -116,7 +124,10 @@
                 label="URL spletne strani"
                 :has-error="dataErrors.web_page"
               />
-              <template v-for="(link, i) in data[activeStage].links" :key="`link-${i}`">
+              <template
+                v-for="(link, i) in data[activeStage].links"
+                :key="`link-${i}`"
+              >
                 <text-input
                   v-model="link.url"
                   :name="`links__${i}`"
@@ -138,176 +149,8 @@
               />
             </form-category>
 
-            <form-category title="Slika">
-              <file-input
-                v-model="data[activeStage].cover_photo"
-                name="cover_photo"
-                label="Naložite sliko"
-                :has-error="dataErrors.cover_photo"
-              />
-            </form-category>
-
-            <form-category title="Davčna številka">
-              <text-input
-                v-model="data[activeStage].tax_number"
-                name="tax_number"
-                label="Davčna številka"
-                :has-error="dataErrors.tax_number"
-              />
-            </form-category>
-
-            <form-category title="Donacije">
-              <text-input
-                v-model="data[activeStage].account_number"
-                name="account_number"
-                label="Številka tekočega računa"
-                :has-error="dataErrors.account_number"
-              />
-              <text-input
-                v-model="data[activeStage].donation_url"
-                name="donation_url"
-                label="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)"
-                :has-error="dataErrors.donation_url"
-              />
-            </form-category>
-
             <form-category
-              title="Področja delovanja"
-              note="lahko izberete več možnosti"
-            >
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="1"
-                label="Človekove pravice, demokracija in enakost"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="2"
-                label="Izobraževanje, raziskave in razvoj"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="3"
-                label="Kultura"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="4"
-                label="Mladina, otroci"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="5"
-                label="Razvojno sodelovanje"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="6"
-                label="Sociala"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="7"
-                label="Šport"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="8"
-                label="Okolje, narava in prostor"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="9"
-                label="Zdravje"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="11"
-                label="Starejši"
-              />
-              <selection-option
-                v-model="data[activeStage].area"
-                type="checkbox"
-                name="area"
-                :value="10"
-                label="Drugo:"
-                custom-input
-                :custom-input-value="data[activeStage].custom_area"
-                @custom-change="data[activeStage].custom_area = $event"
-              />
-            </form-category>
-
-            <form-category title="Proračun">
-              <text-input
-                v-model="data[activeStage].avg_revenue"
-                name="avg_revenue"
-                label="Povprečni letni proračun v zadnjem letu"
-                :has-error="dataErrors.avg_revenue"
-              />
-              <text-input
-                v-model="data[activeStage].employed"
-                name="employed"
-                label="Število zaposlenih v zadnjem zaključenem letu"
-                :has-error="dataErrors.employed"
-              />
-            </form-category>
-
-            <form-category title="Statusi">
-              <selection-option
-                v-model="data[activeStage].is_charity"
-                type="checkbox"
-                name="is_charity"
-                label="Organizacija ima status humanitarne organizacije"
-              />
-              <selection-option
-                v-model="data[activeStage].has_public_interest"
-                type="checkbox"
-                name="has_public_interest"
-                label="Organizacija ima status delovanja v javnem interesu"
-              />
-              <selection-option
-                v-model="data[activeStage].is_voluntary"
-                type="checkbox"
-                name="is_voluntary"
-                label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
-              />
-              <selection-option
-                v-model="data[activeStage].zero5"
-                type="checkbox"
-                name="zero5"
-                label="Organizacija je na seznamu upravičencev do 1 % dohodnine"
-              />
-              <text-input
-                v-if="data[activeStage].zero5"
-                v-model="data[activeStage].zero5_amount"
-                name="zero5_amount"
-                label="Višina zbranih sredstev prek 1 % dohodnine"
-                :has-error="dataErrors.zero5_amount"
-              />
-            </form-category>
-
-            <form-category
-              title="Območje delovanja"
+              title="Regija delovanja organizacije"
               note="lahko izberete več možnosti"
             >
               <selection-option
@@ -402,6 +245,156 @@
                 label="Zasavska"
               />
             </form-category>
+
+            <form-category
+              title="Področja delovanja"
+              note="lahko izberete več možnosti"
+            >
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="1"
+                label="Človekove pravice, demokracija in enakost"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="2"
+                label="Izobraževanje, raziskave in razvoj"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="3"
+                label="Kultura"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="4"
+                label="Mladina, otroci"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="5"
+                label="Razvojno sodelovanje"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="6"
+                label="Sociala"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="7"
+                label="Šport"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="8"
+                label="Okolje, narava in prostor"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="9"
+                label="Zdravje"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="11"
+                label="Starejši"
+              />
+              <selection-option
+                v-model="data[activeStage].area"
+                type="checkbox"
+                name="area"
+                :value="10"
+                label="Drugo:"
+                custom-input
+                :custom-input-value="data[activeStage].custom_area"
+                @custom-change="data[activeStage].custom_area = $event"
+              />
+            </form-category>
+
+            <!-- <form-category title="Donacije">
+              <text-input
+                v-model="data[activeStage].account_number"
+                name="account_number"
+                label="Številka tekočega računa"
+                :has-error="dataErrors.account_number"
+              />
+              <text-input
+                v-model="data[activeStage].donation_url"
+                name="donation_url"
+                label="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)"
+                :has-error="dataErrors.donation_url"
+              />
+            </form-category> -->
+
+            <!-- <form-category title="Proračun">
+              <text-input
+                v-model="data[activeStage].avg_revenue"
+                name="avg_revenue"
+                label="Povprečni letni proračun v zadnjem letu"
+                :has-error="dataErrors.avg_revenue"
+              />
+              <text-input
+                v-model="data[activeStage].employed"
+                name="employed"
+                label="Število zaposlenih v zadnjem zaključenem letu"
+                :has-error="dataErrors.employed"
+              />
+            </form-category> -->
+
+            <!-- <form-category title="Statusi">
+              <selection-option
+                v-model="data[activeStage].is_charity"
+                type="checkbox"
+                name="is_charity"
+                label="Organizacija ima status humanitarne organizacije"
+              />
+              <selection-option
+                v-model="data[activeStage].has_public_interest"
+                type="checkbox"
+                name="has_public_interest"
+                label="Organizacija ima status delovanja v javnem interesu"
+              />
+              <selection-option
+                v-model="data[activeStage].is_voluntary"
+                type="checkbox"
+                name="is_voluntary"
+                label="Organizacija je vpisana v evidenco prostovoljskih organizacij"
+              />
+              <selection-option
+                v-model="data[activeStage].zero5"
+                type="checkbox"
+                name="zero5"
+                label="Organizacija je na seznamu upravičencev do 1 % dohodnine"
+              />
+              <text-input
+                v-if="data[activeStage].zero5"
+                v-model="data[activeStage].zero5_amount"
+                name="zero5_amount"
+                label="Višina zbranih sredstev prek 1 % dohodnine"
+                :has-error="dataErrors.zero5_amount"
+              />
+            </form-category> -->
           </template>
 
           <template v-else-if="activeStage === 1">
@@ -464,17 +457,17 @@
               />
 
               <selection-option
-                v-model="data[activeStage].has_published_contact_info"
+                v-model="data[activeStage].has_published_contact_information"
                 type="checkbox"
-                name="has_published_contact_info"
+                name="has_published_contact_information"
                 label="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
               />
               <text-input
-                v-if="data[activeStage].has_published_contact_info"
-                v-model="data[activeStage].contact_info_url"
-                name="contact_info_url"
+                v-if="data[activeStage].has_published_contact_information"
+                v-model="data[activeStage].contact_information_url"
+                name="contact_information_url"
                 label="URL do objavljenega dokumenta/podatkov"
-                :has-error="dataErrors.contact_info_url"
+                :has-error="dataErrors.contact_information_url"
               />
 
               <selection-option
@@ -782,83 +775,147 @@ export default {
     FileInput,
     PrevNextButtons,
   },
-  // TODO: migrate
-  async asyncData({ $axios, query, error }) {
-    const editId = query.edit_id || null;
-    const editKey = query.edit_key || null;
+  async setup() {
+    const config = useRuntimeConfig();
+    const route = useRoute();
 
-    let initialData = {};
-    if (editId && editKey) {
-      // initialData = await $axios.$get(
-      //   `/api/organizations/${editId}/?edit_key=${editKey}`,
-      // );
-    }
+    const editId = route.query.edit_id;
+    const editKey = route.query.edit_key;
+
+    const { data: initialData } = await useAsyncData('initialData', () => {
+      if (editId && editKey) {
+        const apiBase = process.server
+          ? config.public.apiBaseServer
+          : config.public.apiBase;
+        return $fetch(
+          `${apiBase}/api/organizations/${editId}/?edit_key=${editKey}`,
+        );
+      }
+      return {};
+    });
+
+    return {
+      apiBaseUrl: config.public.apiBase,
+      editId,
+      editKey,
+      initialData,
+    };
+  },
+  data() {
+    const init = this.initialData;
 
     const data = [
+      // OSEBNA IZKAZNICA ORGANIZACIJE
       {
-        name: initialData.name || '',
-        additional_names: initialData.additional_names || '',
-        address: initialData.address || '',
-        contact_name: initialData.contact_name || '',
-        contact_email: initialData.contact_email || '',
-        contact_phone: initialData.contact_phone || '',
-        web_page: initialData.web_page || '',
+        name: init.name || '',
+        additional_names: init.additional_names || '',
+        cover_photo: init.cover_photo || null,
+        address: init.address || '',
+        contact_name: init.contact_name || '',
+        contact_email: init.contact_email || '',
+        contact_phone: init.contact_phone || '',
+        tax_number: init.tax_number || '',
+        web_page: init.web_page || '',
         links:
-          initialData.links && initialData.links.length
-            ? cloneDeep(initialData.links)
+          init.links && init.links.length
+            ? cloneDeep(init.links)
             : [{ url: '' }],
-        cover_photo: initialData.cover_photo || null,
-        tax_number: initialData.tax_number || '',
-        account_number: initialData.account_number || '',
-        donation_url: initialData.donation_url || '',
-        area: initialData.area ? initialData.area.slice() : [],
-        custom_area: initialData.custom_area || '',
-        region: initialData.region ? initialData.region.slice() : [],
-        avg_revenue: initialData.avg_revenue || 0,
-        employed: initialData.employed || 0,
-        is_charity: initialData.is_charity || false,
-        has_public_interest: initialData.has_public_interest || false,
-        is_voluntary: initialData.is_voluntary || false,
-        zero5: initialData.zero5 || false,
-        zero5_amount: initialData.zero5_amount || 0,
+        region: init.region ? init.region.slice() : [],
+        area: init.area ? init.area.slice() : [],
+        custom_area: init.custom_area || '',
       },
+      // DOSTOPNOST OSNOVNIH INFORMACIJ
       {
-        //
+        has_published_key_documents: init.has_published_key_documents || false,
+        key_documents_url: init.key_documents_url || '',
+        has_published_mission: init.has_published_mission || false,
+        mission_url: init.mission_url || '',
+        has_published_key_employee_list:
+          init.has_published_key_employee_list || false,
+        key_employee_list_url: init.key_employee_list_url || '',
+        has_published_board_member_list:
+          init.has_published_board_member_list || false,
+        board_member_list_url: init.board_member_list_url || '',
+        has_published_contact_information:
+          init.has_published_contact_information || false,
+        contact_information_url: init.contact_information_url || '',
+        has_published_complaints_contact:
+          init.has_published_complaints_contact || false,
+        complaints_contact_url: init.complaints_contact_url || '',
+        has_published_complaints_process:
+          init.has_published_complaints_process || false,
+        complaints_process_url: init.complaints_process_url || '',
       },
+      // DOSTOPNOST VSEBINSKIH POROČIL
       {
-        //
+        has_published_substantive_report:
+          init.has_published_substantive_report || false,
+        substantive_report_url: init.substantive_report_url || '',
+        has_published_report_about_work:
+          init.has_published_report_about_work || false,
+        report_about_work_url: init.report_about_work_url || '',
+        has_published_report_with_results:
+          init.has_published_report_with_results || false,
+        report_with_results_url: init.report_with_results_url || '',
+        has_published_work_plan: init.has_published_work_plan || false,
+        work_plan_url: init.work_plan_url || '',
+        has_published_strategic_objectives:
+          init.has_published_strategic_objectives || false,
+        strategic_objectives_url: init.strategic_objectives_url || '',
       },
+      // FINANČNA TRANSPARENTNOST
       {
-        //
+        has_published_financial_report:
+          init.has_published_financial_report || false,
+        financial_report_url: init.financial_report_url || '',
+        has_published_understandable_financial_report:
+          init.has_published_understandable_financial_report || false,
+        understandable_financial_report_url:
+          init.understandable_financial_report_url || '',
+        has_published_operating_expenses:
+          init.has_published_operating_expenses || false,
+        operating_expenses_url: init.operating_expenses_url || '',
+        has_published_main_sources_of_financing:
+          init.has_published_main_sources_of_financing || false,
+        main_sources_of_financing_url: init.main_sources_of_financing_url || '',
+        has_published_management_revenues:
+          init.has_published_management_revenues || false,
+        management_revenues_url: init.management_revenues_url || '',
+        has_published_salary_ratio: init.has_published_salary_ratio || false,
+        salary_ratio_url: init.salary_ratio_url || '',
       },
+      // ZBIRANJE DONACIJSKIH SREDSTEV
       {
-        //
+        has_published_fundraising_reports:
+          init.has_published_fundraising_reports || false,
+        fundraising_reports_url: init.fundraising_reports_url || '',
+        has_published_fundraising_report_with_purposes:
+          init.has_published_fundraising_report_with_purposes || false,
+        fundraising_report_with_purposes_url:
+          init.fundraising_report_with_purposes_url || '',
       },
+      // DOSTOP OBJAVLJENIH INFORMACIJ
       {
-        //
+        website_accessibility_contrast:
+          init.website_accessibility_contrast || false,
+        website_accessibility_zoom: init.website_accessibility_zoom || false,
+        website_accessibility_disabilities:
+          init.website_accessibility_disabilities || false,
       },
     ];
 
     return {
-      editId,
-      editKey,
-      initialData,
-      data,
-      dataErrors: {},
-    };
-  },
-  data() {
-    return {
-      apiBaseUrl: process.env.API_BASE_URL,
       stages: [
-        { label: 'Osnovni podatki' },
-        { label: 'Osnovne informacije o organizaciji' },
-        { label: 'Dostopnost vsebinskih poročil' },
-        { label: 'Finančna transparentnost' },
-        { label: 'Zbiranje donacijskih sredstev' },
-        { label: 'Dostop objavljenih informacij' },
+        { label: 'OSEBNA IZKAZNICA ORGANIZACIJE' },
+        { label: 'DOSTOPNOST OSNOVNIH INFORMACIJ' },
+        { label: 'DOSTOPNOST VSEBINSKIH POROČIL' },
+        { label: 'FINANČNA TRANSPARENTNOST' },
+        { label: 'ZBIRANJE DONACIJSKIH SREDSTEV' },
+        { label: 'DOSTOP OBJAVLJENIH INFORMACIJ' },
       ],
       activeStage: -1,
+      data,
+      dataErrors: {},
       saving: false,
     };
   },
@@ -908,7 +965,7 @@ export default {
 
         keys.forEach((key) => {
           // Add http:// to links if missing!
-          if (key === 'web_page') {
+          if (key === 'web_page' || key.endsWith('_url')) {
             if (data[key]) {
               const url = /^https?:\/\//.test(data[key])
                 ? data[key]
@@ -983,13 +1040,12 @@ export default {
       return true;
     },
     async createOrUpdateOrg(data) {
-      const method = this.editId && this.editKey ? 'patch' : 'post';
+      const method = this.editId && this.editKey ? 'PATCH' : 'POST';
       const query = `${this.editKey ? `?edit_key=${this.editKey}` : ''}`;
-      const url = `/api/organizations/${
+      const url = `${this.apiBaseUrl}/api/organizations/${
         this.editId ? `${this.editId}/` : ''
       }${query}`;
-      // const res = await this.$axios[`$${method}`](url, data);
-      const res = {}
+      const res = await $fetch(url, { method, body: data });
       if ((!this.editId || !this.editKey) && res.id && res.edit_key) {
         this.editId = res.id;
         this.editKey = res.edit_key;

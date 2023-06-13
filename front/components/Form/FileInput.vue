@@ -42,10 +42,6 @@
 import { last } from 'lodash';
 
 export default {
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     name: {
       type: String,
@@ -55,7 +51,7 @@ export default {
       type: String,
       default: 'Naložite datoteko',
     },
-    value: {
+    modelValue: {
       type: [Object, String],
       default: null,
     },
@@ -66,10 +62,10 @@ export default {
   },
   data() {
     const filePath =
-      (typeof this.value === 'string' && this.value) ||
-      (this.value && this.value.file && this.value.file.name) ||
-      (this.value && this.value.name) ||
-      (this.value && this.value.url) ||
+      (typeof this.modelValue === 'string' && this.modelValue) ||
+      (this.modelValue && this.modelValue.file && this.modelValue.file.name) ||
+      (this.modelValue && this.modelValue.name) ||
+      (this.modelValue && this.modelValue.url) ||
       null;
     const fileName =
       (filePath && decodeURIComponent(last(filePath.split('/')))) || null;
@@ -89,13 +85,13 @@ export default {
       if (event == null) {
         this.fileName = null;
         this.$refs.input.value = null;
-        this.$emit('change', null);
+        this.$emit('update:modelValue', null);
         return;
       }
       const file = event.target.files[0];
       if (file) {
         this.fileName = file.name;
-        this.$emit('change', { file });
+        this.$emit('update:modelValue', { file });
       }
     },
   },

@@ -363,7 +363,7 @@
             </div>
           </form-category>
 
-          <form-category title="Statusi">
+          <!-- <form-category title="Statusi">
             <div class="row">
               <div class="col-md-6">
                 <selection-option
@@ -398,9 +398,9 @@
                 />
               </div>
             </div>
-          </form-category>
+          </form-category> -->
 
-          <div class="row align-items-end">
+          <!-- <div class="row align-items-end">
             <div class="col-md-4">
               <form-category title="Število zaposlenih">
                 <select v-model="filters.employed" class="custom-select">
@@ -440,7 +440,7 @@
                 </select>
               </form-category>
             </div>
-          </div>
+          </div> -->
 
           <form-category title="Območja delovanja">
             <div class="row">
@@ -667,6 +667,12 @@ export default {
       default: '',
     },
   },
+  setup() {
+    const config = useRuntimeConfig();
+    return {
+      apiBaseUrl: config.public.apiBase,
+    };
+  },
   data() {
     const [sortKey, sortAsc] =
       this.sortQuery[0] === '-'
@@ -782,7 +788,6 @@ export default {
     ];
 
     return {
-      apiBaseUrl: process.env.API_BASE_URL,
       sortKey,
       sortAsc,
       searchText: this.searchQuery,
@@ -939,7 +944,7 @@ export default {
       this.$router.push({ name: 'organizacija-id', params: { id: org.id } });
     },
     shorten(text, max = 320) {
-      if (text.length > max) {
+      if (text && text.length > max) {
         return `${text.slice(0, text.lastIndexOf(' ', max))} ...`;
       }
       return text;
