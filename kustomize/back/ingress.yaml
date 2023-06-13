@@ -9,10 +9,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - api.dobrodelen.lb.djnd.si
+        - api.dobrodelen.si
       secretName: dobrodelen-back-tls
   rules:
-    - host: api.dobrodelen.lb.djnd.si
+    - host: api.dobrodelen.si
       http:
         paths:
           - path: /
@@ -30,7 +30,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "https://api.dobrodelen.lb.djnd.si"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://api.dobrodelen.si, https://dobrodelen.si"
 spec:
   ingressClassName: nginx
   tls:

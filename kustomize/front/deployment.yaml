@@ -19,6 +19,11 @@ spec:
           image: dobrodelen-front
           ports:
             - containerPort: 3000
+          env:
+            - name: NUXT_PUBLIC_API_BASE_SERVER
+              value: https://api.dobrodelen.si
+            - name: NUXT_PUBLIC_API_BASE
+              value: https://api.dobrodelen.si
           resources:
             requests:
               memory: 50Mi

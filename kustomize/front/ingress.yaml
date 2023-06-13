@@ -4,14 +4,16 @@ metadata:
   name: dobrodelen-front
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - dobrodelen.lb.djnd.si
+        - www.dobrodelen.si
+        - dobrodelen.si
       secretName: dobrodelen-front-tls
   rules:
-    - host: dobrodelen.lb.djnd.si
+    - host: dobrodelen.si
       http:
         paths:
           - path: /
