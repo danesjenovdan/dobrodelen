@@ -146,8 +146,16 @@
             </div>
           </div>
         </div>
-        <div class="org-enprocent">
-          <!-- TODO: embed 1% widget here -->
+        <div v-if="hasTaxDonationWidget" class="org-enprocent">
+          <h4>Donacija prek 1% dohodnine</h4>
+          <iframe
+            id="enprocent_iframe"
+            frameborder="0"
+            width="800"
+            height="600"
+            style="max-width: 100%"
+            :src="taxDonationWidgetUrl"
+          ></iframe>
         </div>
       </div>
     </div>
@@ -313,7 +321,17 @@ export default {
       showStarsModal: false,
       showDonateModal: false,
       qrCodeLoading: false,
+      hasTaxDonationWidget: false,
+      taxDonationWidgetData: null,
     };
+  },
+  async mounted() {
+    const res = await $fetch(
+      `${this.apiBaseUrl}/api/organization-has-tax-donation/${this.organization.id}/`,
+    );
+    if (res.found) {
+      this.enableTaxDonationWidget(res.ngo);
+    }
   },
   beforeDestroy() {
     this.toggleStarsModal(false);
@@ -322,8 +340,39 @@ export default {
     groupedPointsDetails() {
       return groupBy(this.organization.points_details, 'section');
     },
+    taxDonationWidgetUrl() {
+      const qs = new URLSearchParams({
+        address: this.taxDonationWidgetData.address,
+        city: this.taxDonationWidgetData.city,
+        name: this.taxDonationWidgetData.name,
+        percent: 1.0,
+        postalCode: this.taxDonationWidgetData.postal_code,
+        taxNumber: this.taxDonationWidgetData.tax_number,
+      });
+      return `https://www.cnvos.si/enprocent/embed/v2/?${qs.toString()}`;
+    },
   },
   methods: {
+    enableTaxDonationWidget(ngo) {
+      this.taxDonationWidgetData = ngo;
+      this.hasTaxDonationWidget = true;
+
+      this.$nextTick(() => {
+        if (typeof window !== 'undefined') {
+          if (window.iFrameResize) {
+            iFrameResize({ checkOrigin: false }, '#enprocent_iframe');
+          } else {
+            const script = document.createElement('script');
+            script.onload = () => {
+              iFrameResize({ checkOrigin: false }, '#enprocent_iframe');
+            };
+            script.src =
+              'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js';
+            document.head.appendChild(script);
+          }
+        }
+      });
+    },
     splitNameAtColon(section) {
       return section.split(': ');
     },
@@ -517,6 +566,8 @@ export default {
   }
 
   .org-criteria {
+    margin-bottom: 2rem;
+
     .org-criteria-section-name {
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -556,6 +607,15 @@ export default {
     .form-check-label {
       color: $body-color;
       line-height: 1.2;
+    }
+  }
+
+  .org-enprocent {
+    h4 {
+      margin-bottom: 1rem;
+    }
+
+    iframe {
     }
   }
 

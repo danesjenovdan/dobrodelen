@@ -1,7 +1,8 @@
 import re
+import requests
 
 from django.core import signing
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 from rest_framework import filters, permissions, status, views, viewsets
 from rest_framework.generics import get_object_or_404
@@ -98,7 +99,7 @@ class OrganizationFilteredCriteria(views.APIView):
         # if ordering and ordering == "criteria__points":
         #     order_by = "criteria__points"
 
-        return models.Organization.objects.filter(published=True) # .order_by(order_by)
+        return models.Organization.objects.filter(published=True)  # .order_by(order_by)
 
     def get(self, request, format=None):
         # TODO: fix
@@ -175,6 +176,33 @@ class OrganizationDonationQrCode(View):
         )
 
         return HttpResponse(qr_svg, content_type="image/svg+xml")
+
+
+class OrganizationHasTaxDonation(View):
+    def get_queryset(self):
+        return models.Organization.objects.filter(published=True)
+
+    def get_object(self, pk):
+        return get_object_or_404(self.get_queryset(), pk=pk)
+
+    def get(self, request, pk, *args, **kwargs):
+        org = self.get_object(pk)
+
+        if org.tax_number and len(org.tax_number) == 8:
+            try:
+                response = requests.get(
+                    f"https://www.cnvos.si/enprocent/findNGOByTaxNumber/{org.tax_number}/",
+                    timeout=10,
+                )
+                if response.ok:
+                    if "application/json" in response.headers.get("Content-Type", ""):
+                        data = response.json()
+                        if data["found"]:
+                            return JsonResponse(data)
+            except requests.exceptions.Timeout:
+                return JsonResponse({"found": False, "timeout": True})
+
+        return JsonResponse({"found": False})
 
 
 # __ FILLDATA __
