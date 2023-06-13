@@ -11,7 +11,7 @@ resources:
 images:
   - name: dobrodelen-back
     newName: rg.fr-par.scw.cloud/djnd/dobrodelen-back
-    newTag: '8045a63c4e44781858c712d5440a0e4ed99fa493'
+    newTag: '632fe9f739cc3f30d642eddc6373a140d6cdc1a4'
   - name: dobrodelen-front
     newName: rg.fr-par.scw.cloud/djnd/dobrodelen-front
-    newTag: '8045a63c4e44781858c712d5440a0e4ed99fa493'
+    newTag: '632fe9f739cc3f30d642eddc6373a140d6cdc1a4'
