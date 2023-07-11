@@ -123,10 +123,17 @@
               class="col-xl-4"
             >
               <h5 class="org-criteria-section-name">
-                <div>
-                  <em>{{ splitNameAtColon(section)[0] }}</em>
-                </div>
-                <div>{{ splitNameAtColon(section)[1] }}</div>
+                <nuxt-link
+                  :to="{
+                    name: 'metodologija',
+                    hash: `#accordion-item-${sectionIndexFromName(section)}`,
+                  }"
+                >
+                  <div>
+                    <em>{{ splitNameAtColon(section)[0] }}</em>
+                  </div>
+                  <div>{{ splitNameAtColon(section)[1] }}</div>
+                </nuxt-link>
               </h5>
               <div v-for="point in points" :key="point.name">
                 <div class="form-check">
@@ -384,6 +391,10 @@ export default {
         }
       });
     },
+    sectionIndexFromName(section) {
+      const sectionIndex = section.split(': ')[0].split(' ')[1];
+      return Number(sectionIndex) + 1;
+    },
     splitNameAtColon(section) {
       return section.split(': ');
     },
@@ -598,6 +609,10 @@ export default {
       em {
         font-style: italic;
         font-weight: 400;
+      }
+
+      a {
+        color: inherit;
       }
     }
 

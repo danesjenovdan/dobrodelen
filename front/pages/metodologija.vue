@@ -111,7 +111,23 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.onHashChange();
+    window.addEventListener('hashchange', this.onHashChange);
+  },
+  beforeUnmount() {
+    window.removeEventListener('hashchange', this.onHashChange);
+  },
   methods: {
+    onHashChange() {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.querySelector('button').click();
+        }
+      }
+    },
     toggleItem(i) {
       const itemContentElement = this.$refs['accordion-item-content'][i];
 
