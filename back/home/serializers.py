@@ -81,6 +81,8 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "region",
             "area",
             "custom_area",
+            # REVIEW INFO
+            "review_date",
             # SCORE
             "stars",
             "points",

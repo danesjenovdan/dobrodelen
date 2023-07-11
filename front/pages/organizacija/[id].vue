@@ -145,6 +145,17 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <div class="text-right mt-4">
+                <em>
+                  Število izpolnjenih kriterijev {{ organization.points }}/{{
+                    organization.points_details.length
+                  }}
+                </em>
+              </div>
+            </div>
+          </div>
         </div>
         <div v-if="hasTaxDonationWidget" class="org-enprocent">
           <h4>Donacija prek 1% dohodnine</h4>
@@ -438,7 +449,7 @@ export default {
         typeof Intl !== 'undefined' &&
         typeof Intl.DateTimeFormat !== 'undefined'
       ) {
-        return new Intl.DateTimeFormat('sl-SI', {}).format(value);
+        return new Intl.DateTimeFormat('sl-SI').format(new Date(value));
       }
       return String(value);
     },
@@ -607,6 +618,11 @@ export default {
     .form-check-label {
       color: $body-color;
       line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .form-check-input:checked + .form-check-label {
+      font-weight: 700;
     }
   }
 
