@@ -24,7 +24,7 @@
               Preden začnete z vpisovanjem podatkov o svoji organizaciji
               podrobno preberite
               <a
-                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
+                href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 >METODOLOGIJA ZA PREGLED TRANSPARENTOSTI SLOVENSKIH NEVLADNIH
@@ -44,7 +44,7 @@
             <p class="lead text-justify above-form-info-text">
               Navodila za pregled doseganja kriterijev so dostopna v
               <a
-                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
+                href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 >Metodologiji za pregled transparentnosti slovenskih nevladnih

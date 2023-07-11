@@ -229,7 +229,8 @@ export default {
             font-size: 1rem;
           }
 
-          strong {
+          strong,
+          a {
             font-weight: 400;
           }
 
