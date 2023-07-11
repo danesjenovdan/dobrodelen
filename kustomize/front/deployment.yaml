@@ -24,6 +24,9 @@ spec:
               value: https://api.dobrodelen.si
             - name: NUXT_PUBLIC_API_BASE
               value: https://api.dobrodelen.si
+          envFrom:
+            - secretRef:
+                name: dobrodelen-front-secrets
           resources:
             requests:
               memory: 200Mi
