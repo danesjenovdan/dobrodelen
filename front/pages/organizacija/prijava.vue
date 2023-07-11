@@ -24,7 +24,7 @@
               Preden začnete z vpisovanjem podatkov o svoji organizaciji
               podrobno preberite
               <a
-                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
+                href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 >METODOLOGIJA ZA PREGLED TRANSPARENTOSTI SLOVENSKIH NEVLADNIH
@@ -42,12 +42,12 @@
 
           <template v-if="activeStage >= 0 && activeStage < stages.length">
             <p class="lead text-justify above-form-info-text">
-              Navodila za pregled doseganja kriterijev so dostopna v Prilogi 1
+              Navodila za pregled doseganja kriterijev so dostopna v
               <a
-                :href="`${apiBaseUrl}/TODO_LINK.pdf`"
+                href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                >Metodologije za pregled transparentnosti slovenskih nevladnih
+                >Metodologiji za pregled transparentnosti slovenskih nevladnih
                 organizacij</a
               >
             </p>
@@ -114,6 +114,21 @@
                 name="tax_number"
                 label="Davčna številka"
                 :has-error="dataErrors.tax_number"
+              />
+            </form-category>
+
+            <form-category title="Donacije">
+              <text-input
+                v-model="data[activeStage].account_number"
+                name="account_number"
+                label="Številka tekočega računa"
+                :has-error="dataErrors.account_number"
+              />
+              <text-input
+                v-model="data[activeStage].donation_url"
+                name="donation_url"
+                label="URL spletne strani, kjer je možno donirati sredstva (če obstaja)"
+                :has-error="dataErrors.donation_url"
               />
             </form-category>
 
@@ -399,12 +414,12 @@
 
           <template v-else-if="activeStage === 1">
             <!-- SKLOP 1 Kriteriji -->
-            <form-category title="Sklop 1: Kriteriji">
+            <form-category title="DOSTOPNOST OSNOVNIH INFORMACIJ">
               <selection-option
                 v-model="data[activeStage].has_published_key_documents"
                 type="checkbox"
                 name="has_published_key_documents"
-                label="Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)"
+                label="Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)"
               />
               <text-input
                 v-if="data[activeStage].has_published_key_documents"
@@ -418,7 +433,7 @@
                 v-model="data[activeStage].has_published_mission"
                 type="checkbox"
                 name="has_published_mission"
-                label="Kriterij 2: Organizacija ima objavljeno poslanstvo"
+                label="Organizacija ima objavljeno poslanstvo"
               />
               <text-input
                 v-if="data[activeStage].has_published_mission"
@@ -432,7 +447,7 @@
                 v-model="data[activeStage].has_published_key_employee_list"
                 type="checkbox"
                 name="has_published_key_employee_list"
-                label="Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih"
+                label="Organizacija ima objavljen seznam ključnih zaposlenih"
               />
               <text-input
                 v-if="data[activeStage].has_published_key_employee_list"
@@ -446,7 +461,7 @@
                 v-model="data[activeStage].has_published_board_member_list"
                 type="checkbox"
                 name="has_published_board_member_list"
-                label="Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov"
+                label="Organizacija ima objavljen seznam članov nadzornih organov"
               />
               <text-input
                 v-if="data[activeStage].has_published_board_member_list"
@@ -460,7 +475,7 @@
                 v-model="data[activeStage].has_published_contact_information"
                 type="checkbox"
                 name="has_published_contact_information"
-                label="Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
+                label="Objavljen je način, kako lahko posameznik stopi v stik z organizacijo"
               />
               <text-input
                 v-if="data[activeStage].has_published_contact_information"
@@ -474,7 +489,7 @@
                 v-model="data[activeStage].has_published_complaints_contact"
                 type="checkbox"
                 name="has_published_complaints_contact"
-                label="Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe"
+                label="Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe"
               />
               <text-input
                 v-if="data[activeStage].has_published_complaints_contact"
@@ -488,7 +503,7 @@
                 v-model="data[activeStage].has_published_complaints_process"
                 type="checkbox"
                 name="has_published_complaints_process"
-                label="Kriterij 7: Objavljen je celoten pritožbeni postopek"
+                label="Objavljen je celoten pritožbeni postopek"
               />
               <text-input
                 v-if="data[activeStage].has_published_complaints_process"
@@ -502,12 +517,12 @@
 
           <template v-else-if="activeStage === 2">
             <!-- SKLOP 2 Kriteriji -->
-            <form-category title="Sklop 2: Kriteriji">
+            <form-category title="DOSTOPNOST VSEBINSKIH POROČIL">
               <selection-option
                 v-model="data[activeStage].has_published_substantive_report"
                 type="checkbox"
                 name="has_published_substantive_report"
-                label="Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto"
+                label="Objavljeno je vsebinsko poročilo za preteklo leto"
               />
               <text-input
                 v-if="data[activeStage].has_published_substantive_report"
@@ -521,7 +536,7 @@
                 v-model="data[activeStage].has_published_report_about_work"
                 type="checkbox"
                 name="has_published_report_about_work"
-                label="Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja"
+                label="Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja"
               />
               <text-input
                 v-if="data[activeStage].has_published_report_about_work"
@@ -535,7 +550,7 @@
                 v-model="data[activeStage].has_published_report_with_results"
                 type="checkbox"
                 name="has_published_report_with_results"
-                label="Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti"
+                label="Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti"
               />
               <text-input
                 v-if="data[activeStage].has_published_report_with_results"
@@ -549,7 +564,7 @@
                 v-model="data[activeStage].has_published_work_plan"
                 type="checkbox"
                 name="has_published_work_plan"
-                label="Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto"
+                label="Organizacija ima objavljen načrt dela za tekoče leto"
               />
               <text-input
                 v-if="data[activeStage].has_published_work_plan"
@@ -563,7 +578,7 @@
                 v-model="data[activeStage].has_published_strategic_objectives"
                 type="checkbox"
                 name="has_published_strategic_objectives"
-                label="Kriterij 5: Organizacija ima objavljene glavne strateške cilje"
+                label="Organizacija ima objavljene glavne strateške cilje"
               />
               <text-input
                 v-if="data[activeStage].has_published_strategic_objectives"
@@ -577,12 +592,12 @@
 
           <template v-else-if="activeStage === 3">
             <!-- SKLOP 3 Kriteriji -->
-            <form-category title="Sklop 3: Kriteriji">
+            <form-category title="FINANČNA TRANSPARENTNOST">
               <selection-option
                 v-model="data[activeStage].has_published_financial_report"
                 type="checkbox"
                 name="has_published_financial_report"
-                label="Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto"
+                label="Organizacija ima objavljeno letno finančno poročilo za preteklo leto"
               />
               <text-input
                 v-if="data[activeStage].has_published_financial_report"
@@ -599,7 +614,7 @@
                 "
                 type="checkbox"
                 name="has_published_understandable_financial_report"
-                label="Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)"
+                label="Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)"
               />
               <text-input
                 v-if="
@@ -616,7 +631,7 @@
                 v-model="data[activeStage].has_published_operating_expenses"
                 type="checkbox"
                 name="has_published_operating_expenses"
-                label="Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)"
+                label="Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)"
               />
               <text-input
                 v-if="data[activeStage].has_published_operating_expenses"
@@ -632,7 +647,7 @@
                 "
                 type="checkbox"
                 name="has_published_main_sources_of_financing"
-                label="Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)"
+                label="Objavljeni so glavni viri financiranja (prihodki)"
               />
               <text-input
                 v-if="data[activeStage].has_published_main_sources_of_financing"
@@ -646,7 +661,7 @@
                 v-model="data[activeStage].has_published_management_revenues"
                 type="checkbox"
                 name="has_published_management_revenues"
-                label="Kriterij 5: Objavljeni so prihodki vodstva"
+                label="Objavljeni so prihodki vodstva"
               />
               <text-input
                 v-if="data[activeStage].has_published_management_revenues"
@@ -660,7 +675,7 @@
                 v-model="data[activeStage].has_published_salary_ratio"
                 type="checkbox"
                 name="has_published_salary_ratio"
-                label="Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo"
+                label="Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo"
               />
               <text-input
                 v-if="data[activeStage].has_published_salary_ratio"
@@ -674,12 +689,12 @@
 
           <template v-else-if="activeStage === 4">
             <!-- SKLOP 4 Kriteriji -->
-            <form-category title="Sklop 4: Kriteriji">
+            <form-category title="ZBIRANJE DONACIJSKIH SREDSTEV">
               <selection-option
                 v-model="data[activeStage].has_published_fundraising_reports"
                 type="checkbox"
                 name="has_published_fundraising_reports"
-                label="Kriterij 1: Objavljena so poročila o zbranih sredstvih"
+                label="Objavljena so poročila o zbranih sredstvih"
               />
               <text-input
                 v-if="data[activeStage].has_published_fundraising_reports"
@@ -696,7 +711,7 @@
                 "
                 type="checkbox"
                 name="has_published_fundraising_report_with_purposes"
-                label="Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)"
+                label="Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)"
               />
               <text-input
                 v-if="
@@ -713,24 +728,24 @@
 
           <template v-else-if="activeStage === 5">
             <!-- SKLOP 5 Kriteriji -->
-            <form-category title="Sklop 5: Kriteriji">
+            <form-category title="DOSTOP OBJAVLJENIH INFORMACIJ">
               <selection-option
                 v-model="data[activeStage].website_accessibility_contrast"
                 type="checkbox"
                 name="website_accessibility_contrast"
-                label="Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1"
+                label="Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1"
               />
               <selection-option
                 v-model="data[activeStage].website_accessibility_zoom"
                 type="checkbox"
                 name="website_accessibility_zoom"
-                label="Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %"
+                label="Spletno mesto je berljivo tudi ob povečavi na 200 %"
               />
               <selection-option
                 v-model="data[activeStage].website_accessibility_disabilities"
                 type="checkbox"
                 name="website_accessibility_disabilities"
-                label="Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami"
+                label="Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami"
               />
             </form-category>
           </template>
@@ -815,6 +830,8 @@ export default {
         contact_email: init.contact_email || '',
         contact_phone: init.contact_phone || '',
         tax_number: init.tax_number || '',
+        account_number: init.account_number || '',
+        donation_url: init.donation_url || '',
         web_page: init.web_page || '',
         links:
           init.links && init.links.length

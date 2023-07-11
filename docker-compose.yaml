@@ -37,6 +37,7 @@ services:
       - "3000:3000"
       - "24678:24678" # dev server hot reload
     environment:
+      - NUXT_UNLOCK_PASSWORD=unlockmepls
       - NUXT_PUBLIC_API_BASE_SERVER=http://wagtail:8000
       - NUXT_PUBLIC_API_BASE=http://localhost:8000
     depends_on:

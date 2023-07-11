@@ -252,6 +252,23 @@
               </div>
             </div>
           </form-category>
+          <form-category>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="confirmCriteria"
+            >
+              POTRDI
+            </button>
+            {{ ' ' }}
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="resetCriteria"
+            >
+              PONASTAVI
+            </button>
+          </form-category>
         </div>
       </div>
       <div
@@ -679,7 +696,7 @@ export default {
         ? [this.sortQuery.slice(1), false]
         : [this.sortQuery, true];
 
-    let criteria = [
+    let defaultCriteria = [
       '1-1',
       '1-2',
       '1-3',
@@ -704,17 +721,18 @@ export default {
       '5-2',
       '5-3',
     ];
+    let initialCriteria = defaultCriteria.slice();
     let criteriaChanged = false;
 
     if (this.searchCriteria) {
-      criteria = this.searchCriteria.split(',');
+      initialCriteria = this.searchCriteria.split(',');
       criteriaChanged = true;
     }
 
     const initialFilters = {
       area: [],
       region: [],
-      criteria,
+      criteria: initialCriteria,
       is_charity: false,
       has_public_interest: false,
       is_voluntary: false,
@@ -798,6 +816,7 @@ export default {
       employmentFilters,
       budgetFilters,
       zero5AmountFilters,
+      defaultCriteria,
     };
   },
   computed: {
@@ -903,7 +922,8 @@ export default {
       this.emitChange();
     },
     'filters.criteria'() {
-      this.criteriaChanged = true;
+      this.criteriaChanged =
+        this.filters.criteria.length !== this.defaultCriteria.length;
       this.emitChange();
     },
   },
@@ -923,6 +943,12 @@ export default {
         this.showCriteria = true;
         this.showAdvanced = false;
       }
+    },
+    confirmCriteria() {
+      this.showCriteria = false;
+    },
+    resetCriteria() {
+      this.filters.criteria = this.defaultCriteria.slice();
     },
     changeSort(key) {
       if (key === this.sortKey) {
