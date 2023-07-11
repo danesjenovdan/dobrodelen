@@ -331,7 +331,7 @@ export default {
     return {
       showStarsModal: false,
       showDonateModal: false,
-      qrCodeLoading: false,
+      qrCodeAbortController: null,
       hasTaxDonationWidget: false,
       taxDonationWidgetData: null,
     };
@@ -453,18 +453,25 @@ export default {
       }
       return String(value);
     },
-    onAmountChange(newAmount) {
-      this.qrCodeLoading = true;
-      this.$refs.qrCode.textContent = '';
-      const image = document.createElement('img');
-      image.onload = () => {
-        this.$refs.qrCode.appendChild(image);
-      };
-      image.onerror = () => {
-        this.$refs.qrCode.textContent = 'napaka';
-      };
-      image.src = `${this.apiBaseUrl}/api/organizations-donation-qr-code/${this.organization.id}/?amount=${newAmount}`;
-      this.qrCodeLoading = false;
+    async onAmountChange(newAmount) {
+      if (this.qrCodeAbortController) {
+        this.qrCodeAbortController.abort();
+      }
+      this.qrCodeAbortController = new AbortController();
+      const { signal } = this.qrCodeAbortController;
+      this.$refs.qrCode.textContent = 'Nalaganje QR kode...';
+
+      const qrUrl = `${this.apiBaseUrl}/api/organizations-donation-qr-code/${this.organization.id}/?amount=${newAmount}`;
+      try {
+        const response = await fetch(qrUrl, { signal });
+        const svgText = await response.text();
+        this.$refs.qrCode.innerHTML = svgText;
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          this.$refs.qrCode.innerHTML = '<strong>NAPAKA</strong>';
+          console.error(error);
+        }
+      }
     },
   },
   head() {
@@ -687,6 +694,9 @@ export default {
       margin-bottom: 2rem;
 
       .qr-code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin: 0 auto;
         width: 280px;
         height: 280px;

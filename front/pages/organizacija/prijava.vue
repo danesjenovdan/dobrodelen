@@ -117,6 +117,21 @@
               />
             </form-category>
 
+            <form-category title="Donacije">
+              <text-input
+                v-model="data[activeStage].account_number"
+                name="account_number"
+                label="Številka tekočega računa"
+                :has-error="dataErrors.account_number"
+              />
+              <text-input
+                v-model="data[activeStage].donation_url"
+                name="donation_url"
+                label="URL spletne strani, kjer je možno donirati sredstva (če obstaja)"
+                :has-error="dataErrors.donation_url"
+              />
+            </form-category>
+
             <form-category title="Spletna prisotnost">
               <text-input
                 v-model="data[activeStage].web_page"
@@ -815,6 +830,8 @@ export default {
         contact_email: init.contact_email || '',
         contact_phone: init.contact_phone || '',
         tax_number: init.tax_number || '',
+        account_number: init.account_number || '',
+        donation_url: init.donation_url || '',
         web_page: init.web_page || '',
         links:
           init.links && init.links.length

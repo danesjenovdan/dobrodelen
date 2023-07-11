@@ -196,6 +196,18 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Davčna številka",
     )
+    account_number = models.CharField(
+        max_length=64,
+        default="",
+        blank=True,
+        verbose_name="Številka tekočega računa",
+    )
+    donation_url = models.URLField(
+        max_length=512,
+        default="",
+        blank=True,
+        verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
+    )
     web_page = models.URLField(
         max_length=512,
         default="",
@@ -223,19 +235,6 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Področje delovanja: Drugo",
     )
-
-    # account_number = models.CharField(
-    #     max_length=64,
-    #     default="",
-    #     blank=True,
-    #     verbose_name="Številka tekočega računa",
-    # )
-    # donation_url = models.URLField(
-    #     max_length=512,
-    #     default="",
-    #     blank=True,
-    #     verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
-    # )
 
     # avg_revenue = models.IntegerField(
     #     default=0,
@@ -619,6 +618,8 @@ class Organization(ClusterableModel):
                 FieldPanel("contact_email"),
                 FieldPanel("contact_phone"),
                 FieldPanel("tax_number"),
+                FieldPanel("account_number"),
+                FieldPanel("donation_url", widget=URLInputWithLink),
                 FieldPanel("web_page", widget=URLInputWithLink),
                 InlinePanel("links", label="Družbeni mediji"),
                 FieldPanel("region", widget=CheckboxSelectMultiple),
