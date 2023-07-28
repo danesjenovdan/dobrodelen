@@ -67,13 +67,6 @@ class OrganizationAdminGroup(ModelAdminGroup):
 modeladmin_register(OrganizationAdminGroup)
 
 
-@hooks.register("insert_global_admin_css")
-def global_admin_css():
-    return format_html(
-        '<link rel="stylesheet" href="{}">', static("wagtailadmin/css/home.css")
-    )
-
-
 @hooks.register("construct_main_menu")
 def hide_explorer_menu_item(request, menu_items):
     hidden = [
@@ -140,3 +133,8 @@ def global_admin_css():
     return format_html(
         '<link rel="stylesheet" href="{}">', static("css/custom_admin.css")
     )
+
+
+@hooks.register("insert_global_admin_js")
+def global_admin_js():
+    return format_html('<script src="{}"></script>', static("js/custom_admin.js"))
