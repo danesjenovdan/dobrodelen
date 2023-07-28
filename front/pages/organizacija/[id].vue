@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>{{ organization.name }}</Title>
+  </Head>
   <div class="content">
     <content-title
       :image="
@@ -484,11 +487,6 @@ export default {
         }
       }
     },
-  },
-  head() {
-    return {
-      title: this.organization.name,
-    };
   },
 };
 </script>

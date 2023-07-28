@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>Organizacije</Title>
+  </Head>
   <div class="content">
     <intro-text lead="Doniraj pametno." icon="heart" />
     <organization-list
@@ -82,11 +85,6 @@ export default {
         this.loading = false;
       }
     },
-  },
-  head() {
-    return {
-      title: 'Organizacije',
-    };
   },
 };
 </script>

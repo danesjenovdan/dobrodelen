@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>Prijava organizacije</Title>
+  </Head>
   <div class="content">
     <content-title icon="signup-form" title="Prijava organizacije" />
     <div class="row justify-content-center">
@@ -1079,11 +1082,6 @@ export default {
     getWindowLocation() {
       return typeof window !== 'undefined' ? window.location.href : '';
     },
-  },
-  head() {
-    return {
-      title: 'Prijava organizacije',
-    };
   },
 };
 </script>
