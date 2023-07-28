@@ -4,7 +4,7 @@
   </Head>
   <div class="content">
     <content-title icon="signup-form" title="Prijava organizacije" />
-    <div class="row justify-content-center">
+    <div v-if="initialData" class="row justify-content-center">
       <div class="col-12 col-md-9 col-xxl-7">
         <form-stages
           ref="formStages"
@@ -14,7 +14,7 @@
         />
       </div>
     </div>
-    <div class="row justify-content-center form-row">
+    <div v-if="initialData" class="row justify-content-center form-row">
       <div class="col-12 col-md-8 col-xxl-6">
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
@@ -773,6 +773,9 @@
         </form>
       </div>
     </div>
+    <div v-else>
+      <h2 class="text-center mb-5">Urejanje podatkov ni mogoče.</h2>
+    </div>
   </div>
 </template>
 
@@ -825,7 +828,7 @@ export default {
     };
   },
   data() {
-    const init = this.initialData;
+    const init = this.initialData ?? {};
 
     const data = [
       // OSEBNA IZKAZNICA ORGANIZACIJE
@@ -1087,6 +1090,11 @@ export default {
     getWindowLocation() {
       return typeof window !== 'undefined' ? window.location.href : '';
     },
+  },
+  mounted() {
+    if (this.initialData == null) {
+      window.location.href = '/';
+    }
   },
 };
 </script>

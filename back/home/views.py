@@ -11,6 +11,14 @@ from rest_framework.response import Response
 from home import models, qrcode, serializers
 
 
+class PermissionDenyAll(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        return False
+
+
 class OrganizationViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.OrderingFilter,)
     # TODO: fix
@@ -22,6 +30,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.AllowAny]
         elif self.is_valid_edit_key():
             permission_classes = [permissions.AllowAny]
+        elif self.has_edit_key() and not self.is_valid_edit_key():
+            permission_classes = [PermissionDenyAll]
         else:
             permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
         return [permission() for permission in permission_classes]
@@ -46,6 +56,12 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             return serializers.OrganizationListSerializer
         return serializers.OrganizationListSerializer
 
+    def has_edit_key(self):
+        edit_key = self.request.query_params.get("edit_key")
+        if edit_key:
+            return True
+        return False
+
     def is_valid_edit_key(self):
         edit_key = self.request.query_params.get("edit_key")
         if edit_key:
@@ -64,9 +80,17 @@ class OrganizationChildAuth(viewsets.ModelViewSet):
             permission_classes = [permissions.AllowAny]
         elif self.is_valid_edit_key():
             permission_classes = [permissions.AllowAny]
+        elif self.has_edit_key() and not self.is_valid_edit_key():
+            permission_classes = [PermissionDenyAll]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
+
+    def has_edit_key(self):
+        edit_key = self.request.query_params.get("edit_key")
+        if edit_key:
+            return True
+        return False
 
     def is_valid_edit_key(self):
         edit_key = self.request.query_params.get("edit_key")
