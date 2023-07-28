@@ -57,6 +57,11 @@
           </template>
 
           <template v-if="activeStage === 0">
+            <form-category
+              title="OSEBNA IZKAZNICA ORGANIZACIJE"
+              bold-title
+            ></form-category>
+
             <form-category title="Naziv organizacije">
               <text-input
                 v-model="data[activeStage].name"
@@ -417,7 +422,7 @@
 
           <template v-else-if="activeStage === 1">
             <!-- SKLOP 1 Kriteriji -->
-            <form-category title="DOSTOPNOST OSNOVNIH INFORMACIJ">
+            <form-category title="DOSTOPNOST OSNOVNIH INFORMACIJ" bold-title>
               <selection-option
                 v-model="data[activeStage].has_published_key_documents"
                 type="checkbox"
@@ -520,7 +525,7 @@
 
           <template v-else-if="activeStage === 2">
             <!-- SKLOP 2 Kriteriji -->
-            <form-category title="DOSTOPNOST VSEBINSKIH POROČIL">
+            <form-category title="DOSTOPNOST VSEBINSKIH POROČIL" bold-title>
               <selection-option
                 v-model="data[activeStage].has_published_substantive_report"
                 type="checkbox"
@@ -595,7 +600,7 @@
 
           <template v-else-if="activeStage === 3">
             <!-- SKLOP 3 Kriteriji -->
-            <form-category title="FINANČNA TRANSPARENTNOST">
+            <form-category title="FINANČNA TRANSPARENTNOST" bold-title>
               <selection-option
                 v-model="data[activeStage].has_published_financial_report"
                 type="checkbox"
@@ -692,7 +697,7 @@
 
           <template v-else-if="activeStage === 4">
             <!-- SKLOP 4 Kriteriji -->
-            <form-category title="ZBIRANJE DONACIJSKIH SREDSTEV">
+            <form-category title="ZBIRANJE DONACIJSKIH SREDSTEV" bold-title>
               <selection-option
                 v-model="data[activeStage].has_published_fundraising_reports"
                 type="checkbox"
@@ -731,7 +736,7 @@
 
           <template v-else-if="activeStage === 5">
             <!-- SKLOP 5 Kriteriji -->
-            <form-category title="DOSTOP OBJAVLJENIH INFORMACIJ">
+            <form-category title="DOSTOP OBJAVLJENIH INFORMACIJ" bold-title>
               <selection-option
                 v-model="data[activeStage].website_accessibility_contrast"
                 type="checkbox"

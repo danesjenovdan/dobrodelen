@@ -159,9 +159,11 @@
             <div class="col">
               <div class="text-right mt-4">
                 <em>
-                  Število izpolnjenih kriterijev {{ organization.points }}/{{
-                    organization.points_details.length
-                  }}
+                  <strong>
+                    Število izpolnjenih kriterijev {{ organization.points }}/{{
+                      organization.points_details.length
+                    }}
+                  </strong>
                 </em>
               </div>
             </div>
