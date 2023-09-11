@@ -1,5 +1,5 @@
-# Use an official Python runtime based on Debian 11 "bullseye" as a parent image.
-FROM python:3.11.2-slim-bullseye
+# Use an official Python runtime based on Debian 12 "bookworm" as a parent image.
+FROM python:3.11.5-slim-bookworm
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -24,7 +24,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
  && rm -rf /var/lib/apt/lists/*
 
 # Install the application server.
-RUN pip install "gunicorn==20.1.0"
+RUN pip install "gunicorn==21.2.0"
 
 # Install the project requirements.
 COPY requirements.txt /
