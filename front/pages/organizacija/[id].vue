@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>{{ organization.name }}</Title>
+  </Head>
   <div class="content">
     <content-title
       :image="
@@ -156,9 +159,11 @@
             <div class="col">
               <div class="text-right mt-4">
                 <em>
-                  Število izpolnjenih kriterijev {{ organization.points }}/{{
-                    organization.points_details.length
-                  }}
+                  <strong>
+                    Število izpolnjenih kriterijev {{ organization.points }}/{{
+                      organization.points_details.length
+                    }}
+                  </strong>
                 </em>
               </div>
             </div>
@@ -484,11 +489,6 @@ export default {
         }
       }
     },
-  },
-  head() {
-    return {
-      title: this.organization.name,
-    };
   },
 };
 </script>

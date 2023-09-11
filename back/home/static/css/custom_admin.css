@@ -31,3 +31,8 @@
   max-width: 100%;
   text-overflow: ellipsis;
 }
+
+/* custom style for custom select all buttons */
+.w-custom__select-all-button {
+  margin-top: 0.5rem;
+}

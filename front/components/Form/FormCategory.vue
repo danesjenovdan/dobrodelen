@@ -1,6 +1,6 @@
 <template>
   <fieldset>
-    <legend>{{ title }}</legend>
+    <legend :class="{ 'legend-bold': boldTitle }">{{ title }}</legend>
     <small v-if="note" class="form-text">
       <span>* {{ note }}</span>
     </small>
@@ -19,6 +19,10 @@ export default {
       type: String,
       default: null,
     },
+    boldTitle: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -34,6 +38,10 @@ fieldset {
     @include media-breakpoint-down(sm) {
       font-size: 1.5rem;
       margin-bottom: 1rem;
+    }
+
+    &.legend-bold {
+      font-weight: 400;
     }
 
     + small {

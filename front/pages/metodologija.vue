@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>Metodologija</Title>
+  </Head>
   <div class="content">
     <intro-text
       lead="Metodologija za pregled transparentnosti slovenskih nevladnih organizacij "
@@ -159,11 +162,6 @@ export default {
       itemContentElement.addEventListener('transitionend', onTransitionEnd);
     },
   },
-  head() {
-    return {
-      title: 'Metodologija',
-    };
-  },
 };
 </script>
 
@@ -245,14 +243,20 @@ export default {
             font-size: 1rem;
           }
 
-          strong,
+          strong {
+            font-weight: 600;
+          }
+
           a {
             font-weight: 400;
           }
 
           em {
-            font-weight: 400;
             font-style: italic;
+          }
+
+          .bolder {
+            font-weight: 400;
           }
 
           p {
