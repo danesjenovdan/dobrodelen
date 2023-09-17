@@ -284,6 +284,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
     )
+    key_documents_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: Opombe ocenjevalca (ni javno)",
+    )
     has_published_mission = models.BooleanField(
         default=False, verbose_name="Kriterij 2: Organizacija ima objavljeno poslanstvo"
     )
@@ -292,6 +297,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+    mission_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: Opombe ocenjevalca (ni javno)",
     )
     has_published_key_employee_list = models.BooleanField(
         default=False,
@@ -303,6 +313,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
     )
+    key_employee_list_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: Opombe ocenjevalca (ni javno)",
+    )
     has_published_board_member_list = models.BooleanField(
         default=False,
         verbose_name="Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov",
@@ -312,6 +327,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
+    )
+    board_member_list_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: Opombe ocenjevalca (ni javno)",
     )
     has_published_contact_information = models.BooleanField(
         default=False,
@@ -323,6 +343,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
     )
+    contact_information_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: Opombe ocenjevalca (ni javno)",
+    )
     has_published_complaints_contact = models.BooleanField(
         default=False,
         verbose_name="Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe",
@@ -333,6 +358,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 6: URL do objavljenega dokumenta/podatkov",
     )
+    complaints_contact_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 6: Opombe ocenjevalca (ni javno)",
+    )
     has_published_complaints_process = models.BooleanField(
         default=False,
         verbose_name="Kriterij 7: Objavljen je celoten pritožbeni postopek",
@@ -342,6 +372,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 7: URL do objavljenega dokumenta/podatkov",
+    )
+    complaints_process_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 7: Opombe ocenjevalca (ni javno)",
     )
 
     # DOSTOPNOST VSEBINSKIH POROČIL
@@ -355,6 +390,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
     )
+    substantive_report_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: Opombe ocenjevalca (ni javno)",
+    )
     has_published_report_about_work = models.BooleanField(
         default=False,
         verbose_name="Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja",
@@ -364,6 +404,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+    report_about_work_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: Opombe ocenjevalca (ni javno)",
     )
     has_published_report_with_results = models.BooleanField(
         default=False,
@@ -375,6 +420,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
     )
+    report_with_results_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: Opombe ocenjevalca (ni javno)",
+    )
     has_published_work_plan = models.BooleanField(
         default=False,
         verbose_name="Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto",
@@ -385,6 +435,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
     )
+    work_plan_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: Opombe ocenjevalca (ni javno)",
+    )
     has_published_strategic_objectives = models.BooleanField(
         default=False,
         verbose_name="Kriterij 5: Organizacija ima objavljene glavne strateške cilje",
@@ -394,6 +449,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
+    )
+    strategic_objectives_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: Opombe ocenjevalca (ni javno)",
     )
 
     # FINANČNA TRANSPARENTNOST
@@ -407,6 +467,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
     )
+    financial_report_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: Opombe ocenjevalca (ni javno)",
+    )
     has_published_understandable_financial_report = models.BooleanField(
         default=False,
         verbose_name="Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)",
@@ -416,6 +481,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
+    )
+    understandable_financial_report_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: Opombe ocenjevalca (ni javno)",
     )
     has_published_operating_expenses = models.BooleanField(
         default=False,
@@ -427,6 +497,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 3: URL do objavljenega dokumenta/podatkov",
     )
+    operating_expenses_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: Opombe ocenjevalca (ni javno)",
+    )
     has_published_main_sources_of_financing = models.BooleanField(
         default=False,
         verbose_name="Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)",
@@ -437,6 +512,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 4: URL do objavljenega dokumenta/podatkov",
     )
+    main_sources_of_financing_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 4: Opombe ocenjevalca (ni javno)",
+    )
     has_published_management_revenues = models.BooleanField(
         default=False, verbose_name="Kriterij 5: Objavljeni so prihodki vodstva"
     )
@@ -445,6 +525,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 5: URL do objavljenega dokumenta/podatkov",
+    )
+    management_revenues_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 5: Opombe ocenjevalca (ni javno)",
     )
     has_published_salary_ratio = models.BooleanField(
         default=False,
@@ -455,6 +540,11 @@ class Organization(ClusterableModel):
         default="",
         blank=True,
         verbose_name="Kriterij 6: URL do objavljenega dokumenta/podatkov",
+    )
+    salary_ratio_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 6: Opombe ocenjevalca (ni javno)",
     )
 
     # ZBIRANJE DONACIJSKIH SREDSTEV
@@ -468,6 +558,11 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 1: URL do objavljenega dokumenta/podatkov",
     )
+    fundraising_reports_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: Opombe ocenjevalca (ni javno)",
+    )
     has_published_fundraising_report_with_purposes = models.BooleanField(
         default=False,
         verbose_name="Kriterij 2: Poročilo o zbranih sredstvih je razdeljeno po namenih zbiranja (fundraising akcijah)",
@@ -478,19 +573,39 @@ class Organization(ClusterableModel):
         blank=True,
         verbose_name="Kriterij 2: URL do objavljenega dokumenta/podatkov",
     )
+    fundraising_report_with_purposes_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: Opombe ocenjevalca (ni javno)",
+    )
 
     # DOSTOP OBJAVLJENIH INFORMACIJ
     website_accessibility_contrast = models.BooleanField(
         default=False,
         verbose_name="Kriterij 1: Barvni kontrast med tekstom in ozadjem spletne strani je vsaj 4.5:1",
     )
+    website_accessibility_contrast_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 1: Opombe ocenjevalca (ni javno)",
+    )
     website_accessibility_zoom = models.BooleanField(
         default=False,
         verbose_name="Kriterij 2: Spletno mesto je berljivo tudi ob povečavi na 200 %",
     )
+    website_accessibility_zoom_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 2: Opombe ocenjevalca (ni javno)",
+    )
     website_accessibility_disabilities = models.BooleanField(
         default=False,
         verbose_name="Kriterij 3: Spletna stran je dostopna osebam z motoričnimi ali kognitivnimi ovirami",
+    )
+    website_accessibility_disabilities_notes = models.TextField(
+        default="",
+        blank=True,
+        verbose_name="Kriterij 3: Opombe ocenjevalca (ni javno)",
     )
 
     # test_tuple_field = TupleField()
@@ -563,6 +678,10 @@ class Organization(ClusterableModel):
                     for child in panel["children"]:
                         if isinstance(child, str) and child == field_name:
                             return panel["name"]
+                        if isinstance(child, dict):
+                            for child2 in child["children"]:
+                                if isinstance(child2, str) and child2 == field_name:
+                                    return panel["name"]
             return None
 
         def field_to_object(field):
@@ -631,81 +750,152 @@ class Organization(ClusterableModel):
         # DOSTOPNOST OSNOVNIH INFORMACIJ
         MultiFieldPanel(
             [
-                FieldPanel("has_published_key_documents"),
-                FieldPanel("key_documents_url"),
-                FieldPanel("has_published_mission"),
-                FieldPanel("mission_url"),
-                FieldPanel("has_published_key_employee_list"),
-                FieldPanel("key_employee_list_url"),
-                FieldPanel("has_published_board_member_list"),
-                FieldPanel("board_member_list_url"),
-                FieldPanel("has_published_contact_information"),
-                FieldPanel("contact_information_url"),
-                FieldPanel("has_published_complaints_contact"),
-                FieldPanel("complaints_contact_url"),
-                FieldPanel("has_published_complaints_process"),
-                FieldPanel("complaints_process_url"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_key_documents"),
+                    FieldPanel("key_documents_notes"),
+                    FieldPanel("key_documents_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_mission"),
+                    FieldPanel("mission_notes"),
+                    FieldPanel("mission_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_key_employee_list"),
+                    FieldPanel("key_employee_list_notes"),
+                    FieldPanel("key_employee_list_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_board_member_list"),
+                    FieldPanel("board_member_list_notes"),
+                    FieldPanel("board_member_list_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_contact_information"),
+                    FieldPanel("contact_information_notes"),
+                    FieldPanel("contact_information_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_complaints_contact"),
+                    FieldPanel("complaints_contact_notes"),
+                    FieldPanel("complaints_contact_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_complaints_process"),
+                    FieldPanel("complaints_process_notes"),
+                    FieldPanel("complaints_process_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
             ],
             heading="Sklop 1: Dostopnost osnovnih informacij",
         ),
         # DOSTOPNOST VSEBINSKIH POROČIL
         MultiFieldPanel(
             [
-                FieldPanel("has_published_substantive_report"),
-                FieldPanel("substantive_report_url"),
-                FieldPanel("has_published_report_about_work"),
-                FieldPanel("report_about_work_url"),
-                FieldPanel("has_published_report_with_results"),
-                FieldPanel("report_with_results_url"),
-                FieldPanel("has_published_work_plan"),
-                FieldPanel("work_plan_url"),
-                FieldPanel("has_published_strategic_objectives"),
-                FieldPanel("strategic_objectives_url"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_substantive_report"),
+                    FieldPanel("substantive_report_notes"),
+                    FieldPanel("substantive_report_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_report_about_work"),
+                    FieldPanel("report_about_work_notes"),
+                    FieldPanel("report_about_work_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_report_with_results"),
+                    FieldPanel("report_with_results_notes"),
+                    FieldPanel("report_with_results_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_work_plan"),
+                    FieldPanel("work_plan_notes"),
+                    FieldPanel("work_plan_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_strategic_objectives"),
+                    FieldPanel("strategic_objectives_notes"),
+                    FieldPanel("strategic_objectives_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
             ],
             heading="Sklop 2: Dostopnost vsebinskih poročil",
         ),
         # FINANČNA TRANSPARENTNOST
         MultiFieldPanel(
             [
-                FieldPanel("has_published_financial_report"),
-                FieldPanel("financial_report_url"),
-                FieldPanel("has_published_understandable_financial_report"),
-                FieldPanel("understandable_financial_report_url"),
-                FieldPanel("has_published_operating_expenses"),
-                FieldPanel("operating_expenses_url"),
-                FieldPanel("has_published_main_sources_of_financing"),
-                FieldPanel("main_sources_of_financing_url"),
-                FieldPanel("has_published_management_revenues"),
-                FieldPanel("management_revenues_url"),
-                FieldPanel("has_published_salary_ratio"),
-                FieldPanel("salary_ratio_url"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_financial_report"),
+                    FieldPanel("financial_report_notes"),
+                    FieldPanel("financial_report_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_understandable_financial_report"),
+                    FieldPanel("understandable_financial_report_notes"),
+                    FieldPanel("understandable_financial_report_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_operating_expenses"),
+                    FieldPanel("operating_expenses_notes"),
+                    FieldPanel("operating_expenses_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_main_sources_of_financing"),
+                    FieldPanel("main_sources_of_financing_notes"),
+                    FieldPanel("main_sources_of_financing_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_management_revenues"),
+                    FieldPanel("management_revenues_notes"),
+                    FieldPanel("management_revenues_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_salary_ratio"),
+                    FieldPanel("salary_ratio_notes"),
+                    FieldPanel("salary_ratio_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
             ],
             heading="Sklop 3: Finančna transparentnost",
         ),
         # ZBIRANJE DONACIJSKIH SREDSTEV
         MultiFieldPanel(
             [
-                FieldPanel("has_published_fundraising_reports"),
-                FieldPanel("fundraising_reports_url"),
-                FieldPanel("has_published_fundraising_report_with_purposes"),
-                FieldPanel("fundraising_report_with_purposes_url"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_fundraising_reports"),
+                    FieldPanel("fundraising_reports_notes"),
+                    FieldPanel("fundraising_reports_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("has_published_fundraising_report_with_purposes"),
+                    FieldPanel("fundraising_report_with_purposes_notes"),
+                    FieldPanel("fundraising_report_with_purposes_url", widget=URLInputWithLink),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
             ],
             heading="Sklop 4: Zbiranje donacijskih sredstev",
         ),
         # DOSTOP OBJAVLJENIH INFORMACIJ
         MultiFieldPanel(
             [
-                FieldPanel("website_accessibility_contrast"),
-                FieldPanel("website_accessibility_zoom"),
-                FieldPanel("website_accessibility_disabilities"),
+                MultiFieldPanel([
+                    FieldPanel("website_accessibility_contrast"),
+                    FieldPanel("website_accessibility_contrast_notes"),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("website_accessibility_zoom"),
+                    FieldPanel("website_accessibility_zoom_notes"),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel([
+                    FieldPanel("website_accessibility_disabilities"),
+                    FieldPanel("website_accessibility_disabilities_notes"),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
             ],
             heading="Sklop 5: Dostop objavljenih informacij",
         ),
         # REVIEW INFO
         MultiFieldPanel(
             [
-                FieldPanel("review_date"),
-                FieldPanel("review_notes"),
+                MultiFieldPanel([
+                    FieldPanel("review_date"),
+                    FieldPanel("review_notes"),
+                ], classname="w-custom__panel-with-notes w-custom--2col"),
                 FieldPanel("published"),
             ],
             heading="Podatki o pregledu",
