@@ -36,3 +36,30 @@
 .w-custom__select-all-button {
   margin-top: 0.5rem;
 }
+
+/* .w-panel__wrapper.w-custom__panel-with-notes .w-field__label[for$="_notes"] {
+  background-color: red;
+}
+.w-panel__wrapper.w-custom__panel-with-notes .w-field__label[for$="_notes"]::before {
+  content: ">";
+} */
+
+.w-form-width {
+  max-width: 960px;
+}
+.w-panel__wrapper.w-custom__panel-with-notes {
+  padding-inline-start: 2rem;
+  padding-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--w-color-grey-150);
+  border-radius: 0.3125rem;
+  max-width: 960px;
+}
+.w-panel__wrapper.w-custom__panel-with-notes.w-custom--2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+}
+.w-panel__wrapper.w-custom__panel-with-notes.w-custom--2col > .w-panel__wrapper:nth-child(3) {
+  grid-column: 1 / span 2;
+}
