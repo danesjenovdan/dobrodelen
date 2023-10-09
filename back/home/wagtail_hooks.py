@@ -54,7 +54,7 @@ class OrganizationModelAdmin(ModelAdmin):
     add_to_settings_menu = False
     list_display = ("name", "published", "is_complete")
     list_filter = ("published", IsCompleteDefaultFilter)
-    search_fields = ("name", "description")
+    search_fields = ("name", "additional_names")
 
 
 class OrganizationAdminGroup(ModelAdminGroup):
