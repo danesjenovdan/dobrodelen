@@ -632,7 +632,7 @@
             </nuxt-link>
           </td>
           <td>
-            <div class="lead clamp-lines">{{ shorten(org.description) }}</div>
+            <div class="lead clamp-lines"></div>
           </td>
           <td>
             <div v-if="org.stars >= 0" class="stars">
@@ -1060,6 +1060,11 @@ export default {
   .table {
     margin-bottom: 0;
 
+    th:nth-child(2),
+    td:nth-child(2) {
+      display: none;
+    }
+
     @include media-breakpoint-down(md) {
       &,
       thead,
@@ -1152,17 +1157,17 @@ export default {
         font-size: 1rem;
       }
 
-      &:first-child {
-        width: 31rem;
+      // &:first-child {
+      //   width: 31rem;
 
-        @include media-breakpoint-down(xl) {
-          width: 20rem;
-        }
+      //   @include media-breakpoint-down(xl) {
+      //     width: 20rem;
+      //   }
 
-        @include media-breakpoint-down(md) {
-          width: 95%;
-        }
-      }
+      //   @include media-breakpoint-down(md) {
+      //     width: 95%;
+      //   }
+      // }
 
       &:last-child {
         width: 17rem;

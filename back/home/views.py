@@ -212,10 +212,14 @@ class OrganizationHasTaxDonation(View):
     def get(self, request, pk, *args, **kwargs):
         org = self.get_object(pk)
 
-        if org.tax_number and len(org.tax_number) == 8:
+        tax_number = (org.tax_number or "").strip()
+        if tax_number.startswith("SI"):
+            tax_number = tax_number[2:]
+
+        if tax_number and len(tax_number) == 8:
             try:
                 response = requests.get(
-                    f"https://www.cnvos.si/enprocent/findNGOByTaxNumber/{org.tax_number}/",
+                    f"https://www.cnvos.si/enprocent/findNGOByTaxNumber/{tax_number}/",
                     timeout=10,
                 )
                 if response.ok:
