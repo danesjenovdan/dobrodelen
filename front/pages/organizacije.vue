@@ -3,14 +3,27 @@
     <Title>Organizacije</Title>
   </Head>
   <div class="content">
-    <intro-text lead="Doniraj pametno." icon="heart" />
-    <organization-list
-      :organizations="organizations"
-      :sort-query="orgSortQuery"
-      :search-query="orgSearchQuery"
-      :search-criteria="orgSearchCriteria"
-      @change="onOrgListChange"
-    />
+    <div v-if="orgDataError">
+      <h2 style="text-align: center; color: red">{{ orgDataError }}</h2>
+    </div>
+    <template v-else>
+      <intro-text
+        v-if="orgDataPending"
+        lead="Nalaganje ..."
+        icon="heart"
+        animate-icon
+      />
+      <template v-else>
+        <intro-text lead="Doniraj pametno." icon="heart" />
+        <organization-list
+          :organizations="organizations"
+          :sort-query="orgSortQuery"
+          :search-query="orgSearchQuery"
+          :search-criteria="orgSearchCriteria"
+          @change="onOrgListChange"
+        />
+      </template>
+    </template>
   </div>
 </template>
 
@@ -31,28 +44,41 @@ export default {
     const orgSearchQuery = route.query.q;
     const orgSearchCriteria = route.query.criteria;
 
-    const { data: orgData } = await useAsyncData('organizations', () => {
-      const apiBase = process.server
-        ? config.public.apiBaseServer
-        : config.public.apiBase;
-      const url = orgSearchCriteria
-        ? `/api/organizations-filtered-criteria/?filter_keys=${orgSearchCriteria}`
-        : '/api/organizations/';
-      return $fetch(`${apiBase}${url}`);
-    });
+    const {
+      error: orgDataError,
+      pending: orgDataPending,
+      data: orgData,
+    } = await useAsyncData(
+      'organizations',
+      async () => {
+        const apiBase = process.server
+          ? config.public.apiBaseServer
+          : config.public.apiBase;
+        const url = orgSearchCriteria
+          ? `/api/organizations-filtered-criteria/?filter_keys=${orgSearchCriteria}`
+          : '/api/organizations/';
+        return $fetch(`${apiBase}${url}`);
+      },
+      {
+        lazy: true,
+        server: false,
+      },
+    );
 
     return {
       apiBaseUrl: config.public.apiBase,
+      orgDataPending,
+      orgDataError,
       orgData,
       orgSortQuery,
       orgSearchQuery,
       orgSearchCriteria,
     };
   },
-  data() {
-    return {
-      organizations: this.orgData.results || [],
-    };
+  computed: {
+    organizations() {
+      return this.orgData?.results || [];
+    },
   },
   methods: {
     onOrgListChange(changes) {

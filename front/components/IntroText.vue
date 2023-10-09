@@ -8,7 +8,12 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 text-center">
         <p v-if="text" class="text" v-text="text" />
-        <div v-if="icon" :class="`icon icon-${icon} mt-4`" />
+        <div
+          v-if="icon"
+          :class="`icon icon-${icon} mt-4 ${
+            animateIcon ? 'heartbeat-animation' : ''
+          }`"
+        />
       </div>
     </div>
   </div>
@@ -28,6 +33,10 @@ export default {
     icon: {
       type: String,
       default: null,
+    },
+    animateIcon: {
+      type: Boolean,
+      default: false,
     },
   },
 };
