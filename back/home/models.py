@@ -642,6 +642,43 @@ class Organization(ClusterableModel):
             if isinstance(panel, MultiFieldPanel)
         ]
 
+    def get_panel_fields(self):
+        meta = self.__class__._meta
+
+        def panel_to_tuple(panel, parents=None):
+            if parents is None:
+                parents = []
+
+            if isinstance(panel, FieldPanel):
+                return (panel.field_name, meta.get_field(panel.field_name).verbose_name, parents)
+            if isinstance(panel, InlinePanel):
+                return None  # ignore reverse relations for now
+            if isinstance(panel, HelpPanel):
+                return None  # ignore help panels
+            if isinstance(panel, MultiFieldPanel):
+                return panels_to_tuple(panel.children, parents + [panel.heading])
+
+            return None
+
+        def panels_to_tuple(panels, parents=None):
+            if parents is None:
+                parents = []
+
+            panel_fields = list()
+
+            for panel in panels:
+                value = panel_to_tuple(panel, parents)
+                if value is None:
+                    continue
+                if isinstance(value, list):
+                    panel_fields.extend(value)
+                else:
+                    panel_fields.append(value)
+
+            return panel_fields
+
+        return panels_to_tuple(self.__class__.panels)
+
     @property
     def stars(self):
         max_points = len(self.get_point_fields())

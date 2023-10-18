@@ -19,10 +19,12 @@ from wagtail.contrib.modeladmin.options import (
 )
 from wagtail.contrib.modeladmin.views import IndexView
 from wagtail.core import hooks
+from wagtail.images import get_image_model
 from xlsxwriter.workbook import Workbook
 
 from .models import Organization
 
+Image = get_image_model()
 
 # --- Export
 
@@ -198,6 +200,49 @@ class OrganizationModelAdmin(ExportModelAdminMixin, ModelAdmin):
     list_display = ("name", "published", "is_complete")
     list_filter = ("published", IsCompleteDefaultFilter)
     search_fields = ("name", "additional_names")
+
+    def get_xlsx_export_filename(self, queryset):
+        return "dobrodelen_organizacije_export.xlsx"
+
+    def get_xlsx_export_data(self, queryset):
+        rows = list()
+
+        if not len(queryset):
+            return rows
+
+        panel_fields = queryset[0].get_panel_fields()
+
+        for item in queryset:
+            row = dict()
+
+            for field_name, field_verbose_name, field_parents in panel_fields:
+                field_title = field_verbose_name
+                field_value = getattr(item, field_name)
+
+                if isinstance(field_value, bool):
+                    field_value = "Da" if field_value else "Ne"
+                if isinstance(field_value, Image):
+                    field_value = field_value.file.name
+                if field_value.__class__.__name__ == "ManyRelatedManager":
+                    field_value = ", ".join([str(x) for x in field_value.all()])
+
+                if field_verbose_name.startswith("Kriterij "):
+                    field_title = field_verbose_name.replace("Kriterij ", "K")
+
+                for field_parent in field_parents:
+                    if field_parent.startswith("Sklop "):
+                        prefix = field_parent.replace("Sklop ", "S").split(":")[0]
+                        field_title = prefix + " " + field_title
+
+                row[field_title] = field_value
+
+            row["Točke"] = item.points
+            row["Zvedzice"] = item.stars
+
+            # pprint(row)
+            rows.append(row)
+
+        return rows
 
 
 class OrganizationAdminGroup(ModelAdminGroup):
