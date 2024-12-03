@@ -40,6 +40,9 @@ export default {
   components: {
     StripedTextShadow,
   },
+  mounted() {
+    this.$router.push({ name: 'organizacije' });
+  },
 };
 </script>
 

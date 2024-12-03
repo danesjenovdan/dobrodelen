@@ -1250,6 +1250,7 @@ export default {
           height: 100%;
           background: white;
           padding: 8px;
+          border: 1px solid #383838;
 
           img {
             display: block;
