@@ -6,14 +6,14 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-12 col-md-7 text-center">
-        <p v-if="text" class="text" v-text="text" />
+      <div class="col-12 col-md-10 text-center">
         <div
           v-if="icon"
-          :class="`icon icon-${icon} mt-4 ${
+          :class="`icon icon-${icon} ${
             animateIcon ? 'heartbeat-animation' : ''
           }`"
         />
+        <p v-if="text" class="text" v-text="text" />
       </div>
     </div>
   </div>
@@ -78,6 +78,7 @@ export default {
   .icon {
     width: 13rem;
     height: 13rem;
+    margin-top: 2.5rem;
 
     @include media-breakpoint-down(sm) {
       width: 7rem;

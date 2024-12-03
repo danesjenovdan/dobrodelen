@@ -14,7 +14,11 @@
         animate-icon
       />
       <template v-else>
-        <intro-text lead="Doniraj pametno." icon="heart" />
+        <intro-text
+          lead="Doniraj pametno."
+          text="Pomagaj si z našim nepristranskim sistemom razvrščanja organizacij, poišči zaupanja vredne organizacije in jih podpri."
+          icon="heart"
+        />
         <organization-list
           :organizations="organizations"
           :sort-query="orgSortQuery"
