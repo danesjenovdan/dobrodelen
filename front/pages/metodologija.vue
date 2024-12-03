@@ -4,7 +4,8 @@
   </Head>
   <div class="content">
     <intro-text
-      lead="Metodologija za pregled transparentnosti slovenskih nevladnih organizacij "
+      lead="Metodologija za pregled transparentnosti slovenskih nevladnih organizacij"
+      text="Razišči vseh 23 kriterijev v petih sklopih."
     />
     <div class="faq">
       <div class="accordion">
