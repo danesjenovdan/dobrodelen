@@ -18,29 +18,36 @@
       <div class="col-12 col-md-8 col-xxl-6">
         <form ref="form" @submit.prevent>
           <template v-if="activeStage === -1">
-            <p class="lead text-justify">
-              Veseli nas, da ste se odločili vpisati vašo organizacijo na
-              spletno stran <em>dobrodelen.si</em> in širši javnosti pokazati,
-              kako transparenti in odgovorni ste pri svojem poslovanju.
-            </p>
-            <p class="lead text-justify">
-              Preden začnete z vpisovanjem podatkov o svoji organizaciji
-              podrobno preberite
-              <a
-                href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                >METODOLOGIJA ZA PREGLED TRANSPARENTOSTI SLOVENSKIH NEVLADNIH
-                ORGANIZACIJ</a
-              >.
-            </p>
-            <p class="lead text-justify">
-              V njej so predstavljeni sklopi pregleda s kriteriji in pogoji
-              njihovega izpolnjevanja. Glede na število izpolnjenih kriterijev
-              bodo organizaciji dodeljene zvezdice, ki bodo odražale njeno
-              transparentnost. Več zvezdic organizacija doseže, bolj
-              transparentna je v svojem delovanju.
-            </p>
+            <div class="bigger-margins">
+              <p class="lead text-justify">
+                Veseli nas, da ste se odločili vpisati vašo organizacijo na
+                spletno stran <em>dobrodelen.si</em> in širši javnosti pokazati,
+                kako transparentni in odgovorni ste pri svojem poslovanju.
+              </p>
+              <p class="lead text-justify">
+                Preden začnete z vpisovanjem podatkov o svoji organizaciji
+                podrobno preberite
+                <a
+                  href="/docs/Metodologija za pregled transparentnosti slovenskih nevladnih organizacij_F.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >METODOLOGIJA ZA PREGLED TRANSPARENTOSTI SLOVENSKIH NEVLADNIH
+                  ORGANIZACIJ</a
+                >.
+              </p>
+              <p class="lead text-justify">
+                V njej so predstavljeni sklopi pregleda s kriteriji in pogoji
+                njihovega izpolnjevanja. <br />
+                Glede na število izpolnjenih kriterijev bodo organizaciji
+                dodeljene zvezdice, ki bodo odražale njeno transparentnost.
+              </p>
+              <p class="lead text-justify">
+                <strong
+                  >Več zvezdic organizacija doseže, bolj transparentna je v
+                  svojem delovanju.</strong
+                >
+              </p>
+            </div>
           </template>
 
           <template v-if="activeStage >= 0 && activeStage < stages.length">
@@ -1105,6 +1112,12 @@ export default {
     // font-weight: 400;
     // font-style: italic;
     font-style: normal;
+  }
+
+  .bigger-margins p {
+    &:not(:first-child) {
+      margin-top: 2rem;
+    }
   }
 
   .form-row {
