@@ -154,6 +154,40 @@
                 </div>
               </div>
             </div>
+            <div
+              v-for="(points, section) in groupedPointsDetailsExtra"
+              :key="section"
+              class="col-xl-4"
+            >
+              <h5 class="org-criteria-section-name">
+                <nuxt-link
+                  :to="{
+                    name: 'metodologija',
+                    hash: `#accordion-item-${sectionIndexFromName(section)}`,
+                  }"
+                >
+                  <div>
+                    <em>{{ splitNameAtColon(section)[0] }}</em>
+                  </div>
+                  <div>{{ splitNameAtColon(section)[1] }}</div>
+                </nuxt-link>
+              </h5>
+              <div v-for="point in points" :key="point.name">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :id="`point-${point.name}`"
+                    :checked="point.value"
+                    disabled
+                  />
+                  <label class="form-check-label" :for="`point-${point.name}`">
+                    <em>{{ splitNameAtColon(point.verbose_name)[0] }}: </em>
+                    {{ splitNameAtColon(point.verbose_name)[1] }}
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col">
@@ -362,6 +396,9 @@ export default {
   computed: {
     groupedPointsDetails() {
       return _.groupBy(this.organization.points_details, 'section');
+    },
+    groupedPointsDetailsExtra() {
+      return _.groupBy(this.organization.points_details_extra, 'section');
     },
     taxDonationWidgetUrl() {
       const qs = new URLSearchParams({
