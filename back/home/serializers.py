@@ -91,6 +91,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "stars",
             "points",
             "points_details",
+            "points_details_extra",
         )
 
     def get_area(self, obj):
@@ -206,4 +207,5 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "stars",
             "points",
             "points_details",
+            "points_details_extra",
         )

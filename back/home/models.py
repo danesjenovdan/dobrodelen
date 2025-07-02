@@ -617,7 +617,16 @@ class Organization(ClusterableModel):
             if isinstance(field, models.BooleanField)
             and (
                 field.name.startswith("has_published_")
-                or field.name.startswith("website_accessibility_")
+            )
+        ]
+
+    def get_point_fields_extra(self):
+        return [
+            field
+            for field in self.__class__._meta.fields
+            if isinstance(field, models.BooleanField)
+            and (
+                field.name.startswith("website_accessibility_")
             )
         ]
 
@@ -707,6 +716,33 @@ class Organization(ClusterableModel):
     @property
     def points_details(self):
         point_fields = self.get_point_fields()
+        panel_tree = self.get_panel_tree()
+
+        def find_parent_panel(field_name):
+            for panel in panel_tree:
+                if isinstance(panel, dict):
+                    for child in panel["children"]:
+                        if isinstance(child, str) and child == field_name:
+                            return panel["name"]
+                        if isinstance(child, dict):
+                            for child2 in child["children"]:
+                                if isinstance(child2, str) and child2 == field_name:
+                                    return panel["name"]
+            return None
+
+        def field_to_object(field):
+            return {
+                "section": find_parent_panel(field.name),
+                "name": field.name,
+                "verbose_name": field.verbose_name,
+                "value": getattr(self, field.name, False),
+            }
+
+        return list(map(field_to_object, point_fields))
+
+    @property
+    def points_details_extra(self):
+        point_fields = self.get_point_fields_extra()
         panel_tree = self.get_panel_tree()
 
         def find_parent_panel(field_name):
