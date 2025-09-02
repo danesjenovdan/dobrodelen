@@ -113,6 +113,30 @@ class HomePage(Page):
     pass
 
 
+point_field_mapping = {
+    # OSNOVNE INFORMACIJE
+    "has_published_key_documents": 2, # Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)
+    "has_published_mission": 1, # Kriterij 2: Organizacija ima objavljeno poslanstvo
+    "has_published_key_employee_list": 2, # Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih
+    "has_published_board_member_list": 1, # Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov
+    "has_published_contact_information": 2, # Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo
+    "has_published_complaints_contact": 1, # Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe
+    "has_published_complaints_process": 0.5, # Kriterij 7: Objavljen je celoten pritožbeni postopek
+    # PROGRAMSKA TRANSPARENTNOST
+    "has_published_substantive_report": 2, # Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto
+    "has_published_report_about_work": 2, # Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja
+    "has_published_report_with_results": 1, # Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti
+    "has_published_work_plan": 0.5, # Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto
+    "has_published_strategic_objectives": 0.5, # Kriterij 5: Organizacija ima objavljene glavne strateške cilje
+    # FINANČNO POSLOVANJE
+    "has_published_financial_report": 2, # Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto
+    "has_published_understandable_financial_report": 2, # Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)
+    "has_published_operating_expenses": 0.5, # Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)
+    "has_published_main_sources_of_financing": 2, # Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)
+    "has_published_management_revenues": 1, # Kriterij 5: Objavljeni so prihodki vodstva
+    "has_published_salary_ratio": 0.5, # Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo
+}
+
 class Organization(ClusterableModel):
     # META INFO
     is_complete = models.BooleanField(
@@ -615,9 +639,8 @@ class Organization(ClusterableModel):
             field
             for field in self.__class__._meta.fields
             if isinstance(field, models.BooleanField)
-            and (
-                field.name.startswith("has_published_")
-            )
+            and (field.name.startswith("has_published_"))
+            and field.name in point_field_mapping.keys() # on organization page show only main criteria
         ]
 
     def get_point_fields_extra(self):
@@ -690,24 +713,35 @@ class Organization(ClusterableModel):
 
     @property
     def stars(self):
-        max_points = len(self.get_point_fields())
         points = self.points
-        if points >= max_points * 0.9:
+        if points >= 21.15:
             return 5
-        elif points >= max_points * 0.8:
+        elif points >= 18.8:
             return 4
-        elif points >= max_points * 0.7:
+        elif points >= 16.45:
             return 3
-        elif points >= max_points * 0.6:
+        elif points >= 14.1:
             return 2
-        elif points >= max_points * 0.5:
+        elif points >= 11.75:
             return 1
         return 0
 
     @property
     def points(self):
+        def get_point_value(field_name, field_value):
+            if field_value:
+                return point_field_mapping.get(field_name, 0)
+            return 0
+
         point_field_names = [field.name for field in self.get_point_fields()]
-        return sum(list(map(lambda name: getattr(self, name, 0), point_field_names)))
+        return sum(
+            list(
+                map(
+                    lambda name: get_point_value(name, getattr(self, name, 0)),
+                    point_field_names,
+                )
+            )
+        )
 
     def compute_filtered_points(self, filter_keys):
         # TODO: fix
@@ -742,7 +776,7 @@ class Organization(ClusterableModel):
 
     @property
     def points_details_extra(self):
-        point_fields = self.get_point_fields_extra()
+        point_fields = []# self.get_point_fields_extra() # hide sklop 4 and 5
         panel_tree = self.get_panel_tree()
 
         def find_parent_panel(field_name):
@@ -928,40 +962,40 @@ class Organization(ClusterableModel):
             ],
             heading="Sklop 3: Finančna transparentnost",
         ),
-        # ZBIRANJE DONACIJSKIH SREDSTEV
-        MultiFieldPanel(
-            [
-                MultiFieldPanel([
-                    FieldPanel("has_published_fundraising_reports"),
-                    FieldPanel("fundraising_reports_notes"),
-                    FieldPanel("fundraising_reports_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_fundraising_report_with_purposes"),
-                    FieldPanel("fundraising_report_with_purposes_notes"),
-                    FieldPanel("fundraising_report_with_purposes_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-            ],
-            heading="Sklop 4: Zbiranje donacijskih sredstev",
-        ),
-        # DOSTOP OBJAVLJENIH INFORMACIJ
-        MultiFieldPanel(
-            [
-                MultiFieldPanel([
-                    FieldPanel("website_accessibility_contrast"),
-                    FieldPanel("website_accessibility_contrast_notes"),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("website_accessibility_zoom"),
-                    FieldPanel("website_accessibility_zoom_notes"),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("website_accessibility_disabilities"),
-                    FieldPanel("website_accessibility_disabilities_notes"),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-            ],
-            heading="Sklop 5: Dostop objavljenih informacij",
-        ),
+        # # ZBIRANJE DONACIJSKIH SREDSTEV
+        # MultiFieldPanel(
+        #     [
+        #         MultiFieldPanel([
+        #             FieldPanel("has_published_fundraising_reports"),
+        #             FieldPanel("fundraising_reports_notes"),
+        #             FieldPanel("fundraising_reports_url", widget=URLInputWithLink),
+        #         ], classname="w-custom__panel-with-notes w-custom--2col"),
+        #         MultiFieldPanel([
+        #             FieldPanel("has_published_fundraising_report_with_purposes"),
+        #             FieldPanel("fundraising_report_with_purposes_notes"),
+        #             FieldPanel("fundraising_report_with_purposes_url", widget=URLInputWithLink),
+        #         ], classname="w-custom__panel-with-notes w-custom--2col"),
+        #     ],
+        #     heading="Sklop 4: Zbiranje donacijskih sredstev",
+        # ),
+        # # DOSTOP OBJAVLJENIH INFORMACIJ
+        # MultiFieldPanel(
+        #     [
+        #         MultiFieldPanel([
+        #             FieldPanel("website_accessibility_contrast"),
+        #             FieldPanel("website_accessibility_contrast_notes"),
+        #         ], classname="w-custom__panel-with-notes w-custom--2col"),
+        #         MultiFieldPanel([
+        #             FieldPanel("website_accessibility_zoom"),
+        #             FieldPanel("website_accessibility_zoom_notes"),
+        #         ], classname="w-custom__panel-with-notes w-custom--2col"),
+        #         MultiFieldPanel([
+        #             FieldPanel("website_accessibility_disabilities"),
+        #             FieldPanel("website_accessibility_disabilities_notes"),
+        #         ], classname="w-custom__panel-with-notes w-custom--2col"),
+        #     ],
+        #     heading="Sklop 5: Dostop objavljenih informacij",
+        # ),
         # REVIEW INFO
         MultiFieldPanel(
             [
