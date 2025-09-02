@@ -5,7 +5,7 @@
   <div class="content">
     <intro-text
       lead="Metodologija za pregled transparentnosti slovenskih nevladnih organizacij"
-      text="Razišči vseh 23 kriterijev v petih sklopih."
+      text="Razišči vseh 18 kriterijev v treh sklopih."
     />
     <div class="faq">
       <div class="accordion">
@@ -101,7 +101,7 @@ export default {
           headerHTML: 'SKLOP 3: <strong>FINANČNA TRANSPARENTNOST</strong>',
           contentHTML: sklop3,
         },
-        {
+        /*{
           collapsed: true,
           headerHTML: 'SKLOP 4: <strong>ZBIRANJE DONACIJSKIH SREDSTEV</strong>',
           contentHTML: sklop4,
@@ -111,7 +111,7 @@ export default {
           headerHTML:
             'SKLOP 5: <strong>DOSTOPNOST OBJAVLJENIH INFORMACIJ</strong>',
           contentHTML: sklop5,
-        },
+        },*/
       ],
     };
   },

@@ -702,7 +702,7 @@
             </form-category>
           </template>
 
-          <template v-else-if="activeStage === 4">
+          <template v-else-if="activeStage === 8">
             <!-- SKLOP 4 Kriteriji -->
             <form-category title="ZBIRANJE DONACIJSKIH SREDSTEV" bold-title>
               <selection-option
@@ -741,7 +741,7 @@
             </form-category>
           </template>
 
-          <template v-else-if="activeStage === 5">
+          <template v-else-if="activeStage === 9">
             <!-- SKLOP 5 Kriteriji -->
             <form-category title="DOSTOP OBJAVLJENIH INFORMACIJ" bold-title>
               <selection-option
@@ -945,8 +945,8 @@ export default {
         { label: 'DOSTOPNOST OSNOVNIH INFORMACIJ' },
         { label: 'DOSTOPNOST VSEBINSKIH POROČIL' },
         { label: 'FINANČNA TRANSPARENTNOST' },
-        { label: 'ZBIRANJE DONACIJSKIH SREDSTEV' },
-        { label: 'DOSTOP OBJAVLJENIH INFORMACIJ' },
+        // { label: 'ZBIRANJE DONACIJSKIH SREDSTEV' },
+        // { label: 'DOSTOP OBJAVLJENIH INFORMACIJ' },
       ],
       activeStage: -1,
       data,
