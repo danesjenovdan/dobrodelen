@@ -725,6 +725,10 @@ class Organization(ClusterableModel):
         elif points >= 11.5:
             return 1
         return 0
+    
+    @property
+    def checked_criteria(self):
+        return len([field for field in self.get_point_fields() if getattr(self, field.name, False)])
 
     @property
     def points(self):
