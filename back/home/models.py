@@ -714,15 +714,15 @@ class Organization(ClusterableModel):
     @property
     def stars(self):
         points = self.points
-        if points >= 21.15:
+        if points >= 21:
             return 5
-        elif points >= 18.8:
+        elif points >= 18.5:
             return 4
-        elif points >= 16.45:
+        elif points >= 16.5:
             return 3
-        elif points >= 14.1:
+        elif points >= 14:
             return 2
-        elif points >= 11.75:
+        elif points >= 11.5:
             return 1
         return 0
 
