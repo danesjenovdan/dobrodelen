@@ -92,7 +92,7 @@ class OrganizationPublicSerializer(serializers.ModelSerializer):
             "points",
             "points_details",
             "points_details_extra",
-            "checked_criteria"
+            "total_points",
         )
 
     def get_area(self, obj):
@@ -209,5 +209,5 @@ class OrganizationDetailSerializer(WritableNestedModelSerializer):
             "points",
             "points_details",
             "points_details_extra",
-            "checked_criteria",
+            "total_points",
         )

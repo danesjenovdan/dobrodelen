@@ -727,8 +727,8 @@ class Organization(ClusterableModel):
         return 0
     
     @property
-    def checked_criteria(self):
-        return len([field for field in self.get_point_fields() if getattr(self, field.name, False)])
+    def total_points(self):
+        return sum(point_field_mapping.values())
 
     @property
     def points(self):

@@ -194,8 +194,8 @@
               <div class="text-right mt-4">
                 <em>
                   <strong>
-                    Število izpolnjenih kriterijev {{ organization.checked_criteria }}/{{
-                      organization.points_details.length
+                    Število izpolnjenih kriterijev {{ organization.points }}/{{
+                      organization.total_points
                     }}
                   </strong>
                 </em>
