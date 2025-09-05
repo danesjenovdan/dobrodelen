@@ -199,7 +199,7 @@
               </div>
             </div>
           </form-category>
-          <form-category title="Sklop 4: Zbiranje donacijskih sredstev">
+          <!-- <form-category title="Sklop 4: Zbiranje donacijskih sredstev">
             <div class="row">
               <div class="col-md-12">
                 <selection-option
@@ -251,7 +251,7 @@
                 />
               </div>
             </div>
-          </form-category>
+          </form-category> -->
           <form-category>
             <button
               type="button"
