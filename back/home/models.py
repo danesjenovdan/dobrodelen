@@ -725,7 +725,7 @@ class Organization(ClusterableModel):
         elif points >= 11.5:
             return 1
         return 0
-    
+
     @property
     def total_points(self):
         return sum(point_field_mapping.values())
@@ -1015,7 +1015,7 @@ class Organization(ClusterableModel):
     ]
 
     def __str__(self):
-        return str(self.name)
+        return f"{self.name} (ID: {self.pk})"
 
     class Meta:
         verbose_name = "Organizacija"
