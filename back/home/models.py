@@ -768,12 +768,19 @@ class Organization(ClusterableModel):
                                     return panel["name"]
             return None
 
+        def related_url_field(field_name):
+            url_field_name = field_name.replace("has_published_", "") + "_url"
+            return getattr(self, url_field_name, None)
+
         def field_to_object(field):
+            url_field = related_url_field(field.name)
+            url = str(url_field) if url_field and str(url_field).startswith("http") else None
             return {
                 "section": find_parent_panel(field.name),
                 "name": field.name,
                 "verbose_name": field.verbose_name,
                 "value": getattr(self, field.name, False),
+                "url": url,
             }
 
         return list(map(field_to_object, point_fields))

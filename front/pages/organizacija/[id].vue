@@ -149,7 +149,17 @@
                   />
                   <label class="form-check-label" :for="`point-${point.name}`">
                     <em>{{ splitNameAtColon(point.verbose_name)[0] }}: </em>
-                    {{ splitNameAtColon(point.verbose_name)[1] }}
+                    <a
+                      v-if="point.url"
+                      :href="point.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {{ splitNameAtColon(point.verbose_name)[1] }}
+                    </a>
+                    <template v-else>
+                      {{ splitNameAtColon(point.verbose_name)[1] }}
+                    </template>
                   </label>
                 </div>
               </div>
@@ -678,6 +688,15 @@ export default {
       color: $body-color;
       line-height: 1.2;
       font-weight: 400;
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
 
     .form-check-input:checked + .form-check-label {
