@@ -30,5 +30,12 @@ useHead({
       href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900&display=swap&subset=latin-ext',
     },
   ],
+  script: [
+    {
+      defer: true,
+      'data-domain': 'dobrodelen.si',
+      src: 'https://plausible.lb.djnd.si/js/plausible.js',
+    },
+  ],
 });
 </script>
