@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     "home",
     "wagtail.contrib.forms",
-    "wagtail.contrib.modeladmin",
+    "wagtail_modeladmin",
     "wagtail.contrib.redirects",
     "wagtail.contrib.styleguide",
     "wagtail.embeds",
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
 ]
 
 MIDDLEWARE = [
@@ -94,8 +95,12 @@ WSGI_APPLICATION = "dobrodelen.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": os.getenv("DJANGO_DATABASE_HOST", "db"),
+        "NAME": os.getenv("DJANGO_DATABASE_NAME", "wagtail"),
+        "USER": os.getenv("DJANGO_DATABASE_USER", "wagtail"),
+        "PASSWORD": os.getenv("DJANGO_DATABASE_PASSWORD", "changeme"),
+        "PORT": os.getenv("DJANGO_DATABASE_PORT", "5432"),
     }
 }
 
@@ -145,16 +150,27 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
 ]
 
-# ManifestStaticFilesStorage is recommended in production, to prevent outdated
-# JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
-# See https://docs.djangoproject.com/en/4.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+
+# Default storage settings, with the staticfiles storage updated.
+# See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    # ManifestStaticFilesStorage is recommended in production, to prevent
+    # outdated JavaScript / CSS assets being served from cache
+    # (e.g. after a Wagtail upgrade).
+    # See https://docs.djangoproject.com/en/5.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
 
 
 # Wagtail settings

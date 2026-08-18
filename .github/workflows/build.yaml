@@ -28,7 +28,6 @@ jobs:
           DOCKER_BUILD_RECORD_UPLOAD: false
         with:
           context: ./back
-          file: ./back/k8s.Dockerfile
           push: true
           tags: |
             rg.fr-par.scw.cloud/djnd/dobrodelen-back:${{ github.sha }}

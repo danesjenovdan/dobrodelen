@@ -11,14 +11,14 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.admin.site_summary import SummaryItem
 from wagtail.admin.ui.components import Component
 from wagtail.admin.views.mixins import ExcelDateFormatter
-from wagtail.contrib.modeladmin.helpers import AdminURLHelper, ButtonHelper
-from wagtail.contrib.modeladmin.options import (
+from wagtail_modeladmin.helpers import AdminURLHelper, ButtonHelper
+from wagtail_modeladmin.options import (
     ModelAdmin,
     ModelAdminGroup,
     modeladmin_register,
 )
-from wagtail.contrib.modeladmin.views import IndexView
-from wagtail.core import hooks
+from wagtail_modeladmin.views import IndexView
+from wagtail import hooks
 from wagtail.images import get_image_model
 from xlsxwriter.workbook import Workbook
 

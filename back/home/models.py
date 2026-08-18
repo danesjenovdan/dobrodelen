@@ -6,7 +6,7 @@ from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget, URL
 from django.utils import timezone
 from modelcluster.models import ClusterableModel, ParentalKey
 from wagtail.admin.panels import FieldPanel, HelpPanel, InlinePanel, MultiFieldPanel
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 
 def try_send_mail_updated_org(id, inst):
