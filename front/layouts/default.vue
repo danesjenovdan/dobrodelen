@@ -56,13 +56,13 @@
         <div class="col-12 col-lg-6 partners-col">
           <div class="text-center">
             <a
-              href="https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-javno-upravo/"
+              href="https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-notranje-zadeve-in-javno-upravo/"
               target="_blank"
               rel="noopener"
             >
               <img
-                src="/img/Ministrstvo_za_javno_upravo_.png"
-                alt="mju logo"
+                src="/img/mnzju_export.png"
+                alt="mnzju logo"
                 class="mju-logo"
               />
             </a>
@@ -77,7 +77,7 @@
           <div class="text-center">
             <div class="partners-text">
               K nastanku spletnega mesta Dobrodelen.si sta pripomogla
-              Ministrstvo za javno upravo Republike Slovenije ter U.S. Embassy
+              Ministrstvo za notranje zadeve in javno upravo Republike Slovenije ter U.S. Embassy
               Ljubljana
             </div>
           </div>
@@ -179,10 +179,10 @@ export default {
     .mju-logo {
       mix-blend-mode: multiply;
       margin-right: 1rem;
-      height: 48px;
+      height: 56px;
 
       @include media-breakpoint-down(xs) {
-        height: 36px;
+        height: 48px;
       }
     }
 
@@ -197,7 +197,8 @@ export default {
     .partners-text {
       margin: 0 auto;
       max-width: 420px;
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 1.2;
     }
   }
 }
