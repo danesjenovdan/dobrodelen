@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0014_auto_20190821_0953'),
+        ("home", "0014_auto_20190821_0953"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='organization',
-            old_name='minutes_meeteng',
-            new_name='minutes_meeting',
+            model_name="organization",
+            old_name="minutes_meeteng",
+            new_name="minutes_meeting",
         ),
         migrations.AddField(
-            model_name='organization',
-            name='has_minutes_meeting',
-            field=models.BooleanField(default=False, verbose_name='ima priloga zapisnik zadnje seje?'),
+            model_name="organization",
+            name="has_minutes_meeting",
+            field=models.BooleanField(
+                default=False, verbose_name="ima priloga zapisnik zadnje seje?"
+            ),
         ),
     ]

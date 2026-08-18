@@ -1,6 +1,6 @@
 import re
-import requests
 
+import requests
 from django.core import signing
 from django.http import HttpResponse, JsonResponse
 from django.views import View

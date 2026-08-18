@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.urls import include, path, re_path
 from django.contrib import admin
 from django.shortcuts import get_object_or_404
-
-from wagtail.documents import get_document_model
-from wagtail.admin import urls as wagtailadmin_urls
+from django.urls import include, path, re_path
 from wagtail import urls as wagtail_urls
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import get_document_model
 from wagtail.documents import urls as wagtaildocs_urls
 
 

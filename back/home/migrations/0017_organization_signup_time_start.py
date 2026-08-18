@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0016_auto_20190822_1113'),
+        ("home", "0016_auto_20190822_1113"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='organization',
-            name='signup_time_start',
-            field=models.DateTimeField(blank=True, null=True, verbose_name='Čas začetka prijave'),
+            model_name="organization",
+            name="signup_time_start",
+            field=models.DateTimeField(
+                blank=True, null=True, verbose_name="Čas začetka prijave"
+            ),
         ),
     ]

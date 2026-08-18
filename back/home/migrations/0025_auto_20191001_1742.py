@@ -6,18 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0024_auto_20191001_1656'),
+        ("home", "0024_auto_20191001_1656"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='criteria',
-            name='transparency_of_organizations_4_1',
-            field=models.IntegerField(default=0, verbose_name='4.1.1 - Organizacija ima objavljena letna poročila o delu'),
+            model_name="criteria",
+            name="transparency_of_organizations_4_1",
+            field=models.IntegerField(
+                default=0,
+                verbose_name="4.1.1 - Organizacija ima objavljena letna poročila o delu",
+            ),
         ),
         migrations.AlterField(
-            model_name='criteria',
-            name='transparency_of_organizations_4_2',
-            field=models.IntegerField(default=0, verbose_name='4.1.2 - Letna poročila o delu so razumljiva'),
+            model_name="criteria",
+            name="transparency_of_organizations_4_2",
+            field=models.IntegerField(
+                default=0, verbose_name="4.1.2 - Letna poročila o delu so razumljiva"
+            ),
         ),
     ]

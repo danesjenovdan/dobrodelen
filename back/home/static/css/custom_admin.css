@@ -1,4 +1,8 @@
 /* START multi-column checkbox multi select widget */
+.w-field--checkbox_select_multiple {
+  display: block;
+}
+
 .w-field--checkbox_select_multiple .w-field__input > div[id] {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -10,19 +14,6 @@
   align-self: flex-start;
 }
 /* END multi-column checkbox multi select widget */
-
-/* START multi-column custom tuple checkboxes */
-.w-field--labeled_tuple_checkboxes .w-field__input > div[id] {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0 1.5rem;
-}
-
-.w-field--labeled_tuple_checkboxes .w-field__input > div[id] > div > label > input {
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-/* END multi-column custom tuple checkboxes */
 
 /* custom style for clickable links under url inputs */
 .w-custom__url-with-link-button {
@@ -37,21 +28,16 @@
   margin-top: 0.5rem;
 }
 
-/* .w-panel__wrapper.w-custom__panel-with-notes .w-field__label[for$="_notes"] {
-  background-color: red;
-}
-.w-panel__wrapper.w-custom__panel-with-notes .w-field__label[for$="_notes"]::before {
-  content: ">";
-} */
-
-.w-form-width {
+.w-form-width,
+.w-panel__wrapper,
+.w-field__wrapper {
   max-width: 960px;
 }
 .w-panel__wrapper.w-custom__panel-with-notes {
-  padding-inline-start: 2rem;
+  padding-inline: 1.25rem;
   padding-top: 1.25rem;
   margin-bottom: 0.75rem;
-  border: 1px solid var(--w-color-grey-150);
+  border: 1px solid var(--w-color-border-field-default);
   border-radius: 0.3125rem;
   max-width: 960px;
 }

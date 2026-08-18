@@ -6,28 +6,80 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0021_auto_20190923_1412'),
+        ("home", "0021_auto_20190923_1412"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='councilboardmember',
-            name='role',
-            field=models.CharField(choices=[('1', 'Član'), ('2', 'Predstavnik uporabnikov'), ('3', 'Predstavnik zaposlenih'), ('4', 'Predstavnik ustanoviteljev'), ('5', 'Imenovan na podlagi sorodstvenih/prijateljskih vezi'), ('6', 'Neodvisni predstavnik'), ('7', 'Drugo:')], default='1', max_length=2, verbose_name='Povezava z organizacijo'),
+            model_name="councilboardmember",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("1", "Član"),
+                    ("2", "Predstavnik uporabnikov"),
+                    ("3", "Predstavnik zaposlenih"),
+                    ("4", "Predstavnik ustanoviteljev"),
+                    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
+                    ("6", "Neodvisni predstavnik"),
+                    ("7", "Drugo:"),
+                ],
+                default="1",
+                max_length=2,
+                verbose_name="Povezava z organizacijo",
+            ),
         ),
         migrations.AlterField(
-            model_name='managementboardmember',
-            name='role',
-            field=models.CharField(choices=[('1', 'Član'), ('2', 'Predstavnik uporabnikov'), ('3', 'Predstavnik zaposlenih'), ('4', 'Predstavnik ustanoviteljev'), ('5', 'Imenovan na podlagi sorodstvenih/prijateljskih vezi'), ('6', 'Neodvisni predstavnik'), ('7', 'Drugo:')], default='1', max_length=2, verbose_name='Povezava z organizacijo'),
+            model_name="managementboardmember",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("1", "Član"),
+                    ("2", "Predstavnik uporabnikov"),
+                    ("3", "Predstavnik zaposlenih"),
+                    ("4", "Predstavnik ustanoviteljev"),
+                    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
+                    ("6", "Neodvisni predstavnik"),
+                    ("7", "Drugo:"),
+                ],
+                default="1",
+                max_length=2,
+                verbose_name="Povezava z organizacijo",
+            ),
         ),
         migrations.AlterField(
-            model_name='otherboardmember',
-            name='role',
-            field=models.CharField(choices=[('1', 'Član'), ('2', 'Predstavnik uporabnikov'), ('3', 'Predstavnik zaposlenih'), ('4', 'Predstavnik ustanoviteljev'), ('5', 'Imenovan na podlagi sorodstvenih/prijateljskih vezi'), ('6', 'Neodvisni predstavnik'), ('7', 'Drugo:')], default='1', max_length=2, verbose_name='Povezava z organizacijo'),
+            model_name="otherboardmember",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("1", "Član"),
+                    ("2", "Predstavnik uporabnikov"),
+                    ("3", "Predstavnik zaposlenih"),
+                    ("4", "Predstavnik ustanoviteljev"),
+                    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
+                    ("6", "Neodvisni predstavnik"),
+                    ("7", "Drugo:"),
+                ],
+                default="1",
+                max_length=2,
+                verbose_name="Povezava z organizacijo",
+            ),
         ),
         migrations.AlterField(
-            model_name='supervisoryboardmember',
-            name='role',
-            field=models.CharField(choices=[('1', 'Član'), ('2', 'Predstavnik uporabnikov'), ('3', 'Predstavnik zaposlenih'), ('4', 'Predstavnik ustanoviteljev'), ('5', 'Imenovan na podlagi sorodstvenih/prijateljskih vezi'), ('6', 'Neodvisni predstavnik'), ('7', 'Drugo:')], default='1', max_length=2, verbose_name='Povezava z organizacijo'),
+            model_name="supervisoryboardmember",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("1", "Član"),
+                    ("2", "Predstavnik uporabnikov"),
+                    ("3", "Predstavnik zaposlenih"),
+                    ("4", "Predstavnik ustanoviteljev"),
+                    ("5", "Imenovan na podlagi sorodstvenih/prijateljskih vezi"),
+                    ("6", "Neodvisni predstavnik"),
+                    ("7", "Drugo:"),
+                ],
+                default="1",
+                max_length=2,
+                verbose_name="Povezava z organizacijo",
+            ),
         ),
     ]
