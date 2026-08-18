@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0023_criteria_transparency_of_organizations_4_8'),
+        ("home", "0023_criteria_transparency_of_organizations_4_8"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='criteria',
-            name='control_of_business_4',
-            field=models.IntegerField(default=0, verbose_name='1.4 - Organizacija vodi zapisnike sej'),
+            model_name="criteria",
+            name="control_of_business_4",
+            field=models.IntegerField(
+                default=0, verbose_name="1.4 - Organizacija vodi zapisnike sej"
+            ),
         ),
     ]

@@ -23,9 +23,7 @@ def try_send_mail_updated_org(id, inst):
             Povezava do admin strani: https://dobrodelen.si/admin/home/organization/edit/{id}/
 
             LP
-        """.format(
-            id=id, name=inst.name
-        )
+        """.format(id=id, name=inst.name)
 
         if settings.MAILGUN_API and settings.MAILGUN_ACCESS_KEY:
             requests.post(
@@ -115,27 +113,28 @@ class HomePage(Page):
 
 point_field_mapping = {
     # OSNOVNE INFORMACIJE
-    "has_published_key_documents": 2, # Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)
-    "has_published_mission": 1, # Kriterij 2: Organizacija ima objavljeno poslanstvo
-    "has_published_key_employee_list": 2, # Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih
-    "has_published_board_member_list": 1, # Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov
-    "has_published_contact_information": 2, # Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo
-    "has_published_complaints_contact": 1, # Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe
-    "has_published_complaints_process": 0.5, # Kriterij 7: Objavljen je celoten pritožbeni postopek
+    "has_published_key_documents": 2,  # Kriterij 1: Organizacija ima objavljene ključne dokumente (akt o ustanovitvi in/ali statut)
+    "has_published_mission": 1,  # Kriterij 2: Organizacija ima objavljeno poslanstvo
+    "has_published_key_employee_list": 2,  # Kriterij 3: Organizacija ima objavljen seznam ključnih zaposlenih
+    "has_published_board_member_list": 1,  # Kriterij 4: Organizacija ima objavljen seznam članov nadzornih organov
+    "has_published_contact_information": 2,  # Kriterij 5: Objavljen je način, kako lahko posameznik stopi v stik z organizacijo
+    "has_published_complaints_contact": 1,  # Kriterij 6: Objavljene so informacije o možnosti pritožbe nad delom organizacije s podatki komu/kako poslati pritožbe
+    "has_published_complaints_process": 0.5,  # Kriterij 7: Objavljen je celoten pritožbeni postopek
     # PROGRAMSKA TRANSPARENTNOST
-    "has_published_substantive_report": 2, # Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto
-    "has_published_report_about_work": 2, # Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja
-    "has_published_report_with_results": 1, # Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti
-    "has_published_work_plan": 0.5, # Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto
-    "has_published_strategic_objectives": 0.5, # Kriterij 5: Organizacija ima objavljene glavne strateške cilje
+    "has_published_substantive_report": 2,  # Kriterij 1: Objavljeno je vsebinsko poročilo za preteklo leto
+    "has_published_report_about_work": 2,  # Kriterij 2: Objavljeno je vsebinsko poročilo, iz katerega je jasno razvidno, s čim se organizacija ukvarja
+    "has_published_report_with_results": 1,  # Kriterij 3: Vsebinsko poročilo vključuje tudi rezultate (dosežke, učinke), ne zgolj aktivnosti
+    "has_published_work_plan": 0.5,  # Kriterij 4: Organizacija ima objavljen načrt dela za tekoče leto
+    "has_published_strategic_objectives": 0.5,  # Kriterij 5: Organizacija ima objavljene glavne strateške cilje
     # FINANČNO POSLOVANJE
-    "has_published_financial_report": 2, # Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto
-    "has_published_understandable_financial_report": 2, # Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)
-    "has_published_operating_expenses": 0.5, # Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)
-    "has_published_main_sources_of_financing": 2, # Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)
-    "has_published_management_revenues": 1, # Kriterij 5: Objavljeni so prihodki vodstva
-    "has_published_salary_ratio": 0.5, # Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo
+    "has_published_financial_report": 2,  # Kriterij 1: Organizacija ima objavljeno letno finančno poročilo za preteklo leto
+    "has_published_understandable_financial_report": 2,  # Kriterij 2: Finančna poročila so razdeljena po vrstah stroškov, ki so razumljiva javnosti (npr. stroški zaposlenih, potni stroški, stroški za zunanje izvajalce, itd.)
+    "has_published_operating_expenses": 0.5,  # Kriterij 3: Objavljen je podatek o višini ali odstotku sredstev, ki ga organizacija nameni za delovanje (hladni pogon)
+    "has_published_main_sources_of_financing": 2,  # Kriterij 4: Objavljeni so glavni viri financiranja (prihodki)
+    "has_published_management_revenues": 1,  # Kriterij 5: Objavljeni so prihodki vodstva
+    "has_published_salary_ratio": 0.5,  # Kriterij 6: Objavljeno je razmerje med najnižjo, povprečno in najvišjo plačo
 }
+
 
 class Organization(ClusterableModel):
     # META INFO
@@ -640,7 +639,8 @@ class Organization(ClusterableModel):
             for field in self.__class__._meta.fields
             if isinstance(field, models.BooleanField)
             and (field.name.startswith("has_published_"))
-            and field.name in point_field_mapping.keys() # on organization page show only main criteria
+            and field.name
+            in point_field_mapping.keys()  # on organization page show only main criteria
         ]
 
     def get_point_fields_extra(self):
@@ -648,9 +648,7 @@ class Organization(ClusterableModel):
             field
             for field in self.__class__._meta.fields
             if isinstance(field, models.BooleanField)
-            and (
-                field.name.startswith("website_accessibility_")
-            )
+            and (field.name.startswith("website_accessibility_"))
         ]
 
     def get_panel_tree(self):
@@ -682,7 +680,11 @@ class Organization(ClusterableModel):
                 parents = []
 
             if isinstance(panel, FieldPanel):
-                return (panel.field_name, meta.get_field(panel.field_name).verbose_name, parents)
+                return (
+                    panel.field_name,
+                    meta.get_field(panel.field_name).verbose_name,
+                    parents,
+                )
             if isinstance(panel, InlinePanel):
                 return None  # ignore reverse relations for now
             if isinstance(panel, HelpPanel):
@@ -774,7 +776,11 @@ class Organization(ClusterableModel):
 
         def field_to_object(field):
             url_field = related_url_field(field.name)
-            url = str(url_field) if url_field and str(url_field).startswith("http") else None
+            url = (
+                str(url_field)
+                if url_field and str(url_field).startswith("http")
+                else None
+            )
             return {
                 "section": find_parent_panel(field.name),
                 "name": field.name,
@@ -787,7 +793,7 @@ class Organization(ClusterableModel):
 
     @property
     def points_details_extra(self):
-        point_fields = []# self.get_point_fields_extra() # hide sklop 4 and 5
+        point_fields = []  # self.get_point_fields_extra() # hide sklop 4 and 5
         panel_tree = self.get_panel_tree()
 
         def find_parent_panel(field_name):
@@ -868,108 +874,167 @@ class Organization(ClusterableModel):
         # DOSTOPNOST OSNOVNIH INFORMACIJ
         MultiFieldPanel(
             [
-                MultiFieldPanel([
-                    FieldPanel("has_published_key_documents"),
-                    FieldPanel("key_documents_notes"),
-                    FieldPanel("key_documents_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_mission"),
-                    FieldPanel("mission_notes"),
-                    FieldPanel("mission_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_key_employee_list"),
-                    FieldPanel("key_employee_list_notes"),
-                    FieldPanel("key_employee_list_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_board_member_list"),
-                    FieldPanel("board_member_list_notes"),
-                    FieldPanel("board_member_list_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_contact_information"),
-                    FieldPanel("contact_information_notes"),
-                    FieldPanel("contact_information_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_complaints_contact"),
-                    FieldPanel("complaints_contact_notes"),
-                    FieldPanel("complaints_contact_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_complaints_process"),
-                    FieldPanel("complaints_process_notes"),
-                    FieldPanel("complaints_process_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_key_documents"),
+                        FieldPanel("key_documents_notes"),
+                        FieldPanel("key_documents_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_mission"),
+                        FieldPanel("mission_notes"),
+                        FieldPanel("mission_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_key_employee_list"),
+                        FieldPanel("key_employee_list_notes"),
+                        FieldPanel("key_employee_list_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_board_member_list"),
+                        FieldPanel("board_member_list_notes"),
+                        FieldPanel("board_member_list_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_contact_information"),
+                        FieldPanel("contact_information_notes"),
+                        FieldPanel("contact_information_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_complaints_contact"),
+                        FieldPanel("complaints_contact_notes"),
+                        FieldPanel("complaints_contact_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_complaints_process"),
+                        FieldPanel("complaints_process_notes"),
+                        FieldPanel("complaints_process_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
             ],
             heading="Sklop 1: Dostopnost osnovnih informacij",
         ),
         # DOSTOPNOST VSEBINSKIH POROČIL
         MultiFieldPanel(
             [
-                MultiFieldPanel([
-                    FieldPanel("has_published_substantive_report"),
-                    FieldPanel("substantive_report_notes"),
-                    FieldPanel("substantive_report_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_report_about_work"),
-                    FieldPanel("report_about_work_notes"),
-                    FieldPanel("report_about_work_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_report_with_results"),
-                    FieldPanel("report_with_results_notes"),
-                    FieldPanel("report_with_results_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_work_plan"),
-                    FieldPanel("work_plan_notes"),
-                    FieldPanel("work_plan_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_strategic_objectives"),
-                    FieldPanel("strategic_objectives_notes"),
-                    FieldPanel("strategic_objectives_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_substantive_report"),
+                        FieldPanel("substantive_report_notes"),
+                        FieldPanel("substantive_report_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_report_about_work"),
+                        FieldPanel("report_about_work_notes"),
+                        FieldPanel("report_about_work_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_report_with_results"),
+                        FieldPanel("report_with_results_notes"),
+                        FieldPanel("report_with_results_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_work_plan"),
+                        FieldPanel("work_plan_notes"),
+                        FieldPanel("work_plan_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_strategic_objectives"),
+                        FieldPanel("strategic_objectives_notes"),
+                        FieldPanel("strategic_objectives_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
             ],
             heading="Sklop 2: Dostopnost vsebinskih poročil",
         ),
         # FINANČNA TRANSPARENTNOST
         MultiFieldPanel(
             [
-                MultiFieldPanel([
-                    FieldPanel("has_published_financial_report"),
-                    FieldPanel("financial_report_notes"),
-                    FieldPanel("financial_report_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_understandable_financial_report"),
-                    FieldPanel("understandable_financial_report_notes"),
-                    FieldPanel("understandable_financial_report_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_operating_expenses"),
-                    FieldPanel("operating_expenses_notes"),
-                    FieldPanel("operating_expenses_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_main_sources_of_financing"),
-                    FieldPanel("main_sources_of_financing_notes"),
-                    FieldPanel("main_sources_of_financing_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_management_revenues"),
-                    FieldPanel("management_revenues_notes"),
-                    FieldPanel("management_revenues_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
-                MultiFieldPanel([
-                    FieldPanel("has_published_salary_ratio"),
-                    FieldPanel("salary_ratio_notes"),
-                    FieldPanel("salary_ratio_url", widget=URLInputWithLink),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_financial_report"),
+                        FieldPanel("financial_report_notes"),
+                        FieldPanel("financial_report_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_understandable_financial_report"),
+                        FieldPanel("understandable_financial_report_notes"),
+                        FieldPanel(
+                            "understandable_financial_report_url",
+                            widget=URLInputWithLink,
+                        ),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_operating_expenses"),
+                        FieldPanel("operating_expenses_notes"),
+                        FieldPanel("operating_expenses_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_main_sources_of_financing"),
+                        FieldPanel("main_sources_of_financing_notes"),
+                        FieldPanel(
+                            "main_sources_of_financing_url", widget=URLInputWithLink
+                        ),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_management_revenues"),
+                        FieldPanel("management_revenues_notes"),
+                        FieldPanel("management_revenues_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("has_published_salary_ratio"),
+                        FieldPanel("salary_ratio_notes"),
+                        FieldPanel("salary_ratio_url", widget=URLInputWithLink),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
             ],
             heading="Sklop 3: Finančna transparentnost",
         ),
@@ -1010,10 +1075,13 @@ class Organization(ClusterableModel):
         # REVIEW INFO
         MultiFieldPanel(
             [
-                MultiFieldPanel([
-                    FieldPanel("review_date"),
-                    FieldPanel("review_notes"),
-                ], classname="w-custom__panel-with-notes w-custom--2col"),
+                MultiFieldPanel(
+                    [
+                        FieldPanel("review_date"),
+                        FieldPanel("review_notes"),
+                    ],
+                    classname="w-custom__panel-with-notes w-custom--2col",
+                ),
                 FieldPanel("published"),
             ],
             heading="Podatki o pregledu",

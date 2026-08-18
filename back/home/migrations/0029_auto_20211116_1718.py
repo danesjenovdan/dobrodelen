@@ -6,28 +6,47 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0028_auto_20200131_1331'),
+        ("home", "0028_auto_20200131_1331"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='organization',
-            name='account_number',
-            field=models.CharField(blank=True, default='', max_length=64, verbose_name='Številka tekočega računa'),
+            model_name="organization",
+            name="account_number",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=64,
+                verbose_name="Številka tekočega računa",
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='address',
-            field=models.CharField(blank=True, default='', max_length=512, verbose_name='Naslov organizacije'),
+            model_name="organization",
+            name="address",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=512,
+                verbose_name="Naslov organizacije",
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='donation_url',
-            field=models.URLField(blank=True, default='', max_length=512, verbose_name='Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)'),
+            model_name="organization",
+            name="donation_url",
+            field=models.URLField(
+                blank=True,
+                default="",
+                max_length=512,
+                verbose_name="Povezava na spletno stran organizacije, kjer je možno donirati sredstva (če obstaja)",
+            ),
         ),
         migrations.AlterField(
-            model_name='organization',
-            name='zero5',
-            field=models.BooleanField(blank=True, default=False, verbose_name='Organizacija je na seznamu upravičencev do 1 dohodnine'),
+            model_name="organization",
+            name="zero5",
+            field=models.BooleanField(
+                blank=True,
+                default=False,
+                verbose_name="Organizacija je na seznamu upravičencev do 1 dohodnine",
+            ),
         ),
     ]

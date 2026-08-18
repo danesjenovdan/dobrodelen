@@ -6,23 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0011_auto_20190820_1832'),
+        ("home", "0011_auto_20190820_1832"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='organization',
-            name='is_complete',
-            field=models.BooleanField(default=False, verbose_name='Je prijava končana?'),
+            model_name="organization",
+            name="is_complete",
+            field=models.BooleanField(
+                default=False, verbose_name="Je prijava končana?"
+            ),
         ),
         migrations.AlterField(
-            model_name='organization',
-            name='published',
-            field=models.BooleanField(default=False, verbose_name='Objavljena'),
+            model_name="organization",
+            name="published",
+            field=models.BooleanField(default=False, verbose_name="Objavljena"),
         ),
         migrations.AlterField(
-            model_name='organization',
-            name='signup_time',
-            field=models.DateTimeField(blank=True, null=True, verbose_name=''),
+            model_name="organization",
+            name="signup_time",
+            field=models.DateTimeField(blank=True, null=True, verbose_name=""),
         ),
     ]

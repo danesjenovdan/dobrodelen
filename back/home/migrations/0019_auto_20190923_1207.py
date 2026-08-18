@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0018_auto_20190923_1204'),
+        ("home", "0018_auto_20190923_1204"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='organization',
-            name='is_voluntary',
-            field=models.BooleanField(blank=True, default=False, verbose_name='Organizacija je vpisana v evidenco prostovoljskih organizacij'),
+            model_name="organization",
+            name="is_voluntary",
+            field=models.BooleanField(
+                blank=True,
+                default=False,
+                verbose_name="Organizacija je vpisana v evidenco prostovoljskih organizacij",
+            ),
         ),
     ]

@@ -6,33 +6,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0012_auto_20190820_1911'),
+        ("home", "0012_auto_20190820_1911"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='organization',
-            name='has_audited_report',
-            field=models.BooleanField(default=False, verbose_name='ima revidirano poročilo?'),
+            model_name="organization",
+            name="has_audited_report",
+            field=models.BooleanField(
+                default=False, verbose_name="ima revidirano poročilo?"
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='has_finance_plan',
-            field=models.BooleanField(default=False, verbose_name='ima finančni načrt za tekoče leto?'),
+            model_name="organization",
+            name="has_finance_plan",
+            field=models.BooleanField(
+                default=False, verbose_name="ima finančni načrt za tekoče leto?"
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='has_given_loans',
-            field=models.BooleanField(default=False, verbose_name='ima seznam danih posojil?'),
+            model_name="organization",
+            name="has_given_loans",
+            field=models.BooleanField(
+                default=False, verbose_name="ima seznam danih posojil?"
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='has_payment_classes',
-            field=models.BooleanField(default=False, verbose_name='ima akt o sistematizaciji delovnih mest in plačnih razredov?'),
+            model_name="organization",
+            name="has_payment_classes",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="ima akt o sistematizaciji delovnih mest in plačnih razredov?",
+            ),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='has_received_loans',
-            field=models.BooleanField(default=False, verbose_name='ima seznam prejetih posojil?'),
+            model_name="organization",
+            name="has_received_loans",
+            field=models.BooleanField(
+                default=False, verbose_name="ima seznam prejetih posojil?"
+            ),
         ),
     ]
